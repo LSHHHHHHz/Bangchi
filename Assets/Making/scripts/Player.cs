@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
 
 
     Rigidbody rigid;
-    Animator anim;
+    public Animator anim;
 
     //트랜스폼을 담을 변수
     public Transform tr;
@@ -42,6 +42,9 @@ public class Player : MonoBehaviour
     public Text _MP;
     public Text _Attack;
 
+    private bool isFighting;
+    private float fightStartTime;
+
     private void Start()
     {
         _HP.text = Current_HP + " → " + (HPLevel + Current_HP);
@@ -52,7 +55,6 @@ public class Player : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody>();
         tr = GetComponent<Transform>();
-        anim = GetComponent<Animator>();
     }
 
 
@@ -61,7 +63,7 @@ public class Player : MonoBehaviour
     {
         Move();
         rayCast();
-        DrayRayLine();
+        Fighting();
         HPCost();
     }
 
@@ -78,6 +80,11 @@ public class Player : MonoBehaviour
 
     void rayCast()
     {
+        if (isFighting)
+        {
+            return;
+        }
+
         //레이 세팅
         Ray ray = new Ray();
         //레이 시작 지점
@@ -92,15 +99,20 @@ public class Player : MonoBehaviour
         if(Physics.Raycast(ray, out hit, distance))
         {
             print(hit.collider.name + "를 충돌체로 검출");
-        }
-
-    }
-
-    public void DrayRayLine()
-    {
-        if(hit.collider != null)
-        {
             anim.SetTrigger("doSwing");
+            isFighting = true;
+            fightStartTime = Time.time;
+        }
+    }
+    public void Fighting()
+    {
+        if (isFighting == false)
+            return;
+
+        if (Time.time  - fightStartTime > 1f)
+        {
+            isFighting = false;
+            anim.SetTrigger("battleEnd");
         }
     }
 }

@@ -3661,6 +3661,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSpeed: 10
+  anim: {fileID: 1192868805}
   tr: {fileID: 622718922}
   distance: 10
   layerMask:
@@ -7980,6 +7981,11 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!95 &1192868805 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 95570845223693640, guid: ff726cbf10a6436a8c11071a7641036f, type: 3}
+  m_PrefabInstance: {fileID: 1697233472}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1198458819
 GameObject:
   m_ObjectHideFlags: 0
