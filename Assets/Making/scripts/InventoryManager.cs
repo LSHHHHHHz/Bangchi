@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Assets.Item1;
+using System;
 
 public class InventoryData //이것도 뭐지
 {
@@ -9,10 +10,17 @@ public class InventoryData //이것도 뭐지
 }
 public class InventoryManager : MonoBehaviour
 {
+    public static InventoryManager instance;
     public List<ItemInstance> myItems = new();
 
-    public void AddItem(ItemInfo itemInfo)
+    public void Awake()
     {
+        instance = this;
+    }
+
+
+    public void AddItem(ItemInfo itemInfo)
+    {        
         ItemInstance existItem = myItems.Find(item => item.itemInfo == itemInfo);
         if (existItem != null)
         {

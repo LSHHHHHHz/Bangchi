@@ -11,10 +11,11 @@ public class GachaPopup : MonoBehaviour
     public GameObject itemPrefab;
 
     List<GameObject> children = new List<GameObject>();
-    Action oneMoreTime;
+    Action oneMoreTimeAction; // oneMoreTime 전달받은 값을 저장하기 위해 따로 멤버 필드로 가지고 있음.
 
-    public void Initialize(GachaResult gachaResult, Action oneMoreTime)
+    public void Initialize(GachaResult gachaResult, Action oneMoreTime, Action staticMethod)
     {
+        staticMethod();
         // 이전에 보관해뒀던 아이템 UI들을 파괴
         foreach (GameObject child in children)
         {
@@ -22,7 +23,7 @@ public class GachaPopup : MonoBehaviour
         }
         children.Clear();
 
-        this.oneMoreTime = oneMoreTime;
+        this.oneMoreTimeAction = oneMoreTime;
         for (int i = 0; i < gachaResult.items.Count; ++i)
         {
             // 아이템 슬롯 생성
@@ -43,6 +44,7 @@ public class GachaPopup : MonoBehaviour
             Destroy(gameObject);
         }
 
+    // 다시 뽑기 버튼 누르면 호출됨
         public void OneMoreTime()
         {
             //Invoke("Close", 3f); <-- 이거랑 전혀 연관없음. 이건 유니티의 함수
@@ -51,7 +53,8 @@ public class GachaPopup : MonoBehaviour
             // oneMoreTime();  <-- oneMoreTime이 null이면 에러가 발생.
             // oneMoreTime.Invoke() <-- oneMoreTime이 null이면 에러가 발생.
             // oneMoreTime?.Invoke() <-- 객체에 접근할 때 '?'를 붙이면 객체가 null일 때 접근하지 않고 무시.
-            oneMoreTime?.Invoke(); //이것도.. Invoke를 찍었는데 Action이 검색됨
+            oneMoreTimeAction?.Invoke(); //이것도.. Invoke를 찍었는데 Action이 검색됨
+        //  oneMoreTimeAction();
         }
     
 }

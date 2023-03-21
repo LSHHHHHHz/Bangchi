@@ -1,3 +1,4 @@
+using Assets.CSharp;
 using Assets.Item1;
 using System;
 using System.Collections.Generic;
@@ -9,13 +10,12 @@ using UnityEngine;
 public class LobbyUI : MonoBehaviour
 {
     public ItemDB itemDb;
-    public InventoryManager inventoryManager;
-
+    
     GachaPopup gachaPopup;
 
     private void Awake()
     {
-        inventoryManager.Load();
+        InventoryManager.instance.Load();
     }
 
     public void RunGacha()
@@ -31,14 +31,14 @@ public class LobbyUI : MonoBehaviour
         // 가챠를 통해 얻은 아이템을 인벤토리에 하나씩 추가
         foreach (var item in gachaResult.items)
         {
-            inventoryManager.AddItem(item);
+            InventoryManager.instance.AddItem(item);
         }
 
         // 인벤토리에 다 추가했으면 저장
-        inventoryManager.Save();
+        InventoryManager.instance.Save();
 
         // 가챠팝업에서 뽑은 아이템들을 보여줘야 하므로 gachaResult를 넘김.
-        gachaPopup.Initialize(gachaResult, RunGacha);
+        gachaPopup.Initialize(gachaResult, this.RunGacha, StaticMethodTest.MyStaticMethod);
     }
 
     public void OpenInventory()
