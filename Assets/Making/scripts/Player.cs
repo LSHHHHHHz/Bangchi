@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
 {
     public float playerSpeed;
 
-
+    Monsters monsters;
     Rigidbody rigid;
     public Animator anim;
 
@@ -27,23 +27,27 @@ public class Player : MonoBehaviour
     public int Current_MP;
     public int MP;
     public int MPLevel;
-    public int Attack;
-    public int AttackLevel;
     public int Critical;
     public int CriticalLevel;
     public int CriticalPro;
     public int CriticalProLevel;
+    public int Exp;
+    public int Current_Exp;
 
 
     public int Coin;
-    public int Amond;
+    public int Diemond;
 
     public Text _HP;
     public Text _MP;
-    public Text _Attack;
+
+    bool isFireReady;
+    public float fireDelay;
 
     private bool isFighting;
     private float fightStartTime;
+
+    Weapons weapons;
 
     private void Start()
     {
@@ -65,6 +69,12 @@ public class Player : MonoBehaviour
         rayCast();
         Fighting();
         HPCost();
+    }
+
+    void Attack()
+    {
+        fireDelay += Time.deltaTime;
+        isFireReady = weapons.rate < fireDelay;
     }
 
     void HPCost()
@@ -95,9 +105,9 @@ public class Player : MonoBehaviour
 
         //RaycastAll은 RaycastHits[] 를 반환한다
         hits = Physics.RaycastAll(ray, distance, layerMask);
-        
+
         if(Physics.Raycast(ray, out hit, distance))
-        {
+       {
             print(hit.collider.name + "를 충돌체로 검출");
             anim.SetTrigger("doSwing");
             isFighting = true;
@@ -115,4 +125,6 @@ public class Player : MonoBehaviour
             anim.SetTrigger("battleEnd");
         }
     }
+
+  
 }

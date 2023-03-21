@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Abilty : MonoBehaviour
+public class Ability : MonoBehaviour
 {
     public RectTransform uiGroup;
     public RectTransform talkText;
@@ -11,17 +11,20 @@ public class Abilty : MonoBehaviour
 
     public Player enterPlayer;
 
-    public void Enter() //이걸 왜쓰는거지
+    public void EnterAblity() 
     {
        
         uiGroup.anchoredPosition = new Vector3(610, 516, 0);
     }
 
     // Update is called once per frame
-    public void Exit()
+    public void ExitAblity()
     {
         uiGroup.anchoredPosition = new Vector3(550, -700, 0);
     }
+
+    
+
 
     public void Buy(int index)
     {
