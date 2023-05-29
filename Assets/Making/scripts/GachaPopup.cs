@@ -5,24 +5,29 @@ using UnityEngine;
 using UnityEngine.UI;
 using static Unity.VisualScripting.Metadata;
 
-public class GachaPopup : MonoBehaviour
+public class GachaPopup : MonoBehaviour //가차 결과를 보여주는 UI
 {
+    public Action runGacha1Action;
+    public Action runGacha11Action;
+
+
     public GridLayoutGroup grid;
     public GameObject itemPrefab;
 
-    List<GameObject> children = new List<GameObject>();
-    Action oneMoreTimeAction; // oneMoreTime 전달받은 값을 저장하기 위해 따로 멤버 필드로 가지고 있음.
+    private List<GameObject> children = new List<GameObject>();
 
-    public void Initialize(GachaResult gachaResult, Action oneMoreTime, Action staticMethod)
+    private Action<int> oneMoreTimeAction; // oneMoreTime 전달받은 값을 저장하기 위해 따로 멤버 필드로 가지고 있음.
+
+    public void Initialize(GachaResult gachaResult, Action<int> oneMoreTime)
     {
-        staticMethod();
         // 이전에 보관해뒀던 아이템 UI들을 파괴
         foreach (GameObject child in children)
         {
-            Destroy(child);
+            Destroy(child); //객체 파괴
         }
-        children.Clear();
+        children.Clear(); // 리스트 비우는것
 
+        // 나중에 다시 뽑기 버튼 누르면 호출하기 위해 클래스의 멤버 필드인 oneMoreTimeAction에 값을 저장한다.
         this.oneMoreTimeAction = oneMoreTime;
         for (int i = 0; i < gachaResult.items.Count; ++i)
         {
@@ -39,22 +44,21 @@ public class GachaPopup : MonoBehaviour
             children.Add(itemSlot.gameObject);
         }
     }
-        public void Close()
-        {
-            Destroy(gameObject);
-        }
+
+    public void Close()
+    {
+        Destroy(gameObject);
+    }
 
     // 다시 뽑기 버튼 누르면 호출됨
-        public void OneMoreTime()
-        {
-            //Invoke("Close", 3f); <-- 이거랑 전혀 연관없음. 이건 유니티의 함수
+    public void OneMoreTime1()
+    {
+        oneMoreTimeAction?.Invoke(1);
+    }
 
-            // Action.Invoke() : Action을 호출한다.
-            // oneMoreTime();  <-- oneMoreTime이 null이면 에러가 발생.
-            // oneMoreTime.Invoke() <-- oneMoreTime이 null이면 에러가 발생.
-            // oneMoreTime?.Invoke() <-- 객체에 접근할 때 '?'를 붙이면 객체가 null일 때 접근하지 않고 무시.
-            oneMoreTimeAction?.Invoke(); //이것도.. Invoke를 찍었는데 Action이 검색됨
-        //  oneMoreTimeAction();
-        }
-    
+    public void OneMoreTime11()
+    {
+        oneMoreTimeAction?.Invoke(11);
+    }
+
 }

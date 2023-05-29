@@ -1,4 +1,4 @@
-using Assets.CSharp;
+
 using Assets.Item1;
 using System;
 using System.Collections.Generic;
@@ -12,21 +12,28 @@ public class LobbyUI : MonoBehaviour
     public ItemDB itemDb;
     
     GachaPopup gachaPopup;
+    GachaResult gachaResult;
 
     private void Awake()
     {
         InventoryManager.instance.Load();
     }
 
-    public void RunGacha()
+    
+    public void RunGacha(int count)
     {
         if (gachaPopup == null)
         {
-            var prefab = Resources.Load<GameObject>("GachaPopup");
+            //GachaPopup1 GameObject를 불러와서 prefab 변수에 넣는다.
+            var prefab = Resources.Load<GameObject>("GachaPopup1");
+
+            // Instantiate(prefab) : prefab을 Instantiate 한다.
+            // Instantiate 함수 원형 : GameObject Instantiate(GameObject original);
+            // prefab을 Instantiate한 후 해당 GameObect를 반환하고 이 GameObject에서 GachaPopup GetComponent를 가져와서 gachaPopup에 넣는다.
             gachaPopup = Instantiate(prefab).GetComponent<GachaPopup>();
         }
 
-        GachaResult gachaResult = GachaCalculator.Calculate(itemDb, 10);
+        GachaResult gachaResult = GachaCalculator.Calculate(itemDb, count);
 
         // 가챠를 통해 얻은 아이템을 인벤토리에 하나씩 추가
         foreach (var item in gachaResult.items)
@@ -38,29 +45,22 @@ public class LobbyUI : MonoBehaviour
         InventoryManager.instance.Save();
 
         // 가챠팝업에서 뽑은 아이템들을 보여줘야 하므로 gachaResult를 넘김.
-        gachaPopup.Initialize(gachaResult, this.RunGacha, StaticMethodTest.MyStaticMethod);
+        gachaPopup.Initialize(gachaResult, this.RunGacha);
     }
 
-    public void OpenInventory()
+    class Person
     {
-        // <타입명> : C#의 Generic - 원하는 타입을 입력하고, 그 입력받은 클래스나 함수에서 그 타입을 활용할 수 있음.
-        // List : Generic 클래스
-        //List<int> intList = new List<int>();
-        //List<GameObject> gameObjectList = new List<GameObject>();
+        private string name;
 
-        //Resources.Load<타입> : Generic 메서드
+        public Person()
+        {
+            this.name = "Unknown";
+        }
 
-        //var skillImage = Resources.Load<Sprite>("ItemIcon/001_Skill1");
-
-        //----------------------------------------------------
-
-
-       // var prefab = Resources.Load<GameObject>("SkillInventoryPopup"); //프리펩 불러올 때 Gmaeobject로 불러옴
-
-       // var skillInventoryPopup = Instantiate(prefab).GetComponent<SkillInventoryPopup>();
-      //  skillInventoryPopup.Initialize(inventoryManager);
-
-        //SkillInventoryPopup 이 불러와지고 그 안에 스크립트가 어떻게 들어가는지
+        public Person(string name)
+        {
+            this.name = name;
+        }
     }
 }
 

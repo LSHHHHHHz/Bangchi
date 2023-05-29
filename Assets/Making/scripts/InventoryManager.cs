@@ -4,12 +4,16 @@ using UnityEngine;
 using Assets.Item1;
 using System;
 
+[Serializable] // 클래스를 json등 데이터로 저장할 때 [Serializable]을 붙여줘야 함.
 public class InventoryData //이것도 뭐지
 {
     public List<ItemInstance> myItems = new();  //유니티 Inventory Manager에서 My Items는 어디에 있고 어떻게 쓰는건지
 }
 public class InventoryManager : MonoBehaviour
 {
+    // 4-16
+    public event Action OnInventoryChanged; //event 있고 없고 차이 확인
+
     public static InventoryManager instance;
     public List<ItemInstance> myItems = new();
 
@@ -19,7 +23,7 @@ public class InventoryManager : MonoBehaviour
     }
 
 
-    public void AddItem(ItemInfo itemInfo)
+    public void AddItem(ItemInfo itemInfo) //인벤토리를 변경하는 메서드
     {        
         ItemInstance existItem = myItems.Find(item => item.itemInfo == itemInfo);
         if (existItem != null)
@@ -35,6 +39,8 @@ public class InventoryManager : MonoBehaviour
                 upgradeLevel = 1
             });
         }
+
+        OnInventoryChanged?.Invoke(); // 4-16
     }
 
     // 게임을 저장할 때, 아이템 획득시 저장해주면 됨

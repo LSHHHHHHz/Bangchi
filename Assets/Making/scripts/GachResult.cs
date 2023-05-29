@@ -3,9 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Assets.Item1;
+using Unity.VisualScripting;
 
-public class GachaResult : MonoBehaviour
+public class GachaResult //가차를 돌린 결과(가챠에서 나온 아이템들 리스트)
 {
+    // public List<ItemInfo> items = new List<ItemInfo>();
     public List<ItemInfo> items = new List<ItemInfo>();
 }
 

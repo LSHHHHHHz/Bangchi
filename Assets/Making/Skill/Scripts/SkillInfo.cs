@@ -1,0 +1,38 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace Assets.Item1
+{
+    public enum SkillGrade
+    {
+        FFF,
+        EEE,
+        DDD,
+        CCC,
+        BBB,
+        AAA,
+        SSS
+    }
+
+    public enum SkillType
+    {
+        Active,
+        Passive,
+    }
+
+    /// <summary>
+    /// 게임에 등장하는 아이템 각각 하나하나를 나타내는 데이터.
+    /// </summary>
+    [CreateAssetMenu(menuName = "My Assets/SkillInfo")]
+    public class SkillInfo : ScriptableObject
+    {
+        public SkillGrade grade;
+        public SkillType type;
+        public string name;
+        public string iconPath;
+        public int Number;
+
+        //스킬 등급, 타입, 이름, 경로, 숫자(변경되지 않는 정보?)
+    }
+}
