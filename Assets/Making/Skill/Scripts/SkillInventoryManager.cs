@@ -7,7 +7,8 @@ using System;
 [Serializable] // 클래스를 json등 데이터로 저장할 때 [Serializable]을 붙여줘야 함.
 public class SkillInventoryData 
 {
-    public List<SkillInstance> myItems = new(); 
+    public List<SkillInstance> myItems = new();
+    public List<SkillInstance> equippedSkills = new();
 }
 public class SkillInventoryManager : MonoBehaviour
 {
@@ -70,6 +71,8 @@ public class SkillInventoryManager : MonoBehaviour
 
         equippedSkills.Add(existItem);
         OnEquippedSkillsChanged?.Invoke();
+
+        Save();
     }
 
     public void UnEquipSkill(SkillInfo skillInfo)
@@ -83,6 +86,8 @@ public class SkillInventoryManager : MonoBehaviour
 
         equippedSkills.Remove(existItem);
         OnEquippedSkillsChanged?.Invoke();
+
+        Save();
     }
 
     // 게임을 저장할 때, 아이템 획득시 저장해주면 됨
@@ -90,6 +95,7 @@ public class SkillInventoryManager : MonoBehaviour
     {
         var skillInventoryData = new SkillInventoryData();
         skillInventoryData.myItems = myItems;
+        skillInventoryData.equippedSkills = equippedSkills;
 
         string json = JsonUtility.ToJson(skillInventoryData);
 
@@ -117,7 +123,18 @@ public class SkillInventoryManager : MonoBehaviour
                 myItems.Add(item);
             }
 
+            for (int i = 0; i < skillInventoryData.equippedSkills.Count; ++i)
+            {
+                var item = skillInventoryData.equippedSkills[i];
+                if (item.skillInfo == null)
+                    continue;
+
+                equippedSkills.Add(item);
+            }
+
             //myItems = inventoryData.myItems;
         }
+
+        OnEquippedSkillsChanged?.Invoke();
     }
 }

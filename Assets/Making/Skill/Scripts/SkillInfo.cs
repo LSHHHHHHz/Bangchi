@@ -27,6 +27,7 @@ namespace Assets.Item1
     [CreateAssetMenu(menuName = "My Assets/SkillInfo")]
     public class SkillInfo : ScriptableObject
     {
+        public GameObject skillPrefab;
         public SkillGrade grade;
         public SkillType type;
         public string name;
