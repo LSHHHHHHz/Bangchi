@@ -11,7 +11,6 @@ public class InventoryData //이것도 뭐지
 }
 public class InventoryManager : MonoBehaviour
 {
-    // 4-16
     public event Action OnInventoryChanged; //event 있고 없고 차이 확인
 
     public static InventoryManager instance;
@@ -40,8 +39,10 @@ public class InventoryManager : MonoBehaviour
             });
         }
 
-        OnInventoryChanged?.Invoke(); // 4-16
+        OnInventoryChanged?.Invoke(); 
     }
+
+    
 
     // 게임을 저장할 때, 아이템 획득시 저장해주면 됨
     public void Save()

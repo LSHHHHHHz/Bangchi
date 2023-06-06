@@ -90,6 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d4194101c779f04e8dd5bd24a55047c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillInfo: {fileID: 0}
   icon: {fileID: 6983741721240234903}
   countText: {fileID: 8952769452713095080}
 --- !u!1 &7062333585979373279

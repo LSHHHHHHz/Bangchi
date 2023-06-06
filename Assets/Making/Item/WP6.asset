@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: WP6
   m_EditorClassIdentifier: 
   grade: 0
-  name: item4
-  iconPath: ItemIcon/WP6
-  Number: 4
+  type: 0
+  name: item6
+  iconPath: ItemIcon/B2
+  Number: 6

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: WP8
   m_EditorClassIdentifier: 
   grade: 0
-  name: item4
-  iconPath: ItemIcon/WP8
-  Number: 4
+  type: 0
+  name: item8
+  iconPath: ItemIcon/B4
+  Number: 8

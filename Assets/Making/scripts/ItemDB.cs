@@ -15,4 +15,5 @@ namespace Assets.Item1
     {
         public List<ItemInfo> items; //<> 안에 있는 타입 인스턴스를 여러개 갖는다
     }
+    
 }

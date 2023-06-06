@@ -9,7 +9,7 @@ public class Ability : MonoBehaviour
     public RectTransform uiGroup;
     public Text talkText;
     public string[] talkData;
-    public int[] ablityPrice;
+    public int[] ablityPrice; //어빌리티 구매 가격
     public GameObject[] itemObj; // 힘,체력, 회복력 등등
 
     public Text[] abilityPriceText;
@@ -25,6 +25,9 @@ public class Ability : MonoBehaviour
     {
         abilityPriceText[0].text = ablityPrice[0].ToString();
         abilityPriceText[1].text = ablityPrice[1].ToString();
+        abilityPriceText[2].text = ablityPrice[2].ToString();
+        abilityPriceText[3].text = ablityPrice[3].ToString();
+        abilityPriceText[4].text = ablityPrice[4].ToString();
     }
     public void EnterAblity() 
     {
@@ -68,6 +71,33 @@ public class Ability : MonoBehaviour
             ablityPrice[index] += 100;
             abilityPriceText[index].text = ablityPrice[index].ToString();// UI Text에 가격 정보 보여주기
         
+        }
+        else if (index == 2)
+        {
+            enterPlayer.Coin -= price;
+            enterPlayer.Current_Recovery += enterPlayer.RecoveryLevel;
+            enterPlayer.RecoveryLevel += 1;
+            ablityPrice[index] += 100;
+            abilityPriceText[index].text = ablityPrice[index].ToString();// UI Text에 가격 정보 보여주기
+
+        }
+        else if (index == 3)
+        {
+            enterPlayer.Coin -= price;
+            enterPlayer.Current_CriticalDamage += enterPlayer.CriticalDamageLevel;
+            enterPlayer.CriticalDamageLevel += 1;
+            ablityPrice[index] += 100;
+            abilityPriceText[index].text = ablityPrice[index].ToString();// UI Text에 가격 정보 보여주기
+
+        }
+        else if (index == 4)
+        {
+            enterPlayer.Coin -= price;
+            enterPlayer.Current_Criticalprobability += enterPlayer.CriticalprobabilityLevel;
+            enterPlayer.CriticalprobabilityLevel += 1;
+            ablityPrice[index] += 100;
+            abilityPriceText[index].text = ablityPrice[index].ToString();// UI Text에 가격 정보 보여주기
+
         }
     }
 

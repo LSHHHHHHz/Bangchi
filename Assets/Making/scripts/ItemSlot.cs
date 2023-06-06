@@ -7,11 +7,13 @@ using UnityEngine.UI;
 
 public class ItemSlot : MonoBehaviour
 {
+    public ItemInfo itemInfo;
     public Image icon;
     public Text countText;
 
     public void SetData(ItemInfo itemInfo)
     {
+        this.itemInfo = itemInfo;
         icon.sprite = Resources.Load<Sprite>(itemInfo.iconPath);
         if (countText != null)
         {
@@ -27,5 +29,10 @@ public class ItemSlot : MonoBehaviour
             countText.gameObject.SetActive(true);
             countText.text = itemInstance.count.ToString();
         }
+    }
+    public void SetEmpty(Sprite emptySprite)
+    {
+        icon.sprite = emptySprite;
+        itemInfo = null; // 기존에 설정된 스킬 데이터를 날린다.
     }
 }

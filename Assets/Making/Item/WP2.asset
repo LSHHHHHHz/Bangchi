@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: WP2
   m_EditorClassIdentifier: 
   grade: 0
+  type: 0
   name: item2
-  iconPath: ItemIcon/WP2
+  iconPath: ItemIcon/F2
   Number: 2

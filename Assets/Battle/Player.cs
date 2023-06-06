@@ -6,7 +6,11 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+    
     public float playerSpeed;
+
+    public GameObject[] weapons;
+    public bool[] hasWeapons;
 
     Monsters monsters;
     Rigidbody rigid;
@@ -22,16 +26,33 @@ public class Player : MonoBehaviour
     public RaycastHit[] hits;
     //레이어 마스크를 지정할 변수
     public LayerMask layerMask = -1;
+    
 
+    //능력 창
     public int Current_Attack;
     public int Attack;
     public int AttackLevel;
+
     public int Current_HP;
     public int HP;
-    public int MaxHP;
     public int HPLevel;
+
+    public int Current_Recovery;
+    public int Recovery;
+    public int RecoveryLevel;
+
+    public int Current_CriticalDamage;
+    public int CriticalDamage;
+    public int CriticalDamageLevel;
+
+    public int Current_Criticalprobability;
+    public int Criticalprobability;
+    public int CriticalprobabilityLevel;
+
+
     public int Current_MP;
     public int MP;
+    public int MaxHP;
     public int MPLevel;
 
     //경험치
@@ -45,7 +66,6 @@ public class Player : MonoBehaviour
     public int LV = 1;
 
     //회복
-    public int Recovery;
     public int RecoveryHP;
     public float currentDotTime = 0;
     public float dotTime = 1;
@@ -57,11 +77,19 @@ public class Player : MonoBehaviour
     public int Coin;
     public int Diemond;
 
+
+    //Ablity 골드 스텟 상태창
     public Text _Attack;
     public Text _AttackLevel;
     public Text _HP;
     public Text _HPLevel;
     public Text _HPCoin;
+    public Text _Recovery;
+    public Text _RecoveryLevel;
+    public Text _CriticalDamage;
+    public Text _CriticalDamageLevel;
+    public Text _Criticalprobability;
+    public Text _CriticalprobabilityLevel;
 
     public Text _MP;
 
@@ -71,7 +99,7 @@ public class Player : MonoBehaviour
     private bool isFighting;
     private float fightStartTime;
 
-    Weapons weapons;
+    Weapons weapons1;
     Ability ability;
     
 
@@ -93,12 +121,12 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        ablityUpdate();
         LV_txt.text = "LV" + LV;
         Exp_Bar.fillAmount = Current_Exp / Exp;
         Move();
         rayCast();
         Fighting();
-        ablityUpdate();
     }
 
     public void Player_XP()
@@ -119,16 +147,38 @@ public class Player : MonoBehaviour
     void Attack_weapon()
     {
         fireDelay += Time.deltaTime;
-        isFireReady = weapons.rate < fireDelay;
+        isFireReady = weapons1.rate < fireDelay;
     }
 
     void ablityUpdate()
     {
         _Attack.text = Current_Attack + " → " + (AttackLevel + Current_Attack);
+        Attack = AttackLevel + Current_Attack;
         _AttackLevel.text = "LV" + AttackLevel;
+
         _HP.text = Current_HP + " → " + (HPLevel + Current_HP);
+        HP = HPLevel + Current_HP;
         _HPLevel.text = "LV" + HPLevel;
+
+        _Recovery.text = Current_Recovery + " → " + (RecoveryLevel + Current_Recovery);
+        Recovery = RecoveryLevel + Current_Recovery;
+        _RecoveryLevel.text = "LV" + RecoveryLevel;
+
+        _CriticalDamage.text = Current_CriticalDamage + " → " + (CriticalDamageLevel + Current_CriticalDamage);
+        CriticalDamage = CriticalDamageLevel + Current_CriticalDamage;
+        _CriticalDamageLevel.text = "LV" + CriticalDamageLevel;
+
+        _Criticalprobability.text = Current_Criticalprobability + " → " + (CriticalprobabilityLevel + Current_Criticalprobability);
+        Criticalprobability = CriticalprobabilityLevel + Current_Criticalprobability;
+        _CriticalprobabilityLevel.text = "LV" + CriticalprobabilityLevel;
+
+        //  _Criticalprobability.text = Current_Criticalprobability + " → " + (CriticalprobabilityLevel + Current_Criticalprobability);
+        // Criticalprobability = CriticalprobabilityLevel + Current_Criticalprobability;
+        // _CriticalprobabilityLevel.text = "LV" + CriticalprobabilityLevel;
+
     }
+
+   
 
     void Move()
     {
