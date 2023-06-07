@@ -26,9 +26,10 @@ public class LobbyUI : MonoBehaviour
     GachaPopup gachaPopup;
     GachaResult gachaResult;
 
+    //GachaPopupShield
     private void Awake()
     {
-        InventoryManager.instance.Load();
+
         // 무기 슬롯이 16개가 있는데, 그것의 부모 GameObject가 weaponSlotParent이다.
         // 반대로 말하면 weaponSlotParent의 자식들을 가지고 오면 그것들은 무기 슬롯이다.
 
@@ -49,32 +50,45 @@ public class LobbyUI : MonoBehaviour
         weaponSlots = childList.ToArray(); //자식들이 들어있는 childList를 배열 변환로 변환한다.
 
     }
-    private void Start() //왜 Start에 넣는거지?
+    private void Start() //왜 ilStart에 넣는거지?
     {
+        InventoryManager.instance.Load();
         // 인벤토리가 바뀌었을 때 UI를 갱신할 수 있도록 이벤트 콜백(특정 시점에 호출되는 함수) 등록.
         InventoryManager.instance.OnInventoryChanged += OnInventoryChangedCallback;
-     
+
         // 인벤토리가 로드된 이후 데이터를 설정해야 해서 Awake가 아닌 Start에다가 함수 추가
         SetData();
     }
 
     private void ChangeEquip(ItemSlot itemSlot)
     {
+        // itemSlot이 null인 상황이 정상인가?
+        // 비정상. 가만히 두기
+        // itemInfo가 null인 상황은?
+        //  - 아이템 정보가 설정 안된 것 - 잠겨있다는 뜻
+        // 잠겨있는 아이템을 장착하는 것은 불가능.
+        if (itemSlot.itemInfo == null)
+        {
+            // 잠겨있는 아이템은 장착할 수 없음.
+            return;
+        }
+
+
         if (itemSlot.itemInfo.type == ItemType.Sword)
         {
             int emptyIndex = -1;
-            for (int i = 0; i < weaponSlots.Length; ++i) 
+            for (int i = 0; i < weaponSlots.Length; ++i)
             {
                 ItemSlot equipSlot = weaponSlots[i];
-                if(equipSlot.itemInfo == itemSlot.itemInfo)
+                if (equipSlot.itemInfo == itemSlot.itemInfo)
                 {
                     return;
                 }
-                if (emptyIndex == -1 || equipSlot.itemInfo == null) 
+                if (emptyIndex == -1 || equipSlot.itemInfo == null)
                 {
                     emptyIndex = i;
                 }
-                
+
 
             }
         }
@@ -94,6 +108,7 @@ public class LobbyUI : MonoBehaviour
             // Instantiate 함수 원형 : GameObject Instantiate(GameObject original);
             // prefab을 Instantiate한 후 해당 GameObect를 반환하고 이 GameObject에서 GachaPopup GetComponent를 가져와서 gachaPopup에 넣는다.
             gachaPopup = Instantiate(prefab).GetComponent<GachaPopup>();
+
         }
 
         GachaResult gachaResult = GachaCalculator.Calculate(itemDb, count);
@@ -102,6 +117,30 @@ public class LobbyUI : MonoBehaviour
         foreach (var item in gachaResult.items)
         {
             InventoryManager.instance.AddItem(item);
+        }
+
+        // 인벤토리에 다 추가했으면 저장
+        InventoryManager.instance.Save();
+
+        // 가챠팝업에서 뽑은 아이템들을 보여줘야 하므로 gachaResult를 넘김.
+        gachaPopup.Initialize(gachaResult, this.RunGacha);
+    }
+    public void RunGachaSH(int count)
+    {
+        if (gachaPopup == null)
+        {
+            var prefab = Resources.Load<GameObject>("GachaPopupShield");
+
+            gachaPopup = Instantiate(prefab).GetComponent<GachaPopup>();
+
+        }
+
+        GachaResult gachaResult = GachaCalculator.CalculateSH(itemDB_SH, count);
+
+        // 가챠를 통해 얻은 아이템을 인벤토리에 하나씩 추가
+        foreach (var item in gachaResult.items)
+        {
+            InventoryManager.instance.AddItemSH(item);
         }
 
         // 인벤토리에 다 추가했으면 저장
@@ -120,10 +159,24 @@ public class LobbyUI : MonoBehaviour
             // number : 2 /  weaponSlots 배열엔 0~15까지 들어있다. number2에 해당하는 weaponSlots 값은 1이다.(0부터 시작하니까 -1을 해줌).
             // number값  : 1부터 시작, 배열은 0부터 시작하기 때문에 -1을 해줘야 값이 맞음.
             int number = item.itemInfo.Number;
+            // weaponSlots 배열의 [number - 1] 번째 요소를 가져와 slot 변수에 넣는다.
+            // 요소(element) : 배열안에 들어있는 값들
+            // 배열(array) : 같은 타입의 요소들이 연속적으로 나열된 데이터.
             ItemSlot slot = weaponSlots[number - 1];
             slot.SetData(item);
         }
     }
-    
+
+    public void weaponInventoryOn()
+    {
+        weaponParent.localPosition = new Vector3(0, 0, 0);
+        shieldParent.localPosition = new Vector3(1000f, 1000f, 1000f);
+    }
+    public void shieldInventoryOn()
+    {
+        shieldParent.localPosition = new Vector3(0, 0, 0);
+        weaponParent.localPosition = new Vector3(1000f, 1000f, 1000f);
+    }
+
 }
 

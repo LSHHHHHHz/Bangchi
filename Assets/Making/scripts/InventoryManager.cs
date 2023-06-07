@@ -8,6 +8,7 @@ using System;
 public class InventoryData //이것도 뭐지
 {
     public List<ItemInstance> myItems = new();  //유니티 Inventory Manager에서 My Items는 어디에 있고 어떻게 쓰는건지
+    public List<ItemInstance> myitemsSH = new();
 }
 public class InventoryManager : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class InventoryManager : MonoBehaviour
 
     public static InventoryManager instance;
     public List<ItemInstance> myItems = new();
+    public List<ItemInstance> myItemsSH = new();
 
     public void Awake()
     {
@@ -23,7 +25,7 @@ public class InventoryManager : MonoBehaviour
 
 
     public void AddItem(ItemInfo itemInfo) //인벤토리를 변경하는 메서드
-    {        
+    {   
         ItemInstance existItem = myItems.Find(item => item.itemInfo == itemInfo);
         if (existItem != null)
         {
@@ -42,7 +44,27 @@ public class InventoryManager : MonoBehaviour
         OnInventoryChanged?.Invoke(); 
     }
 
-    
+    public void AddItemSH(ItemInfo itemInfo) //인벤토리를 변경하는 메서드
+    {
+        ItemInstance existItem = myItemsSH.Find(item => item.itemInfo == itemInfo);
+        if (existItem != null)
+        {
+            existItem.count++;
+        }
+        else
+        {
+            myItemsSH.Add(new ItemInstance()
+            {
+                itemInfo = itemInfo,
+                count = 1,
+                upgradeLevel = 1
+            });
+        }
+
+        OnInventoryChanged?.Invoke();
+    }
+
+
 
     // 게임을 저장할 때, 아이템 획득시 저장해주면 됨
     public void Save()

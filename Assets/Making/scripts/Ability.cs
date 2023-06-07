@@ -19,7 +19,7 @@ public class Ability : MonoBehaviour
 
     private void Start()
     {
-        InvokeRepeating("Recovery", 0f, 1f);
+        //InvokeRepeating("Recovery", 0f, 1f);
     }
     void Update()
     {
@@ -84,7 +84,7 @@ public class Ability : MonoBehaviour
         else if (index == 3)
         {
             enterPlayer.Coin -= price;
-            enterPlayer.Current_CriticalDamage += enterPlayer.CriticalDamageLevel;
+            enterPlayer.Current_CriticalDamage += 0.1f;
             enterPlayer.CriticalDamageLevel += 1;
             ablityPrice[index] += 100;
             abilityPriceText[index].text = ablityPrice[index].ToString();// UI Text에 가격 정보 보여주기
@@ -113,7 +113,7 @@ public class Ability : MonoBehaviour
     {
         if (IsCriticalHit())
         {
-            enterPlayer.Attack *= enterPlayer.Critical_Damage; // 치명타 발생 시 데미지를 2배로 적용
+            enterPlayer.Current_Attack *= enterPlayer.Current_CriticalDamage; // 치명타 발생 시 데미지를 2배로 적용
             Console.WriteLine("Critical hit!");
         }
     }
@@ -121,21 +121,23 @@ public class Ability : MonoBehaviour
     private bool IsCriticalHit()
     {
         System.Random random = new System.Random();
-        int roll = random.Next(1, 101); // 1~100 사이의 무작위 정수 생성
-        return roll <= enterPlayer.Critical_value; // 무작위 값이 치명타 확률보다 작거나 같으면 치명타 발생
+        int roll = random.Next(1, 100); // 1~100 사이의 무작위 정수 생성
+        return roll <= enterPlayer.Current_Criticalprobability; // 무작위 값이 치명타 확률보다 작거나 같으면 치명타 발생
     }
 
+
+    //회복하는거 
     public void Recovery()
     {
         enterPlayer.currentDotTime -= Time.deltaTime;
-        if(enterPlayer.HP<enterPlayer.MaxHP)
+        if(enterPlayer.Current_HP<enterPlayer.MaxHP)
         {
             if(enterPlayer.currentDotTime<=0)
             {
-                enterPlayer.HP += enterPlayer.RecoveryHP;
-                if(enterPlayer.HP > enterPlayer.MaxHP)
+                enterPlayer.Current_HP += enterPlayer.RecoveryHP;
+                if(enterPlayer.Current_HP > enterPlayer.MaxHP)
                 {
-                    enterPlayer.HP = enterPlayer.MaxHP;
+                    enterPlayer.Current_HP = enterPlayer.MaxHP;
                     if (enterPlayer.currentDotTime <= -1f)
                     {
                         enterPlayer.currentDotTime = enterPlayer.dotTime;

@@ -9,6 +9,7 @@ public class GachaResult //가차를 돌린 결과(가챠에서 나온 아이템들 리스트)
 {
     // public List<ItemInfo> items = new List<ItemInfo>();
     public List<ItemInfo> items = new List<ItemInfo>();
+    public List<ItemInfo> itemsSH = new List<ItemInfo>();
 }
 
 internal class GachaCalculator
@@ -30,5 +31,19 @@ internal class GachaCalculator
 
         return result;
         //result는 뭔지
+    }
+
+    //추가
+    public static GachaResult CalculateSH(ItemDB_SH itemDB_SH, int count)
+    {
+        var result = new GachaResult();
+
+        for (int i = 0; i < count; ++i)
+        {
+            ItemInfo selected = itemDB_SH.items[UnityEngine.Random.Range(0, itemDB_SH.items.Count)];
+            result.itemsSH.Add(selected);
+        }
+
+        return result;
     }
 }

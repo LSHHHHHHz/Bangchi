@@ -164,80 +164,14 @@ public class SkillUI : MonoBehaviour
     // 장착 혹은 장착 해제
     private void EquipOrUnequip(SkillSlot slot)
     {
-        if (slot.skillInfo.type == SkillType.Active) //SkillType은 그냥 사용이 가능한가????????????????????????????
+        SetEquipSlot(slot.skillInfo, out bool isEquiped);
+        if (isEquiped)
         {
-            int emptyIndex = -1;
-            for (int i = 0; i < equippedActiveSkillSlots.Length; ++i)
-            {
-                SkillSlot equipSlot = equippedActiveSkillSlots[i];
-                if (equipSlot.skillInfo == slot.skillInfo)
-                {
-                    // 장착돼있다는 뜻, 장착 해제.
-                    equipSlot.SetEmpty(lockedSprite);
-                    equipSlot.skillInfo = null;
-                    SkillInventoryManager.instance.UnEquipSkill(slot.skillInfo);
-                    return;
-                }
-                if (emptyIndex == -1 && equipSlot.skillInfo == null) //slot는 인벤토리, equipslot는 장착슬롯
-                //    if (equipSlot.skillInfo == null) //slot는 인벤토리, equipslot는 장착슬롯
-                    emptyIndex = i; // 만약 비어있는 칸이 있다면 index 저장
-            }
-            // 저장된 비어있는 칸이 있다면 사용
-            if (emptyIndex != -1)
-            {
-                equippedActiveSkillSlots[emptyIndex].SetData(slot.skillInfo);
-                SkillInventoryManager.instance.EquipSkill(slot.skillInfo);
-            }
-            else
-            {
-                // 빈칸이 없다는 뜻.
-            }
+            SkillInventoryManager.instance.EquipSkill(slot.skillInfo);
         }
-        /*
-        //SkillType이 엑티브일 때
-        //emptyIndex를 -1로 초기화
-        //equippedActiveSkillSlots(스킬 슬롯)의 개수만큼 for문을 돌림
-        //for문을 돌면서 equippedActiveSkillSlots[i]을 SkillSlot 타입의 equipSlot에 넣음
-        //equipSlot의 스킬 정보가 slot의 스킬정보와 같다면 equipSlot의 SetEmpty를 호출함 -> skillInfor가 비어게 됨
-        //SkillInventoryManager의 UnEquipSkill에 slot.skillInfo가 들어가서 스킬이 해제됨 (return;은 머지?)
-        //emptyIndex가 -1이고 equipSlot의 스킬정보가 비어있다면, emtyIndex는 i번째로 설정됨
-
-        //만약 emtyIndex가 -1이 아니라면 equippedActiveSkillSlots[emtyIndex]의
-        //equippedActiveSkillSlots[emtyIndex]여기서 SetData를 어떻게 쓸 수 있는거지??
-        */
-
-        else if (slot.skillInfo.type == SkillType.Passive)
+        else
         {
-            int emptyIndex = -1;
-            for (int i = 0; i < equippedPassiveSkillSlots.Length; ++i)
-            {
-                SkillSlot equipSlot = equippedPassiveSkillSlots[i];
-                if (equipSlot.skillInfo == slot.skillInfo)
-                {
-                    // 장착돼있다는 뜻, 장착 해제.
-                    equipSlot.SetEmpty(lockedSprite);
-                    equipSlot.skillInfo = null;
-                    SkillInventoryManager.instance.UnEquipSkill(slot.skillInfo);
-                    return;
-                }
-
-                if (emptyIndex == -1 && equipSlot.skillInfo == null) //slot는 인벤토리, equipslot는 장착슬롯
-                    //if (equipSlot.skillInfo == null)
-                    emptyIndex = i; // 만약 비어있는 칸이 있다면 index 저장
-            }
-
-            // 저장된 비어있는 칸이 있다면 사용
-            if (emptyIndex != -1)
-            {
-                SkillSlot emptySlot = equippedPassiveSkillSlots[emptyIndex];
-                emptySlot.SetData(slot.skillInfo);
-                //equippedPassiveSkillSlots[emptyIndex].SetData(slot.skillInfo);
-                SkillInventoryManager.instance.EquipSkill(slot.skillInfo);
-            }
-            else
-            {
-                // 빈칸이 없다는 뜻.
-            }
+            SkillInventoryManager.instance.UnEquipSkill(slot.skillInfo);
         }
     }
 
@@ -262,7 +196,80 @@ public class SkillUI : MonoBehaviour
                 slot.SetData(item);
             }
         }
+
+        foreach (SkillInstance equipedItem in SkillInventoryManager.instance.equippedSkills)
+        {
+            SetEquipSlot(equipedItem.skillInfo, out bool isEquiped);
+        }
     }
+
+    private void SetEquipSlot(SkillInfo skillInfo, out bool isEquiped)
+    {
+        isEquiped = false;
+        if (skillInfo.type == SkillType.Active)
+        {
+            int emptyIndex = -1;
+            for (int i = 0; i < equippedActiveSkillSlots.Length; ++i)
+            {
+                SkillSlot equipSlot = equippedActiveSkillSlots[i];
+                if (equipSlot.skillInfo == skillInfo)
+                {
+                    // 장착돼있다는 뜻, 장착 해제.
+                    equipSlot.SetEmpty(lockedSprite);
+                    equipSlot.skillInfo = null;
+                    isEquiped = false;
+                    return;
+                }
+                if (emptyIndex == -1 && equipSlot.skillInfo == null) //slot는 인벤토리, equipslot는 장착슬롯
+                                                                     //    if (equipSlot.skillInfo == null) //slot는 인벤토리, equipslot는 장착슬롯
+                    emptyIndex = i; // 만약 비어있는 칸이 있다면 index 저장
+            }
+            // 저장된 비어있는 칸이 있다면 사용
+            if (emptyIndex != -1)
+            {
+                equippedActiveSkillSlots[emptyIndex].SetData(skillInfo);
+                isEquiped = true;
+            }
+            else
+            {
+                // 빈칸이 없다는 뜻.
+            }
+        }
+        else if (skillInfo.type == SkillType.Passive)
+        {
+            int emptyIndex = -1;
+            for (int i = 0; i < equippedPassiveSkillSlots.Length; ++i)
+            {
+                SkillSlot equipSlot = equippedPassiveSkillSlots[i];
+                if (equipSlot.skillInfo == skillInfo)
+                {
+                    // 장착돼있다는 뜻, 장착 해제.
+                    equipSlot.SetEmpty(lockedSprite);
+                    equipSlot.skillInfo = null;
+                    isEquiped = false;
+                    return;
+                }
+
+                if (emptyIndex == -1 && equipSlot.skillInfo == null) //slot는 인벤토리, equipslot는 장착슬롯
+                                                                     //if (equipSlot.skillInfo == null)
+                    emptyIndex = i; // 만약 비어있는 칸이 있다면 index 저장
+            }
+
+            // 저장된 비어있는 칸이 있다면 사용
+            if (emptyIndex != -1)
+            {
+                SkillSlot emptySlot = equippedPassiveSkillSlots[emptyIndex];
+                emptySlot.SetData(skillInfo);
+                isEquiped = true;
+                //equippedPassiveSkillSlots[emptyIndex].SetData(slot.skillInfo);
+            }
+            else
+            {
+                // 빈칸이 없다는 뜻.
+            }
+        }
+    }
+
     /*
     //SkillInventoryManager에 들어있는 myItems들을 foreach문을 돌려 SkillInstance 타입의 item 변수에 넣는다.
     //number변수에 item의 스킬정보 Number를 넣는다.

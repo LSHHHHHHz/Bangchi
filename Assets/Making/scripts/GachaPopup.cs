@@ -1,3 +1,4 @@
+using Assets.HeroEditor.InventorySystem.Scripts.Enums;
 using System;
 using System.Collections;
 using System.Collections.Generic;

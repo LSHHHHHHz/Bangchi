@@ -29,24 +29,19 @@ public class Player : MonoBehaviour
     
 
     //능력 창
-    public int Current_Attack;
-    public int Attack;
+    public float Current_Attack;
     public int AttackLevel;
 
-    public int Current_HP;
-    public int HP;
+    public float Current_HP;
     public int HPLevel;
 
-    public int Current_Recovery;
-    public int Recovery;
+    public float Current_Recovery;
     public int RecoveryLevel;
 
-    public int Current_CriticalDamage;
-    public int CriticalDamage;
+    public float Current_CriticalDamage;
     public int CriticalDamageLevel;
 
-    public int Current_Criticalprobability;
-    public int Criticalprobability;
+    public float Current_Criticalprobability;
     public int CriticalprobabilityLevel;
 
 
@@ -69,10 +64,6 @@ public class Player : MonoBehaviour
     public int RecoveryHP;
     public float currentDotTime = 0;
     public float dotTime = 1;
-
-    //크리티컬
-    public int Critical_value;
-    public int Critical_Damage;
 
     public int Coin;
     public int Diemond;
@@ -153,28 +144,20 @@ public class Player : MonoBehaviour
     void ablityUpdate()
     {
         _Attack.text = Current_Attack + " → " + (AttackLevel + Current_Attack);
-        Attack = AttackLevel + Current_Attack;
         _AttackLevel.text = "LV" + AttackLevel;
 
         _HP.text = Current_HP + " → " + (HPLevel + Current_HP);
-        HP = HPLevel + Current_HP;
         _HPLevel.text = "LV" + HPLevel;
 
         _Recovery.text = Current_Recovery + " → " + (RecoveryLevel + Current_Recovery);
-        Recovery = RecoveryLevel + Current_Recovery;
         _RecoveryLevel.text = "LV" + RecoveryLevel;
 
-        _CriticalDamage.text = Current_CriticalDamage + " → " + (CriticalDamageLevel + Current_CriticalDamage);
-        CriticalDamage = CriticalDamageLevel + Current_CriticalDamage;
+        _CriticalDamage.text = $"{Current_CriticalDamage:F1} → {(0.1f + Current_CriticalDamage):F1}";
         _CriticalDamageLevel.text = "LV" + CriticalDamageLevel;
 
         _Criticalprobability.text = Current_Criticalprobability + " → " + (CriticalprobabilityLevel + Current_Criticalprobability);
-        Criticalprobability = CriticalprobabilityLevel + Current_Criticalprobability;
         _CriticalprobabilityLevel.text = "LV" + CriticalprobabilityLevel;
 
-        //  _Criticalprobability.text = Current_Criticalprobability + " → " + (CriticalprobabilityLevel + Current_Criticalprobability);
-        // Criticalprobability = CriticalprobabilityLevel + Current_Criticalprobability;
-        // _CriticalprobabilityLevel.text = "LV" + CriticalprobabilityLevel;
 
     }
 
