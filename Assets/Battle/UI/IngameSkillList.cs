@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Item1;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,28 +10,30 @@ using UnityEngine.UI;
 public class IngameSkillList : MonoBehaviour
 {
     public Sprite lockedSprite;
-    public RectTransform weaponSlotParent;
+    public RectTransform activeSkillSlotParent;
+    public RectTransform passiveSkillSlotParent;
 
-    private SkillSlot[] skillSlots;
+    private SkillSlot[] activeSkillSlots;
+    private SkillSlot[] passiveSkillSlots;
     private BaseSkill[] skills;
 
     private void Awake()
     {
-        List<SkillSlot> childList = new();
-        for (int i = 0; i < weaponSlotParent.childCount; ++i) // weaponSlotParent의 자식 개수를 가져오고, 그 개수만큼 for문 반복
-        {
-            SkillSlot child = weaponSlotParent.GetChild(i).GetComponent<SkillSlot>();
-            childList.Add(child); // 자식을 childList에 임시로 넣어둔다.
+        activeSkillSlots = GetChildSlots(activeSkillSlotParent);
+        passiveSkillSlots = GetChildSlots(passiveSkillSlotParent);
+    }
 
-            var skillButton = child.GetComponent<Button>();
-            int index = i;
-            skillButton.onClick.AddListener(() =>
-            {
-                OnSkillButtonClicked(index);
-            });
+    private SkillSlot[] GetChildSlots(RectTransform parent)
+    {
+        List<SkillSlot> childList = new();
+
+        for (int i = 0; i < parent.childCount; ++i) // weaponSlotParent의 자식 개수를 가져오고, 그 개수만큼 for문 반복
+        {
+            SkillSlot child = parent.GetChild(i).GetComponent<SkillSlot>();
+            childList.Add(child); // 자식을 childList에 임시로 넣어둔다.
         }
 
-        skillSlots = childList.ToArray(); //자식들이 들어있는 childList를 배열 변환로 변환한다.
+        return childList.ToArray();
     }
 
     private void Start()
@@ -48,13 +51,29 @@ public class IngameSkillList : MonoBehaviour
     {
         ClearSkills(); // 기존에 가지고 있던 스킬 오브젝트 삭제
         List<BaseSkill> skills = new();
+        SetSkills(activeSkillSlots, skills, SkillType.Active);
+        SetSkills(passiveSkillSlots, skills, SkillType.Passive);
+        this.skills = skills.ToArray();
+    }
+
+    private void SetSkills(SkillSlot[] skillSlots, List<BaseSkill> skillsList, SkillType skillType)
+    {
+        List<SkillInstance> equippedSkills = new();
+        foreach (SkillInstance skillInstance in SkillInventoryManager.instance.equippedSkills)
+        {
+            if (skillInstance.skillInfo.type == skillType)
+            {
+                equippedSkills.Add(skillInstance);
+            }
+        }
+
         for (int i = 0; i < skillSlots.Length; ++i)
         {
             SkillSlot slot = skillSlots[i];
-            if (i < SkillInventoryManager.instance.equippedSkills.Count)
+            if (i < equippedSkills.Count)
             {
                 // 장착할 스킬이 있음
-                SkillInstance skillInstance = SkillInventoryManager.instance.equippedSkills[i];
+                SkillInstance skillInstance = equippedSkills[i];
                 slot.SetData(skillInstance);
 
                 GameObject skillPrefab = skillInstance.skillInfo.skillPrefab;
@@ -66,18 +85,16 @@ public class IngameSkillList : MonoBehaviour
                 {
                     GameObject skillObject = Instantiate(skillPrefab);
                     var skill = skillObject.GetComponent<BaseSkill>();
-                    skills.Add(skill);
+                    skillsList.Add(skill);
                 }
             }
             else
             {
                 // 장착할 스킬이 없음
                 slot.icon.sprite = lockedSprite;
-                skills.Add(null);
+                skillsList.Add(null);
             }
         }
-
-        this.skills = skills.ToArray();
     }
 
     private void ClearSkills()

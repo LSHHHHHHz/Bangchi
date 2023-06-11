@@ -40,7 +40,7 @@ public class Monsters : MonoBehaviour
         {
             Destroy(gameObject);
             Death();
-            //var battleManager = GameObject.FindObjectOfType<BattleManager>();
+            //var battleManager = GameObject.   FindObjectOfType<BattleManager>();
             //battleManager.player.Current_Exp += MonsterExp;
 
             BattleManager.instance.player.Current_Exp += MonsterExp;
