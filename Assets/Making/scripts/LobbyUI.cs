@@ -38,16 +38,22 @@ public class LobbyUI : MonoBehaviour
         {
             ItemSlot child = weaponSlotParent.GetChild(i).GetComponent<ItemSlot>();
 
-            var button = child.GetComponent<Button>();
-            button.onClick.AddListener(() =>
-            {
-                ChangeEquip(child);
-            });
 
             childList.Add(child); // 자식을 childList에 임시로 넣어둔다.
         }
 
         weaponSlots = childList.ToArray(); //자식들이 들어있는 childList를 배열 변환로 변환한다.
+
+
+        List<ItemSlot> shieldChildList = new List<ItemSlot>();
+        for (int i = 0; i < shieldSlotParent.childCount; ++i)
+        {
+            ItemSlot child = shieldSlotParent.GetChild(i).GetComponent<ItemSlot>();
+
+
+            shieldChildList.Add(child);
+        }
+        shieldSlots = shieldChildList.ToArray();
 
     }
     private void Start() //왜 ilStart에 넣는거지?
@@ -89,7 +95,6 @@ public class LobbyUI : MonoBehaviour
                     emptyIndex = i;
                 }
 
-
             }
         }
     }
@@ -99,6 +104,7 @@ public class LobbyUI : MonoBehaviour
     }
     public void RunGacha(int count)
     {
+
         if (gachaPopup == null)
         {
             //GachaPopup1 GameObject를 불러와서 prefab 변수에 넣는다.
@@ -124,6 +130,7 @@ public class LobbyUI : MonoBehaviour
 
         // 가챠팝업에서 뽑은 아이템들을 보여줘야 하므로 gachaResult를 넘김.
         gachaPopup.Initialize(gachaResult, this.RunGacha);
+        
     }
     public void RunGachaSH(int count)
     {
@@ -138,22 +145,23 @@ public class LobbyUI : MonoBehaviour
         GachaResult gachaResult = GachaCalculator.CalculateSH(itemDB_SH, count);
 
         // 가챠를 통해 얻은 아이템을 인벤토리에 하나씩 추가
-        foreach (var item in gachaResult.items)
+        foreach (var item in gachaResult.itemsSH)
         {
             InventoryManager.instance.AddItemSH(item);
         }
 
         // 인벤토리에 다 추가했으면 저장
-        InventoryManager.instance.Save();
+        InventoryManager.instance.SaveSH();
 
         // 가챠팝업에서 뽑은 아이템들을 보여줘야 하므로 gachaResult를 넘김.
-        gachaPopup.Initialize(gachaResult, this.RunGacha);
+        gachaPopup.Initialize(gachaResult, this.RunGachaSH);
     }
 
     public void SetData()
     {
         // 내가 갖고 있는 아이템들을 foreach문으로 순회한다.
         // 내가 갖고 있는 아이템은 InventoryManager.instance.myItems에 들어있다.
+
         foreach (ItemInstance item in InventoryManager.instance.myItems)
         {
             // number : 2 /  weaponSlots 배열엔 0~15까지 들어있다. number2에 해당하는 weaponSlots 값은 1이다.(0부터 시작하니까 -1을 해줌).
@@ -165,6 +173,15 @@ public class LobbyUI : MonoBehaviour
             ItemSlot slot = weaponSlots[number - 1];
             slot.SetData(item);
         }
+
+
+        foreach (ItemInstance item in InventoryManager.instance.myItemsSH)
+        {
+            int number = item.itemInfo.Number;
+            ItemSlot slot = shieldSlots[number - 1];
+            slot.SetData(item);
+        }
+
     }
 
     public void weaponInventoryOn()

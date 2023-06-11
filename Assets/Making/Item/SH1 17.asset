@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 01bd080c23aee374fbc74ac37344eff8, type: 3}
-  m_Name: SH1 12
+  m_Name: SH1 17
   m_EditorClassIdentifier: 
-  grade: 0
+  grade: 6
   type: 1
-  name: item12
-  iconPath: ItemIcon/Sheild/SHA4
-  Number: 12
+  name: item17
+  iconPath: ItemIcon/Sheild/SHSSS
+  Number: 17

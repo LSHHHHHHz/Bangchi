@@ -33,7 +33,7 @@ internal class GachaCalculator
         //result는 뭔지
     }
 
-    //추가
+    //추가 여기로 와야함, 아이템을 뽑을 때 여기서 랜덤으로 아이템 뽑기가 나옴
     public static GachaResult CalculateSH(ItemDB_SH itemDB_SH, int count)
     {
         var result = new GachaResult();

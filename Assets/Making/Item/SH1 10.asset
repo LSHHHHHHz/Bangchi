@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grade: 0
   type: 1
-  name: item1
-  iconPath: ItemIcon/WP1
-  Number: 1
+  name: item10
+  iconPath: ItemIcon/Sheild/SHA2
+  Number: 10

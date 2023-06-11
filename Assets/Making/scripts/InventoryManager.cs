@@ -7,8 +7,9 @@ using System;
 [Serializable] // 클래스를 json등 데이터로 저장할 때 [Serializable]을 붙여줘야 함.
 public class InventoryData //이것도 뭐지
 {
-    public List<ItemInstance> myItems = new();  //유니티 Inventory Manager에서 My Items는 어디에 있고 어떻게 쓰는건지
     public List<ItemInstance> myitemsSH = new();
+    public List<ItemInstance> myItems = new();  //유니티 Inventory Manager에서 My Items는 어디에 있고 어떻게 쓰는건지
+   
 }
 public class InventoryManager : MonoBehaviour
 {
@@ -67,17 +68,24 @@ public class InventoryManager : MonoBehaviour
 
 
     // 게임을 저장할 때, 아이템 획득시 저장해주면 됨
-    public void Save()
+    public void Save()   
     {
         var inventoryData = new InventoryData();
         inventoryData.myItems = myItems;
-
         string json = JsonUtility.ToJson(inventoryData);
-
         // PlayerPrefs : 데이터를 저장하고 불러오는데 쓰는 클래스
         PlayerPrefs.SetString("InventoryData", json);
         PlayerPrefs.Save();
     }
+    public void SaveSH()
+    {
+        var inventoryDataSH = new InventoryData();
+        inventoryDataSH.myitemsSH = myItemsSH;
+        string jsonSH = JsonUtility.ToJson(inventoryDataSH);
+        PlayerPrefs.SetString("InventoryDataSH", jsonSH);
+        PlayerPrefs.Save();
+    }
+
 
     // 게임을 처음에 켰을 때 내 아이템들 불러오기
     public void Load()

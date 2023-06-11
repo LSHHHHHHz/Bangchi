@@ -15,5 +15,5 @@ MonoBehaviour:
   grade: 0
   type: 1
   name: item8
-  iconPath: ItemIcon/WP1
+  iconPath: ItemIcon/Sheild/SHB4
   Number: 8
