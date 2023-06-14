@@ -7,7 +7,6 @@ using System;
 [Serializable] // 클래스를 json등 데이터로 저장할 때 [Serializable]을 붙여줘야 함.
 public class InventoryData //이것도 뭐지
 {
-    public List<ItemInstance> myitemsSH = new();
     public List<ItemInstance> myItems = new();  //유니티 Inventory Manager에서 My Items는 어디에 있고 어떻게 쓰는건지
     public List<ItemInstance> equippedItems = new();
 
@@ -19,12 +18,12 @@ public class InventoryManager : MonoBehaviour
 
     public static InventoryManager instance;
     public List<ItemInstance> myItems = new();
-    public List<ItemInstance> myItemsSH = new();
     public List<ItemInstance> equippedItems = new(); //장착 아이템 리스트
 
     public void Awake()
     {
         instance = this;
+        Load();
     }
 
     //-----------------------------------------------------------------------------------------------
@@ -48,26 +47,6 @@ public class InventoryManager : MonoBehaviour
         OnInventoryChanged?.Invoke(); 
     }
 
-    public void AddItemSH(ItemInfo itemInfo) //인벤토리를 변경하는 메서드
-    {
-        ItemInstance existItem = myItemsSH.Find(item => item.itemInfo == itemInfo);
-        if (existItem != null)
-        {
-            existItem.count++;
-        }
-        else
-        {
-            myItemsSH.Add(new ItemInstance()
-            {
-                itemInfo = itemInfo,
-                count = 1,
-                upgradeLevel = 1
-            });
-        }
-
-        OnInventoryChanged?.Invoke();
-    }
-
     //-----------------------------------------------------------------------------------------------
 
     // 게임을 저장할 때, 아이템 획득시 저장해주면 됨
@@ -81,19 +60,9 @@ public class InventoryManager : MonoBehaviour
         PlayerPrefs.SetString("InventoryData", json);
         PlayerPrefs.Save();
     }
-    public void SaveSH()
-    {
-        var inventoryDataSH = new InventoryData();
-        inventoryDataSH.myitemsSH = myItemsSH;
-        inventoryDataSH.equippedItems = equippedItems;
-        string jsonSH = JsonUtility.ToJson(inventoryDataSH);
-        PlayerPrefs.SetString("InventoryDataSH", jsonSH);
-        PlayerPrefs.Save();
-    }
-
 
     // 게임을 처음에 켰을 때 내 아이템들 불러오기
-    public void Load()
+    private void Load()
     {
         string json = PlayerPrefs.GetString("InventoryData");
         // 게임을 처음할 때는 저장된 데이터가 없을 수 있으니

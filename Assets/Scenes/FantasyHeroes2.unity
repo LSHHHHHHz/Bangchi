@@ -14869,8 +14869,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1234520051}
-        m_TargetAssemblyTypeName: LobbyUI, Assembly-CSharp
-        m_MethodName: RunGacha
+        m_TargetAssemblyTypeName: EquipmentUI, Assembly-CSharp
+        m_MethodName: RunGacha_Sword
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -21221,8 +21221,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1234520051}
-        m_TargetAssemblyTypeName: LobbyUI, Assembly-CSharp
-        m_MethodName: RunGachaSH
+        m_TargetAssemblyTypeName: EquipmentUI, Assembly-CSharp
+        m_MethodName: RunGacha_Shield
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -26212,7 +26212,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myItems: []
-  myItemsSH: []
   equippedItems: []
 --- !u!4 &2012438447
 Transform:

@@ -130,7 +130,7 @@ public class Player : MonoBehaviour
         {
             if (equippedItem.itemInfo.type == ItemType.Sword)
             {
-                int weaponIndex = equippedItem.itemInfo.Number;
+                int weaponIndex = equippedItem.itemInfo.Number - 1;
 
                 for (int i = 0; i < weapons.Length; ++i)
                 {
@@ -144,6 +144,7 @@ public class Player : MonoBehaviour
                     }
                 }
             }
+            // 방패도 여기서 끼기
         }
     }
 

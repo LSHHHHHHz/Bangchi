@@ -14,7 +14,6 @@ public class EquipmentUI : MonoBehaviour
     public GameObject[] WeaponPoint;
     
     public ItemDB itemDb;
-    public ItemDB_SH itemDB_SH;
 
     ItemSlot[] weaponSlots;
     ItemSlot[] shieldSlots;
@@ -68,7 +67,6 @@ public class EquipmentUI : MonoBehaviour
     }
     private void Start() //왜 ilStart에 넣는거지?
     {
-        InventoryManager.instance.Load();
         // 인벤토리가 바뀌었을 때 UI를 갱신할 수 있도록 이벤트 콜백(특정 시점에 호출되는 함수) 등록.
         InventoryManager.instance.OnInventoryChanged += OnInventoryChangedCallback;
 
@@ -131,18 +129,17 @@ public class EquipmentUI : MonoBehaviour
             // weaponSlots 배열의 [number - 1] 번째 요소를 가져와 slot 변수에 넣는다.
             // 요소(element) : 배열안에 들어있는 값들
             // 배열(array) : 같은 타입의 요소들이 연속적으로 나열된 데이터.
-            ItemSlot slot = weaponSlots[number - 1];
-            slot.SetData(item);
+            if (item.itemInfo.type == ItemType.Sword)
+            {
+                ItemSlot slot = weaponSlots[number - 1];
+                slot.SetData(item);
+            }
+            else if (item.itemInfo.type == ItemType.Shield)
+            {
+                ItemSlot slot = shieldSlots[number - 1];
+                slot.SetData(item);
+            }
         }
-
-
-        foreach (ItemInstance item in InventoryManager.instance.myItemsSH)
-        {
-            int number = item.itemInfo.Number;
-            ItemSlot slot = shieldSlots[number - 1];
-            slot.SetData(item);
-        }
-
     }
 
 
@@ -151,7 +148,7 @@ public class EquipmentUI : MonoBehaviour
     {
         SetData();
     }
-    public void RunGacha(int count)
+    private void RunGacha(int count, ItemType type, Action<int> oneMoreTime)
     {
 
         if (gachaPopup == null)
@@ -166,7 +163,7 @@ public class EquipmentUI : MonoBehaviour
 
         }
 
-        GachaResult gachaResult = GachaCalculator.Calculate(itemDb, count);
+        GachaResult gachaResult = GachaCalculator.Calculate(itemDb, count, type);
 
         // 가챠를 통해 얻은 아이템을 인벤토리에 하나씩 추가
         foreach (var item in gachaResult.items)
@@ -178,34 +175,18 @@ public class EquipmentUI : MonoBehaviour
         InventoryManager.instance.Save();
 
         // 가챠팝업에서 뽑은 아이템들을 보여줘야 하므로 gachaResult를 넘김.
-        gachaPopup.Initialize(gachaResult, this.RunGacha);
-        
+        gachaPopup.Initialize(gachaResult, oneMoreTime);
     }
-    public void RunGachaSH(int count)
+
+    public void RunGacha_Sword(int count)
     {
-        if (gachaPopup == null)
-        {
-            var prefab = Resources.Load<GameObject>("GachaPopupShield");
-
-            gachaPopup = Instantiate(prefab).GetComponent<GachaPopup>();
-
-        }
-
-        GachaResult gachaResult = GachaCalculator.CalculateSH(itemDB_SH, count);
-
-        // 가챠를 통해 얻은 아이템을 인벤토리에 하나씩 추가
-        foreach (var item in gachaResult.itemsSH)
-        {
-            InventoryManager.instance.AddItemSH(item);
-        }
-
-        // 인벤토리에 다 추가했으면 저장
-        InventoryManager.instance.SaveSH();
-
-        // 가챠팝업에서 뽑은 아이템들을 보여줘야 하므로 gachaResult를 넘김.
-        gachaPopup.Initialize(gachaResult, this.RunGachaSH);
+        RunGacha(count, ItemType.Sword, RunGacha_Sword);
     }
 
+    public void RunGacha_Shield(int count)
+    {
+        RunGacha(count, ItemType.Shield, RunGacha_Shield);
+    }
    
 
     public void weaponInventoryOn()

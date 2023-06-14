@@ -23,6 +23,7 @@ public class SkillInventoryManager : MonoBehaviour
     public void Awake()
     {
         instance = this;
+        Load();
     }
 
 
@@ -105,7 +106,7 @@ public class SkillInventoryManager : MonoBehaviour
     }
 
     // 게임을 처음에 켰을 때 내 아이템들 불러오기
-    public void Load()
+    private void Load()
     {
         string json = PlayerPrefs.GetString("SkillInventoryData");
         // 게임을 처음할 때는 저장된 데이터가 없을 수 있으니

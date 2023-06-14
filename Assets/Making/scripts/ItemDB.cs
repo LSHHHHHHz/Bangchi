@@ -14,6 +14,21 @@ namespace Assets.Item1
     public class ItemDB : ScriptableObject
     {
         public List<ItemInfo> items; //<> 안에 있는 타입 인스턴스를 여러개 갖는다
+
+        //아이템DB에 들어있는 아이템중 특정 아이템 종류만 얻어오는 함수
+        public List<ItemInfo> GetItemsByType(ItemType type)
+        {
+            var result = new List<ItemInfo>();
+            foreach (ItemInfo item in items)
+            {
+                if (item.type == type)
+                {
+                    result.Add(item);
+                }
+            }
+
+            return result;
+        }
     }
     
 }

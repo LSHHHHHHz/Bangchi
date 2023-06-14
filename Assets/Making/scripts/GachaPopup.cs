@@ -44,17 +44,6 @@ public class GachaPopup : MonoBehaviour //가차 결과를 보여주는 UI
             // 나중에 삭제해야되니까 children에 넣어서 관리
             children.Add(itemSlot.gameObject);
         }
-
-        //방패
-        for (int i = 0; i < gachaResult.itemsSH.Count; ++i)
-        {
-            ItemSlot itemSlot = Instantiate(itemPrefab, grid.transform).GetComponent<ItemSlot>();
-
-            itemSlot.SetData(gachaResult.itemsSH[i]);
-
-            itemSlot.gameObject.SetActive(true);
-            children.Add(itemSlot.gameObject);
-        }
     }
 
     public void Close()

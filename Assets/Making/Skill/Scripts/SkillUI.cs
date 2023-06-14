@@ -115,13 +115,6 @@ public class SkillUI : MonoBehaviour
 
     private void Start()
     {
-        
-
-        if (SkillInventoryManager.instance != null)
-        {
-            SkillInventoryManager.instance.Load();
-        }
-
         // 4-16
         // 인벤토리가 바뀌었을 때 UI를 갱신할 수 있도록 이벤트 콜백(특정 시점에 호출되는 함수) 등록.
         SkillInventoryManager.instance.OnSkillInventoryChanged += OnSkillInventoryChangedCallback;
