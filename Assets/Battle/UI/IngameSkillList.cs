@@ -23,14 +23,14 @@ public class IngameSkillList : MonoBehaviour
         passiveSkillSlots = GetChildSlots(passiveSkillSlotParent);
     }
 
-    private SkillSlot[] GetChildSlots(RectTransform parent)
+    private SkillSlot[] GetChildSlots(RectTransform parent) //스킬 슬롯에 저장하게 하는 매서드??
     {
         List<SkillSlot> childList = new();
 
         for (int i = 0; i < parent.childCount; ++i) // weaponSlotParent의 자식 개수를 가져오고, 그 개수만큼 for문 반복
         {
             SkillSlot child = parent.GetChild(i).GetComponent<SkillSlot>();
-            childList.Add(child); // 자식을 childList에 임시로 넣어둔다.
+            childList.Add(child); // SkillSlot이 있는 자식을 childList에 임시로 넣어둔다.
         }
 
         return childList.ToArray();

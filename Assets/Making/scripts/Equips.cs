@@ -12,17 +12,7 @@ public class Equips : MonoBehaviour
 
     public RectTransform weaponSlotParent;
 
-    private ItemSlot[] weaponSlots;
-
-
-    //부모 게임오브젝트 만들고 아래 16개 자식 오브젝트 만듬
-    //
-    private void Awake()
-    {
-       
-    }
-    
-
+  
     public void EnterEquip()
     {
         uiGroup.anchoredPosition = new Vector3(0, 0, 0);

@@ -9,22 +9,25 @@ public class InventoryData //이것도 뭐지
 {
     public List<ItemInstance> myitemsSH = new();
     public List<ItemInstance> myItems = new();  //유니티 Inventory Manager에서 My Items는 어디에 있고 어떻게 쓰는건지
-   
+    public List<ItemInstance> equippedItems = new();
+
 }
 public class InventoryManager : MonoBehaviour
 {
     public event Action OnInventoryChanged; //event 있고 없고 차이 확인
+    public event Action OnEquippedItemChanged;
 
     public static InventoryManager instance;
     public List<ItemInstance> myItems = new();
     public List<ItemInstance> myItemsSH = new();
+    public List<ItemInstance> equippedItems = new(); //장착 아이템 리스트
 
     public void Awake()
     {
         instance = this;
     }
 
-
+    //-----------------------------------------------------------------------------------------------
     public void AddItem(ItemInfo itemInfo) //인벤토리를 변경하는 메서드
     {   
         ItemInstance existItem = myItems.Find(item => item.itemInfo == itemInfo);
@@ -65,13 +68,14 @@ public class InventoryManager : MonoBehaviour
         OnInventoryChanged?.Invoke();
     }
 
-
+    //-----------------------------------------------------------------------------------------------
 
     // 게임을 저장할 때, 아이템 획득시 저장해주면 됨
     public void Save()   
     {
         var inventoryData = new InventoryData();
         inventoryData.myItems = myItems;
+        inventoryData.equippedItems = equippedItems;
         string json = JsonUtility.ToJson(inventoryData);
         // PlayerPrefs : 데이터를 저장하고 불러오는데 쓰는 클래스
         PlayerPrefs.SetString("InventoryData", json);
@@ -81,6 +85,7 @@ public class InventoryManager : MonoBehaviour
     {
         var inventoryDataSH = new InventoryData();
         inventoryDataSH.myitemsSH = myItemsSH;
+        inventoryDataSH.equippedItems = equippedItems;
         string jsonSH = JsonUtility.ToJson(inventoryDataSH);
         PlayerPrefs.SetString("InventoryDataSH", jsonSH);
         PlayerPrefs.Save();
@@ -106,7 +111,64 @@ public class InventoryManager : MonoBehaviour
                 myItems.Add(item);
             }
 
+            for (int i = 0; i < inventoryData.equippedItems.Count; ++i)
+            {
+                var item = inventoryData.equippedItems[i];
+                if (item.itemInfo == null)
+                    continue;
+
+                equippedItems.Add(item);
+            }
+
             //myItems = inventoryData.myItems;
         }
+    }
+
+    public void Equip(ItemInfo itemInfo)
+    {
+        ItemInstance existItem = myItems.Find(item => item.itemInfo == itemInfo); //
+        if (existItem == null)
+        {
+            // 아이템을 가지고 있지 않다는 것!
+            throw new Exception($"Item not found : {itemInfo.name}");
+        }
+
+
+        equippedItems.Add(existItem);
+        OnEquippedItemChanged?.Invoke();
+
+        Save();
+    }
+
+    public void UnEquip(ItemInfo itemInfo)
+    {
+        ItemInstance existItem = equippedItems.Find(item => item.itemInfo == itemInfo);
+        if (existItem == null)
+        {
+            // 장착을 안했다는 얘기
+            return;
+        }
+
+        equippedItems.Remove(existItem);
+        OnEquippedItemChanged?.Invoke();
+
+        Save();
+    }
+
+    public void UnEquip(ItemType type)
+    {
+        for (int i = 0; i < equippedItems.Count;)
+        {
+            ItemInstance equippedItem = equippedItems[i];
+            if (equippedItem.itemInfo.type == type)
+            {
+                equippedItems.RemoveAt(i);
+                continue;
+            }
+
+            ++i;
+        }
+
+        OnEquippedItemChanged?.Invoke();
     }
 }

@@ -1,3 +1,4 @@
+using Assets.Item1;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -99,6 +100,9 @@ public class Player : MonoBehaviour
         Player_XP(); //°æÇèÄ¡
         _Attack.text = Current_Attack + " ¡æ " + (AttackLevel + Current_Attack);
         _HP.text = Current_HP + " ¡æ " + (HPLevel + Current_HP);
+
+        RefreshWeapon();
+        InventoryManager.instance.OnEquippedItemChanged += RefreshWeapon;
     }
 
 
@@ -119,6 +123,35 @@ public class Player : MonoBehaviour
         rayCast();
         Fighting();
     }
+
+    private void RefreshWeapon()
+    {
+        foreach (ItemInstance equippedItem in InventoryManager.instance.equippedItems)
+        {
+            if (equippedItem.itemInfo.type == ItemType.Sword)
+            {
+                int weaponIndex = equippedItem.itemInfo.Number;
+
+                for (int i = 0; i < weapons.Length; ++i)
+                {
+                    if (i == weaponIndex)
+                    {
+                        weapons[i].SetActive(true);
+                    }
+                    else
+                    {
+                        weapons[i].SetActive(false);
+                    }
+                }
+            }
+        }
+    }
+
+    private void changeWeapon()
+    {
+
+    }
+
 
     public void Player_XP()
     {

@@ -18,8 +18,8 @@ public class CharacterStats : MonoBehaviour
     public Text _Coin;
     public Text _Exp;
 
-    public int haha = 10;
-
+    public RectTransform characterUI;
+    public RectTransform characterUIClose;
     void Start()
     {
     }
@@ -34,6 +34,16 @@ public class CharacterStats : MonoBehaviour
         _HP.text = player.Current_HP + "";
 
         _Coin.text = player.Coin + "";
+    }
+
+    public void characterOpen()
+    {
+        characterUI.localPosition = new Vector3(310, 455, 0);
+    }
+
+    public void characterClose()
+    {
+        characterUI.localPosition = new Vector3(-782, 455, 0);
     }
 
 }

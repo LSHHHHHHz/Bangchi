@@ -8,9 +8,11 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LobbyUI : MonoBehaviour
+public class EquipmentUI : MonoBehaviour
 {
-    Player player;
+    public Player player;
+    public GameObject[] WeaponPoint;
+    
     public ItemDB itemDb;
     public ItemDB_SH itemDB_SH;
 
@@ -37,7 +39,11 @@ public class LobbyUI : MonoBehaviour
         for (int i = 0; i < weaponSlotParent.childCount; ++i) // weaponSlotParent의 자식 개수를 가져오고, 그 개수만큼 for문 반복
         {
             ItemSlot child = weaponSlotParent.GetChild(i).GetComponent<ItemSlot>();
-
+            var button = child.GetComponent<Button>();
+            button.onClick.AddListener(() =>
+            {
+                EquipOrUnequip(child);
+            });
 
             childList.Add(child); // 자식을 childList에 임시로 넣어둔다.
         }
@@ -49,7 +55,11 @@ public class LobbyUI : MonoBehaviour
         for (int i = 0; i < shieldSlotParent.childCount; ++i)
         {
             ItemSlot child = shieldSlotParent.GetChild(i).GetComponent<ItemSlot>();
-
+            var button = child.GetComponent<Button>();
+            button.onClick.AddListener(() =>
+            {
+                EquipOrUnequip(child);
+            });
 
             shieldChildList.Add(child);
         }
@@ -98,6 +108,45 @@ public class LobbyUI : MonoBehaviour
             }
         }
     }
+
+    //------------------------------------------------------------------------------------------------
+   
+    public void EquipOrUnequip(ItemSlot item)
+    {
+        InventoryManager.instance.UnEquip(item.itemInfo.type); // 장착하고 있던 칼이나 방패등 장착 해제.
+        InventoryManager.instance.Equip(item.itemInfo); // 장착.
+    }
+
+
+    public void SetData()
+    {
+        // 내가 갖고 있는 아이템들을 foreach문으로 순회한다.
+        // 내가 갖고 있는 아이템은 InventoryManager.instance.myItems에 들어있다.
+
+        foreach (ItemInstance item in InventoryManager.instance.myItems)
+        {
+            // number : 2 /  weaponSlots 배열엔 0~15까지 들어있다. number2에 해당하는 weaponSlots 값은 1이다.(0부터 시작하니까 -1을 해줌).
+            // number값  : 1부터 시작, 배열은 0부터 시작하기 때문에 -1을 해줘야 값이 맞음.
+            int number = item.itemInfo.Number;
+            // weaponSlots 배열의 [number - 1] 번째 요소를 가져와 slot 변수에 넣는다.
+            // 요소(element) : 배열안에 들어있는 값들
+            // 배열(array) : 같은 타입의 요소들이 연속적으로 나열된 데이터.
+            ItemSlot slot = weaponSlots[number - 1];
+            slot.SetData(item);
+        }
+
+
+        foreach (ItemInstance item in InventoryManager.instance.myItemsSH)
+        {
+            int number = item.itemInfo.Number;
+            ItemSlot slot = shieldSlots[number - 1];
+            slot.SetData(item);
+        }
+
+    }
+
+
+    //------------------------------------------------------------------------------------------------
     private void OnInventoryChangedCallback()
     {
         SetData();
@@ -157,32 +206,7 @@ public class LobbyUI : MonoBehaviour
         gachaPopup.Initialize(gachaResult, this.RunGachaSH);
     }
 
-    public void SetData()
-    {
-        // 내가 갖고 있는 아이템들을 foreach문으로 순회한다.
-        // 내가 갖고 있는 아이템은 InventoryManager.instance.myItems에 들어있다.
-
-        foreach (ItemInstance item in InventoryManager.instance.myItems)
-        {
-            // number : 2 /  weaponSlots 배열엔 0~15까지 들어있다. number2에 해당하는 weaponSlots 값은 1이다.(0부터 시작하니까 -1을 해줌).
-            // number값  : 1부터 시작, 배열은 0부터 시작하기 때문에 -1을 해줘야 값이 맞음.
-            int number = item.itemInfo.Number;
-            // weaponSlots 배열의 [number - 1] 번째 요소를 가져와 slot 변수에 넣는다.
-            // 요소(element) : 배열안에 들어있는 값들
-            // 배열(array) : 같은 타입의 요소들이 연속적으로 나열된 데이터.
-            ItemSlot slot = weaponSlots[number - 1];
-            slot.SetData(item);
-        }
-
-
-        foreach (ItemInstance item in InventoryManager.instance.myItemsSH)
-        {
-            int number = item.itemInfo.Number;
-            ItemSlot slot = shieldSlots[number - 1];
-            slot.SetData(item);
-        }
-
-    }
+   
 
     public void weaponInventoryOn()
     {
