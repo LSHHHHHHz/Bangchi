@@ -515,7 +515,7 @@ GameObject:
   - component: {fileID: 8843106589501282831}
   - component: {fileID: 8843106589501282828}
   - component: {fileID: 8843106589501282829}
-  - component: {fileID: 8843106589501282826}
+  - component: {fileID: 4624945681433629221}
   m_Layer: 6
   m_Name: "\uC2DD\uBB3C\uBAAC\uC2A4\uD130 (1)"
   m_TagString: Untagged
@@ -581,7 +581,7 @@ CapsuleCollider:
   m_Height: 3
   m_Direction: 1
   m_Center: {x: 0, y: 1.74, z: 0}
---- !u!114 &8843106589501282826
+--- !u!114 &4624945681433629221
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -590,13 +590,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 8843106589501282827}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39ac827be2722e148b2fd5ca67aa1c2b, type: 3}
+  m_Script: {fileID: 11500000, guid: 8862b33d18f939947a81d6e9dde7c4b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Current_HP: 100
   HP: 100
   MonsterExp: 10
-  player: {fileID: 0}
+  Player: {fileID: 0}
 --- !u!1 &8843106589968236324
 GameObject:
   m_ObjectHideFlags: 0

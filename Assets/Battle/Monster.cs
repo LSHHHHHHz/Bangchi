@@ -1,14 +1,13 @@
+using Assets.Battle;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Monsters : MonoBehaviour
+public class Monster : MonoBehaviour
 {
     public int Current_HP;
     public int HP;
     public int MonsterExp = 10;
-
-    public GameObject Player;
 
     Rigidbody2D rigid;
     Collider2D collider;
@@ -27,6 +26,14 @@ public class Monsters : MonoBehaviour
         Object obj = null;
         obj = rigid; // rigid 변수의 타입 Rigidbody2D는 Object로부터 파생된 타입이기 때문에 Object 타입 변수 obj에 할당할 수 있다.
         //obj = 1; // 1은 int 타입값이며 obj 변수 Object 클래스와 int는 아무런 연관 관계가 없다. 그러므로 타입이 달라서 할당할 수 없다.
+
+        UnitManager.instance.RegisterMonster(this);
+    }
+
+    private void OnDestroy()
+    {
+        //살아있는 몬스터만 UnitManager에 등록되어 있어야 하기 때문에, 죽은 몬스터는 UnregisterMonster()를 통해 UnitManager에서 등록 해제한다.
+        UnitManager.instance.UnregisterMonster(this); 
     }
 
     public void PrintName(Object obj)
@@ -43,13 +50,13 @@ public class Monsters : MonoBehaviour
             //var battleManager = GameObject.   FindObjectOfType<BattleManager>();
             //battleManager.player.Current_Exp += MonsterExp;
 
-            BattleManager.instance.player.Current_Exp += MonsterExp;
+            UnitManager.instance.player.Current_Exp += MonsterExp;
         }
     }
 
     public void Death()
     {
-        var py = Player.GetComponent<Player>();
+        var py = UnitManager.instance.player;
         py.Current_Exp += MonsterExp;
         py.LV_UP();
         MonsterExp = 0;

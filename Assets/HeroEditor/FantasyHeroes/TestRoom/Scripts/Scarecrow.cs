@@ -33,7 +33,7 @@ namespace Assets.HeroEditor.FantasyHeroes.TestRoom.Scarecrow
         {
             if (eventName == "Hit" && Vector2.Distance(Character.MeleeWeapon.Edge.position, transform.position) < 1.5)
             {
-                GetComponent<Monster>().Spring();
+                GetComponent<Scripts.Monster>().Spring();
             }
         }
     }

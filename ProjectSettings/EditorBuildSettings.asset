@@ -5,10 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/FantasyHeroes.unity
-    guid: 97bd551564f449d89ed52d0cd06064b7
+    guid: af4e04f427237544bb882f6d46289cd3
+  - enabled: 1
+    path: Assets/Scenes/Stages/Stage1.unity
+    guid: 249e492ae3da412468f2b23cb5f7e75e
   m_configObjects: {}

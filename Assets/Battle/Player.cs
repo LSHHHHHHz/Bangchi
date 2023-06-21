@@ -1,3 +1,4 @@
+using Assets.Battle;
 using Assets.Item1;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ public class Player : MonoBehaviour
     public GameObject[] weapons;
     public bool[] hasWeapons;
 
-    Monsters monsters;
+    Monster monsters;
     Rigidbody rigid;
     public Animator anim;
 
@@ -95,6 +96,13 @@ public class Player : MonoBehaviour
     Weapons weapons1;
     public Ability ability;
 
+    void Awake()
+    {
+        rigid = GetComponent<Rigidbody>();
+        tr = GetComponent<Transform>();
+        statDataLoad();
+    }
+
 
     private void Start()
     {
@@ -104,14 +112,6 @@ public class Player : MonoBehaviour
 
         RefreshWeapon();
         InventoryManager.instance.OnEquippedItemChanged += RefreshWeapon;
-    }
-
-
-    void Awake()
-    {
-        rigid = GetComponent<Rigidbody>();
-        tr = GetComponent<Transform>();
-        statDataLoad();
     }
 
 
