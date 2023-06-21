@@ -114,19 +114,20 @@ public class SkillInventoryManager : MonoBehaviour
         if (string.IsNullOrEmpty(json) == false)
         {
             // json이 값이 들어있다는 뜻
-            var skillInventoryData = JsonUtility.FromJson< SkillInventoryData>(json);
-            for (int i = 0; i < skillInventoryData.myItems.Count; ++i)
+            // json 문자열을 가지고 SkillInventoryData 형식으로 변환한 다음 data 변수에 담는다.
+            var data = JsonUtility.FromJson<SkillInventoryData>(json);
+            for (int i = 0; i < data.myItems.Count; ++i)
             {
-                var item = skillInventoryData.myItems[i];
+                var item = data.myItems[i];
                 if (item.skillInfo == null)
                     continue;
 
                 myItems.Add(item);
             }
 
-            for (int i = 0; i < skillInventoryData.equippedSkills.Count; ++i)
+            for (int i = 0; i < data.equippedSkills.Count; ++i)
             {
-                var item = skillInventoryData.equippedSkills[i];
+                var item = data.equippedSkills[i];
                 if (item.skillInfo == null)
                     continue;
 

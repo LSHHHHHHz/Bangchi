@@ -16,7 +16,11 @@ public class Ability : MonoBehaviour
 
     public Player enterPlayer;
 
+    public Ability()
+    {
+        ablityPrice = new int[5]; // 길이가 5인 배열을 생성
 
+    }
     private void Start()
     {
         //InvokeRepeating("Recovery", 0f, 1f);
@@ -99,6 +103,7 @@ public class Ability : MonoBehaviour
             abilityPriceText[index].text = ablityPrice[index].ToString();// UI Text에 가격 정보 보여주기
 
         }
+        enterPlayer.statDataSave();
     }
 
     IEnumerator Talk()

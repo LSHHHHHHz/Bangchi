@@ -5698,7 +5698,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8843106589501282827, guid: ed6ea0a966bb8e243bfe3565285ab0c4, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8843106589501282831, guid: ed6ea0a966bb8e243bfe3565285ab0c4, type: 3}
       propertyPath: m_RootOrder
@@ -6333,12 +6333,12 @@ MonoBehaviour:
   AttackLevel: 1
   Current_HP: 100
   HPLevel: 1
-  Current_Recovery: 0
-  RecoveryLevel: 0
-  Current_CriticalDamage: 0
-  CriticalDamageLevel: 0
+  Current_Recovery: 10
+  RecoveryLevel: 1
+  Current_CriticalDamage: 100
+  CriticalDamageLevel: 1
   Current_Criticalprobability: 0
-  CriticalprobabilityLevel: 0
+  CriticalprobabilityLevel: 1
   Current_MP: 0
   MP: 0
   MaxHP: 1000
@@ -6366,6 +6366,7 @@ MonoBehaviour:
   _CriticalprobabilityLevel: {fileID: 627972952}
   _MP: {fileID: 0}
   fireDelay: 0
+  ability: {fileID: 440887868}
 --- !u!1 &627972950
 GameObject:
   m_ObjectHideFlags: 0
@@ -15637,7 +15638,6 @@ MonoBehaviour:
   player: {fileID: 622718925}
   WeaponPoint: []
   itemDb: {fileID: 11400000, guid: 9b060e37df1483442ae875ade1ba8c4a, type: 2}
-  itemDB_SH: {fileID: 11400000, guid: d601112ffd7396345a9455b9b139120d, type: 2}
   weaponSlotParent: {fileID: 177518978}
   shieldSlotParent: {fileID: 586820730}
   weaponParent: {fileID: 50062274}
@@ -18004,6 +18004,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1378455641}
   - component: {fileID: 1378455642}
+  - component: {fileID: 1378455643}
   m_Layer: 0
   m_Name: A1
   m_TagString: Untagged
@@ -18078,6 +18079,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1378455643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1378455640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cb819f14f917e547a7a78d836ac7cdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 0
+  rate: 0
+  capsule: {fileID: 0}
+  weaponSlotParent: {fileID: 0}
+  grade: 0
 --- !u!1 &1378723463
 GameObject:
   m_ObjectHideFlags: 0
@@ -21367,6 +21385,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 10
   rate: 0
+  capsule: {fileID: 0}
+  weaponSlotParent: {fileID: 0}
+  grade: 0
 --- !u!136 &1611542930
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -22137,7 +22158,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4305108561794920, guid: ff726cbf10a6436a8c11071a7641036f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.97998047
+      value: -1.87
       objectReference: {fileID: 0}
     - target: {fileID: 4305108561794920, guid: ff726cbf10a6436a8c11071a7641036f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -25770,9 +25791,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1964896597}
   - component: {fileID: 1964896598}
+  - component: {fileID: 1964896600}
+  - component: {fileID: 1964896601}
   m_Layer: 0
   m_Name: F1
-  m_TagString: Untagged
+  m_TagString: Melee
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25844,6 +25867,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1964896600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1964896596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cb819f14f917e547a7a78d836ac7cdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 100
+  rate: 0
+  capsule: {fileID: 1964896601}
+  weaponSlotParent: {fileID: 0}
+  grade: 6
+--- !u!136 &1964896601
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1964896596}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.2
+  m_Height: 0.2
+  m_Direction: 1
+  m_Center: {x: 0.7, y: 0.7, z: 0}
 --- !u!1 &1982472878
 GameObject:
   m_ObjectHideFlags: 0

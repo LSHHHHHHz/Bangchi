@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
-    
+
     public float playerSpeed;
 
     public GameObject[] weapons;
@@ -27,7 +27,7 @@ public class Player : MonoBehaviour
     public RaycastHit[] hits;
     //레이어 마스크를 지정할 변수
     public LayerMask layerMask = -1;
-    
+
 
     //능력 창
     public float Current_Attack;
@@ -54,7 +54,8 @@ public class Player : MonoBehaviour
     //경험치
     public float Exp = 100;
     public float Current_Exp;
-    public Image Exp_Bar;
+    //public Image Exp_Bar;
+    public UnityEngine.UI.Image Exp_Bar; //이렇게 해야 에러가 안생김
     public Text LV_txt;
 
 
@@ -92,8 +93,8 @@ public class Player : MonoBehaviour
     private float fightStartTime;
 
     Weapons weapons1;
-    Ability ability;
-    
+    public Ability ability;
+
 
     private void Start()
     {
@@ -110,6 +111,7 @@ public class Player : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody>();
         tr = GetComponent<Transform>();
+        statDataLoad();
     }
 
 
@@ -123,6 +125,8 @@ public class Player : MonoBehaviour
         rayCast();
         Fighting();
     }
+
+
 
     private void RefreshWeapon()
     {
@@ -148,9 +152,78 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void changeWeapon()
+    public void statDataSave()
     {
+        PlayerPrefs.SetFloat("Current_Attack", Current_Attack);
+        PlayerPrefs.SetInt("AttackLevel", AttackLevel);
 
+        PlayerPrefs.SetFloat("Current_HP", Current_HP);
+        PlayerPrefs.SetInt("HPLevel", HPLevel);
+
+        PlayerPrefs.SetFloat("Current_Recovery", Current_Recovery);
+        PlayerPrefs.SetInt("RecoveryLevel", RecoveryLevel);
+
+        PlayerPrefs.SetFloat("Current_CriticalDamage", Current_CriticalDamage);
+        PlayerPrefs.SetInt("CriticalDamageLevel", CriticalDamageLevel);
+
+        PlayerPrefs.SetFloat("Current_Criticalprobability", Current_Criticalprobability);
+        PlayerPrefs.SetInt("CriticalprobabilityLevel", CriticalprobabilityLevel);
+
+        PlayerPrefs.SetInt("LV", LV);
+        PlayerPrefs.SetFloat("Exp", Exp);
+        PlayerPrefs.SetFloat("Current_Exp", Current_Exp);
+
+        PlayerPrefs.SetInt("Coin", Coin);
+
+        int abliltyCoinLengh = ability.ablityPrice.Length;
+        PlayerPrefs.SetInt("abliltyCoinLengh", abliltyCoinLengh);
+        for (int i = 0; i < abliltyCoinLengh; i++)
+        {
+            string key = "abliltyCoin_" + i;
+            int value = ability.ablityPrice[i];
+            PlayerPrefs.SetInt(key, value);
+        }
+       
+        // PlayerPrefs에 저장된 값을 디스크에 기록
+        PlayerPrefs.Save();
+    }
+
+    public void statDataLoad()
+    {
+        Current_Attack = PlayerPrefs.GetFloat("Current_Attack", 0);
+        AttackLevel = PlayerPrefs.GetInt("AttackLevel", 0);
+
+        Current_HP = PlayerPrefs.GetFloat("Current_HP", 0);
+        HPLevel = PlayerPrefs.GetInt("HPLevel", 0);
+
+        Current_Recovery = PlayerPrefs.GetFloat("Current_Recovery", 0);
+        RecoveryLevel = PlayerPrefs.GetInt("RecoveryLevel", 0);
+
+        Current_CriticalDamage = PlayerPrefs.GetFloat("Current_CriticalDamage", 0);
+        CriticalDamageLevel = PlayerPrefs.GetInt("CriticalDamageLevel", 0);
+
+        Current_Criticalprobability = PlayerPrefs.GetFloat("Current_Criticalprobability", 0);
+        CriticalprobabilityLevel = PlayerPrefs.GetInt("CriticalprobabilityLevel", 0);
+
+        LV = PlayerPrefs.GetInt("LV", 0);
+        Exp = PlayerPrefs.GetFloat("Exp", 0);
+        Current_Exp = PlayerPrefs.GetFloat("Current_Exp", 0);
+
+
+        Coin = PlayerPrefs.GetInt("Coin", 0);
+
+        if (PlayerPrefs.HasKey("abliltyCoinLengh"))
+        {
+            int abliltyCoinLengh = PlayerPrefs.GetInt("abliltyCoinLengh", 0);
+            ability.ablityPrice = new int[abliltyCoinLengh];
+            for (int i = 0; i < abliltyCoinLengh; i++)
+            {
+                string key = "abliltyCoin_" + i;
+                int value = PlayerPrefs.GetInt(key, 0);
+                ability.ablityPrice[i] = value;
+            }
+        }
+        
     }
 
 
@@ -161,7 +234,7 @@ public class Player : MonoBehaviour
 
     public void LV_UP()
     {
-        if(Current_Exp>=Exp)
+        if (Current_Exp >= Exp)
         {
             Current_Exp -= Exp; //현재 경험치 - 총 경험치
             LV++;
@@ -192,15 +265,15 @@ public class Player : MonoBehaviour
         _Criticalprobability.text = Current_Criticalprobability + " → " + (CriticalprobabilityLevel + Current_Criticalprobability);
         _CriticalprobabilityLevel.text = "LV" + CriticalprobabilityLevel;
 
-
+        statDataSave();
     }
 
-   
+
 
     void Move()
     {
         Vector2 moveVec = new Vector2(playerSpeed, 0);
-        rigid.velocity = moveVec*playerSpeed*Time.deltaTime;
+        rigid.velocity = moveVec * playerSpeed * Time.deltaTime;
     }
 
     void rayCast()
@@ -221,8 +294,8 @@ public class Player : MonoBehaviour
         //RaycastAll은 RaycastHits[] 를 반환한다
         hits = Physics.RaycastAll(ray, distance, layerMask);
 
-        if(Physics.Raycast(ray, out hit, distance))
-       {
+        if (Physics.Raycast(ray, out hit, distance))
+        {
             print(hit.collider.name + "를 충돌체로 검출");
             anim.SetTrigger("doSwing");
             isFighting = true;
@@ -234,12 +307,12 @@ public class Player : MonoBehaviour
         if (isFighting == false)
             return;
 
-        if (Time.time  - fightStartTime > 1f)
+        if (Time.time - fightStartTime > 1f)
         {
             isFighting = false;
             anim.SetTrigger("battleEnd");
         }
     }
 
-  
+
 }

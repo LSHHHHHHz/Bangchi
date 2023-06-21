@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Assets.Item1;
 using System;
+using System.Linq;
 
 [Serializable] // 클래스를 json등 데이터로 저장할 때 [Serializable]을 붙여줘야 함.
 public class InventoryData //이것도 뭐지
@@ -96,6 +97,7 @@ public class InventoryManager : MonoBehaviour
     public void Equip(ItemInfo itemInfo)
     {
         ItemInstance existItem = myItems.Find(item => item.itemInfo == itemInfo); //
+        //IEnumerable<ItemInstance> existItems = myItems.Where(item => item.itemInfo == itemInfo);
         if (existItem == null)
         {
             // 아이템을 가지고 있지 않다는 것!
