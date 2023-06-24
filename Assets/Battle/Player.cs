@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
 
     Monster monsters;
     Rigidbody rigid;
+    Prefabs prefabs;
     public Animator anim;
 
     //트랜스폼을 담을 변수
@@ -98,6 +99,7 @@ public class Player : MonoBehaviour
 
     void Awake()
     {
+        prefabs = new Prefabs();
         rigid = GetComponent<Rigidbody>();
         tr = GetComponent<Transform>();
         statDataLoad();
@@ -313,6 +315,20 @@ public class Player : MonoBehaviour
             anim.SetTrigger("battleEnd");
         }
     }
-
+    private void OnTriggerEnter(Collider collision)
+    {
+        Prefabs prefab = collision.GetComponent<Prefabs>();
+        if (collision.CompareTag("ExpIcon"))
+        {
+            //Prefabs prefab = new Prefabs();
+            Current_Exp += prefab.exp;
+            Destroy(collision.gameObject);
+        }
+        else if(collision.CompareTag("CoinIcon"))
+        {
+            Coin += prefab.coin;
+            Destroy(collision.gameObject);
+        }
+    }
 
 }

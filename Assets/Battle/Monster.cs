@@ -10,12 +10,19 @@ public class Monster : MonoBehaviour
     public int MonsterExp = 10;
 
     Rigidbody2D rigid;
-    Collider2D collider;
+    public Collider collider;
+
+    public GameObject expIconPrefab; //경험치 아이콘
+    public GameObject coinIconPrefab; //골드 아이콘
+    public GameObject weaponPrefab;
+    public float weaponPrefabProbability;
+    public GameObject shieldPrefab;
+    public float shieldPrefabProbability;
 
     public void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
-        collider = GetComponent<Collider2D>();
+        collider = GetComponent<Collider>();
 
         // Rigidbody2D : Component : Object
         
@@ -46,20 +53,30 @@ public class Monster : MonoBehaviour
         if(Current_HP<=0)
         {
             Destroy(gameObject);
-            Death();
+            monsterDeathIcon(expIconPrefab);
+            monsterDeathIcon(coinIconPrefab);
             //var battleManager = GameObject.   FindObjectOfType<BattleManager>();
             //battleManager.player.Current_Exp += MonsterExp;
 
-            UnitManager.instance.player.Current_Exp += MonsterExp;
+            //UnitManager.instance.player.Current_Exp += MonsterExp;
+
+
         }
     }
 
-    public void Death()
+    public void monsterDeathIcon(GameObject Icon)
     {
-        var py = UnitManager.instance.player;
-        py.Current_Exp += MonsterExp;
-        py.LV_UP();
-        MonsterExp = 0;
+        Vector3 offset = new Vector3(0f,0.5f, 0f);
+        GameObject expIcon = Instantiate(Icon, transform.position + offset, Quaternion.identity);
+        Rigidbody IconRigid = expIcon.GetComponent<Rigidbody>();
+        Vector3 IconVec = transform.right * Random.Range(1,1) + Vector3.up * Random.Range(1,2);
+        IconRigid.AddForce(IconVec, ForceMode.Impulse);
+        IconRigid.AddTorque(Vector3.forward * 0.2f, ForceMode.Impulse);
+
+    }
+    public void monsterDeathEquip(GameObject Icon)
+    {
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -70,5 +87,10 @@ public class Monster : MonoBehaviour
 
             Current_HP -= weapons.damage;
         }
+    }
+
+    IEnumerator Death()
+    {
+        yield return null;
     }
 }

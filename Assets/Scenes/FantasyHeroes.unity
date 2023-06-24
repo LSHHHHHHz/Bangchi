@@ -7612,7 +7612,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd5d99a3cb06547479400e2a2bfe6de0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startStageName: Stage1
+  startStageName: Stage2
 --- !u!1 &766666605
 GameObject:
   m_ObjectHideFlags: 0

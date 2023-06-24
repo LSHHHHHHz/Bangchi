@@ -596,7 +596,9 @@ MonoBehaviour:
   Current_HP: 100
   HP: 100
   MonsterExp: 10
-  Player: {fileID: 0}
+  collider: {fileID: 0}
+  expIconPrefab: {fileID: 2078815229775703815, guid: 52b4657d96be3e9448808544cae73f4a, type: 3}
+  coinIconPrefab: {fileID: 7122588463523522965, guid: 1919c62f8fe64ab4480fe10cc0051d65, type: 3}
 --- !u!1 &8843106589968236324
 GameObject:
   m_ObjectHideFlags: 0
