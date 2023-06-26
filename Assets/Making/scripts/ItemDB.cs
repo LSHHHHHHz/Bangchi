@@ -24,7 +24,8 @@ namespace Assets.Item1
                 if (item.type == type)
                 {
                     result.Add(item);
-                }            }
+                }           
+            }
 
             return result;
         }

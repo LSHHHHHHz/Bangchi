@@ -2,6 +2,7 @@ using Assets.Battle;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Monster : MonoBehaviour
 {
@@ -14,10 +15,12 @@ public class Monster : MonoBehaviour
 
     public GameObject expIconPrefab; //경험치 아이콘
     public GameObject coinIconPrefab; //골드 아이콘
+
     public GameObject weaponPrefab;
     public float weaponPrefabProbability;
     public GameObject shieldPrefab;
     public float shieldPrefabProbability;
+
 
     public void Awake()
     {
@@ -53,8 +56,11 @@ public class Monster : MonoBehaviour
         if(Current_HP<=0)
         {
             Destroy(gameObject);
-            monsterDeathIcon(expIconPrefab);
-            monsterDeathIcon(coinIconPrefab);
+            monsterDeathIcon(expIconPrefab);  //이거 안 넣으니 실행이 안됐음
+            monsterDeathIcon(coinIconPrefab); //이거 안 넣으니 실행이 안됐음
+
+            monsterDeathIcon(weaponPrefab, weaponPrefabProbability);
+            monsterDeathIcon(shieldPrefab, shieldPrefabProbability);
             //var battleManager = GameObject.   FindObjectOfType<BattleManager>();
             //battleManager.player.Current_Exp += MonsterExp;
 
@@ -64,20 +70,30 @@ public class Monster : MonoBehaviour
         }
     }
 
-    public void monsterDeathIcon(GameObject Icon)
+    public void monsterDeathIcon(GameObject whatIcon)
     {
         Vector3 offset = new Vector3(0f,0.5f, 0f);
-        GameObject expIcon = Instantiate(Icon, transform.position + offset, Quaternion.identity);
-        Rigidbody IconRigid = expIcon.GetComponent<Rigidbody>();
+        GameObject Icon = Instantiate(whatIcon, transform.position + offset, Quaternion.identity);
+        Rigidbody IconRigid = Icon.GetComponent<Rigidbody>();
         Vector3 IconVec = transform.right * Random.Range(1,1) + Vector3.up * Random.Range(1,2);
         IconRigid.AddForce(IconVec, ForceMode.Impulse);
         IconRigid.AddTorque(Vector3.forward * 0.2f, ForceMode.Impulse);
 
     }
-    public void monsterDeathEquip(GameObject Icon)
+    public void monsterDeathIcon(GameObject whatIcon, float probability)
     {
-
+        float randomValue = Random.value;
+        if (randomValue < probability)
+        {
+            Vector3 offset = new Vector3(0f, 0.5f, 0f);
+            GameObject Icon = Instantiate(whatIcon, transform.position + offset, Quaternion.identity);
+            Rigidbody IconRigid = Icon.GetComponent<Rigidbody>();
+            Vector3 IconVec = transform.right * Random.Range(1, 1) + Vector3.up * Random.Range(1, 2);
+            IconRigid.AddForce(IconVec, ForceMode.Impulse);
+            IconRigid.AddTorque(Vector3.forward * 0.2f, ForceMode.Impulse);
+        }
     }
+    
 
     private void OnTriggerEnter(Collider other)
     {
@@ -93,4 +109,5 @@ public class Monster : MonoBehaviour
     {
         yield return null;
     }
+
 }

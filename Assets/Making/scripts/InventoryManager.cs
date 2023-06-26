@@ -10,6 +10,7 @@ public class InventoryData //이것도 뭐지
 {
     public List<ItemInstance> myItems = new();  //유니티 Inventory Manager에서 My Items는 어디에 있고 어떻게 쓰는건지
     public List<ItemInstance> equippedItems = new();
+    public List<ItemInstance> colleague = new();
 
 }
 public class InventoryManager : MonoBehaviour
@@ -20,6 +21,7 @@ public class InventoryManager : MonoBehaviour
     public static InventoryManager instance;
     public List<ItemInstance> myItems = new();
     public List<ItemInstance> equippedItems = new(); //장착 아이템 리스트
+    public List<ItemInstance> colleague = new();
 
     public void Awake()
     {

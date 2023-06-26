@@ -599,6 +599,10 @@ MonoBehaviour:
   collider: {fileID: 0}
   expIconPrefab: {fileID: 2078815229775703815, guid: 52b4657d96be3e9448808544cae73f4a, type: 3}
   coinIconPrefab: {fileID: 7122588463523522965, guid: 1919c62f8fe64ab4480fe10cc0051d65, type: 3}
+  weaponPrefab: {fileID: 5887622293301662554, guid: a3f0a20dda213bb4f8331fbe3b1b3e66, type: 3}
+  weaponPrefabProbability: 0.5
+  shieldPrefab: {fileID: 0}
+  shieldPrefabProbability: 0
 --- !u!1 &8843106589968236324
 GameObject:
   m_ObjectHideFlags: 0

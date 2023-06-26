@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,11 +7,15 @@ namespace Assets.Battle
 {
     public class BattleManager : MonoBehaviour
     {
+        public event Action restartStage;
+
         public static BattleManager instance;
         public string startStageName;
 
         private bool stageEndCheck = true;
         private string currentStageName;
+
+        public Transform target;
 
         private void Awake()
         {
@@ -40,6 +45,7 @@ namespace Assets.Battle
             // 언로드했으면 다시 씬 로딩하기.
             SceneManager.LoadScene(currentStageName, LoadSceneMode.Additive);
             stageEndCheck = true;
+            restartStage.Invoke();
         }
 
         // 현재 스테이지
@@ -47,5 +53,6 @@ namespace Assets.Battle
         {
             return UnitManager.instance.monsterList.Count == 0;
         }
+       
     }
 }
