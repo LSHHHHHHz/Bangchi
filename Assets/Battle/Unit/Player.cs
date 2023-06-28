@@ -1,4 +1,5 @@
 using Assets.Battle;
+using Assets.Battle.Unit;
 using Assets.Item1;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 
-public class Player : MonoBehaviour
+public class Player : BaseUnit
 {
 
     public float playerSpeed;
@@ -16,7 +17,7 @@ public class Player : MonoBehaviour
 
     Monster monsters;
     Rigidbody rigid;
-    Prefabs prefabs;
+    DropItem prefabs;
     public Animator anim;
 
     //트랜스폼을 담을 변수
@@ -70,6 +71,7 @@ public class Player : MonoBehaviour
     public float dotTime = 1;
 
     public int Coin;
+    public int PetCoin;
     public int Diemond;
 
 
@@ -97,9 +99,12 @@ public class Player : MonoBehaviour
     Weapons weapons1;
     public Ability ability;
 
+    public static Player instance;
+
     void Awake()
     {
-        prefabs = new Prefabs();
+        instance = this;
+        prefabs = new DropItem();
         rigid = GetComponent<Rigidbody>();
         tr = GetComponent<Transform>();
         statDataLoad();
@@ -317,7 +322,7 @@ public class Player : MonoBehaviour
     }
     private void OnTriggerEnter(Collider collision)
     {
-        Prefabs prefab = collision.GetComponent<Prefabs>();
+        DropItem prefab = collision.GetComponent<DropItem>();
         if (collision.CompareTag("ExpIcon"))
         {
             //Prefabs prefab = new Prefabs();

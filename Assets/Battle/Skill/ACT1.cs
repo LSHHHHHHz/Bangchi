@@ -12,7 +12,6 @@ public class ACT1 : BaseSkill
 
     public override void Execute()
     {
-        base.Execute();
         // ACT 1 : 5번 공격, 마지막 공격은 더 크게 공격z
 
         StartCoroutine(SkillCoroutine());

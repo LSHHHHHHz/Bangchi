@@ -8,6 +8,8 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class Spawner : MonoBehaviour
 {
+    private bool isEventRegistered = false;
+
     public PoolManager poolManager;
     public Transform[] spawnPoint;
     public Transform BoxPoint;
@@ -17,17 +19,20 @@ public class Spawner : MonoBehaviour
 
     private void Awake()
     {
-        spawnPoint = GetComponentsInChildren<Transform>();
+        //spawnPoint = GetComponentsInChildren<Transform>();  <-- 부모까지 갖고오기 때문에 아래는 부모 컴포넌트를 불러오지 못하게 막음
+        spawnPoint = GetComponentsInChildren<Transform>(false).Where(t => t != transform).ToArray();
     }
 
     private void Start()
 
     {
+        if (!isEventRegistered)
+        {
+            BattleManager.instance.restartStage += () => Spawn(stageMonster);
+            isEventRegistered = true;
+        }
 
         Spawn(stageMonster);
-
-
-        BattleManager.instance.restartStage += () => Spawn(stageMonster);
     }
     public void Spawn(int value)
     {

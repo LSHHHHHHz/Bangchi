@@ -1,4 +1,5 @@
-﻿using Assets.Item1;
+﻿using Assets.Battle;
+using Assets.Item1;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,25 @@ public class IngameSkillList : MonoBehaviour
     private void Awake()
     {
         activeSkillSlots = GetChildSlots(activeSkillSlotParent);
+        int skillIndex = 0;
+        for (int i = 0; i < activeSkillSlots.Length; ++i)
+        {
+            SkillSlot activeSkillSlot = activeSkillSlots[i];
+            var button = activeSkillSlot.GetComponent<Button>();
+            int index = skillIndex;
+            button.onClick.AddListener(() => OnSkillButtonClicked(index));
+            ++skillIndex;
+        }
+
         passiveSkillSlots = GetChildSlots(passiveSkillSlotParent);
+        for (int i = 0; i < passiveSkillSlots.Length; ++i)
+        {
+            SkillSlot passiveSkillSlot = passiveSkillSlots[i];
+            var button = passiveSkillSlot.GetComponent<Button>();
+            int index = skillIndex;
+            button.onClick.AddListener(() => OnSkillButtonClicked(index));
+            ++skillIndex;
+        }
     }
 
     private SkillSlot[] GetChildSlots(RectTransform parent) //스킬 슬롯에 저장하게 하는 매서드??
@@ -85,6 +104,7 @@ public class IngameSkillList : MonoBehaviour
                 {
                     GameObject skillObject = Instantiate(skillPrefab);
                     var skill = skillObject.GetComponent<BaseSkill>();
+                    skill.owner = UnitManager.instance.player;// 플레이어로 스킬 주인 설정
                     skillsList.Add(skill);
                 }
             }

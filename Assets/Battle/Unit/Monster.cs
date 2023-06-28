@@ -1,10 +1,11 @@
 using Assets.Battle;
+using Assets.Battle.Unit;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class Monster : MonoBehaviour
+public class Monster : BaseUnit
 {
     public int Current_HP;
     public int HP;
@@ -73,13 +74,16 @@ public class Monster : MonoBehaviour
     public void monsterDeathIcon(GameObject whatIcon)
     {
         Vector3 offset = new Vector3(0f,0.5f, 0f);
+        float power = 1f;
         GameObject Icon = Instantiate(whatIcon, transform.position + offset, Quaternion.identity);
         Rigidbody IconRigid = Icon.GetComponent<Rigidbody>();
-        Vector3 IconVec = transform.right * Random.Range(1,1) + Vector3.up * Random.Range(1,2);
-        IconRigid.AddForce(IconVec, ForceMode.Impulse);
-        IconRigid.AddTorque(Vector3.forward * 0.2f, ForceMode.Impulse);
 
+        // 오른쪽 + 위쪽을 향하는 힘을 가한다.
+        Vector3 powerVector = Vector3.right/*오른쪽 방향*/ + Vector3.up * Random.Range(1,2); /*위쪽 방향*/
+        powerVector *= power;
+        IconRigid.AddForce(powerVector, ForceMode.Impulse);
     }
+
     public void monsterDeathIcon(GameObject whatIcon, float probability)
     {
         float randomValue = Random.value;

@@ -15,8 +15,6 @@ namespace Assets.Battle
         private bool stageEndCheck = true;
         private string currentStageName;
 
-        public Transform target;
-
         private void Awake()
         {
             instance = this;
