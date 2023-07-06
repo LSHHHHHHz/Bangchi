@@ -8253,7 +8253,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 120
   m_CollisionDetection: 0
@@ -8269,7 +8269,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e006cb03270d80a4a9eb5c408694cc90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSpeed: 10
+  Current_HP: 0
+  Max_HP: 0
+  playerSpeed: 1
   weapons:
   - {fileID: 1964896596}
   - {fileID: 1806178089}
@@ -8291,13 +8293,12 @@ MonoBehaviour:
   hasWeapons: 0000000000000000000000000000000000
   anim: {fileID: 1192868807}
   tr: {fileID: 622718922}
-  distance: 10
+  raycastDistance: 0.3
   layerMask:
     serializedVersion: 2
     m_Bits: 4294967295
   Current_Attack: 100
   AttackLevel: 1
-  Current_HP: 100
   HPLevel: 1
   Current_Recovery: 10
   RecoveryLevel: 1
@@ -8307,7 +8308,6 @@ MonoBehaviour:
   CriticalprobabilityLevel: 1
   Current_MP: 0
   MP: 0
-  MaxHP: 1000
   MPLevel: 0
   Exp: 100
   Current_Exp: 80
@@ -10901,7 +10901,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startStageName: Spawn12
-  target: {fileID: 622718922}
 --- !u!1 &766666605
 GameObject:
   m_ObjectHideFlags: 0

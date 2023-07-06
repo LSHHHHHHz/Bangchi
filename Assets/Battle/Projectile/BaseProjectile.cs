@@ -24,7 +24,7 @@ namespace Assets.Battle.Projectile
         }
 
         private void OnTriggerEnter(Collider other)
-        {
+        { 
             if (owner is Player)
             {
                 // 몬스터 공격

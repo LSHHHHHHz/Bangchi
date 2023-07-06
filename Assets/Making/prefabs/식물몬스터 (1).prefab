@@ -594,7 +594,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Current_HP: 100
-  HP: 100
+  MAX_HP: 100
   MonsterExp: 10
   collider: {fileID: 0}
   expIconPrefab: {fileID: 2078815229775703815, guid: 52b4657d96be3e9448808544cae73f4a, type: 3}

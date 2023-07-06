@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2911476942644385774}
-  - component: {fileID: 6752033318725260641}
+  - component: {fileID: -7758341557584926941}
   m_Layer: 0
-  m_Name: ACT1
+  m_Name: ACT 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6752033318725260641
+--- !u!114 &-7758341557584926941
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,7 +41,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 2769186315298664327}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71caea639e9283b45834806b62344d15, type: 3}
+  m_Script: {fileID: 11500000, guid: 839aca3923a34b0458c54c9ed171df42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectPrefab: {fileID: 1845240806346120, guid: a0d88a7e841516247ba96bd972aedb9c, type: 3}
+  owner: {fileID: 0}
+  projectilePrefab: {fileID: 3776229379000687780, guid: 80c7758d5b313c6469beb7b2cfbcd6c3, type: 3}

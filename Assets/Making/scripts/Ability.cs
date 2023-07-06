@@ -135,14 +135,14 @@ public class Ability : MonoBehaviour
     public void Recovery()
     {
         enterPlayer.currentDotTime -= Time.deltaTime;
-        if(enterPlayer.Current_HP<enterPlayer.MaxHP)
+        if(enterPlayer.Current_HP<enterPlayer.Max_HP)
         {
             if(enterPlayer.currentDotTime<=0)
             {
                 enterPlayer.Current_HP += enterPlayer.RecoveryHP;
-                if(enterPlayer.Current_HP > enterPlayer.MaxHP)
+                if(enterPlayer.Current_HP > enterPlayer.Max_HP)
                 {
-                    enterPlayer.Current_HP = enterPlayer.MaxHP;
+                    enterPlayer.Current_HP = enterPlayer.Max_HP;
                     if (enterPlayer.currentDotTime <= -1f)
                     {
                         enterPlayer.currentDotTime = enterPlayer.dotTime;

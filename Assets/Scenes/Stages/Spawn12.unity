@@ -186,7 +186,7 @@ MonoBehaviour:
   - {fileID: 675923958}
   - {fileID: 1542534349}
   BoxPoint: {fileID: 0}
-  stageMonster: 1
+  stageMonster: 2
   monster: 1
 --- !u!1 &33453215
 GameObject:
@@ -654,7 +654,7 @@ MonoBehaviour:
   - {fileID: 1910139979}
   - {fileID: 2089494728}
   BoxPoint: {fileID: 0}
-  stageMonster: 1
+  stageMonster: 2
   monster: 1
 --- !u!1 &174789825
 GameObject:
@@ -679,7 +679,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 174789825}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -1.4411445, y: 0, z: 0.06573924}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -885,7 +885,7 @@ MonoBehaviour:
   - {fileID: 438873388}
   - {fileID: 130944150}
   BoxPoint: {fileID: 0}
-  stageMonster: 1
+  stageMonster: 2
   monster: 1
 --- !u!1 &297279314
 GameObject:
@@ -1264,7 +1264,7 @@ MonoBehaviour:
   - {fileID: 72074718}
   - {fileID: 254076106}
   BoxPoint: {fileID: 0}
-  stageMonster: 1
+  stageMonster: 2
   monster: 1
 --- !u!1 &472752816
 GameObject:
@@ -1546,7 +1546,7 @@ MonoBehaviour:
   - {fileID: 1283839138}
   - {fileID: 1784875378}
   BoxPoint: {fileID: 0}
-  stageMonster: 1
+  stageMonster: 2
   monster: 1
 --- !u!1 &632866265
 GameObject:
@@ -1703,6 +1703,37 @@ Transform:
   m_Father: {fileID: 289115047}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &717100020
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 717100021}
+  m_Layer: 0
+  m_Name: Stage12
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &717100021
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 717100020}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.95, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &717376544
 GameObject:
   m_ObjectHideFlags: 0
@@ -1766,7 +1797,7 @@ MonoBehaviour:
   - {fileID: 1271501160}
   - {fileID: 1811405372}
   BoxPoint: {fileID: 0}
-  stageMonster: 1
+  stageMonster: 2
   monster: 1
 --- !u!1 &717502874
 GameObject:
@@ -1893,7 +1924,7 @@ MonoBehaviour:
   - {fileID: 2045947295}
   - {fileID: 1555843071}
   BoxPoint: {fileID: 0}
-  stageMonster: 1
+  stageMonster: 2
   monster: 1
 --- !u!1 &746147807
 GameObject:
@@ -2051,7 +2082,7 @@ MonoBehaviour:
   - {fileID: 1268433594}
   - {fileID: 587591224}
   BoxPoint: {fileID: 0}
-  stageMonster: 1
+  stageMonster: 2
   monster: 1
 --- !u!1 &764979859
 GameObject:
@@ -2538,7 +2569,7 @@ MonoBehaviour:
   - {fileID: 2061850575}
   - {fileID: 1001143661}
   BoxPoint: {fileID: 0}
-  stageMonster: 1
+  stageMonster: 2
   monster: 1
 --- !u!1 &1053480881
 GameObject:
@@ -2789,7 +2820,7 @@ MonoBehaviour:
   - {fileID: 82579524}
   - {fileID: 1687936981}
   BoxPoint: {fileID: 0}
-  stageMonster: 1
+  stageMonster: 2
   monster: 1
 --- !u!1 &1168561640
 GameObject:
@@ -2862,7 +2893,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1170426584}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

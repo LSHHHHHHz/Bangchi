@@ -178,7 +178,7 @@ MonoBehaviour:
   - {fileID: 1910139979}
   - {fileID: 2089494728}
   BoxPoint: {fileID: 0}
-  stageMonster: 2
+  stageMonster: 1
   monster: 1
 --- !u!1 &174789825
 GameObject:
@@ -560,7 +560,7 @@ MonoBehaviour:
   - {fileID: 1123548370}
   - {fileID: 521069829}
   BoxPoint: {fileID: 0}
-  stageMonster: 2
+  stageMonster: 1
   monster: 1
 --- !u!1 &470659380
 GameObject:
@@ -772,7 +772,7 @@ MonoBehaviour:
   - {fileID: 1479867597}
   - {fileID: 1789120052}
   BoxPoint: {fileID: 0}
-  stageMonster: 2
+  stageMonster: 1
   monster: 1
 --- !u!1 &896382549
 GameObject:
@@ -829,7 +829,7 @@ MonoBehaviour:
   - {fileID: 1478759246}
   - {fileID: 1181190879}
   BoxPoint: {fileID: 0}
-  stageMonster: 2
+  stageMonster: 1
   monster: 1
 --- !u!1 &911615698
 GameObject:
@@ -1029,7 +1029,7 @@ MonoBehaviour:
   - {fileID: 911615699}
   - {fileID: 1284472196}
   BoxPoint: {fileID: 0}
-  stageMonster: 2
+  stageMonster: 1
   monster: 1
 --- !u!1 &1123548369
 GameObject:
@@ -1413,7 +1413,7 @@ MonoBehaviour:
   - {fileID: 1380954073}
   - {fileID: 470659381}
   BoxPoint: {fileID: 0}
-  stageMonster: 2
+  stageMonster: 1
   monster: 1
 --- !u!1 &1416912047
 GameObject:
@@ -1656,7 +1656,7 @@ MonoBehaviour:
   - {fileID: 1474626739}
   - {fileID: 1151546951}
   BoxPoint: {fileID: 0}
-  stageMonster: 2
+  stageMonster: 1
   monster: 1
 --- !u!1 &1789120051
 GameObject:
@@ -1868,7 +1868,7 @@ MonoBehaviour:
   - {fileID: 332350980}
   - {fileID: 293829835}
   BoxPoint: {fileID: 0}
-  stageMonster: 2
+  stageMonster: 1
   monster: 1
 --- !u!1 &1993624742
 GameObject:
@@ -1987,7 +1987,7 @@ MonoBehaviour:
   - {fileID: 1338268838}
   - {fileID: 1303082447}
   BoxPoint: {fileID: 0}
-  stageMonster: 2
+  stageMonster: 1
   monster: 1
 --- !u!1 &2042099641
 GameObject:
@@ -2106,7 +2106,7 @@ MonoBehaviour:
   - {fileID: 2000908488}
   - {fileID: 350363489}
   BoxPoint: {fileID: 0}
-  stageMonster: 2
+  stageMonster: 1
   monster: 1
 --- !u!1 &2119462410
 GameObject:

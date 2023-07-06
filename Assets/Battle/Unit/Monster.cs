@@ -7,8 +7,7 @@ using UnityEngine.UIElements;
 
 public class Monster : BaseUnit
 {
-    public int Current_HP;
-    public int HP;
+    
     public int MonsterExp = 10;
 
     Rigidbody2D rigid;

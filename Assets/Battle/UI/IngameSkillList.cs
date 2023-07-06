@@ -14,12 +14,18 @@ public class IngameSkillList : MonoBehaviour
     public RectTransform activeSkillSlotParent;
     public RectTransform passiveSkillSlotParent;
 
+    // ActiveSkill용 슬롯과 PassiveSkill용 슬롯을 저장해둔다.
     private SkillSlot[] activeSkillSlots;
     private SkillSlot[] passiveSkillSlots;
+    // 내가 장착한 스킬들의 인스턴스를 가지고 있는다.
+    // 가지고 있다가 스킬 버튼이 눌리면 스킬을 실행한다.
     private BaseSkill[] skills;
 
     private void Awake()
     {
+        // 슬롯을 얻어오는 과정.
+        // activeSkillSlotParent, passiveSkillSlotParent를 가지고 슬롯을 얻어옴.
+        // Parent의 자식들을 순회하며 SkillSlot을 가져오고 Button 클릭시 처리도 연결한다.
         activeSkillSlots = GetChildSlots(activeSkillSlotParent);
         int skillIndex = 0;
         for (int i = 0; i < activeSkillSlots.Length; ++i)
@@ -57,6 +63,7 @@ public class IngameSkillList : MonoBehaviour
 
     private void Start()
     {
+        // 최초 1회만 이벤트에 콜백을 등록함.
         SkillInventoryManager.instance.OnEquippedSkillsChanged += OnEquippedSkillsChanged;
         Refresh();
     }
@@ -86,9 +93,16 @@ public class IngameSkillList : MonoBehaviour
             }
         }
 
+        // skillSlots : 4개, equippedSkills : 2개
+        // i : 3                             / 0, 1
         for (int i = 0; i < skillSlots.Length; ++i)
         {
             SkillSlot slot = skillSlots[i];
+            // i < equipSkills.Count
+            // 0 < 2 ==> true
+            // 1 < 2 ==> true
+            // 2 < 2 ==> false
+
             if (i < equippedSkills.Count)
             {
                 // 장착할 스킬이 있음
@@ -104,7 +118,7 @@ public class IngameSkillList : MonoBehaviour
                 {
                     GameObject skillObject = Instantiate(skillPrefab);
                     var skill = skillObject.GetComponent<BaseSkill>();
-                    skill.owner = UnitManager.instance.player;// 플레이어로 스킬 주인 설정
+                    skill.owner = UnitManager.instance.player; // 플레이어로 스킬 주인 설정
                     skillsList.Add(skill);
                 }
             }

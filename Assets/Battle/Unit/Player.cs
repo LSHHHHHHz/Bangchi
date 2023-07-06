@@ -23,7 +23,7 @@ public class Player : BaseUnit
     //트랜스폼을 담을 변수
     public Transform tr;
     //레이 길이
-    public float distance;
+    public float raycastDistance;
     //충돌 정보를 가져올 레이캐스트 히트
     public RaycastHit hit;
     //충돌 정보를 여려개 담을 히트배열
@@ -36,7 +36,6 @@ public class Player : BaseUnit
     public float Current_Attack;
     public int AttackLevel;
 
-    public float Current_HP;
     public int HPLevel;
 
     public float Current_Recovery;
@@ -51,7 +50,6 @@ public class Player : BaseUnit
 
     public int Current_MP;
     public int MP;
-    public int MaxHP;
     public int MPLevel;
 
     //경험치
@@ -200,7 +198,7 @@ public class Player : BaseUnit
         Current_Attack = PlayerPrefs.GetFloat("Current_Attack", 0);
         AttackLevel = PlayerPrefs.GetInt("AttackLevel", 0);
 
-        Current_HP = PlayerPrefs.GetFloat("Current_HP", 0);
+        Current_HP = PlayerPrefs.GetInt("Current_HP", 0);
         HPLevel = PlayerPrefs.GetInt("HPLevel", 0);
 
         Current_Recovery = PlayerPrefs.GetFloat("Current_Recovery", 0);
@@ -279,8 +277,12 @@ public class Player : BaseUnit
 
     void Move()
     {
+        if (isFighting)
+            return;
+
         Vector2 moveVec = new Vector2(playerSpeed, 0);
-        rigid.velocity = moveVec * playerSpeed * Time.deltaTime;
+        //rigid.velocity = moveVec * playerSpeed * Time.deltaTime; // 물리적인 힘으로 움직이게끔 하는 것, 이 플레이어는 그럴 필요가 없어서 Translate로 강제로 이동시키기.
+        transform.Translate(moveVec * Time.deltaTime);
     }
 
     void rayCast()
@@ -290,6 +292,29 @@ public class Player : BaseUnit
             return;
         }
 
+        isFighting = NeedToFight();
+    }
+    public void Fighting()
+    {
+        if (isFighting == false)
+            return;
+
+        // 내가 전투가 끝난지 아닌지 1초마다 검사.
+        if (Time.time - fightStartTime > 1f)
+        {
+            isFighting = NeedToFight();
+
+            // 전투가 끝난 것.
+            if (isFighting == false)
+            {
+                anim.SetTrigger("battleEnd");
+            }
+        }
+    }
+
+    // 내가 전투해야 하는지, 아닌지 검사하는 함수.
+    private bool NeedToFight()
+    {
         //레이 세팅
         Ray ray = new Ray();
         //레이 시작 지점
@@ -299,27 +324,24 @@ public class Player : BaseUnit
         //레이 사용 방법(레이에 검출되는 것이 있다면)
 
         //RaycastAll은 RaycastHits[] 를 반환한다
-        hits = Physics.RaycastAll(ray, distance, layerMask);
-
-        if (Physics.Raycast(ray, out hit, distance))
+        // Physics.Raycast <-- 1개만 반환, RayCastAll은 여러개를 반환.
+        hits = Physics.RaycastAll(ray, raycastDistance, layerMask);
+        for (int i = 0; i < hits.Length; ++i)
         {
+            RaycastHit hit = hits[i];
             print(hit.collider.name + "를 충돌체로 검출");
-            anim.SetTrigger("doSwing");
-            isFighting = true;
-            fightStartTime = Time.time;
-        }
-    }
-    public void Fighting()
-    {
-        if (isFighting == false)
-            return;
 
-        if (Time.time - fightStartTime > 1f)
-        {
-            isFighting = false;
-            anim.SetTrigger("battleEnd");
+            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("enemy"))
+            {
+                anim.SetTrigger("doSwing");
+                fightStartTime = Time.time;
+                return true;
+            }
         }
+
+        return false;
     }
+
     private void OnTriggerEnter(Collider collision)
     {
         DropItem prefab = collision.GetComponent<DropItem>();
