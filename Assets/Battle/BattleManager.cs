@@ -51,6 +51,20 @@ namespace Assets.Battle
         {
             return UnitManager.instance.monsterList.Count == 0;
         }
-       
+
+
+
+
+        public void LoadStage(int page, int stageNumber)
+        {
+            // 이전 스테이지 언로드
+            SceneManager.UnloadScene(currentStageName);
+
+            // 새로운 스테이지 로드
+            string newStageName = "Stage" + page + "-" + stageNumber;
+            SceneManager.LoadScene(newStageName, LoadSceneMode.Additive);
+
+            currentStageName = newStageName;
+        }
     }
 }
