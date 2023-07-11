@@ -15,11 +15,5 @@ public class Stage : MonoBehaviour
         dropItem.exp = stageInfo.exp;
         dropItem.coin = stageInfo.coin;
     }
-    public void StageSelect(int index)
-    {
-        if (index == 0)
-        {
-            BattleManager.instance.LoadStage(page, stageNumber);
-        }
-    }
+   
 }

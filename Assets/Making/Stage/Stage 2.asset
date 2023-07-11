@@ -10,5 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74478469e3740484aa7cb2b496303ca4, type: 3}
-  m_Name: New Stage Info
+  m_Name: Stage 2
   m_EditorClassIdentifier: 
+  stageSpawnCount: Spawn12
+  StageNumber: 1
+  coin: 110
+  exp: 110
+  weaponProbability: 0.15
+  shieldProbability: 0.25
+  stageIconPath: ItemIcon/StageIcon
+  pageIconPath: 

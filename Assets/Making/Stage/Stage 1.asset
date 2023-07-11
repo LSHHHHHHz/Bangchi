@@ -9,6 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72494f793db12ea4e9fa844265e4efb1, type: 3}
-  m_Name: New Stage DB
+  m_Script: {fileID: 11500000, guid: 74478469e3740484aa7cb2b496303ca4, type: 3}
+  m_Name: Stage 1
   m_EditorClassIdentifier: 
+  stageSpawnCount: Spawn4
+  StageNumber: 0
+  coin: 100
+  exp: 100
+  weaponProbability: 0.1
+  shieldProbability: 0.2
+  stageIconPath: ItemIcon/StageIcon
+  pageIconPath: 

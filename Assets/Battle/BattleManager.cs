@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Assets.HeroEditor.InventorySystem.Scripts.Elements;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,31 +10,39 @@ namespace Assets.Battle
     public class BattleManager : MonoBehaviour
     {
         public event Action restartStage;
+        public List<ItemInfo> myStages = new List<ItemInfo>();
 
         public static BattleManager instance;
-        public string startStageName;
+        private string startStageName;
 
         private bool stageEndCheck = true;
         private string currentStageName;
 
+        // StageInfo 객체를 할당하기 위한 변수 추가
+        [SerializeField]
+        private StageInfo stageInfo;
         private void Awake()
         {
             instance = this;
-            currentStageName = startStageName;
-            SceneManager.LoadScene(startStageName, LoadSceneMode.Additive);
+            if (startStageName != null)
+            {
+                currentStageName = startStageName;
+                SceneManager.LoadScene(currentStageName, LoadSceneMode.Additive);
+            }
         }
 
+   
         void Update()
         {
             if (stageEndCheck && IsStageEnded())
             {
                 stageEndCheck = false;
 
-                RestartStage();
+                //RestartStage();
             }
         }
 
-        private void RestartStage()
+       /* public void RestartStage()
         {
             // reset player position
             UnitManager.instance.player.transform.position = UnitManager.instance.playerInitialPosition;
@@ -44,7 +54,7 @@ namespace Assets.Battle
             SceneManager.LoadScene(currentStageName, LoadSceneMode.Additive);
             stageEndCheck = true;
             restartStage.Invoke();
-        }
+        }*/
 
         // 현재 스테이지
         private bool IsStageEnded()
@@ -55,16 +65,22 @@ namespace Assets.Battle
 
 
 
-        public void LoadStage(int page, int stageNumber)
+        public void LoadStage(string spawnNumber)
         {
+            UnitManager.instance.player.transform.position = UnitManager.instance.playerInitialPosition;
             // 이전 스테이지 언로드
-            SceneManager.UnloadScene(currentStageName);
-
+            if (currentStageName != null)
+            {
+                SceneManager.UnloadScene(currentStageName);
+            }
             // 새로운 스테이지 로드
-            string newStageName = "Stage" + page + "-" + stageNumber;
-            SceneManager.LoadScene(newStageName, LoadSceneMode.Additive);
-
-            currentStageName = newStageName;
+            startStageName = spawnNumber;
+            SceneManager.LoadScene(startStageName, LoadSceneMode.Additive);
+            
+            currentStageName = startStageName;
+            stageEndCheck = true;
+            restartStage.Invoke(); //왜 비어있다고 나오는거지
+            
         }
     }
 }
