@@ -13,4 +13,13 @@ public class StageInfo : ScriptableObject
     public float shieldProbability;
     public string stageIconPath;
     public string pageIconPath;
+
+    public List<MonsterSpawnInfo> monsterSpawnInfos = new List<MonsterSpawnInfo>();
+}
+
+[System.Serializable]
+public class MonsterSpawnInfo
+{
+    public GameObject prefab;
+    public Vector3 position;
 }

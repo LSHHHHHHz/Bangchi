@@ -7,14 +7,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class StageUI : MonoBehaviour
 {
     StagePopup stagePopup;
-    StageResult stageResult;
     public StageDB stageDB;
+
+    public static StageUI instance;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     public void RunStage(int page)
     {
@@ -23,10 +30,11 @@ public class StageUI : MonoBehaviour
             var prefab = Resources.Load<GameObject>("StagePopup");
             stagePopup = Instantiate(prefab).GetComponent<StagePopup>();
 
+            // 사탕 봉지            =  마트가서      사탕을 사온다.
             StageResult stageResult = StageCalculator.Calculate(stageDB, page);
-            //어떻게 배열을 받을 수 있는거지??? Caculate는 배열아닌가
 
             stagePopup.Initialize(stageResult);
         }
     }
+    
 }

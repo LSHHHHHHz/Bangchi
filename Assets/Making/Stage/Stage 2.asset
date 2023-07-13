@@ -19,4 +19,4 @@ MonoBehaviour:
   weaponProbability: 0.15
   shieldProbability: 0.25
   stageIconPath: ItemIcon/StageIcon
-  pageIconPath: 
+  pageIconPath: ItemIcon/PAS4

@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
+// 마트에서 준 비닐봉지
 public class StageResult : ScriptableObject //스테이지를 클릭했을 때 나온 스테이지들
 {
+    // 사탕 봉지
     public List<StageInfo> stages = new List<StageInfo>();
 }
 
@@ -15,9 +19,12 @@ internal class StageCalculator
 
         for (int i = page*20; i < 20 + page*20; i++)
         {
+            if (i >= stageDB.stages.Count)
+                continue;
+
             StageInfo selected = stageDB.stages[i];
-            result.stages.Add(selected); //아 이거 어디다 저장하는지 다시공부 seleced에
+            result.stages.Add(selected); 
         }
         return result;
-    }
+    }//result가 스테이지 리스트를 갖고있다..?
 }

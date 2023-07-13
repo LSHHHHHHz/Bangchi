@@ -10,10 +10,11 @@ namespace Assets.Making.Stage
 {
     public class StageSlot : MonoBehaviour
     {
+        ItemDB itemDB;
         public StageInfo stageInfo;
         public Image icon;
         public GameObject stageClickButton; //컴포넌트를 갖고오려고 씀
-
+        StageUI stageUI;
         private Button stageButton;
         private void Awake()
         {
