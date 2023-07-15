@@ -10930,6 +10930,7 @@ GameObject:
   - component: {fileID: 763275227}
   - component: {fileID: 763275229}
   - component: {fileID: 763275228}
+  - component: {fileID: 763275230}
   m_Layer: 0
   m_Name: Battle
   m_TagString: Untagged
@@ -10982,6 +10983,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myStages: []
   stageInfo: {fileID: 0}
+--- !u!114 &763275230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763275225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47570c4befe61a740bfc383f56d523cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stageDB: {fileID: 11400000, guid: 2b12599745baad042b818581782d65f9, type: 2}
 --- !u!1 &766666605
 GameObject:
   m_ObjectHideFlags: 0
@@ -13016,7 +13030,6 @@ GameObject:
   - component: {fileID: 884330894}
   - component: {fileID: 884330893}
   - component: {fileID: 884330892}
-  - component: {fileID: 884330891}
   m_Layer: 5
   m_Name: StageUIClick
   m_TagString: Untagged
@@ -13045,19 +13058,6 @@ RectTransform:
   m_AnchoredPosition: {x: 261, y: 543.0654}
   m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &884330891
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 884330889}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47570c4befe61a740bfc383f56d523cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stageDB: {fileID: 11400000, guid: 2b12599745baad042b818581782d65f9, type: 2}
 --- !u!114 &884330892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13102,7 +13102,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 884330891}
+      - m_Target: {fileID: 763275230}
         m_TargetAssemblyTypeName: StageUI, Assembly-CSharp
         m_MethodName: RunStage
         m_Mode: 3

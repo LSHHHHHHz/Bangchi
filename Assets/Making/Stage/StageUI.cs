@@ -1,6 +1,7 @@
 ﻿
 using Assets.Battle;
 using Assets.Item1;
+using Assets.Making.Stage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ public class StageUI : MonoBehaviour
 {
     StagePopup stagePopup;
     public StageDB stageDB;
+    private int currentPage;
 
     public static StageUI instance;
 
@@ -25,8 +27,8 @@ public class StageUI : MonoBehaviour
 
     public void RunStage(int page)
     {
-        if (stagePopup == null)
-        {
+        this.currentPage = page;
+        
             var prefab = Resources.Load<GameObject>("StagePopup");
             stagePopup = Instantiate(prefab).GetComponent<StagePopup>();
 
@@ -34,7 +36,35 @@ public class StageUI : MonoBehaviour
             StageResult stageResult = StageCalculator.Calculate(stageDB, page);
 
             stagePopup.Initialize(stageResult);
-        }
+            int pageNumber = page;
+            if (pageNumber < stageDB.stagePage.Count)
+            {
+                StageInfo selectedPage = stageDB.stagePage[pageNumber];
+                StagePopup.instance.pageIcon.sprite = Resources.Load<Sprite>(selectedPage.pageIconPath);
+            }
+        
     }
-    
+    public void RightStageChange()
+    {
+        currentPage++;
+        if (stagePopup != null)
+        {
+            Destroy(stagePopup.gameObject);
+        }
+
+        // RunStage 호출하여 페이지 업데이트
+        RunStage(currentPage);
+    }
+
+
+    public void LeftStageChange()
+    {
+        currentPage--; 
+        if (stagePopup != null)
+        {
+            Destroy(stagePopup.gameObject);
+        }
+        // RunStage 호출하여 페이지 업데이트
+        RunStage(currentPage);
+    }
 }

@@ -3,6 +3,7 @@ using Assets.Item1;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Rendering.LookDev;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,8 +26,10 @@ namespace Assets.Making.Stage
         {
             this.stageInfo = StageInfo;
             icon.sprite = Resources.Load<Sprite>(StageInfo.stageIconPath);
-            StagePopup.instance.pageIcon.sprite = Resources.Load<Sprite>(StageInfo.pageIconPath);
+            
         }
+        
+
         //
         public void StageSelect()
         {

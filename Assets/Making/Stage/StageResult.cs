@@ -9,6 +9,7 @@ public class StageResult : ScriptableObject //스테이지를 클릭했을 때 �
 {
     // 사탕 봉지
     public List<StageInfo> stages = new List<StageInfo>();
+    public List<StageInfo> stagePage = new();
 }
 
 internal class StageCalculator
@@ -25,6 +26,14 @@ internal class StageCalculator
             StageInfo selected = stageDB.stages[i];
             result.stages.Add(selected); 
         }
+
+        
+
+
+
+
+        //StagePopup.instance.pageIcon.sprite = Resources.Load<Sprite>(StageInfo.pageIconPath);
         return result;
-    }//result가 스테이지 리스트를 갖고있다..?
+
+    }
 }

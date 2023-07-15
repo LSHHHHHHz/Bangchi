@@ -58,6 +58,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f638f6ece58984d45b5e771086453ed4, type: 2}
   - {fileID: 11400000, guid: f638f6ece58984d45b5e771086453ed4, type: 2}
   - {fileID: 11400000, guid: f638f6ece58984d45b5e771086453ed4, type: 2}
+  stagePage:
+  - {fileID: 11400000, guid: 35926011bf272d54da1d43be32377995, type: 2}
+  - {fileID: 11400000, guid: 9dbaaf0ac723c064e87dd28f04e7ba25, type: 2}
   pageInconPathInfo:
   - ItemIcon/001_skill1
   - ItemIcon/001_skill2

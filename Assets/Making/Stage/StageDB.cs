@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class StageDB : ScriptableObject
 {
     public List<StageInfo> stages;
-
+    public List<StageInfo> stagePage;
 
     public string[] pageInconPathInfo;
 }
