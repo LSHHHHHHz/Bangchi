@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class ACT1 : BaseSkill
+public class ACT7 : BaseSkill
 {
     public GameObject effectPrefab;
     private bool isSkillEwcuted = false;
@@ -24,7 +24,7 @@ public class ACT1 : BaseSkill
 
     private IEnumerator SkillCoroutine()
     {
-        isSkillEwcuted = true; //<- 이걸 지우고 위에걸 켜도 실행이 됨 어떻게 되는거지..?(1111)
+        isSkillEwcuted = true; 
         List<GameObject> effectList = new List<GameObject>();
        
         for (int i = 0; i < 5; ++i)

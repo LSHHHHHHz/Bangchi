@@ -680,6 +680,7 @@ MonoBehaviour:
   stageUI: {fileID: 0}
   stagePageLeftButton: {fileID: 9207155712073329357}
   stagePageRightButton: {fileID: 8642459189751819909}
+  stageDB: {fileID: 11400000, guid: 2b12599745baad042b818581782d65f9, type: 2}
 --- !u!1 &6368898434418322876
 GameObject:
   m_ObjectHideFlags: 0

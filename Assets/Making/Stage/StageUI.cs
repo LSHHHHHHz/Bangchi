@@ -16,13 +16,16 @@ public class StageUI : MonoBehaviour
 {
     StagePopup stagePopup;
     public StageDB stageDB;
-    private int currentPage;
+    public int currentPage;
 
     public static StageUI instance;
+
+    private Action<int> stageChangeDelegate;
 
     private void Awake()
     {
         instance = this;
+        stageChangeDelegate = RunStage;
     }
 
     public void RunStage(int page)
@@ -47,24 +50,31 @@ public class StageUI : MonoBehaviour
     public void RightStageChange()
     {
         currentPage++;
+        if(currentPage >= stageDB.stagePage.Count)
+        {
+            currentPage--;
+        }
         if (stagePopup != null)
         {
             Destroy(stagePopup.gameObject);
         }
 
         // RunStage 호출하여 페이지 업데이트
-        RunStage(currentPage);
+        stageChangeDelegate.Invoke(currentPage);
     }
 
 
     public void LeftStageChange()
     {
         currentPage--; 
+        if(currentPage <0)
+        {
+            currentPage++;
+        }
         if (stagePopup != null)
         {
             Destroy(stagePopup.gameObject);
         }
-        // RunStage 호출하여 페이지 업데이트
-        RunStage(currentPage);
+        stageChangeDelegate.Invoke(currentPage);
     }
 }

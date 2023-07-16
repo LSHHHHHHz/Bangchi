@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b77716afe1b29b2428fcf61567d356d5, type: 3}
   m_Name: ActiveSkill4
   m_EditorClassIdentifier: 
-  skillPrefab: {fileID: 0}
+  skillPrefab: {fileID: 2769186315298664327, guid: df0bab004ee4bee40b51a807398be152, type: 3}
   grade: 0
   type: 0
   name: skill4
