@@ -26,5 +26,7 @@ public class GameManager : MonoBehaviour
             dropItem.coin = stageInfo.coin;
             dropItem.exp = stageInfo.exp;
         }
+
+        BattleManager.instance.StartStage(stageInfo);
     }
 }

@@ -21,6 +21,7 @@ public class Spawner : MonoBehaviour
     {
         //spawnPoint = GetComponentsInChildren<Transform>();  <-- 부모까지 갖고오기 때문에 아래는 부모 컴포넌트를 불러오지 못하게 막음
         spawnPoint = GetComponentsInChildren<Transform>(false).Where(t => t != transform).ToArray();
+       
     }
 
     private void Start()
@@ -28,7 +29,7 @@ public class Spawner : MonoBehaviour
     {
         if (!isEventRegistered)
         {
-            BattleManager.instance.restartStage += () => Spawn(stageMonster);
+            //BattleManager.instance.restartStage += () => Spawn(stageMonster);
             isEventRegistered = true;
         }
 

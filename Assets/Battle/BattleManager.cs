@@ -1,4 +1,5 @@
 ﻿using Assets.HeroEditor.InventorySystem.Scripts.Elements;
+using Assets.Making.Stage;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,78 +10,75 @@ namespace Assets.Battle
 {
     public class BattleManager : MonoBehaviour
     {
-        public event Action restartStage;
         public List<ItemInfo> myStages = new List<ItemInfo>();
 
         public static BattleManager instance;
-        private string startStageName;
 
-        private bool stageEndCheck = true;
-        private string currentStageName;
+        private bool stageEndCheck = false;
+        public StageInfo currentStageInfo;
+        public GameObject stageRoot;
+        float fiveTimeHasPassed;
+        bool readToRestartStage = false;
 
-        // StageInfo 객체를 할당하기 위한 변수 추가
-        [SerializeField]
-        private StageInfo stageInfo;
         private void Awake()
         {
             instance = this;
-            if (startStageName != null)
-            {
-                currentStageName = startStageName;
-                SceneManager.LoadScene(currentStageName, LoadSceneMode.Additive);
-            }
+            stageRoot = new GameObject("StageRoot");
         }
 
    
         void Update()
         {
-            if (stageEndCheck && IsStageEnded())
+            /*if (stageEndCheck && IsStageEnded())
             {
                 stageEndCheck = false;
 
-                //RestartStage();
+               // RestartStage();
+                readToRestartStage = true;
+                
             }
+            if(readToRestartStage)
+            {
+                createdTime += Time.deltaTime;
+                if(createdTime > 5)
+                {
+                    RestartStage();
+                    readToRestartStage = false;
+                }
+            }*/
+
+            if (stageEndCheck && IsStageEnded())
+            {
+                fiveTimeHasPassed += Time.deltaTime;
+                if (fiveTimeHasPassed > 5)
+                {
+                    stageEndCheck = false;
+                    RestartStage();
+                    fiveTimeHasPassed = 0;
+                }
+            }
+
         }
 
-       /* public void RestartStage()
+        public void StartStage(StageInfo stageInfo)
         {
-            // reset player position
             UnitManager.instance.player.transform.position = UnitManager.instance.playerInitialPosition;
 
-            // 이미 씬이 로딩되어 있음. 그 상태에서 중복해서 로딩할 수 없기 때문에 씬을 언로드.
-            SceneManager.UnloadScene(currentStageName);
-
-            // 언로드했으면 다시 씬 로딩하기.
-            SceneManager.LoadScene(currentStageName, LoadSceneMode.Additive);
+            currentStageInfo = stageInfo;
+            StageInfoUtility.PrepareStage(stageRoot, stageInfo);
             stageEndCheck = true;
-            restartStage.Invoke();
-        }*/
+
+        }
+
+        public void RestartStage()
+        {
+            StartStage(currentStageInfo);
+        }
 
         // 현재 스테이지
         private bool IsStageEnded()
         {
             return UnitManager.instance.monsterList.Count == 0;
-        }
-
-
-
-
-        public void LoadStage(string spawnNumber)
-        {
-            UnitManager.instance.player.transform.position = UnitManager.instance.playerInitialPosition;
-            // 이전 스테이지 언로드
-            if (currentStageName != null)
-            {
-                SceneManager.UnloadScene(currentStageName);
-            }
-            // 새로운 스테이지 로드
-            startStageName = spawnNumber;
-            SceneManager.LoadScene(startStageName, LoadSceneMode.Additive);
-            
-            currentStageName = startStageName;
-            stageEndCheck = true;
-            restartStage.Invoke(); //왜 비어있다고 나오는거지
-            
         }
     }
 }

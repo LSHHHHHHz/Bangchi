@@ -35,7 +35,7 @@ namespace Assets.Making.Stage
         {
             //BattleManager battleManager = new BattleManager();
             BattleManager battleManager = BattleManager.instance;
-            battleManager.LoadStage(stageInfo.stageSpawnCount);
+            battleManager.StartStage(stageInfo);
         }
     }
 }

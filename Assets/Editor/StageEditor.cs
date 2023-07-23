@@ -1,4 +1,5 @@
 ﻿using Assets.Item1;
+using Assets.Making.Stage;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
@@ -23,6 +24,7 @@ namespace Assets.Editor
         }
 
 
+
         // 현재 선택한 스테이지 정보.
         private StageInfo currentStageInfo;
         // 프로젝트에 있는 모든 스테이지 정보들. 이게 있어야 툴에서 스테이지들을 보여줄 수 있다.
@@ -35,18 +37,23 @@ namespace Assets.Editor
         {
             EditorSceneManager.OpenScene("Assets/Scenes/StageEditorScene.unity"); //GUI가 실행되면 해당 경로로 Scene를 생성함
         }
+        
 
-        private void InitTestScene()
+        private void InitTestScene() //★testObjectRoot가 없으면 testObjectName도 없는거 아닌가..?
         {
             if (testObjectRoot == null) //testObjectRoot이 비었다면 if문 실행(처음에 실행되는 것 같음)
             {
                 testObjectRoot = GameObject.Find(testObjectName); //GameObject에서 testObjectName이름을 찾아서 testObjectRoot에 넣음
-                                                                  //맨 처음에 'StageTestRoot' 이 이름을 갖은 GameObject가 없는데 어떻게 testObjectRoot에 값을 넣는거지?
-                                                                  
+
+
                 if (testObjectRoot == null) //testObjectRoot가 비었다면 testObjectName을 갖은 게임 오브젝트를 생성함!!
-                    new GameObject(testObjectName);
+                    testObjectRoot = new GameObject(testObjectName);
+
+                //★testObjectRoot = new GameObject(testObjectName);
+                //이렇게 해도 되는건지
             }
         }
+
 
         private void OnGUI()
         {
@@ -67,10 +74,10 @@ namespace Assets.Editor
 
 
             //★EditorGUI.indentLevel이 뭐지? --를 지워도 똑같음
-            ++EditorGUI.indentLevel;
+            EditorGUI.indentLevel += 3;
             DrawCurrentStage();
 
-            --EditorGUI.indentLevel;
+            EditorGUI.indentLevel -= 3;
 
             
 
@@ -109,8 +116,16 @@ namespace Assets.Editor
 
         private List<StageInfo> GetStageList() //이건 StagelInfo 에셋을 불러오는 함수라 생각하면 됨
         {
+            // 특정 폴더에 있는 StageInfo를 모두 로드한다.
+            // 특정 폴더에 있는 에셋을 어떻게 찾지?
+            // GUID를 가지고 에셋을 로드하는 방법?
+            // GUID를 Path로 변환한다.
+            // Path로 에셋을 불러온다.
+
             // Find all assets labelled with 'architecture' :
-            string[] guids1 = AssetDatabase.FindAssets(filter: null, new string[] { stageInfoDirectoryPath }); // filter: null <-- 모든 에셋 검색!!, new string[] { stageInfoDirectoryPath }<-- 검색할 폴더의 경로 지정
+            string[] guids1 = AssetDatabase.FindAssets(filter: null, new string[] { stageInfoDirectoryPath }); 
+            // filter: null <-- 모든 에셋 검색!!, new string[] { stageInfoDirectoryPath }<-- 검색할 폴더의 경로 지정
+            
             var result = new List<StageInfo>();
             foreach (string guid1 in guids1)
             {
@@ -125,7 +140,7 @@ namespace Assets.Editor
             return result;
         }
 
-        private void DrawCurrentStage()
+        private void DrawCurrentStage() //
         {
             if (currentStageInfo == null) //currentStageInfo가 비어있으면 리턴, currnentStageInfo가 null이 아니려면 버튼이 클릭 되어야함!
                 return;
@@ -134,6 +149,7 @@ namespace Assets.Editor
             for (int i = 0; i < currentStageInfo.monsterSpawnInfos.Count; ++i)
             {
                 GUILayout.BeginHorizontal();
+                //var changeCheckScope = new EditorGUI.ChangeCheckScope();
                 using (var changeCheckScope = new EditorGUI.ChangeCheckScope())  //★이게 뭐지?
                 {
                     //이 사이는 prefab이나 position을 설정할 수 있게 만들어 줌//
@@ -151,11 +167,12 @@ namespace Assets.Editor
                         --i;
                     }
 
-                    if (changeCheckScope.changed)
+                    if (changeCheckScope.changed) // 만약 위에서 뭔가 변경이 일어났다면
                     {
                         RefreshStagePreview();
                     }
                 }
+                //changeCheckScope.Dispose();
                 GUILayout.EndHorizontal(); //이게 없으니 save랑 new stage가 없어짐
                                            //GUILayout.BeginHorizontal()을 쓰면 반드시 GUILayout.EndHorizontal() 써야함.
             }
@@ -169,6 +186,10 @@ namespace Assets.Editor
                 {
                     newSpawnInfo.prefab = lastOne.prefab;
                     newSpawnInfo.position = lastOne.position + new Vector3(1, 0, 0);
+                }
+                else
+                {
+                    newSpawnInfo.position = new Vector3(0f, 1f, 0f);
                 }
 
                 currentStageInfo.monsterSpawnInfos.Add(newSpawnInfo);
@@ -201,22 +222,7 @@ namespace Assets.Editor
         // 스테이지 정보에 들어있는 몬스터 소환 정보를 씬에 출력한다.
         private void RefreshStagePreview() //★이부분 잘 모르겠음//
         {
-            // 이미 소환되어 있는 몬스터를 모두 파괴한다.
-            while (testObjectRoot.transform.childCount > 0) //testObjectRoot의 자식 개수가 0보다 크면 계속 실행
-            {
-                DestroyImmediate(testObjectRoot.transform.GetChild(0).gameObject); //계속 파괴
-            }
-
-            if (currentStageInfo == null) //currentsStageInfo는 버튼을 누르면 null이 아니게 됨 (DrawStageList에서 누름)?
-                return;
-
-            // 현재 스테이지 정보의 몬스터 소환 정보를 바탕으로 몬스터를 소환한다.
-            foreach (var spawnInfo in currentStageInfo.monsterSpawnInfos)
-            {
-                GameObject spawnedMonster = PrefabUtility.InstantiatePrefab(spawnInfo.prefab, testObjectRoot.transform) as GameObject;
-                                                          //Instantiate (spawnInfo.prefab, testObjectRoot.transform) 무슨 차이지..?
-                spawnedMonster.transform.position = spawnInfo.position;
-            }
+            StageInfoUtility.PrepareStage(testObjectRoot, currentStageInfo);
         }
     }
 }
