@@ -26,7 +26,10 @@ namespace Assets.Making.Stage
             {
                 GameObject spawnedMonster = UnityEngine.Object.Instantiate(spawnInfo.prefab, stageRoot.transform);
                 spawnedMonster.transform.position = spawnInfo.position;
+
+                UnityEngine.Random.Range(0, spawnedMonster.transform.childCount);
             }
+
         }
     }
 }

@@ -36,7 +36,7 @@ public class Ability : MonoBehaviour
     public void EnterAblity() 
     {
         uiGroup.gameObject.SetActive(true);
-        uiGroup.anchoredPosition = new Vector3(0f, 0f, 0f);
+        uiGroup.anchoredPosition = new Vector3(283.8f, 231.5f, 0f);
     }
 
     // Update is called once per frame

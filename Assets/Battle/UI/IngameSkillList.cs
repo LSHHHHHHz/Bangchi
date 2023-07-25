@@ -106,8 +106,8 @@ public class IngameSkillList : MonoBehaviour
             if (i < equippedSkills.Count)
             {
                 // 장착할 스킬이 있음
-                SkillInstance skillInstance = equippedSkills[i];
-                slot.SetData(skillInstance);
+                SkillInstance skillInstance = equippedSkills[i]; //내가 장착한 스킬을 skillInstance에 저장 
+                slot.SetData(skillInstance); // 스킬 슬롯에 내가 장착한 스킬을 설정한다.
 
                 GameObject skillPrefab = skillInstance.skillInfo.skillPrefab;
                 if (skillPrefab == null)

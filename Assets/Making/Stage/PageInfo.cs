@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "My Assets/StageInfo")]
+[CreateAssetMenu(menuName = "My Assets/PageInfo")]
 public class PageInfo : ScriptableObject
 {
     public int PageNumber;

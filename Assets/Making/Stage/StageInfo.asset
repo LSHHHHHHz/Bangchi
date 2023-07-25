@@ -20,4 +20,4 @@ MonoBehaviour:
   shieldProbability: 0
   stageIconPath: 
   pageIconPath: 
-  MonsterSummonInfos: []
+  monsterSpawnInfos: []

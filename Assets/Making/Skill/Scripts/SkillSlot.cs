@@ -10,7 +10,7 @@ public class SkillSlot : MonoBehaviour
     public Image icon;
     public Text countText;
 
-    public void SetData(SkillInfo skillInfo)
+    public void SetData(SkillInfo skillInfo) //SkillSlot에 정보를 설정하는 함수
     {
         this.skillInfo = skillInfo;
         // Resources.Load()를 쓸때엔 Resources 폴더 하위에 있어야 하고, Resources 경로 하위의 경로만 입력한다. 확장자는 입력하지 않는다.

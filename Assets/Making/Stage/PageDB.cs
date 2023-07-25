@@ -10,5 +10,5 @@ using UnityEngine.UI;
 [CreateAssetMenu(menuName = "My Assets/PageDB")]
 public class PageDB : ScriptableObject
 {
-    public List<StageInfo> stagePage;
+    public List<PageInfo> stagePage;
 }

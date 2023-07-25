@@ -20,7 +20,7 @@ internal class StageCalculator
 
         for (int i = page*20; i < 20 + page*20; i++)
         {
-            if (i >= stageDB.stages.Count)
+            if (i >= stageDB.stages.Count) 
                 continue;
 
             StageInfo selected = stageDB.stages[i];
