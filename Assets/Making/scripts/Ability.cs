@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class Ability : MonoBehaviour
 {
+    public float recoveryRate = 1; // 1초마다 회복되도록 설정
+
     public RectTransform uiGroup;
     public Text talkText;
     public string[] talkData;
@@ -23,10 +25,12 @@ public class Ability : MonoBehaviour
     }
     private void Start()
     {
-        //InvokeRepeating("Recovery", 0f, 1f);
+        // InvokeRepeating("Recovery", 0f, 1f);
+        StartCoroutine(RecoveryRoutine());
     }
     void Update()
     {
+
         abilityPriceText[0].text = ablityPrice[0].ToString();
         abilityPriceText[1].text = ablityPrice[1].ToString();
         abilityPriceText[2].text = ablityPrice[2].ToString();
@@ -70,7 +74,7 @@ public class Ability : MonoBehaviour
         else if (index == 1)
         {
             enterPlayer.Coin -= price;
-            enterPlayer.Current_HP += enterPlayer.HPLevel;
+            enterPlayer.Max_HP += enterPlayer.HPLevel;
             enterPlayer.HPLevel += 1;
             ablityPrice[index] += 100;
             abilityPriceText[index].text = ablityPrice[index].ToString();// UI Text에 가격 정보 보여주기
@@ -79,7 +83,7 @@ public class Ability : MonoBehaviour
         else if (index == 2)
         {
             enterPlayer.Coin -= price;
-            enterPlayer.Current_Recovery += enterPlayer.RecoveryLevel;
+            enterPlayer.RecoveryHP += enterPlayer.RecoveryLevel;
             enterPlayer.RecoveryLevel += 1;
             ablityPrice[index] += 100;
             abilityPriceText[index].text = ablityPrice[index].ToString();// UI Text에 가격 정보 보여주기
@@ -88,7 +92,7 @@ public class Ability : MonoBehaviour
         else if (index == 3)
         {
             enterPlayer.Coin -= price;
-            enterPlayer.Current_CriticalDamage += 0.1f;
+            enterPlayer.Current_CriticalDamage += enterPlayer.CriticalDamageLevel;
             enterPlayer.CriticalDamageLevel += 1;
             ablityPrice[index] += 100;
             abilityPriceText[index].text = ablityPrice[index].ToString();// UI Text에 가격 정보 보여주기
@@ -97,7 +101,7 @@ public class Ability : MonoBehaviour
         else if (index == 4)
         {
             enterPlayer.Coin -= price;
-            enterPlayer.Current_Criticalprobability += enterPlayer.CriticalprobabilityLevel;
+            enterPlayer.Current_Criticalprobability += 0.1f;
             enterPlayer.CriticalprobabilityLevel += 1;
             ablityPrice[index] += 100;
             abilityPriceText[index].text = ablityPrice[index].ToString();// UI Text에 가격 정보 보여주기
@@ -132,26 +136,49 @@ public class Ability : MonoBehaviour
 
 
     //회복하는거 
-    public void Recovery()
-    {
-        enterPlayer.currentDotTime -= Time.deltaTime;
-        if(enterPlayer.Current_HP<enterPlayer.Max_HP)
+    /* public void Recovery()
+     {
+         enterPlayer.currentDotTime -= Time.deltaTime;
+         if(enterPlayer.Current_HP < enterPlayer.Max_HP)
+         {
+             if(enterPlayer.currentDotTime<=0)
+             {
+                 enterPlayer.Current_HP += enterPlayer.RecoveryHP;
+                 if(enterPlayer.Current_HP > enterPlayer.Max_HP)
+                 {
+                     enterPlayer.Current_HP = enterPlayer.Max_HP;
+
+                 }
+                 enterPlayer.currentDotTime = 1;
+             }
+         }
+     }*/
+
+    private IEnumerator RecoveryRoutine()
         {
-            if(enterPlayer.currentDotTime<=0)
+        while (true)
+        {
+            yield return new WaitForSeconds(recoveryRate);
+
+            // HP 회복
+            if (enterPlayer.Current_HP < enterPlayer.Max_HP)
             {
                 enterPlayer.Current_HP += enterPlayer.RecoveryHP;
-                if(enterPlayer.Current_HP > enterPlayer.Max_HP)
+                if (enterPlayer.Current_HP > enterPlayer.Max_HP)
                 {
                     enterPlayer.Current_HP = enterPlayer.Max_HP;
-                    if (enterPlayer.currentDotTime <= -1f)
-                    {
-                        enterPlayer.currentDotTime = enterPlayer.dotTime;
-                    }
                 }
-                
+            }
+
+            // MP 회복
+            if (enterPlayer.Current_MP < enterPlayer.Max_MP)
+            {
+                enterPlayer.Current_MP += enterPlayer.RecoveryMP;
+                if (enterPlayer.Current_MP > enterPlayer.Max_MP)
+                {
+                    enterPlayer.Current_MP = enterPlayer.Max_MP;
+                }
             }
         }
-
-
     }
 }

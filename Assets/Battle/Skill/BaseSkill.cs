@@ -22,7 +22,7 @@ public abstract class BaseSkill : MonoBehaviour
             var monster = other.gameObject.GetComponent<Monster>();
             if (monster != null)
             {
-                monster.Current_HP -= damage;
+                monster._Current_HP -= damage;
                 // 
             }
         }

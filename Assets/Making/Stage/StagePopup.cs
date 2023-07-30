@@ -18,8 +18,6 @@ public class StagePopup : MonoBehaviour
     public Button stagePageLeftButton;
     public Button stagePageRightButton;
 
-    public StageDB stageDB;
-
     private List<GameObject> children = new List<GameObject>();
     private void Awake()
     {    
@@ -33,7 +31,7 @@ public class StagePopup : MonoBehaviour
     }
     //Page 변경 파라미터 필요
     //버튼 누를 때 이벤트 쓰고 이벤트가 호출될 때마다 이전에 보관되어있던 UI 파괴
-    public void Initialize(StageResult stageResult)
+    public void Initialize(PageInfo pageInfo)
     {
         foreach (GameObject child in children)
         {
@@ -42,10 +40,10 @@ public class StagePopup : MonoBehaviour
         children.Clear();
 
 
-        for (int i = 0; i < stageResult.stages.Count; i++)
+        for (int i = 0; i < pageInfo.stages.Count; i++)
         {
             StageSlot stageSlot = Instantiate(stagePrefab, grid.transform).GetComponent<StageSlot>();
-            stageSlot.SetData(stageResult.stages[i]);
+            stageSlot.SetData(pageInfo.stages[i]);
 
             stageSlot.gameObject.SetActive(true);
 

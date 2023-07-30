@@ -11,7 +11,7 @@ namespace Assets.Battle
     public class DropItem : MonoBehaviour
     {
         public Collider collider;
-        public float exp;
+        public int exp;
         public int coin;
 
         Rigidbody prefabRigid;

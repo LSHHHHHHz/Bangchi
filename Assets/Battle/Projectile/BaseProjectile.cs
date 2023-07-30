@@ -31,7 +31,7 @@ namespace Assets.Battle.Projectile
                 var monster = other.gameObject.GetComponent<Monster>();
                 if (monster != null)
                 {
-                    monster.Current_HP -= damage;
+                    monster._Current_HP -= damage;
                     // 
                 }
             }

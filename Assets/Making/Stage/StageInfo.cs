@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "My Assets/StageInfo")]
 public class StageInfo : ScriptableObject
 {
-    public string stageSpawnCount;
+    public string stageName;
     public int StageNumber;
     public int coin;
     public int exp;

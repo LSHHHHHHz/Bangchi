@@ -10,7 +10,7 @@ public class CharacterStats : MonoBehaviour
 
     public Text _Attack;
     public Text _HP;
-    public Text _Recovery;
+    public Text _HPRecovery;
     public Text _CriticalDamage;
     public Text _Criticalprobability;
     public Text _MP;
@@ -31,8 +31,14 @@ public class CharacterStats : MonoBehaviour
     void Text_Stats()
     {
         _Attack.text = player.Current_Attack + ""; //이방법 말고 다른방법있는지
-        _HP.text = player.Current_HP + "";
+        _HP.text = player.Max_HP + "";
+        _HPRecovery.text = player.RecoveryHP + "";
+        _CriticalDamage.text = player.Current_CriticalDamage + "";
+        _Criticalprobability.text = player.Current_Criticalprobability + "";
+        _MP.text = player.Max_MP + "";
+        _MPRecovery.text = player.RecoveryMP + "";
 
+    
         _Coin.text = player.Coin + "";
     }
 

@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74478469e3740484aa7cb2b496303ca4, type: 3}
-  m_Name: StageInfo
+  m_Name: StageInfo 2
   m_EditorClassIdentifier: 
-  stageName: Stage1
-  StageNumber: 1
+  stageName: Stage3
+  StageNumber: 3
   coin: 0
   exp: 0
   weaponProbability: 0
@@ -25,13 +25,11 @@ MonoBehaviour:
     position: {x: 3, y: 0, z: 0}
   - prefab: {fileID: 8843106589501282827, guid: ed6ea0a966bb8e243bfe3565285ab0c4, type: 3}
     position: {x: 4, y: 0, z: 0}
-  - prefab: {fileID: 8843106589501282827, guid: ed6ea0a966bb8e243bfe3565285ab0c4, type: 3}
+  - prefab: {fileID: 2507269854294887217, guid: 3a9b9b38a7694e24d89317f7722c2e24, type: 3}
     position: {x: 5, y: 0, z: 0}
-  - prefab: {fileID: 8843106589501282827, guid: ed6ea0a966bb8e243bfe3565285ab0c4, type: 3}
+  - prefab: {fileID: 2507269854294887217, guid: 3a9b9b38a7694e24d89317f7722c2e24, type: 3}
     position: {x: 6, y: 0, z: 0}
-  - prefab: {fileID: 8843106589501282827, guid: ed6ea0a966bb8e243bfe3565285ab0c4, type: 3}
+  - prefab: {fileID: 2507269854294887217, guid: 3a9b9b38a7694e24d89317f7722c2e24, type: 3}
     position: {x: 7, y: 0, z: 0}
-  - prefab: {fileID: 8843106589501282827, guid: ed6ea0a966bb8e243bfe3565285ab0c4, type: 3}
+  - prefab: {fileID: 2507269854294887217, guid: 3a9b9b38a7694e24d89317f7722c2e24, type: 3}
     position: {x: 8, y: 0, z: 0}
-  - prefab: {fileID: 8843106589501282827, guid: ed6ea0a966bb8e243bfe3565285ab0c4, type: 3}
-    position: {x: 9, y: 0, z: 0}

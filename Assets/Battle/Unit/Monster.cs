@@ -53,7 +53,7 @@ public class Monster : BaseUnit
 
     public void Update()
     {
-        if(Current_HP<=0)
+        if(_Current_HP <=0)
         {
             Destroy(gameObject);
             monsterDeathIcon(expIconPrefab);  //이거 안 넣으니 실행이 안됐음
@@ -104,7 +104,7 @@ public class Monster : BaseUnit
         {
             Weapons weapons = other.GetComponent<Weapons>();
 
-            Current_HP -= weapons.damage;
+            _Current_HP -= weapons.damage;
         }
     }
 

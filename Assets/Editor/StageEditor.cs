@@ -7,6 +7,7 @@ using UnityEditor;
 using UnityEditor.PackageManager.UI;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using static UnityEditor.EditorGUI;
 
 namespace Assets.Editor
 {
@@ -83,11 +84,6 @@ namespace Assets.Editor
 
             GUILayout.Space(10);
 
-            if (GUILayout.Button("Save"))
-            {
-
-            }
-
             NewStageMenu();
         }
 
@@ -145,13 +141,17 @@ namespace Assets.Editor
             if (currentStageInfo == null) //currentStageInfo가 비어있으면 리턴, currnentStageInfo가 null이 아니려면 버튼이 클릭 되어야함!
                 return;
 
-            GUILayout.Label("Spawn", titleStyle); //null이 아니면 Spawn이라는 라벨이 나옴
-            for (int i = 0; i < currentStageInfo.monsterSpawnInfos.Count; ++i)
+            using (var changeCheckScope = new EditorGUI.ChangeCheckScope())  //★이게 뭐지?
             {
-                GUILayout.BeginHorizontal();
-                //var changeCheckScope = new EditorGUI.ChangeCheckScope();
-                using (var changeCheckScope = new EditorGUI.ChangeCheckScope())  //★이게 뭐지?
+                currentStageInfo.stageName = EditorGUILayout.TextField("Stage Name", currentStageInfo.stageName);
+                currentStageInfo.StageNumber = EditorGUILayout.IntField("Stage Number", currentStageInfo.StageNumber);
+
+                GUILayout.Label("Spawn", titleStyle); //null이 아니면 Spawn이라는 라벨이 나옴
+                for (int i = 0; i < currentStageInfo.monsterSpawnInfos.Count; ++i)
                 {
+                    GUILayout.BeginHorizontal();
+                    //var changeCheckScope = new EditorGUI.ChangeCheckScope();
+
                     //이 사이는 prefab이나 position을 설정할 수 있게 만들어 줌//
                     MonsterSpawnInfo spawnInfo = currentStageInfo.monsterSpawnInfos[i];
 
@@ -166,36 +166,37 @@ namespace Assets.Editor
                         currentStageInfo.monsterSpawnInfos.RemoveAt(i); //Delete를 누르면 monsterSpawnInfos가 삭제됨
                         --i;
                     }
+                    GUILayout.EndHorizontal(); //이게 없으니 save랑 new stage가 없어짐
+                }
 
-                    if (changeCheckScope.changed) // 만약 위에서 뭔가 변경이 일어났다면
+                using (new GUILayout.HorizontalScope())
+                {
+                    if (GUILayout.Button("Add"))
                     {
+                        var lastOne = currentStageInfo.monsterSpawnInfos.LastOrDefault();
+                        var newSpawnInfo = new MonsterSpawnInfo();
+                        if (lastOne != null) // 몬스터 소환 정보의 마지막 몬스터 정보
+                        {
+                            newSpawnInfo.prefab = lastOne.prefab;
+                            newSpawnInfo.position = lastOne.position + new Vector3(1, 0, 0);
+                        }
+                        else // 아직 아무 몬스터 정보가 없음. =>처음 몬스터
+                        {
+                            newSpawnInfo.position = new Vector3(3f, 0f, 0f);
+                        }
+
+                        currentStageInfo.monsterSpawnInfos.Add(newSpawnInfo);
                         RefreshStagePreview();
                     }
                 }
-                //changeCheckScope.Dispose();
-                GUILayout.EndHorizontal(); //이게 없으니 save랑 new stage가 없어짐
-                                           //GUILayout.BeginHorizontal()을 쓰면 반드시 GUILayout.EndHorizontal() 써야함.
-            }
 
-            GUILayout.BeginHorizontal();
-            if (GUILayout.Button("Add"))
-            {
-                var lastOne = currentStageInfo.monsterSpawnInfos.LastOrDefault();
-                var newSpawnInfo = new MonsterSpawnInfo();
-                if (lastOne != null)
-                {
-                    newSpawnInfo.prefab = lastOne.prefab;
-                    newSpawnInfo.position = lastOne.position + new Vector3(1, 0, 0);
-                }
-                else
-                {
-                    newSpawnInfo.position = new Vector3(0f, 1f, 0f);
-                }
 
-                currentStageInfo.monsterSpawnInfos.Add(newSpawnInfo);
-                RefreshStagePreview();
+                if (changeCheckScope.changed) // 만약 위에서 뭔가 변경이 일어났다면
+                {
+                    EditorUtility.SetDirty(currentStageInfo); // 대상 에셋을 변경된 상태로 만든다.
+                    RefreshStagePreview();
+                }
             }
-            GUILayout.EndHorizontal();
         }
 
         private void NewStageMenu()

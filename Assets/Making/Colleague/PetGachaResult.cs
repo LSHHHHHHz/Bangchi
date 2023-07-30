@@ -23,7 +23,7 @@ internal class PetGachaCalculator
             result.pets.Add(petSelected);
         }
 
-
         return result;
     }
+
 }

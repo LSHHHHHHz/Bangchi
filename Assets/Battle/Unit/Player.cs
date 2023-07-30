@@ -13,7 +13,6 @@ public class Player : BaseUnit
     public float playerSpeed;
 
     public GameObject[] weapons;
-    public bool[] hasWeapons;
 
     Monster monsters;
     Rigidbody rigid;
@@ -36,9 +35,11 @@ public class Player : BaseUnit
     public float Current_Attack;
     public int AttackLevel;
 
+    public int Max_HP;
+    public int Current_HP;
     public int HPLevel;
 
-    public float Current_Recovery;
+    public int RecoveryHP;
     public int RecoveryLevel;
 
     public float Current_CriticalDamage;
@@ -47,14 +48,16 @@ public class Player : BaseUnit
     public float Current_Criticalprobability;
     public int CriticalprobabilityLevel;
 
-
+    public int Max_MP;
     public int Current_MP;
-    public int MP;
     public int MPLevel;
 
+    public int RecoveryMP;
+    public int RecoveryMPLevel;
+
     //경험치
-    public float Exp = 100;
-    public float Current_Exp;
+    public int Exp = 100;
+    public int Current_Exp;
     //public Image Exp_Bar;
     public UnityEngine.UI.Image Exp_Bar; //이렇게 해야 에러가 안생김
     public Text LV_txt;
@@ -64,7 +67,6 @@ public class Player : BaseUnit
     public int LV = 1;
 
     //회복
-    public int RecoveryHP;
     public float currentDotTime = 0;
     public float dotTime = 1;
 
@@ -113,7 +115,7 @@ public class Player : BaseUnit
     {
         Player_XP(); //경험치
         _Attack.text = Current_Attack + " → " + (AttackLevel + Current_Attack);
-        _HP.text = Current_HP + " → " + (HPLevel + Current_HP);
+        _HP.text = Max_HP + " → " + (HPLevel + Max_HP);
 
         RefreshWeapon();
         InventoryManager.instance.OnEquippedItemChanged += RefreshWeapon;
@@ -162,10 +164,10 @@ public class Player : BaseUnit
         PlayerPrefs.SetFloat("Current_Attack", Current_Attack);
         PlayerPrefs.SetInt("AttackLevel", AttackLevel);
 
-        PlayerPrefs.SetFloat("Current_HP", Current_HP);
+        PlayerPrefs.SetInt("Current_HP", Max_HP);
         PlayerPrefs.SetInt("HPLevel", HPLevel);
 
-        PlayerPrefs.SetFloat("Current_Recovery", Current_Recovery);
+        PlayerPrefs.SetInt("RecoveryHP", RecoveryHP);
         PlayerPrefs.SetInt("RecoveryLevel", RecoveryLevel);
 
         PlayerPrefs.SetFloat("Current_CriticalDamage", Current_CriticalDamage);
@@ -175,8 +177,8 @@ public class Player : BaseUnit
         PlayerPrefs.SetInt("CriticalprobabilityLevel", CriticalprobabilityLevel);
 
         PlayerPrefs.SetInt("LV", LV);
-        PlayerPrefs.SetFloat("Exp", Exp);
-        PlayerPrefs.SetFloat("Current_Exp", Current_Exp);
+        PlayerPrefs.SetInt("Exp", Exp);
+        PlayerPrefs.SetInt("Current_Exp", Current_Exp);
 
         PlayerPrefs.SetInt("Coin", Coin);
 
@@ -198,10 +200,10 @@ public class Player : BaseUnit
         Current_Attack = PlayerPrefs.GetFloat("Current_Attack", 0);
         AttackLevel = PlayerPrefs.GetInt("AttackLevel", 0);
 
-        Current_HP = PlayerPrefs.GetInt("Current_HP", 0);
+        Max_HP = PlayerPrefs.GetInt("Current_HP", 0);
         HPLevel = PlayerPrefs.GetInt("HPLevel", 0);
 
-        Current_Recovery = PlayerPrefs.GetFloat("Current_Recovery", 0);
+        RecoveryHP = PlayerPrefs.GetInt("RecoveryHP", 0);
         RecoveryLevel = PlayerPrefs.GetInt("RecoveryLevel", 0);
 
         Current_CriticalDamage = PlayerPrefs.GetFloat("Current_CriticalDamage", 0);
@@ -211,8 +213,8 @@ public class Player : BaseUnit
         CriticalprobabilityLevel = PlayerPrefs.GetInt("CriticalprobabilityLevel", 0);
 
         LV = PlayerPrefs.GetInt("LV", 0);
-        Exp = PlayerPrefs.GetFloat("Exp", 0);
-        Current_Exp = PlayerPrefs.GetFloat("Current_Exp", 0);
+        Exp = PlayerPrefs.GetInt("Exp", 0);
+        Current_Exp = PlayerPrefs.GetInt("Current_Exp", 0);
 
 
         Coin = PlayerPrefs.GetInt("Coin", 0);
@@ -258,10 +260,10 @@ public class Player : BaseUnit
         _Attack.text = Current_Attack + " → " + (AttackLevel + Current_Attack);
         _AttackLevel.text = "LV" + AttackLevel;
 
-        _HP.text = Current_HP + " → " + (HPLevel + Current_HP);
+        _HP.text = Max_HP + " → " + (HPLevel + Max_HP);
         _HPLevel.text = "LV" + HPLevel;
 
-        _Recovery.text = Current_Recovery + " → " + (RecoveryLevel + Current_Recovery);
+        _Recovery.text = RecoveryHP + " → " + (RecoveryLevel + RecoveryHP);
         _RecoveryLevel.text = "LV" + RecoveryLevel;
 
         _CriticalDamage.text = $"{Current_CriticalDamage:F1} → {(0.1f + Current_CriticalDamage):F1}";

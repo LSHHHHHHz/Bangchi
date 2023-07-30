@@ -12,10 +12,10 @@ public class SkillUI : MonoBehaviour
 {
     public SkillDB skillDB;
     public Sprite lockedSprite;
-    public RectTransform activeSkillSlotParent;
-    public RectTransform passiveSkillSlotParent;
-    public RectTransform equippedActiveSkillSlotParent;
-    public RectTransform equippedPassiveSkillSlotParent;
+    public RectTransform activeSkillSlotParent; //인벤토리에서 엑티브 슬롯들의 부모 
+    public RectTransform passiveSkillSlotParent; //인벤토리에서 패시브 슬롯들의 부모
+    public RectTransform equippedActiveSkillSlotParent; //엑티브 스킬 슬롯
+    public RectTransform equippedPassiveSkillSlotParent; //패시브 스킬 슬롯
 
     public RectTransform passiveSkillUI;
     public RectTransform activeSkillUI;

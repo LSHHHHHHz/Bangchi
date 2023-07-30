@@ -128,8 +128,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8862b33d18f939947a81d6e9dde7c4b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Current_HP: 20
-  Max_HP: 0
+  _Current_HP: 20
+  _Max_HP: 20
   MonsterExp: 10
   collider: {fileID: -5460100367022941955}
   expIconPrefab: {fileID: 2078815229775703815, guid: 52b4657d96be3e9448808544cae73f4a, type: 3}

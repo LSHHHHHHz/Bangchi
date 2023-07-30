@@ -15,7 +15,6 @@ using UnityEngine.UI;
 public class StageUI : MonoBehaviour
 {
     StagePopup stagePopup;
-    public StageDB stageDB;
     public PageDB pageDB;
     public int currentPage;
 
@@ -29,19 +28,23 @@ public class StageUI : MonoBehaviour
         stageChangeDelegate = RunStage;
     }
 
-    public void RunStage(int page)
+    public void RunStage(int pageIndex)
     {
+        if (pageIndex >= pageDB.stagePage.Count || pageIndex < 0)
+        {
+            return;
+        }
 
-        this.currentPage = page;
+        this.currentPage = pageIndex;
 
         var prefab = Resources.Load<GameObject>("StagePopup");
         stagePopup = Instantiate(prefab).GetComponent<StagePopup>();
 
-        // 사탕 봉지            =  마트가서      사탕을 사온다.
-        StageResult stageResult = StageCalculator.Calculate(stageDB, page);
 
-        stagePopup.Initialize(stageResult);
-        int pageNumber = page;
+        PageInfo pageInfo = pageDB.stagePage[pageIndex];
+
+        stagePopup.Initialize(pageInfo);
+        int pageNumber = pageIndex;
         if (pageNumber < pageDB.stagePage.Count)
         {
             PageInfo selectedPage = pageDB.stagePage[pageNumber];

@@ -5465,6 +5465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f299629cdaa3c3845bde59630c438285, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  recoveryRate: 1
   uiGroup: {fileID: 696632420}
   talkText: {fileID: 1715356031}
   talkData:
@@ -7012,6 +7013,7 @@ MonoBehaviour:
   type: 0
   PetPriceText: []
   PetPrice: 000000000000000000000000
+  lockedSprite: {fileID: 0}
 --- !u!1 &539888758
 GameObject:
   m_ObjectHideFlags: 0
@@ -8298,8 +8300,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e006cb03270d80a4a9eb5c408694cc90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Current_HP: 0
-  Max_HP: 0
+  _Current_HP: 0
+  _Max_HP: 0
   playerSpeed: 1
   weapons:
   - {fileID: 1964896596}
@@ -8319,7 +8321,6 @@ MonoBehaviour:
   - {fileID: 36040299}
   - {fileID: 61980783}
   - {fileID: 326386428}
-  hasWeapons: 0000000000000000000000000000000000
   anim: {fileID: 1192868807}
   tr: {fileID: 622718922}
   raycastDistance: 0.3
@@ -8328,22 +8329,25 @@ MonoBehaviour:
     m_Bits: 4294967295
   Current_Attack: 100
   AttackLevel: 1
+  Max_HP: 0
+  Current_HP: 0
   HPLevel: 1
-  Current_Recovery: 10
+  RecoveryHP: 0
   RecoveryLevel: 1
   Current_CriticalDamage: 100
   CriticalDamageLevel: 1
   Current_Criticalprobability: 0
   CriticalprobabilityLevel: 1
-  Current_MP: 0
-  MP: 0
+  Max_MP: 100
+  Current_MP: 100
   MPLevel: 0
+  RecoveryMP: 0
+  RecoveryMPLevel: 0
   Exp: 100
-  Current_Exp: 80
+  Current_Exp: 0
   Exp_Bar: {fileID: 303116265}
   LV_txt: {fileID: 648492980}
   LV: 1
-  RecoveryHP: 10
   currentDotTime: 0
   dotTime: 1
   Coin: 1000000
@@ -9589,37 +9593,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 668420951}
   m_CullTransparentMesh: 1
---- !u!1 &675336627
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 675336628}
-  m_Layer: 0
-  m_Name: StageTestRoot
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &675336628
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 675336627}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &677389026
 GameObject:
   m_ObjectHideFlags: 0
@@ -11057,7 +11030,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47570c4befe61a740bfc383f56d523cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageDB: {fileID: 11400000, guid: 2b12599745baad042b818581782d65f9, type: 2}
   pageDB: {fileID: 11400000, guid: c7fc1b415aa95c94b96341ee5c2fbac2, type: 2}
   currentPage: 0
 --- !u!114 &763275231
@@ -14610,12 +14582,12 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 531600350}
         m_TargetAssemblyTypeName: PetUI, Assembly-CSharp
-        m_MethodName: RunPetPopup
+        m_MethodName: RunPet
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 5
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -26345,6 +26317,7 @@ MonoBehaviour:
   - {fileID: 1141028256}
   - {fileID: 1406313254}
   PetPrice: 2b02000057040000ae080000
+  lockedSprite: {fileID: 0}
 --- !u!1 &1503017008
 GameObject:
   m_ObjectHideFlags: 0
@@ -29830,11 +29803,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4305108561794920, guid: ff726cbf10a6436a8c11071a7641036f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.86
       objectReference: {fileID: 0}
     - target: {fileID: 4305108561794920, guid: ff726cbf10a6436a8c11071a7641036f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.7
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 4305108561794920, guid: ff726cbf10a6436a8c11071a7641036f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -34071,7 +34044,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pool: {fileID: 0}
   player: {fileID: 0}
-  stageInfo: {fileID: 11400000, guid: 5b343284931fdd94993c61996c51c4d5, type: 2}
+  stageInfo: {fileID: 11400000, guid: a4a8fe8d789fbd14ba47bbe13647dfeb, type: 2}
 --- !u!4 &1894159805
 Transform:
   m_ObjectHideFlags: 0
@@ -35126,7 +35099,7 @@ MonoBehaviour:
   rate: 0
   capsule: {fileID: 1964896601}
   weaponSlotParent: {fileID: 0}
-  grade: 6
+  grade: 0
 --- !u!136 &1964896601
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -35776,7 +35749,7 @@ MonoBehaviour:
   player: {fileID: 622718925}
   _Attack: {fileID: 1043605803}
   _HP: {fileID: 655029644}
-  _Recovery: {fileID: 2048602600}
+  _HPRecovery: {fileID: 2048602600}
   _CriticalDamage: {fileID: 1295839714}
   _Criticalprobability: {fileID: 1113200955}
   _MP: {fileID: 2116738963}

@@ -18,14 +18,12 @@ public class PetUI : MonoBehaviour
     public Text[] PetPriceText;
     public int[] PetPrice;
     PetPopup petPopup;
-    PetDB petDB;
+    public PetDB petDB;
+    public Sprite lockedSprite;
 
     public void Awake()
     {
         
-    }
-    public PetUI()
-    {
     }
 
     public void Update()
@@ -33,7 +31,7 @@ public class PetUI : MonoBehaviour
        
     }
 
-    public void RunPet(int count, Action<int> oneMoreTime)
+    public void RunPet(int count)
     {
         if(petPopup != null)
         {
@@ -45,8 +43,11 @@ public class PetUI : MonoBehaviour
         PetGachaResult petGachaResult = PetGachaCalculator.Calculate(count, petDB);
 
 
-
-
+        foreach(var pet in petGachaResult.pets)
+        {
+            PetInventoryManager.Instance.AddPet(pet);
+        }
+        PetInventoryManager.Instance.Save();
     }
 
 
