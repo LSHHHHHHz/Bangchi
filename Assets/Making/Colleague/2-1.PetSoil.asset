@@ -15,5 +15,5 @@ MonoBehaviour:
   petgrade: 0
   petType: 1
   name: SoilD
-  iconPath: 
+  iconPath: PetIcon/1.Soil
   Number: 1

@@ -15,5 +15,5 @@ MonoBehaviour:
   petgrade: 0
   petType: 0
   name: WaterD
-  iconPath: 
+  iconPath: PetIcon/1.Water
   Number: 1

@@ -15,5 +15,5 @@ MonoBehaviour:
   petgrade: 0
   petType: 3
   name: WindD
-  iconPath: 
+  iconPath: PetIcon/1.Fire
   Number: 1
