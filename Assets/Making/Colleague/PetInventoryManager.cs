@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Assets.Item1;
 using System;
+using UnityEngine.UI;
 
 [Serializable] // 클래스를 json등 데이터로 저장할 때 [Serializable]을 붙여줘야 함.
 public class PetInventoryData
@@ -15,10 +16,20 @@ public class PetInventoryManager : MonoBehaviour
     public static PetInventoryManager Instance;
     public List <PetInstance> myPets = new();
     public List <PetInstance> equipPets = new();
-
+    public List<GameObject> children = new List<GameObject>();
+    
+    public GridLayoutGroup grid;
     public void Awake()
     {
         Instance = this; 
+    }
+ 
+    public void AddInventoryPets()
+    {
+        foreach (GameObject child in children)
+        {
+            var inventorypet = Instantiate(child, grid.transform);
+        }
     }
 
     public void AddPet(PetInfo petInfo)

@@ -13,6 +13,7 @@ using UnityEngine.UI;
 
 public class PetUI : MonoBehaviour
 {
+
     public RectTransform petUI;
 
     public PetType type;
@@ -23,6 +24,8 @@ public class PetUI : MonoBehaviour
     public PetDB petDB;
     public Sprite lockedSprite;
 
+
+    public Grid gird;
     public void Awake()
     {
         

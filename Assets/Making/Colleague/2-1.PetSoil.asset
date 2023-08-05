@@ -15,5 +15,5 @@ MonoBehaviour:
   petgrade: 0
   petType: 1
   name: SoilD
-  iconPath: PetIcon/1.Soil
+  iconPath: PetIcon(Popup)/1.Soil(Popup)
   Number: 1

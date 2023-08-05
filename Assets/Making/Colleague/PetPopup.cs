@@ -10,6 +10,7 @@ using UnityEngine.UI;
 
 public class PetPopup : MonoBehaviour 
 {
+    public event Action OnInitialize;
     public GridLayoutGroup gird;
     public GameObject petPrefab;
 
@@ -17,7 +18,10 @@ public class PetPopup : MonoBehaviour
     private Action<int> oneMoreTimeAction;
 
     private bool isCoroutineDone = true;
-
+    void Start()
+    {
+        OnInitialize += PetInventoryManager.Instance.AddInventoryPets;
+    }
     public void Initialize(PetGachaResult petgachaResult, Action<int> oneMoreTime)
     {
         transform.position = new Vector3(0, -1000, 0);
@@ -30,6 +34,7 @@ public class PetPopup : MonoBehaviour
         this.oneMoreTimeAction = oneMoreTime;
         isCoroutineDone = false;
         StartCoroutine(SetupCoroutine(petgachaResult));
+        OnInitialize?.Invoke();
 
     }
 
@@ -37,16 +42,21 @@ public class PetPopup : MonoBehaviour
     {
         yield return transform.DOLocalMoveY(0, 2f).Play().WaitForCompletion();
 
-        for (int i = 0; i < petGachaResult2.pets.Count; i++) 
+        for (int i = 0; i < petGachaResult2.pets.Count; i++)
         {
+
             PetInfo petInfo = petGachaResult2.pets[i];
             PetSlot petSlot = Instantiate(petPrefab, gird.transform).GetComponent<PetSlot>();
             petSlot.SetData(petInfo);
+
+
             var sequence = DOTween.Sequence();
             petSlot.transform.localScale = Vector3.one * 3f;
+
+           
+
             sequence.Append(petSlot.transform.DOScale(1, 0.5f).SetEase(Ease.OutQuad));
           
-
             sequence.Play();
 
 
@@ -54,6 +64,8 @@ public class PetPopup : MonoBehaviour
             petSlot.gameObject.SetActive(true);
 
             // 나중에 삭제해야되니까 children에 넣어서 관리
+            PetInventoryManager.Instance.children.Add(petSlot.gameObject);
+
             children.Add(petSlot.gameObject);
 
             yield return new WaitForSeconds(0.1f);

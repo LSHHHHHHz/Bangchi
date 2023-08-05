@@ -196,6 +196,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gird: {fileID: 6872878309986001640}
   petPrefab: {fileID: 1304311911501168271, guid: 018b3c8c465696740964dd45432fcdf9, type: 3}
+  WhiteImage: {fileID: 2695646843220017078, guid: 2c02261edbed19f4fbdbb9f04e0fc63a, type: 3}
 --- !u!1 &2685387924946415254
 GameObject:
   m_ObjectHideFlags: 0
