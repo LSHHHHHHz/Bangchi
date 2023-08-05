@@ -13,6 +13,8 @@ using UnityEngine.UI;
 
 public class PetUI : MonoBehaviour
 {
+    public RectTransform petUI;
+
     public PetType type;
 
     public Text[] PetPriceText;
@@ -33,7 +35,7 @@ public class PetUI : MonoBehaviour
 
     public void RunPet(int count)
     {
-        if(petPopup != null)
+        if(petPopup == null)
         {
             GameObject prefab = Resources.Load<GameObject>("PetPopup");
 
@@ -48,9 +50,19 @@ public class PetUI : MonoBehaviour
             PetInventoryManager.Instance.AddPet(pet);
         }
         PetInventoryManager.Instance.Save();
+
+        petPopup.Initialize(petGachaResult, this.RunPet);
     }
 
+    
 
-
+    public void petUIopen()
+    {
+        petUI.localPosition = new Vector3(-900, 0, 0);
+    }
+    public void petUIClose()
+    {
+        petUI.localPosition = new Vector3(-3600, 0, 0);
+    }
 }
 

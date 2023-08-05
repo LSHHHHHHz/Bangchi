@@ -23,11 +23,11 @@ public class PetInventoryManager : MonoBehaviour
 
     public void AddPet(PetInfo petInfo)
     {
-        PetInstance exitPet = myPets.Find(myPet => myPet.petInfo == petInfo);
+        PetInstance existPet = myPets.Find(myPet => myPet.petInfo == petInfo);
 
-        if(exitPet != null)
+        if(existPet != null)
         {
-            exitPet.count++;
+            existPet.count++;
         }
         else
         {

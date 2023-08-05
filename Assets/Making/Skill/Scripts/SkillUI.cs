@@ -1,5 +1,6 @@
 
 using Assets.Item1;
+using Assets.Making.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -130,7 +131,7 @@ public class SkillUI : MonoBehaviour
         {
             var prefab = Resources.Load<GameObject>("SkillPopup"); //Resources 말고 다른곳에서 저장하는방법
             
-            skillgachaPopup = Instantiate(prefab).GetComponent<SkillGachaPopup>();
+            skillgachaPopup = Instantiate(prefab, RootCanvas.Instance.transform).GetComponent<SkillGachaPopup>();
 
         }
 

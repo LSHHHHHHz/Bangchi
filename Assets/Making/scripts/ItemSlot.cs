@@ -16,6 +16,7 @@ public class ItemSlot : MonoBehaviour
         icon.sprite = Resources.Load<Sprite>(itemInfo.iconPath);
         if (countText != null)
         {
+            
             countText.gameObject.SetActive(false);
         }
     }
@@ -25,8 +26,15 @@ public class ItemSlot : MonoBehaviour
         SetData(itemInstance.itemInfo);
         if (countText != null)
         {
-            countText.gameObject.SetActive(true);
-            countText.text = itemInstance.count.ToString();
+            if (itemInstance.count == 0)
+            {
+                countText.gameObject.SetActive(false);
+            }
+            else
+            {
+                countText.gameObject.SetActive(true);
+                countText.text = itemInstance.count.ToString();
+            }
         }
     }
     public void SetEmpty(Sprite emptySprite)

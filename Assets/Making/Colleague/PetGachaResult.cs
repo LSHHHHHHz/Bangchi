@@ -15,6 +15,7 @@ internal class PetGachaCalculator
 {
     public static PetGachaResult Calculate(int count, PetDB petDB)
     {
+
         PetGachaResult result = new PetGachaResult();
         List<PetInfo> pets = petDB.pets;
         for (int i = 0; i < count; i++) 
