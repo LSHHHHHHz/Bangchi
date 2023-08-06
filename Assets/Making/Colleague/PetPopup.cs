@@ -31,6 +31,7 @@ public class PetPopup : MonoBehaviour
             Destroy(child);
         }
         children.Clear();
+
         this.oneMoreTimeAction = oneMoreTime;
         isCoroutineDone = false;
         StartCoroutine(SetupCoroutine(petgachaResult));
@@ -64,10 +65,10 @@ public class PetPopup : MonoBehaviour
             petSlot.gameObject.SetActive(true);
 
             // 나중에 삭제해야되니까 children에 넣어서 관리
-            PetInventoryManager.Instance.children.Add(petSlot.gameObject);
+            
 
             children.Add(petSlot.gameObject);
-
+            PetInventoryManager.Instance.petchildren.Add(petSlot.gameObject);
             yield return new WaitForSeconds(0.1f);
 
             yield return sequence.WaitForCompletion();

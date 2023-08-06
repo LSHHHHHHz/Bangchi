@@ -18,19 +18,30 @@ public class EquipmentUI : MonoBehaviour
     ItemSlot[] weaponSlots;
     ItemSlot[] shieldSlots;
 
+    
     public RectTransform weaponSlotParent;
     public RectTransform shieldSlotParent;
 
     public RectTransform weaponParent;
     public RectTransform shieldParent;
 
+    public Sprite lockedSprite;
+    public RectTransform EquipCharacterSword;
+    public RectTransform EquipCharacterShield;
+
+    ItemSlot equipWeaponSlot;
+    ItemSlot equipShieldSLot;
+
+
     GachaPopup gachaPopup;
     GachaResult gachaResult;
+
 
     //GachaPopupShield
     private void Awake()
     {
 
+       
         // 무기 슬롯이 16개가 있는데, 그것의 부모 GameObject가 weaponSlotParent이다.
         // 반대로 말하면 weaponSlotParent의 자식들을 가지고 오면 그것들은 무기 슬롯이다.
 
@@ -63,6 +74,12 @@ public class EquipmentUI : MonoBehaviour
             shieldChildList.Add(child);
         }
         shieldSlots = shieldChildList.ToArray();
+
+        childList = new();
+        equipWeaponSlot = EquipCharacterSword.GetComponent<ItemSlot>();
+
+        childList = new();
+        equipShieldSLot = EquipCharacterShield.GetComponent<ItemSlot>();
 
     }
     private void Start() //왜 ilStart에 넣는거지?
@@ -111,7 +128,8 @@ public class EquipmentUI : MonoBehaviour
    
     public void EquipOrUnequip(ItemSlot item)
     {
-        InventoryManager.instance.UnEquip(item.itemInfo.type); // 장착하고 있던 칼이나 방패등 장착 해제.
+        SetEquipSlot(item.itemInfo);
+        InventoryManager.instance.UnEquip(item.itemInfo); // 장착하고 있던 칼이나 방패등 장착 해제.
         InventoryManager.instance.Equip(item.itemInfo); // 장착.
     }
 
@@ -142,6 +160,24 @@ public class EquipmentUI : MonoBehaviour
         }
     }
 
+    private void SetEquipSlot(ItemInfo iteminfo)
+    {
+        if(iteminfo.type == ItemType.Sword)
+        {
+            int emptyIndex = -1;
+            ItemSlot equipSlot = equipWeaponSlot;
+            if(equipSlot.itemInfo == iteminfo)
+            {
+                return;
+            }
+            else
+            {
+                equipWeaponSlot.SetData(iteminfo);
+            }
+           
+            
+        }
+    }
 
     //------------------------------------------------------------------------------------------------
     private void OnInventoryChangedCallback()

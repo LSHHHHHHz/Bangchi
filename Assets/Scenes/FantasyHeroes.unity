@@ -2188,7 +2188,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemInfo: {fileID: 0}
-  icon: {fileID: 0}
+  icon: {fileID: 187726319}
   countText: {fileID: 0}
 --- !u!1 &197863171
 GameObject:
@@ -5524,14 +5524,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.19339621, b: 0.19339621, a: 1}
+  m_Color: {r: 1, g: 0.56553584, b: 0.19215685, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: cf1462bc694c3c249831ad8ac5293aa2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -13690,7 +13690,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 830349289}
-  - component: {fileID: 830349290}
   m_Layer: 5
   m_Name: "Pet \uC778\uBCA4\uD1A0\uB9AC"
   m_TagString: Untagged
@@ -13720,22 +13719,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -620, y: -1180}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &830349290
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 830349288}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a213dd1ff15ed284a9147661409911ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myPets: []
-  equipPets: []
-  children: []
-  grid: {fileID: 1113528645}
 --- !u!1 &838115341
 GameObject:
   m_ObjectHideFlags: 0
@@ -15745,7 +15728,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 11
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -21682,6 +21665,9 @@ MonoBehaviour:
   shieldSlotParent: {fileID: 586820730}
   weaponParent: {fileID: 50062274}
   shieldParent: {fileID: 412444476}
+  lockedSprite: {fileID: 21300000, guid: 38c6ff7be2f581a47843418f0d908c5a, type: 3}
+  EquipCharacterSword: {fileID: 187726318}
+  EquipCharacterShield: {fileID: 1486853079}
 --- !u!1 &1237864596
 GameObject:
   m_ObjectHideFlags: 0
@@ -27827,7 +27813,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1816, y: 0}
+  m_AnchoredPosition: {x: -1826, y: 0}
   m_SizeDelta: {x: 720, y: 1280}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1505937032
@@ -29200,7 +29186,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -91}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 105, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1582409127
 MonoBehaviour:
@@ -29222,7 +29208,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: cf1462bc694c3c249831ad8ac5293aa2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -37784,8 +37770,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myPets: []
   equipPets: []
-  children: []
-  grid: {fileID: 0}
+  petchildren: []
+  grid: {fileID: 1113528645}
 --- !u!1 &2015431676
 GameObject:
   m_ObjectHideFlags: 0

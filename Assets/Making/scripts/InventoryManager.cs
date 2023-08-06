@@ -23,6 +23,9 @@ public class InventoryManager : MonoBehaviour
     public List<ItemInstance> equippedItems = new(); //ÀåÂø ¾ÆÀÌÅÛ ¸®½ºÆ®
     public List<ItemInstance> colleague = new();
 
+    
+
+    int MaxEquipCount = 1;
     public void Awake()
     {
         instance = this;
@@ -50,6 +53,7 @@ public class InventoryManager : MonoBehaviour
         OnInventoryChanged?.Invoke(); 
     }
 
+   
     //-----------------------------------------------------------------------------------------------
 
     // °ÔÀÓÀ» ÀúÀåÇÒ ¶§, ¾ÆÀÌÅÛ È¹µæ½Ã ÀúÀåÇØÁÖ¸é µÊ
@@ -128,20 +132,5 @@ public class InventoryManager : MonoBehaviour
         Save();
     }
 
-    public void UnEquip(ItemType type)
-    {
-        for (int i = 0; i < equippedItems.Count;)
-        {
-            ItemInstance equippedItem = equippedItems[i];
-            if (equippedItem.itemInfo.type == type)
-            {
-                equippedItems.RemoveAt(i);
-                continue;
-            }
 
-            ++i;
-        }
-
-        OnEquippedItemChanged?.Invoke();
-    }
 }
