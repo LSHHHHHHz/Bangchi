@@ -3,12 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class Ability : MonoBehaviour
 {
     public float recoveryRate = 1; // 1초마다 회복되도록 설정
 
     public RectTransform uiGroup;
+    public RectTransform[] BuyButton;
+    public GameObject prefab;
     public Text talkText;
     public string[] talkData;
     public int[] ablityPrice; //어빌리티 구매 가격
@@ -50,11 +53,27 @@ public class Ability : MonoBehaviour
         uiGroup.anchoredPosition = new Vector3(550, -700, 0);
     }
 
-    
 
+    private void PlayPrefabEffect(Vector3 position)
+    {
+        // 게임 오브젝트 인스턴스 생성
+        GameObject effectInstance = Instantiate(prefab, position, Quaternion.identity);
+
+        // 여기서 추가적인 설정이 필요하면 작성
+    }
 
     public void Buy(int index) //index는 어떤 물건인지 확인함
-    {
+    { 
+        //RectTransform buyButton = BuyButton.GetComponent<RectTransform>();
+        RectTransform buyButton = BuyButton[index];
+
+        // DoTween Sequence를 만듭니다.
+        Sequence sequence = DOTween.Sequence();
+
+        sequence.Append(buyButton.transform.DOScale(1.2f, 0.1f)); // 1.2배 크기로 0.1초 동안 확장
+        sequence.Append(buyButton.transform.DOScale(1f, 0.1f)); // 원래 크기로 0.1초 동안 축소
+
+
         int price = ablityPrice[index];
         if (price > enterPlayer.Coin)
         {

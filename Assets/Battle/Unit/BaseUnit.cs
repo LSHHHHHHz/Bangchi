@@ -9,7 +9,7 @@ namespace Assets.Battle.Unit
 {
     public abstract class BaseUnit : MonoBehaviour
     {
-        public int _Current_HP;
+        public float _Current_HP;
         public int _Max_HP;
     }
 }

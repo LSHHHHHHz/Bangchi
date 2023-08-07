@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class Weapons : MonoBehaviour
 {
-    public int damage;
+    public float Weapon_damage;
+    public float Current_totalDamage;
     public float rate;
     public CapsuleCollider capsule;
     public RectTransform weaponSlotParent;
@@ -16,45 +17,21 @@ public class Weapons : MonoBehaviour
 
     void Start()
     {
-        totalDamage(damage);
-        Debug.Log(totalDamage(damage));
         
     }
-    public int AddDamage(ItemGrade grade)
+
+    private void Update()
     {
-        int addDamage = 0;
-
-        switch (grade)
-        {
-            case ItemGrade.FFF:
-                addDamage = 10;
-                break;
-            case ItemGrade.EEE:
-                addDamage = 20;
-                break;
-            case ItemGrade.CCC:
-                addDamage = 30;
-                break;
-            case ItemGrade.BBB:
-                addDamage = 40;
-                break;
-            case ItemGrade.AAA:
-                addDamage = 50;
-                break;
-            case ItemGrade.SSS:
-                addDamage = 60;
-                break;
-        }
-
-        return addDamage;
+        totalDamage(Weapon_damage);
     }
 
-    public int totalDamage(int baseDamage)
+
+    public float totalDamage(float weaponDamage)
     {
-        int addDamage = AddDamage(grade);
-        int totalDamage = baseDamage + addDamage;
-            
-        return totalDamage;
+        float totalDamage = Weapon_damage + Player.instance.Current_Attack;
+        Current_totalDamage = totalDamage;
+
+        return Current_totalDamage;
     }
 
   

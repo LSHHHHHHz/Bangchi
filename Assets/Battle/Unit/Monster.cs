@@ -104,7 +104,7 @@ public class Monster : BaseUnit
         {
             Weapons weapons = other.GetComponent<Weapons>();
 
-            _Current_HP -= weapons.damage;
+            _Current_HP -= weapons.Weapon_damage;
         }
     }
 

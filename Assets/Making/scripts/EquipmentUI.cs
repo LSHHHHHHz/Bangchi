@@ -17,7 +17,6 @@ public class EquipmentUI : MonoBehaviour
 
     ItemSlot[] weaponSlots;
     ItemSlot[] shieldSlots;
-
     
     public RectTransform weaponSlotParent;
     public RectTransform shieldSlotParent;
@@ -26,10 +25,10 @@ public class EquipmentUI : MonoBehaviour
     public RectTransform shieldParent;
 
     public Sprite lockedSprite;
-    public RectTransform EquipCharacterSword;
-    public RectTransform EquipCharacterShield;
 
-    ItemSlot equipWeaponSlot;
+    public RectTransform EquipCharacterSword; //무기 슬롯(오브젝트)을 넣는 것
+    public RectTransform EquipCharacterShield;
+    ItemSlot equipWeaponSlot; //무기 슬롯을 담을 변수
     ItemSlot equipShieldSLot;
 
 
@@ -41,7 +40,6 @@ public class EquipmentUI : MonoBehaviour
     private void Awake()
     {
 
-       
         // 무기 슬롯이 16개가 있는데, 그것의 부모 GameObject가 weaponSlotParent이다.
         // 반대로 말하면 weaponSlotParent의 자식들을 가지고 오면 그것들은 무기 슬롯이다.
 
@@ -91,38 +89,6 @@ public class EquipmentUI : MonoBehaviour
         SetData();
     }
 
-    private void ChangeEquip(ItemSlot itemSlot)
-    {
-        // itemSlot이 null인 상황이 정상인가?
-        // 비정상. 가만히 두기
-        // itemInfo가 null인 상황은?
-        //  - 아이템 정보가 설정 안된 것 - 잠겨있다는 뜻
-        // 잠겨있는 아이템을 장착하는 것은 불가능.
-        if (itemSlot.itemInfo == null)
-        {
-            // 잠겨있는 아이템은 장착할 수 없음.
-            return;
-        }
-
-
-        if (itemSlot.itemInfo.type == ItemType.Sword)
-        {
-            int emptyIndex = -1;
-            for (int i = 0; i < weaponSlots.Length; ++i)
-            {
-                ItemSlot equipSlot = weaponSlots[i];
-                if (equipSlot.itemInfo == itemSlot.itemInfo)
-                {
-                    return;
-                }
-                if (emptyIndex == -1 || equipSlot.itemInfo == null)
-                {
-                    emptyIndex = i;
-                }
-
-            }
-        }
-    }
 
     //------------------------------------------------------------------------------------------------
    
@@ -160,11 +126,10 @@ public class EquipmentUI : MonoBehaviour
         }
     }
 
-    private void SetEquipSlot(ItemInfo iteminfo)
+    private void SetEquipSlot(ItemInfo iteminfo) //캐릭터 상태창 넣기
     {
         if(iteminfo.type == ItemType.Sword)
         {
-            int emptyIndex = -1;
             ItemSlot equipSlot = equipWeaponSlot;
             if(equipSlot.itemInfo == iteminfo)
             {
@@ -174,8 +139,20 @@ public class EquipmentUI : MonoBehaviour
             {
                 equipWeaponSlot.SetData(iteminfo);
             }
-           
             
+        }
+        else if(iteminfo.type == ItemType.Shield)
+        {
+            ItemSlot equipSlot = equipShieldSLot;
+            if (equipSlot.itemInfo == iteminfo)
+            {
+                return;
+            }
+            else
+            {
+                equipShieldSLot.SetData(iteminfo);
+            }
+
         }
     }
 
@@ -194,7 +171,8 @@ public class EquipmentUI : MonoBehaviour
 
             // Instantiate(prefab) : prefab을 Instantiate 한다.
             // Instantiate 함수 원형 : GameObject Instantiate(GameObject original);
-            // prefab을 Instantiate한 후 해당 GameObect를 반환하고 이 GameObject에서 GachaPopup GetComponent를 가져와서 gachaPopup에 넣는다.
+            // prefab을 Instantiate한 후 해당 GameObect를 반환하고 이 GameObject에서
+            // GachaPopup GetComponent를 가져와서 gachaPopup에 넣는다.
             gachaPopup = Instantiate(prefab).GetComponent<GachaPopup>();
 
         }
@@ -235,6 +213,9 @@ public class EquipmentUI : MonoBehaviour
         shieldParent.localPosition = new Vector3(0, 0, 0);
         weaponParent.localPosition = new Vector3(1000f, 1000f, 1000f);
     }
+
+
+
 
 }
 

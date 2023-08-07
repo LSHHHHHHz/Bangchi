@@ -13,6 +13,7 @@ public class Player : BaseUnit
     public float playerSpeed;
 
     public GameObject[] weapons;
+    public GameObject[] shiled;
 
     Monster monsters;
     Rigidbody rigid;
@@ -72,6 +73,10 @@ public class Player : BaseUnit
 
     public int Coin;
     public int PetCoin;
+    public int ColleageCoinWater;
+    public int ColleageCoinSoil;
+    public int ColleageCoinWind;
+    public int ColleageCoinFire;
     public int Diemond;
 
 
@@ -156,6 +161,21 @@ public class Player : BaseUnit
                 }
             }
             // 방패도 여기서 끼기
+            if(equippedItem.itemInfo.type == ItemType.Shield)
+            {
+                int shiledIndex = equippedItem.itemInfo.Number - 1;
+                for (int i = 0; i < shiled.Length; ++i)
+                {
+                    if (i == shiledIndex)
+                    {
+                        shiled[i].SetActive(true);
+                    }
+                    else
+                    {
+                        shiled[i].SetActive(false);
+                    }
+                }
+            }
         }
     }
 

@@ -24,8 +24,6 @@ public class InventoryManager : MonoBehaviour
     public List<ItemInstance> colleague = new();
 
     
-
-    int MaxEquipCount = 1;
     public void Awake()
     {
         instance = this;
@@ -63,6 +61,8 @@ public class InventoryManager : MonoBehaviour
         inventoryData.myItems = myItems;
         inventoryData.equippedItems = equippedItems;
         string json = JsonUtility.ToJson(inventoryData);
+
+
         // PlayerPrefs : 데이터를 저장하고 불러오는데 쓰는 클래스
         PlayerPrefs.SetString("InventoryData", json);
         PlayerPrefs.Save();
@@ -99,6 +99,7 @@ public class InventoryManager : MonoBehaviour
             //myItems = inventoryData.myItems;
         }
     }
+ 
 
     public void Equip(ItemInfo itemInfo)
     {
@@ -128,7 +129,6 @@ public class InventoryManager : MonoBehaviour
 
         equippedItems.Remove(existItem);
         OnEquippedItemChanged?.Invoke();
-
         Save();
     }
 
