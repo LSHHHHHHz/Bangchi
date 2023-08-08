@@ -2358,8 +2358,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1494332872}
-        m_TargetAssemblyTypeName: ColleagueStatus, Assembly-CSharp
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: ColleagueStats, Assembly-CSharp
         m_MethodName: ColleagueStatusBuy
         m_Mode: 3
         m_Arguments:
@@ -2894,14 +2894,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4433962, g: 0.4433962, b: 0.4433962, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 7066e0747291df44fa5c2bf93bee3a6e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5167,14 +5167,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4433962, g: 0.4433962, b: 0.4433962, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 7066e0747291df44fa5c2bf93bee3a6e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -8744,8 +8744,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1494332872}
-        m_TargetAssemblyTypeName: ColleagueStatus, Assembly-CSharp
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: ColleagueStats, Assembly-CSharp
         m_MethodName: ColleagueStatusBuy
         m_Mode: 3
         m_Arguments:
@@ -11243,8 +11243,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1494332872}
-        m_TargetAssemblyTypeName: ColleagueStatus, Assembly-CSharp
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: ColleagueStats, Assembly-CSharp
         m_MethodName: ColleagueStatusBuy
         m_Mode: 3
         m_Arguments:
@@ -12165,14 +12165,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.99382436, b: 0.8820755, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b1b7d244d57341f9a64fefb9ad87ceff, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 15101aa8274743f3b592174115165fe8, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -13257,14 +13257,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4433962, g: 0.4433962, b: 0.4433962, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 7066e0747291df44fa5c2bf93bee3a6e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -26974,7 +26974,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 7066e0747291df44fa5c2bf93bee3a6e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -29848,14 +29848,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4433962, g: 0.4433962, b: 0.4433962, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 7066e0747291df44fa5c2bf93bee3a6e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -29882,43 +29882,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1494332868}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f158feeda4cac964dbd2f67570113f62, type: 3}
+  m_Script: {fileID: 11500000, guid: 0a2a2b5f5c76e7740a40dc26d2c6a4ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ColleagueStatsPrice: 640000006400000064000000
-  ColleagueStatsPriceText:
-  - {fileID: 2007426692}
-  - {fileID: 1173845109}
-  - {fileID: 1478795751}
-  ColleagueStatsLVText:
-  - {fileID: 1533080076}
-  - {fileID: 662099409}
-  - {fileID: 252547918}
+  ColleagueStatsPrice: 
+  ColleagueStatsPriceText: []
+  ColleagueStatsLVText: []
   colleagueType: 0
-  Water_MP: 0
-  Water_MP_LV: 0
-  Water_MP_Recovery: 0
-  Water_MP_Recovery_LV: 0
-  Water_PlusExp: 0
-  Water_PlusExp_LV: 0
-  Soil_CriticalDamage: 0
-  Soil_CriticalDamage_LV: 0
-  Soil_FinalTotalDamage: 0
-  Soil_FinalTotalDamage_LV: 0
-  Soil_PlusCoin: 0
-  Soil_PlusCoin_LV: 0
-  Soil_AttackSpeed: 0
-  Soil_AttackSpeed_LV: 0
-  Soil_MoveSpeed: 0
-  Soil_MoveSpeed_LV: 0
-  Soil_PlusPetCoin: 0
-  Soil_PlusPetCoin_LV: 0
-  Soil_Attack: 0
-  Soil_Attack_LV: 0
-  Soil_HP: 0
-  Soil_HP_LV: 0
-  Soil_HP_Recovery: 0
-  Soil_HP_Recovery_LV: 0
+  First_stat: 0
+  First_stat_LV: 0
+  Second_stat: 0
+  Second_stat_LV: 0
+  Third_stat: 0
+  Third_stat_LV: 0
 --- !u!1 &1495706153
 GameObject:
   m_ObjectHideFlags: 0
