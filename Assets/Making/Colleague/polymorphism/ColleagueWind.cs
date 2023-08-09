@@ -8,7 +8,7 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 
-public class ColleagueWater : ColleaguePoly
+public class ColleagueWind : ColleaguePoly
 {
     
 
@@ -22,9 +22,9 @@ public class ColleagueWater : ColleaguePoly
         ColleagueStatsLVText[1].text = "LV" + Second_stat_LV.ToString();
         ColleagueStatsLVText[2].text = "LV" + Third_stat_LV.ToString();
 
-        ColleagueStatsNameText[0].text = "MP";
-        ColleagueStatsNameText[1].text = "MP 회복";
-        ColleagueStatsNameText[2].text = "추가 경험치";
+        ColleagueStatsNameText[0].text = "공격속도";
+        ColleagueStatsNameText[1].text = "이동속도";
+        ColleagueStatsNameText[2].text = "Pet 코인";
 
         ColleagueStatsInfoNameText[0].text = ColleagueStatsNameText[0].text + "+" + First_stat.ToString();
         ColleagueStatsInfoNameText[1].text = ColleagueStatsNameText[1].text + "+" + Second_stat.ToString();

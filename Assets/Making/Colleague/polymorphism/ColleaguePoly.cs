@@ -13,6 +13,10 @@ public abstract class ColleaguePoly : MonoBehaviour
     public int[] ColleagueStatsPrice;
     public Text[] ColleagueStatsPriceText;
     public Text[] ColleagueStatsLVText;
+    public Text[] ColleagueStatsNameText;
+    public Text[] ColleagueStatsInfoNameText;
+
+
     public ColleagueType colleagueType;
 
     public int First_stat;

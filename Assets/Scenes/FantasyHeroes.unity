@@ -2358,8 +2358,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ColleagueStats, Assembly-CSharp
+      - m_Target: {fileID: 1494332872}
+        m_TargetAssemblyTypeName: ColleagueWater, Assembly-CSharp
         m_MethodName: ColleagueStatusBuy
         m_Mode: 3
         m_Arguments:
@@ -8744,8 +8744,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ColleagueStats, Assembly-CSharp
+      - m_Target: {fileID: 1494332872}
+        m_TargetAssemblyTypeName: ColleagueWater, Assembly-CSharp
         m_MethodName: ColleagueStatusBuy
         m_Mode: 3
         m_Arguments:
@@ -11243,8 +11243,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ColleagueStats, Assembly-CSharp
+      - m_Target: {fileID: 1494332872}
+        m_TargetAssemblyTypeName: ColleagueWater, Assembly-CSharp
         m_MethodName: ColleagueStatusBuy
         m_Mode: 3
         m_Arguments:
@@ -29885,16 +29885,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a2a2b5f5c76e7740a40dc26d2c6a4ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ColleagueStatsPrice: 
-  ColleagueStatsPriceText: []
-  ColleagueStatsLVText: []
+  ColleagueStatsPrice: 640000006400000064000000
+  ColleagueStatsPriceText:
+  - {fileID: 2007426692}
+  - {fileID: 1173845109}
+  - {fileID: 1478795751}
+  ColleagueStatsLVText:
+  - {fileID: 1533080076}
+  - {fileID: 662099409}
+  - {fileID: 252547918}
   colleagueType: 0
-  First_stat: 0
-  First_stat_LV: 0
-  Second_stat: 0
-  Second_stat_LV: 0
-  Third_stat: 0
-  Third_stat_LV: 0
+  First_stat: 1
+  First_stat_LV: 1
+  Second_stat: 1
+  Second_stat_LV: 1
+  Third_stat: 1
+  Third_stat_LV: 1
 --- !u!1 &1495706153
 GameObject:
   m_ObjectHideFlags: 0

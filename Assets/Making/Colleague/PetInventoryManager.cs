@@ -26,15 +26,11 @@ public class PetInventoryManager : MonoBehaviour
  
     public void AddInventoryPets()
     {
-        Debug.Log("Children count: " + petchildren.Count);
-        Debug.Log("Grid: " + grid);
         foreach (GameObject child in petchildren)
         {
-            Debug.Log("Child: " + child);
             var inventorypet = Instantiate(child, grid.transform);
             var imageComponent = inventorypet.GetComponent<Image>();
             imageComponent.enabled = true; //이걸 넣어야만 이미지가 보임
-            Debug.Log("Instantiated: " + inventorypet);
         }
     }
 
