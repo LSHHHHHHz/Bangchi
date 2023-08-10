@@ -12,6 +12,7 @@ public class SkillGachaPopup : MonoBehaviour
     public Action runGacha11Action;
 
 
+    public GameObject gachaEffectPrefab;
     public GridLayoutGroup grid;
     public GameObject itemPrefab;
 
@@ -60,6 +61,10 @@ public class SkillGachaPopup : MonoBehaviour
             SkillSlot skillitemSlot = Instantiate(itemPrefab, grid.transform).GetComponent<SkillSlot>();
             // 아이템 슬롯에 뽑은 아이템 데이터 적용
             skillitemSlot.SetData(skillInfo);
+            GameObject effect = Instantiate(gachaEffectPrefab, skillitemSlot.transform);
+            var effectCanvas = effect.GetComponent<Canvas>();
+            if (effectCanvas != null)
+                effectCanvas.overrideSorting = true;
 
             var sequence = DOTween.Sequence();
             skillitemSlot.transform.localScale = Vector3.one * 3f;
@@ -82,6 +87,8 @@ public class SkillGachaPopup : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
 
             yield return sequence.WaitForCompletion();
+
+            //Destroy(effect.gameObject);
         }
 
         isCoroutineDone = true;

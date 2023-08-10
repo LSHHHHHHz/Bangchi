@@ -29894,6 +29894,14 @@ MonoBehaviour:
   - {fileID: 1533080076}
   - {fileID: 662099409}
   - {fileID: 252547918}
+  ColleagueStatsNameText:
+  - {fileID: 458653340}
+  - {fileID: 42984891}
+  - {fileID: 477669845}
+  ColleagueStatsInfoNameText:
+  - {fileID: 1244236806}
+  - {fileID: 1141028256}
+  - {fileID: 1406313254}
   colleagueType: 0
   First_stat: 1
   First_stat_LV: 1

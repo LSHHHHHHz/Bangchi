@@ -132,7 +132,7 @@ public class Player : BaseUnit
     {
         ablityUpdate();
         LV_txt.text = "LV" + LV;
-        Exp_Bar.fillAmount = Current_Exp / Exp;
+        Exp_Bar.fillAmount = Exp == 0 ? 0 : (float)Current_Exp / Exp;
         Move();
         rayCast();
         Fighting();

@@ -495,9 +495,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9bfe1a612d8efe40a972e7c23efffc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gachaEffectPrefab: {fileID: 375299028243609477, guid: 5137d94e69a4aba4c88328df7ad7fa18, type: 3}
   grid: {fileID: 8081610327507258317}
   itemPrefab: {fileID: 1304311911501168271, guid: f39f98a087aa56840b2a95fa88340da3, type: 3}
-  image: {fileID: 0}
 --- !u!222 &1536025548648018873
 CanvasRenderer:
   m_ObjectHideFlags: 0
