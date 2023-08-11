@@ -30,7 +30,21 @@ namespace Assets.Item1
             return result;
         }
 
-        
+        public List<ItemInfo> GetItemGrade(ItemGrade itemGrade, ItemType type)
+        {
+            List<ItemInfo> result = new List<ItemInfo>();
+
+            foreach (ItemInfo item in items)
+            {
+                if(item.grade == itemGrade && item.type == type)
+                {
+                    result.Add(item);
+                }
+            }
+
+            return result;
+        }
+
     }
 
     

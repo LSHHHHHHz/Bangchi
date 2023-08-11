@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01bd080c23aee374fbc74ac37344eff8, type: 3}
   m_Name: WP17
   m_EditorClassIdentifier: 
-  grade: 6
+  grade: 3
   type: 0
+  petType: 0
   name: Item17
   iconPath: ItemIcon/SSS
   Number: 17

@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01bd080c23aee374fbc74ac37344eff8, type: 3}
   m_Name: WP5
   m_EditorClassIdentifier: 
-  grade: 0
+  grade: 1
   type: 0
+  petType: 0
   name: item5
   iconPath: ItemIcon/B1
   Number: 5

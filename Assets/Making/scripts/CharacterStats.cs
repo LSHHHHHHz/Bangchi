@@ -1,5 +1,9 @@
+using Assets.HeroEditor.InventorySystem.Scripts.Elements;
+using Assets.Item1;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor.Timeline;
 using UnityEngine;
 using UnityEngine.UI;
 public class CharacterStats : MonoBehaviour
@@ -20,13 +24,22 @@ public class CharacterStats : MonoBehaviour
 
     public RectTransform characterUI;
     public RectTransform characterUIClose;
+
+    public ItemSlot equipWeaponSlot; //무기 슬롯을 담을 변수
+    public ItemSlot equipShieldSLot;
+
     void Start()
     {
+        RefreshWeapon();
+        InventoryManager.instance.OnEquippedItemChanged += RefreshWeapon;
     }
+
     void Update()
     {
         Text_Stats();
     }
+
+
 
     void Text_Stats()
     {
@@ -50,6 +63,43 @@ public class CharacterStats : MonoBehaviour
     public void characterClose()
     {
         characterUI.localPosition = new Vector3(-782, 455, 0);
+    }
+
+    private void RefreshWeapon()
+    {
+        foreach (ItemInstance equippedItem in InventoryManager.instance.equippedItems)
+        {
+            OnEquipItem(equippedItem.itemInfo);
+        }
+    }
+
+    private void OnEquipItem(Assets.Item1.ItemInfo itemInfo)
+    {
+        if (itemInfo.type == ItemType.Sword)
+        {
+            ItemSlot equipSlot = equipWeaponSlot;
+            if (equipSlot.itemInfo == itemInfo)
+            {
+                return;
+            }
+            else
+            {
+                equipWeaponSlot.SetData(itemInfo);
+            }
+
+        }
+        else if (itemInfo.type == ItemType.Shield)
+        {
+            ItemSlot equipSlot = equipShieldSLot;
+            if (equipSlot.itemInfo == itemInfo)
+            {
+                return;
+            }
+            else
+            {
+                equipShieldSLot.SetData(itemInfo);
+            }
+        }
     }
 
 }

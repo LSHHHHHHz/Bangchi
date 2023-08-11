@@ -26,11 +26,7 @@ public class PetPopup : MonoBehaviour
     {
         transform.position = new Vector3(0, -1000, 0);
 
-        foreach(GameObject child in children)
-        {
-            Destroy(child);
-        }
-        children.Clear();
+       
 
         this.oneMoreTimeAction = oneMoreTime;
         isCoroutineDone = false;

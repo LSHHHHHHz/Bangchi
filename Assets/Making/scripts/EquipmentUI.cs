@@ -26,11 +26,8 @@ public class EquipmentUI : MonoBehaviour
 
     public Sprite lockedSprite;
 
-    public RectTransform EquipCharacterSword; //무기 슬롯(오브젝트)을 넣는 것
-    public RectTransform EquipCharacterShield;
-    ItemSlot equipWeaponSlot; //무기 슬롯을 담을 변수
-    ItemSlot equipShieldSLot;
-
+    public CharacterStats characterStats;
+    
 
     GachaPopup gachaPopup;
     GachaResult gachaResult;
@@ -72,13 +69,6 @@ public class EquipmentUI : MonoBehaviour
             shieldChildList.Add(child);
         }
         shieldSlots = shieldChildList.ToArray();
-
-        childList = new();
-        equipWeaponSlot = EquipCharacterSword.GetComponent<ItemSlot>();
-
-        childList = new();
-        equipShieldSLot = EquipCharacterShield.GetComponent<ItemSlot>();
-
     }
     private void Start() //왜 ilStart에 넣는거지?
     {
@@ -126,34 +116,9 @@ public class EquipmentUI : MonoBehaviour
         }
     }
 
-    private void SetEquipSlot(ItemInfo iteminfo) //캐릭터 상태창 넣기
+    private void SetEquipSlot(ItemInfo itemInfo) //캐릭터 상태창 넣기
     {
-        if(iteminfo.type == ItemType.Sword)
-        {
-            ItemSlot equipSlot = equipWeaponSlot;
-            if(equipSlot.itemInfo == iteminfo)
-            {
-                return;
-            }
-            else
-            {
-                equipWeaponSlot.SetData(iteminfo);
-            }
-            
-        }
-        else if(iteminfo.type == ItemType.Shield)
-        {
-            ItemSlot equipSlot = equipShieldSLot;
-            if (equipSlot.itemInfo == iteminfo)
-            {
-                return;
-            }
-            else
-            {
-                equipShieldSLot.SetData(iteminfo);
-            }
-
-        }
+        //characterStats.OnEquipItem(itemInfo);
     }
 
     //------------------------------------------------------------------------------------------------

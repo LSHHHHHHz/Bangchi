@@ -10,13 +10,14 @@ namespace Assets.Item1
 {
     public enum ItemGrade
     {
-        FFF,
-        EEE,
-        DDD,
-        CCC,
-        BBB,
-        AAA,
-        SSS
+        D,
+        C,
+        B,
+        A,
+        S
+
+
+
     }
 
     public enum PetType

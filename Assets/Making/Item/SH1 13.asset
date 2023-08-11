@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01bd080c23aee374fbc74ac37344eff8, type: 3}
   m_Name: SH1 13
   m_EditorClassIdentifier: 
-  grade: 0
+  grade: 3
   type: 1
+  petType: 0
   name: item13
   iconPath: ItemIcon/Sheild/SHS1
   Number: 13

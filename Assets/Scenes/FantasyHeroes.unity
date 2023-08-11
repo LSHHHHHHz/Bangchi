@@ -23847,8 +23847,7 @@ MonoBehaviour:
   weaponParent: {fileID: 50062274}
   shieldParent: {fileID: 412444476}
   lockedSprite: {fileID: 21300000, guid: 38c6ff7be2f581a47843418f0d908c5a, type: 3}
-  EquipCharacterSword: {fileID: 187726318}
-  EquipCharacterShield: {fileID: 1486853079}
+  characterStats: {fileID: 2015431681}
 --- !u!1 &1237864596
 GameObject:
   m_ObjectHideFlags: 0
@@ -40298,6 +40297,8 @@ MonoBehaviour:
   _Exp: {fileID: 1997807059}
   characterUI: {fileID: 424015533}
   characterUIClose: {fileID: 0}
+  equipWeaponSlot: {fileID: 187726321}
+  equipShieldSLot: {fileID: 1486853082}
 --- !u!1 &2015802008
 GameObject:
   m_ObjectHideFlags: 0
