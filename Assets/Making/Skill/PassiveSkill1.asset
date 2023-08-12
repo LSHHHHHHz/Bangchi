@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b77716afe1b29b2428fcf61567d356d5, type: 3}
   m_Name: PassiveSkill1
   m_EditorClassIdentifier: 
+  skillPrefab: {fileID: 0}
   grade: 0
   type: 1
   name: skill1

@@ -30,7 +30,7 @@ namespace Assets.Item1
             return result;
         }
 
-        public List<ItemInfo> GetItemGrade(ItemGrade itemGrade, ItemType type)
+        public List<ItemInfo> GetItemGradeAndType(ItemGrade itemGrade, ItemType type)
         {
             List<ItemInfo> result = new List<ItemInfo>();
 

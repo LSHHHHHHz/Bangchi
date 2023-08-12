@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b77716afe1b29b2428fcf61567d356d5, type: 3}
   m_Name: PassiveSkill4
   m_EditorClassIdentifier: 
-  grade: 0
+  skillPrefab: {fileID: 0}
+  grade: 1
   type: 1
   name: skill3
   iconPath: PAS4

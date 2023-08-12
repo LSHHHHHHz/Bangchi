@@ -55,7 +55,7 @@ public class SkillGachaPopup : MonoBehaviour
         for (int i = 0; i < skillgachaResult.items.Count; ++i)
         {
             SkillInfo skillInfo = skillgachaResult.items[i];
-            bool isDelayShowing = (int)skillInfo.grade >= (int)SkillGrade.CCC;
+            bool isDelayShowing = (int)skillInfo.grade >= (int)SkillGrade.B;
 
             // 아이템 슬롯 생성
             SkillSlot skillitemSlot = Instantiate(itemPrefab, grid.transform).GetComponent<SkillSlot>();

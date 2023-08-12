@@ -4,19 +4,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
+using Assets.Item1;
+using Unity.VisualScripting;
 
 public class GachaPopup : MonoBehaviour //가차 결과를 보여주는 UI
 {
-    public Action runGacha1Action;
-    public Action runGacha11Action;
-
-
     public GridLayoutGroup grid;
     public GameObject itemPrefab;
 
     private List<GameObject> children = new List<GameObject>();
 
     private Action<int> oneMoreTimeAction; // oneMoreTime 전달받은 값을 저장하기 위해 따로 멤버 필드로 가지고 있음.
+
+    private bool isCoroutineDone = true;
 
     public void Initialize(GachaResult gachaResult, Action<int> oneMoreTime)
     {
@@ -29,22 +30,48 @@ public class GachaPopup : MonoBehaviour //가차 결과를 보여주는 UI
 
         // 나중에 다시 뽑기 버튼 누르면 호출하기 위해 클래스의 멤버 필드인 oneMoreTimeAction에 값을 저장한다.
         this.oneMoreTimeAction = oneMoreTime;
+
+        isCoroutineDone = false;
+        StartCoroutine(SetupCoroutine(gachaResult));
+    }
+    private IEnumerator SetupCoroutine(GachaResult gachaResult)
+    {
+        yield return transform.DOLocalMoveX(0, 2f).Play().WaitForCompletion();
+
         for (int i = 0; i < gachaResult.items.Count; ++i)
         {
+            ItemInfo itemInfo = gachaResult.items[i];
+            bool isHigeGrade = (int)itemInfo.grade >= (int)ItemGrade.C;
+
             // 아이템 슬롯 생성
             ItemSlot itemSlot = Instantiate(itemPrefab, grid.transform).GetComponent<ItemSlot>();
 
             // 아이템 슬롯에 뽑은 아이템 데이터 적용
             itemSlot.SetData(gachaResult.items[i]);
 
+            var sequence = DOTween.Sequence();
+            itemSlot.transform.localScale = Vector3.one * 3;
+            
+            if (isHigeGrade)
+            {
+                sequence.Append(itemSlot.transform.DOScale(1.5f, 0.2f).SetLoops(4));
+                sequence.Append(itemSlot.transform.DOScale(1f, 0.2f));
+            }
+
+            sequence.Play();
+
             // 아이템 프리팹이 원래 Active:false였으니 이것도 false인 상태. true로 바꿔서 보이게 한다.
             itemSlot.gameObject.SetActive(true);
 
             // 나중에 삭제해야되니까 children에 넣어서 관리
             children.Add(itemSlot.gameObject);
-        }
-    }
+            yield return itemSlot.transform.DOScale(Vector3.one, 0.1f).WaitForCompletion();
 
+            yield return sequence.WaitForCompletion();
+
+        }
+        isCoroutineDone = true;
+    }
     public void Close()
     {
         Destroy(gameObject);

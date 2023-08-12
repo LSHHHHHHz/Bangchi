@@ -10,11 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b77716afe1b29b2428fcf61567d356d5, type: 3}
-  m_Name: ActiveSkill5
+  m_Name: 00
   m_EditorClassIdentifier: 
-  skillPrefab: {fileID: 0}
-  grade: 2
-  type: 0
-  name: skill5
-  iconPath: ACT 5
-  Number: 5
+  grade: 0
+  type: 1
+  name: skill3
+  iconPath: PAS4
+  Number: 4

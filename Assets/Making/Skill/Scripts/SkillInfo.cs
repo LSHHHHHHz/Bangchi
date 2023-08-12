@@ -6,13 +6,11 @@ namespace Assets.Item1
 {
     public enum SkillGrade
     {
-        FFF,
-        EEE,
-        DDD,
-        CCC,
-        BBB,
-        AAA,
-        SSS
+        D,
+        C,
+        B,
+        A,
+        S
     }
 
     public enum SkillType

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ActiveSkill4
   m_EditorClassIdentifier: 
   skillPrefab: {fileID: 2769186315298664327, guid: df0bab004ee4bee40b51a807398be152, type: 3}
-  grade: 0
+  grade: 1
   type: 0
   name: skill4
   iconPath: ACT 4

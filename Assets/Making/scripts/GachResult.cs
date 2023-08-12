@@ -37,10 +37,10 @@ internal class GachaCalculator
     {
         var result = new GachaResult();
 
-        List<ItemInfo> typeAItems = itemDB.GetItemGrade(ItemGrade.A, type);
-        List<ItemInfo> typeBItems = itemDB.GetItemGrade(ItemGrade.B, type);
-        List<ItemInfo> typeCItems = itemDB.GetItemGrade(ItemGrade.C, type);
-        List<ItemInfo> typeDItems = itemDB.GetItemGrade(ItemGrade.D, type);
+        List<ItemInfo> typeAItems = itemDB.GetItemGradeAndType(ItemGrade.A, type);
+        List<ItemInfo> typeBItems = itemDB.GetItemGradeAndType(ItemGrade.B, type);
+        List<ItemInfo> typeCItems = itemDB.GetItemGradeAndType(ItemGrade.C, type);
+        List<ItemInfo> typeDItems = itemDB.GetItemGradeAndType(ItemGrade.D, type);
 
         for (int i = 0; i < count; ++i)
         {
