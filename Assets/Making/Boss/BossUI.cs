@@ -25,7 +25,7 @@ public class BossUI : MonoBehaviour
     {
         canvasGroup.alpha = 1;
         rectTransform.transform.localPosition = new Vector3(0f, 0f, 0f);
-        rectTransform.DOAnchorPos(new Vector2(0f, -1000f), fadeTime, false).SetEase(Ease.InOutQuint);
+        rectTransform.DOAnchorPos(new Vector2(0f, -1500f), fadeTime, false).SetEase(Ease.InOutQuint);
         canvasGroup.DOFade(0, fadeTime);
     }
 }

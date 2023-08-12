@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class StagePopup : MonoBehaviour
+
 {
     public static StagePopup instance;
 

@@ -11,7 +11,7 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
-
+using DG.Tweening;
 public class StageUI : MonoBehaviour
 {
     StagePopup stagePopup;
@@ -50,6 +50,7 @@ public class StageUI : MonoBehaviour
             PageInfo selectedPage = pageDB.stagePage[pageNumber];
             StagePopup.instance.pageIcon.sprite = Resources.Load<Sprite>(selectedPage.pageIconPath);
         }
+
 
     }
     public void RightStageChange()

@@ -25,8 +25,12 @@ public class PetPopup : MonoBehaviour
     public void Initialize(PetGachaResult petgachaResult, Action<int> oneMoreTime)
     {
         transform.position = new Vector3(0, -1000, 0);
+        foreach (GameObject child in children)
+        {
+            Destroy(child); //객체 파괴
+        }
+        children.Clear(); // 리스트 비우는것
 
-       
 
         this.oneMoreTimeAction = oneMoreTime;
         isCoroutineDone = false;
@@ -52,7 +56,7 @@ public class PetPopup : MonoBehaviour
 
            
 
-            sequence.Append(petSlot.transform.DOScale(1, 0.5f).SetEase(Ease.OutQuad));
+            sequence.Append(petSlot.transform.DOScale(1, 0.2f).SetEase(Ease.OutQuad));
           
             sequence.Play();
 
