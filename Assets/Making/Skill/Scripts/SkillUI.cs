@@ -1,4 +1,5 @@
 
+using Assets.HeroEditor.Common.Scripts.Common;
 using Assets.Item1;
 using Assets.Making.UI;
 using System;
@@ -8,9 +9,14 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using static Unity.Burst.Intrinsics.X86.Avx;
 
 public class SkillUI : MonoBehaviour
 {
+    public static SkillUI instance;
+    public delegate void ResetSkillDelegate(int value);
+    public event ResetSkillDelegate resetSkill;
+
     public SkillDB skillDB;
     public Sprite lockedSprite;
     public RectTransform activeSkillSlotParent; //인벤토리에서 엑티브 슬롯들의 부모 
@@ -29,9 +35,10 @@ public class SkillUI : MonoBehaviour
     SkillSlot[] equippedActiveSkillSlots; // 4칸
     SkillSlot[] equippedPassiveSkillSlots; // 4칸
 
-
     private void Awake()
     {
+        instance = this;
+
         // 무기 슬롯이 16개가 있는데, 그것의 부모 GameObject가 weaponSlotParent이다.
         // 반대로 말하면 weaponSlotParent의 자식들을 가지고 오면 그것들은 무기 슬롯이다.
 
@@ -212,11 +219,17 @@ public class SkillUI : MonoBehaviour
                     equipSlot.SetEmpty(lockedSprite);
                     equipSlot.skillInfo = null;
                     isEquiped = false;
+                   
+                        
                     return;
                 }
                 if (emptyIndex == -1 && equipSlot.skillInfo == null) //slot는 인벤토리, equipslot는 장착슬롯
                                                                      //    if (equipSlot.skillInfo == null) //slot는 인벤토리, equipslot는 장착슬롯
+                {
                     emptyIndex = i; // 만약 비어있는 칸이 있다면 index 저장
+                    IngameSkillList2.instance.SetSkills(skillInfo,skillInfo.type,emptyIndex);
+                    
+                }
             }
             // 저장된 비어있는 칸이 있다면 사용
             if (emptyIndex != -1)
@@ -270,7 +283,7 @@ public class SkillUI : MonoBehaviour
     //만약 SkillType가 Active라면 SkillSlot 타입의 slot변수에 activeSkillSlots에 들어있는 childList에 들어있는 것을 넣는다.
     //item은 SkillInstance로 받았으며, SkillSlot에 있는 SetData(SkillInstance skillInstance) 매개변수가 호출되어 사용된다.
     */
-
+    
     public void PassiveSkillOn()
     {
         passiveSkillUI.localPosition = new Vector3(0, 0, 0);

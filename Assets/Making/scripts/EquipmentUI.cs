@@ -103,10 +103,12 @@ public class EquipmentUI : MonoBehaviour
             // weaponSlots 배열의 [number - 1] 번째 요소를 가져와 slot 변수에 넣는다.
             // 요소(element) : 배열안에 들어있는 값들
             // 배열(array) : 같은 타입의 요소들이 연속적으로 나열된 데이터.
+         
             if (item.itemInfo.type == ItemType.Sword)
             {
                 ItemSlot slot = weaponSlots[number - 1];
                 slot.SetData(item);
+                
             }
             else if (item.itemInfo.type == ItemType.Shield)
             {

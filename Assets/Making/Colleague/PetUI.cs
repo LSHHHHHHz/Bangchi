@@ -38,23 +38,32 @@ public class PetUI : MonoBehaviour
 
     public void RunPet(int count)
     {
-        if(petPopup == null)
+        if (PetInventoryManager.Instance.accumulatePets.Count < PetInventoryManager.Instance.maxaccumulatePetsCount)
         {
-            GameObject prefab = Resources.Load<GameObject>("PetPopup");
+            if (petPopup == null)
+            {
+                GameObject prefab = Resources.Load<GameObject>("PetPopup");
 
-            petPopup = Instantiate(prefab).GetComponent<PetPopup>();
+                petPopup = Instantiate(prefab).GetComponent<PetPopup>();
+            }
+
+            PetGachaResult petGachaResult = PetGachaCalculator.Calculate(count, petDB);
+
+
+            foreach (var pet in petGachaResult.pets)
+            {
+                //PetInventoryManager.Instance.AddPet(pet); <--펫 인벤토리에서는 딱히 필요없음 count가 필요 없기 때문
+                PetInventoryManager.Instance.accumulatePet(pet);
+
+            }
+            PetInventoryManager.Instance.Save();
+
+            petPopup.Initialize(petGachaResult, this.RunPet);
         }
-
-        PetGachaResult petGachaResult = PetGachaCalculator.Calculate(count, petDB);
-
-
-        foreach(var pet in petGachaResult.pets)
+        else
         {
-            PetInventoryManager.Instance.AddPet(pet);
+            return;
         }
-        PetInventoryManager.Instance.Save();
-
-        petPopup.Initialize(petGachaResult, this.RunPet);
     }
 
     

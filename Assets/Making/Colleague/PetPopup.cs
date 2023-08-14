@@ -20,8 +20,9 @@ public class PetPopup : MonoBehaviour
     private bool isCoroutineDone = true;
     void Start()
     {
-        OnInitialize += PetInventoryManager.Instance.AddInventoryPets;
     }
+
+
     public void Initialize(PetGachaResult petgachaResult, Action<int> oneMoreTime)
     {
         transform.position = new Vector3(0, -1000, 0);
@@ -35,7 +36,6 @@ public class PetPopup : MonoBehaviour
         this.oneMoreTimeAction = oneMoreTime;
         isCoroutineDone = false;
         StartCoroutine(SetupCoroutine(petgachaResult));
-        OnInitialize?.Invoke();
 
     }
 
@@ -48,6 +48,10 @@ public class PetPopup : MonoBehaviour
 
             PetInfo petInfo = petGachaResult2.pets[i];
             PetSlot petSlot = Instantiate(petPrefab, gird.transform).GetComponent<PetSlot>();
+            
+           // PetSlot InventoryPetSlot = Instantiate(petPrefab, PetInventoryManager.Instance.inventoryGrid.transform).GetComponent<PetSlot>();
+           // InventoryPetSlot.SetData(petInfo);
+           
             petSlot.SetData(petInfo);
 
 
@@ -63,12 +67,12 @@ public class PetPopup : MonoBehaviour
 
             // 아이템 프리팹이 원래 Active:false였으니 이것도 false인 상태. true로 바꿔서 보이게 한다.
             petSlot.gameObject.SetActive(true);
-
+            //InventoryPetSlot.gameObject.SetActive(true);
             // 나중에 삭제해야되니까 children에 넣어서 관리
-            
+
 
             children.Add(petSlot.gameObject);
-            PetInventoryManager.Instance.petchildren.Add(petSlot.gameObject);
+           // PetInventoryManager.Instance.inventoryChildren.Add(InventoryPetSlot.gameObject);
             yield return new WaitForSeconds(0.1f);
 
             yield return sequence.WaitForCompletion();

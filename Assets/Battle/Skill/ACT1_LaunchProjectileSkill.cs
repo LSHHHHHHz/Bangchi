@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Assets.Battle.Skill
 {
-    public class LaunchProjectileSkill : BaseSkill
+    public class ACT1_LaunchProjectileSkill : BaseSkill
     {
         public GameObject projectilePrefab;
         public override void Execute()
