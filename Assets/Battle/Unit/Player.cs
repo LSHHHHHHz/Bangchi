@@ -78,7 +78,7 @@ public class Player : BaseUnit
     public int ColleageCoinWind;
     public int ColleageCoinFire;
     public int Diemond;
-
+    public int enforceCoin;
 
     //Ablity ∞ÒµÂ Ω∫≈› ªÛ≈¬√¢
     public Text _Attack;

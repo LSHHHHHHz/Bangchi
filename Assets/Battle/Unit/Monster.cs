@@ -7,6 +7,7 @@ using UnityEngine.UIElements;
 
 public class Monster : BaseUnit
 {
+    public GameObject hudDamageText;
     
     public int MonsterExp = 10;
 
@@ -15,6 +16,7 @@ public class Monster : BaseUnit
 
     public GameObject expIconPrefab; //경험치 아이콘
     public GameObject coinIconPrefab; //골드 아이콘
+    public GameObject enforceCoinPrefab; //강화석 아이콘
 
     public GameObject weaponPrefab;
     public float weaponPrefabProbability;
@@ -58,6 +60,7 @@ public class Monster : BaseUnit
             Destroy(gameObject);
             monsterDeathIcon(expIconPrefab);  //이거 안 넣으니 실행이 안됐음
             monsterDeathIcon(coinIconPrefab); //이거 안 넣으니 실행이 안됐음
+            monsterDeathIcon(enforceCoinPrefab);
 
             monsterDeathIcon(weaponPrefab, weaponPrefabProbability);
             monsterDeathIcon(shieldPrefab, shieldPrefabProbability);
@@ -104,7 +107,11 @@ public class Monster : BaseUnit
         {
             Weapons weapons = other.GetComponent<Weapons>();
 
-            _Current_HP -= weapons.Weapon_damage;
+            _Current_HP -= weapons.Current_totalDamage;
+
+            GameObject hudeText = Instantiate(hudDamageText);
+            hudeText.transform.position = transform.position + new Vector3(0,1,0);
+            hudeText.GetComponent<DamageText>().damage = (int)weapons.Current_totalDamage;
         }
     }
 

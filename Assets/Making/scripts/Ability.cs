@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.UIElements;
 
 public class Ability : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class Ability : MonoBehaviour
 
     public Player enterPlayer;
 
+    bool isButtonPress = false;
     public Ability()
     {
         ablityPrice = new int[5]; // 길이가 5인 배열을 생성
@@ -60,6 +62,25 @@ public class Ability : MonoBehaviour
         GameObject effectInstance = Instantiate(prefab, position, Quaternion.identity);
 
         // 여기서 추가적인 설정이 필요하면 작성
+    }
+
+    public void OnbuttonPressDown(int index)
+    {
+        isButtonPress = true;
+        StartCoroutine(repeatedBuy(index));
+    }
+    public void OnbuttonPressUP(int index)
+    {
+        isButtonPress = false;
+    }
+
+    private IEnumerator repeatedBuy(int index)
+    {
+        while (isButtonPress)
+        {
+            Buy(index);
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 
     public void Buy(int index) //index는 어떤 물건인지 확인함

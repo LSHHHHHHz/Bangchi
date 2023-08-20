@@ -13,6 +13,7 @@ namespace Assets.Battle
         public Collider collider;
         public int exp;
         public int coin;
+        public int enforceCoin;
 
         Rigidbody prefabRigid;
         Transform target;
@@ -85,6 +86,7 @@ namespace Assets.Battle
 
             player.Exp += exp;
             player.Coin += coin;
+            player.enforceCoin += enforceCoin;
             Destroy(gameObject);
         }
     }

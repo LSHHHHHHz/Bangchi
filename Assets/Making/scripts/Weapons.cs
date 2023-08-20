@@ -28,7 +28,7 @@ public class Weapons : MonoBehaviour
 
     public float totalDamage(float weaponDamage)
     {
-        float totalDamage = Weapon_damage + Player.instance.Current_Attack;
+        float totalDamage = weaponDamage + Player.instance.Current_Attack;
         Current_totalDamage = totalDamage;
 
         return Current_totalDamage;

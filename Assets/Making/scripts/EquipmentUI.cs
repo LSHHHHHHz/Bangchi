@@ -27,12 +27,13 @@ public class EquipmentUI : MonoBehaviour
     public Sprite lockedSprite;
 
     public CharacterStats characterStats;
-    
 
+    public GameObject EquipAndEnforceUI;
+    
     GachaPopup gachaPopup;
     GachaResult gachaResult;
 
-
+    public EquipAndEnforcePopup EAEPopup;
     //GachaPopupShield
     private void Awake()
     {
@@ -47,7 +48,7 @@ public class EquipmentUI : MonoBehaviour
             var button = child.GetComponent<Button>();
             button.onClick.AddListener(() =>
             {
-                EquipOrUnequip(child);
+                EAEPopup.EquipAndEnforce(child);
             });
 
             childList.Add(child); // 자식을 childList에 임시로 넣어둔다.
