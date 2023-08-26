@@ -9,26 +9,21 @@ public class ItemSlot : MonoBehaviour
     public ItemInfo itemInfo;
     public Image icon;
     public Text countText;
-    public int count;
-    public int upgradeLevel;
+    public ItemInstance itemInstance;
 
     public void SetData(ItemInfo itemInfo)
     {
         this.itemInfo = itemInfo;
-        //itemInstance.upgradeLevel = itemInfo.Number;//★강화하려고 사용함
         icon.sprite = Resources.Load<Sprite>(itemInfo.iconPath);
         if (countText != null)
         {
-
+            
             countText.gameObject.SetActive(false);
         }
     }
 
     public void SetData(ItemInstance itemInstance)
     {
-        //this.itemInstance = itemInstance; //★강화하려고 사용함
-        this.count = itemInstance.count;
-
         SetData(itemInstance.itemInfo);
         if (countText != null)
         {

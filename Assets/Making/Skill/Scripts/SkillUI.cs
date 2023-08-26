@@ -165,35 +165,15 @@ public class SkillUI : MonoBehaviour
     // 장착 혹은 장착 해제
     private void EquipOrUnequip(SkillSlot slot)
     {
-        SetEquipSlot(slot.skillInfo.type, slot.skillInfo, out bool isEquiped);
-        List<SkillInfo> equippedSkills = new();
-        if (slot.skillInfo.type == SkillType.Active)
+        SetEquipSlot(slot.skillInfo, out bool isEquiped);
+        if (isEquiped)
         {
-            foreach (SkillSlot equippedSlot in equippedActiveSkillSlots)
-            {
-                equippedSkills.Add(equippedSlot.skillInfo);
-            }
-
-            SkillInventoryManager.instance.ChangeEquipSkillSet(SkillType.Active, equippedSkills);
+            SkillInventoryManager.instance.EquipSkill(slot.skillInfo);
         }
-        else if (slot.skillInfo.type == SkillType.Passive)
+        else
         {
-            foreach (SkillSlot equippedSlot in equippedPassiveSkillSlots)
-            {
-                equippedSkills.Add(equippedSlot.skillInfo);
-            }
-
-            SkillInventoryManager.instance.ChangeEquipSkillSet(SkillType.Passive, equippedSkills);
+            SkillInventoryManager.instance.UnEquipSkill(slot.skillInfo);
         }
-        
-        //if (isEquiped)
-        //{
-        //    SkillInventoryManager.instance.EquipSkill(slot.skillInfo);
-        //}
-        //else
-        //{
-        //    SkillInventoryManager.instance.UnEquipSkill(slot.skillInfo);
-        //}
     }
 
     // 인벤토리에 있는 아이템들을 UI에 설정하는 기능.
@@ -218,48 +198,16 @@ public class SkillUI : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < SkillInventoryManager.instance.equippedActiveSkills.Count; ++i)
+        foreach (SkillInstance equipedItem in SkillInventoryManager.instance.equippedSkills)
         {
-            SkillInstance equipSkill = SkillInventoryManager.instance.equippedActiveSkills[i];
-            SkillSlot equipSlot = equippedActiveSkillSlots[i];
-            if (equipSkill != null)
-            {
-                equipSlot.SetData(equipSkill);
-            }
-            else
-            {
-                equipSlot.SetEmpty(lockedSprite);
-            }
+            SetEquipSlot(equipedItem.skillInfo, out bool isEquiped);
         }
-
-        for (int i = 0; i < SkillInventoryManager.instance.equippedPassiveSkills.Count; ++i)
-        {
-            SkillInstance equipSkill = SkillInventoryManager.instance.equippedPassiveSkills[i];
-            SkillSlot equipSlot = equippedPassiveSkillSlots[i];
-            if (equipSkill != null)
-            {
-                equipSlot.SetData(equipSkill);
-            }
-            else
-            {
-                equipSlot.SetEmpty(lockedSprite);
-            }
-        }
-        //foreach (SkillInstance equipedItem in SkillInventoryManager.instance.equippedActiveSkills)
-        //{
-        //    SetEquipSlot(SkillType.Active, equipedItem?.skillInfo, out bool isEquiped);
-        //}
-
-        //foreach (SkillInstance equipedItem in SkillInventoryManager.instance.equippedPassiveSkills)
-        //{
-        //    SetEquipSlot(SkillType.Passive, equipedItem?.skillInfo, out bool isEquiped);
-        //}
     }
 
-    private void SetEquipSlot(SkillType type, SkillInfo skillInfo, out bool isEquiped)
+    private void SetEquipSlot(SkillInfo skillInfo, out bool isEquiped)
     {
         isEquiped = false;
-        if (type == SkillType.Active)
+        if (skillInfo.type == SkillType.Active)
         {
             int emptyIndex = -1;
             for (int i = 0; i < equippedActiveSkillSlots.Length; ++i)
@@ -271,14 +219,16 @@ public class SkillUI : MonoBehaviour
                     equipSlot.SetEmpty(lockedSprite);
                     equipSlot.skillInfo = null;
                     isEquiped = false;
-
-
+                   
+                        
                     return;
                 }
                 if (emptyIndex == -1 && equipSlot.skillInfo == null) //slot는 인벤토리, equipslot는 장착슬롯
                                                                      //    if (equipSlot.skillInfo == null) //slot는 인벤토리, equipslot는 장착슬롯
                 {
-                    emptyIndex = i; // 만약 비어있는 칸이 있다면 index 저장                    
+                    emptyIndex = i; // 만약 비어있는 칸이 있다면 index 저장
+                    IngameSkillList2.instance.SetSkills(skillInfo,skillInfo.type,emptyIndex);
+                    
                 }
             }
             // 저장된 비어있는 칸이 있다면 사용
@@ -292,7 +242,7 @@ public class SkillUI : MonoBehaviour
                 // 빈칸이 없다는 뜻.
             }
         }
-        else if (type == SkillType.Passive)
+        else if (skillInfo.type == SkillType.Passive)
         {
             int emptyIndex = -1;
             for (int i = 0; i < equippedPassiveSkillSlots.Length; ++i)
@@ -333,7 +283,7 @@ public class SkillUI : MonoBehaviour
     //만약 SkillType가 Active라면 SkillSlot 타입의 slot변수에 activeSkillSlots에 들어있는 childList에 들어있는 것을 넣는다.
     //item은 SkillInstance로 받았으며, SkillSlot에 있는 SetData(SkillInstance skillInstance) 매개변수가 호출되어 사용된다.
     */
-
+    
     public void PassiveSkillOn()
     {
         passiveSkillUI.localPosition = new Vector3(0, 0, 0);

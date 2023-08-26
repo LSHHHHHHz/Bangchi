@@ -8,8 +8,7 @@ using System;
 public class SkillInventoryData 
 {
     public List<SkillInstance> myItems = new();
-    public List<SkillInstance> equippedActiveSkills = new();
-    public List<SkillInstance> equippedPassiveSkills = new();
+    public List<SkillInstance> equippedSkills = new();
 }
 public class SkillInventoryManager : MonoBehaviour
 {
@@ -18,8 +17,7 @@ public class SkillInventoryManager : MonoBehaviour
 
     public static SkillInventoryManager instance;
     public List<SkillInstance> myItems = new();
-    public List<SkillInstance> equippedActiveSkills = new(); //장착 스킬 리스트
-    public List<SkillInstance> equippedPassiveSkills = new(); //장착 스킬 리스트
+    public List<SkillInstance> equippedSkills = new(); //장착 스킬 리스트
     public const int MaxEquipCount = 8;
 
     public void Awake()
@@ -58,37 +56,21 @@ public class SkillInventoryManager : MonoBehaviour
     //그렇지 않다면 
 
 
-    //public void EquipSkill(SkillInfo skillInfo)
-    //{
-    //    SkillInstance existItem = myItems.Find(item => item.skillInfo == skillInfo); //
-    //    if (existItem == null)
-    //    {
-    //        // 스킬을 가지고 있지 않다는 것!
-    //        throw new Exception($"Skill not found : {skillInfo.name}");
-    //    }
-
-    //    if (equippedSkills.Count == MaxEquipCount)
-    //    {
-    //        throw new Exception($"Max Equip count reached!");
-    //    }
-
-    //    equippedSkills.Add(existItem);
-    //    OnEquippedSkillsChanged?.Invoke();
-
-    //    Save();
-    //}
-
-    public void ChangeEquipSkillSet(SkillType skillType, List<SkillInfo> skillList)
+    public void EquipSkill(SkillInfo skillInfo)
     {
-        var equippedSkillList = skillType == SkillType.Active ? equippedActiveSkills : equippedPassiveSkills;
-
-        equippedSkillList.Clear();
-        foreach (SkillInfo skillInfo in skillList)
+        SkillInstance existItem = myItems.Find(item => item.skillInfo == skillInfo); //
+        if (existItem == null)
         {
-            SkillInstance existItem = myItems.Find(item => item.skillInfo == skillInfo); //
-            equippedSkillList.Add(existItem);
+            // 스킬을 가지고 있지 않다는 것!
+            throw new Exception($"Skill not found : {skillInfo.name}");
         }
 
+        if (equippedSkills.Count == MaxEquipCount)
+        {
+            throw new Exception($"Max Equip count reached!");
+        }
+
+        equippedSkills.Add(existItem);
         OnEquippedSkillsChanged?.Invoke();
 
         Save();
@@ -96,16 +78,14 @@ public class SkillInventoryManager : MonoBehaviour
 
     public void UnEquipSkill(SkillInfo skillInfo)
     {
-        var equippedSkillList = skillInfo.type == SkillType.Active ? equippedActiveSkills : equippedPassiveSkills;
-
-        SkillInstance existItem = equippedSkillList.Find(item => item.skillInfo == skillInfo);
+        SkillInstance existItem = equippedSkills.Find(item => item.skillInfo == skillInfo);
         if (existItem == null)
         {
             // 장착을 안했다는 얘기
             return;
         }
 
-        equippedSkillList.Remove(existItem);
+        equippedSkills.Remove(existItem);
         OnEquippedSkillsChanged?.Invoke();
 
         Save();
@@ -116,8 +96,7 @@ public class SkillInventoryManager : MonoBehaviour
     {
         var skillInventoryData = new SkillInventoryData();
         skillInventoryData.myItems = myItems;
-        skillInventoryData.equippedActiveSkills = equippedActiveSkills;
-        skillInventoryData.equippedPassiveSkills = equippedPassiveSkills;
+        skillInventoryData.equippedSkills = equippedSkills;
 
         string json = JsonUtility.ToJson(skillInventoryData);
 
@@ -146,16 +125,13 @@ public class SkillInventoryManager : MonoBehaviour
                 myItems.Add(item);
             }
 
-            for (int i = 0; i < data.equippedActiveSkills.Count; ++i)
+            for (int i = 0; i < data.equippedSkills.Count; ++i)
             {
-                var item = data.equippedActiveSkills[i];
-                equippedActiveSkills.Add(item);
-            }
+                var item = data.equippedSkills[i];
+                if (item.skillInfo == null)
+                    continue;
 
-            for (int i = 0; i < data.equippedPassiveSkills.Count; ++i)
-            {
-                var item = data.equippedPassiveSkills[i];
-                equippedPassiveSkills.Add(item);
+                equippedSkills.Add(item);
             }
 
             //myItems = inventoryData.myItems;

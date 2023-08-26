@@ -84,7 +84,14 @@ public class IngameSkillList : MonoBehaviour
 
     private void SetSkills(SkillSlot[] skillSlots, List<BaseSkill> skillsList, SkillType skillType)
     {
-        var equippedSkillList = skillType  == SkillType.Active ? SkillInventoryManager.instance.equippedActiveSkills : SkillInventoryManager.instance.equippedPassiveSkills;
+        List<SkillInstance> equippedSkills = new();
+        foreach (SkillInstance skillInstance in SkillInventoryManager.instance.equippedSkills)
+        {
+            if (skillInstance.skillInfo.type == skillType)
+            {
+                equippedSkills.Add(skillInstance);
+            }
+        }
 
         // skillSlots : 4개, equippedSkills : 2개
         // i : 3                             / 0, 1
@@ -96,18 +103,16 @@ public class IngameSkillList : MonoBehaviour
             // 1 < 2 ==> true
             // 2 < 2 ==> false
 
-            // equippedSkillList가 기본적으로는 4개, 처음 게임을 시작했을 때 / 인벤토리에서 장착을 아직 안했을 때 
-            // i가 equippedSkillList보다 크다면 내가 대응할 수 있는 범위가 아니니까 어차피 장착하지 않은 것이므로 null 값을 사용.
-            SkillInstance equipSkill = i < equippedSkillList.Count ? equippedSkillList[i] : null;
-            if (equipSkill != null)
+            if (i < equippedSkills.Count)
             {
                 // 장착할 스킬이 있음
-                slot.SetData(equipSkill); // 스킬 슬롯에 내가 장착한 스킬을 설정한다.
+                SkillInstance skillInstance = equippedSkills[i]; //내가 장착한 스킬을 skillInstance에 저장 
+                slot.SetData(skillInstance); // 스킬 슬롯에 내가 장착한 스킬을 설정한다.
 
-                GameObject skillPrefab = equipSkill.skillInfo.skillPrefab;
+                GameObject skillPrefab = skillInstance.skillInfo.skillPrefab;
                 if (skillPrefab == null)
                 {
-                    Debug.LogError($"SkillPrefab is null : {equipSkill.skillInfo.name}");
+                    Debug.LogError($"SkillPrefab is null : {skillInstance.skillInfo.name}");
                 }
                 else
                 {
