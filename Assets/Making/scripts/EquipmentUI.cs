@@ -15,9 +15,9 @@ public class EquipmentUI : MonoBehaviour
     
     public ItemDB itemDb;
 
-    ItemSlot[] weaponSlots;
-    ItemSlot[] shieldSlots;
-    
+    public ItemSlot[] weaponSlots;
+    public ItemSlot[] shieldSlots;
+
     public RectTransform weaponSlotParent;
     public RectTransform shieldSlotParent;
 
@@ -28,15 +28,16 @@ public class EquipmentUI : MonoBehaviour
 
     public CharacterStats characterStats;
 
-    public GameObject EquipAndEnforceUI;
     
     GachaPopup gachaPopup;
     GachaResult gachaResult;
 
-    public EquipAndEnforcePopup EAEPopup;
     //GachaPopupShield
+
+    public static EquipmentUI instance;
     private void Awake()
     {
+        instance = this;
 
         // 무기 슬롯이 16개가 있는데, 그것의 부모 GameObject가 weaponSlotParent이다.
         // 반대로 말하면 weaponSlotParent의 자식들을 가지고 오면 그것들은 무기 슬롯이다.
@@ -48,7 +49,7 @@ public class EquipmentUI : MonoBehaviour
             var button = child.GetComponent<Button>();
             button.onClick.AddListener(() =>
             {
-                EAEPopup.EquipAndEnforce(child);
+                EquipAndEnforcePopup.EquipAndEnforce(child);
             });
 
             childList.Add(child); // 자식을 childList에 임시로 넣어둔다.
