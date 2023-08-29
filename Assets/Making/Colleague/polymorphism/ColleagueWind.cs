@@ -14,6 +14,7 @@ public class ColleagueWind : ColleaguePoly
 
     public override void Update()
     {
+        Load();
         base.Update();
         ColleagueStatsNameText[0].text = "공격속도";
         ColleagueStatsNameText[1].text = "이동속도";
@@ -42,6 +43,7 @@ public class ColleagueWind : ColleaguePoly
             }
             ColleagueStatsPrice[index] += 100 * (index + 1);
             ColleagueStatsPriceText[index].text = ColleagueStatsPrice[index].ToString();
+            save();
         }
     }
 }

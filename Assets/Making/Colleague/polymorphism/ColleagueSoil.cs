@@ -14,6 +14,7 @@ public class ColleagueSoil : ColleaguePoly
 
     public override void Update()
     {
+        Load();
         base.Update();
         ColleagueStatsNameText[0].text = "크리티컬 데미지";
         ColleagueStatsNameText[1].text = "전체 공격력 추가";
@@ -43,6 +44,7 @@ public class ColleagueSoil : ColleaguePoly
             }
             ColleagueStatsPrice[index] += 100 * (index + 1);
             ColleagueStatsPriceText[index].text = ColleagueStatsPrice[index].ToString();
+            save();
         }
     }
 }

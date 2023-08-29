@@ -14,6 +14,7 @@ public class ColleagueWater : ColleaguePoly
 
     public override void Update()
     {
+        Load();
         base.Update();
         ColleagueStatsNameText[0].text = "MP";
         ColleagueStatsNameText[1].text = "MP 회복";
@@ -43,6 +44,7 @@ public class ColleagueWater : ColleaguePoly
             }
             ColleagueStatsPrice[index] += 100 * (index + 1);
             ColleagueStatsPriceText[index].text = ColleagueStatsPrice[index].ToString();
+            save();
         }
     }
 }

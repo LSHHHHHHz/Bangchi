@@ -12,6 +12,8 @@ public class CharacterStats : MonoBehaviour
     [SerializeField]
     private Player player;
 
+    public ColleaguePoly[] colleaguePoly;
+
     public Text _Attack;
     public Text _HP;
     public Text _HPRecovery;
@@ -19,14 +21,15 @@ public class CharacterStats : MonoBehaviour
     public Text _Criticalprobability;
     public Text _MP;
     public Text _MPRecovery;
-    public Text _Coin;
-    public Text _Exp;
+    public Text _CoinGetAmount; //획득량은 여기서만 조절
+    public Text _ExpGetAmount;  //획득량은 여기서만 조절
 
     public RectTransform characterUI;
     public RectTransform characterUIClose;
 
     public ItemSlot equipWeaponSlot; //무기 슬롯을 담을 변수
     public ItemSlot equipShieldSLot;
+
 
     void Start()
     {
@@ -52,7 +55,9 @@ public class CharacterStats : MonoBehaviour
         _MPRecovery.text = player.RecoveryMP + "";
 
     
-        _Coin.text = player.Coin + "";
+        //★ 왜 에러가 발생하는거지
+        //_CoinGetAmount.text = colleaguePoly[1].Third_stat.ToString();
+       // _ExpGetAmount.text = colleaguePoly[0].Third_stat + "";
     }
 
     public void characterOpen()

@@ -10,7 +10,10 @@ using UnityEngine.UI;
 
 public class ColleagueFire : ColleaguePoly
 {
-    
+    private void Start()
+    {
+        Load();
+    }
 
     public override void Update()
     {
@@ -43,6 +46,7 @@ public class ColleagueFire : ColleaguePoly
             }
             ColleagueStatsPrice[index] += 100 * (index + 1);
             ColleagueStatsPriceText[index].text = ColleagueStatsPrice[index].ToString();
+            save();
         }
     }
 }

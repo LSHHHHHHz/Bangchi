@@ -103,8 +103,45 @@ public abstract class ColleaguePoly : MonoBehaviour
         ColleagueStatsInfoNameText[2].text = ColleagueStatsNameText[2].text + "+" + Third_stat.ToString();
 
     }
-    public abstract void ColleagueStatusBuy(int index);
-   
 
-    
+
+    public abstract void ColleagueStatusBuy(int index);
+
+    public void save()
+    {
+        if (colleagueType == ColleagueType.Fire)
+        {
+            var colleagueData = new ColleagueData();
+
+            colleagueData.First_stat = this.First_stat;
+            colleagueData.First_stat_LV = this.First_stat_LV;
+            colleagueData.Second_stat = this.Second_stat;
+            colleagueData.Second_stat_LV = this.Second_stat_LV;
+            colleagueData.Third_stat_LV = this.Third_stat_LV;
+            colleagueData.Third_stat = this.Third_stat;
+            colleagueData.ColleagueStatsPrice = this.ColleagueStatsPrice;
+            string json = JsonUtility.ToJson(colleagueData);
+            
+            PlayerPrefs.SetString("colleagueData", json);
+            PlayerPrefs.Save();
+        }
+    }
+
+    public void Load2()
+    {
+        string json = PlayerPrefs.GetString("colleagueData");
+        if (string.IsNullOrEmpty(json) == false)
+        {
+            var colleagueData = JsonUtility.FromJson<ColleagueData>(json);
+
+            First_stat = colleagueData.First_stat;
+            First_stat_LV = colleagueData.First_stat_LV;
+            Second_stat = colleagueData.Second_stat;
+            Second_stat_LV = colleagueData.Second_stat_LV;
+            Third_stat = colleagueData.Third_stat;
+            Third_stat_LV = colleagueData.Third_stat_LV;
+            ColleagueStatsPrice = colleagueData.ColleagueStatsPrice;
+        }
+    }
+
 }

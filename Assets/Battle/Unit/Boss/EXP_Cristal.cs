@@ -14,7 +14,7 @@ public class EXP_Cristal : MonoBehaviour
     public int Cristal_HP = 1000000;
     public int Current_Cristal_HP;
 
-    float duration = 5f;
+    public float duration = 10f;
     float elapsedTime = 0f;
 
     public Image Time_Bar;
@@ -38,7 +38,7 @@ public class EXP_Cristal : MonoBehaviour
                 elapsedTime += Time.deltaTime;
                 Time_Bar.fillAmount = 1f - (elapsedTime / duration);
             }
-            if(Time_Bar.fillAmount < 0.01)
+            if(Time_Bar.fillAmount < 0.01 || Current_Cristal_HP<0)
             {
                 bossUI.Exit_Exp_Boss();
             }
@@ -48,7 +48,9 @@ public class EXP_Cristal : MonoBehaviour
         {
             Current_Cristal_HP = Cristal_HP;
             elapsedTime = 0f;
+           
         }
+        
     }
    
 

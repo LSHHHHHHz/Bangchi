@@ -10,6 +10,8 @@ using UnityEngine.UI;
 
 public class IngameSkillList : MonoBehaviour
 {
+    public static IngameSkillList instance;
+
     public Sprite lockedSprite;
     public RectTransform activeSkillSlotParent;
     public RectTransform passiveSkillSlotParent;
@@ -19,10 +21,11 @@ public class IngameSkillList : MonoBehaviour
     private SkillSlot[] passiveSkillSlots;
     // 내가 장착한 스킬들의 인스턴스를 가지고 있는다.
     // 가지고 있다가 스킬 버튼이 눌리면 스킬을 실행한다.
-    private BaseSkill[] skills;
+    public BaseSkill[] skills;
 
     private void Awake()
     {
+        instance = this;
         // 슬롯을 얻어오는 과정.
         // activeSkillSlotParent, passiveSkillSlotParent를 가지고 슬롯을 얻어옴.
         // Parent의 자식들을 순회하며 SkillSlot을 가져오고 Button 클릭시 처리도 연결한다.
@@ -82,7 +85,7 @@ public class IngameSkillList : MonoBehaviour
         this.skills = skills.ToArray();
     }
 
-    private void SetSkills(SkillSlot[] skillSlots, List<BaseSkill> skillsList, SkillType skillType)
+    public void SetSkills(SkillSlot[] skillSlots, List<BaseSkill> skillsList, SkillType skillType)
     {
         var equippedSkillList = skillType  == SkillType.Active ? SkillInventoryManager.instance.equippedActiveSkills : SkillInventoryManager.instance.equippedPassiveSkills;
 
