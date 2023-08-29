@@ -31,24 +31,44 @@ public class InventoryManager : MonoBehaviour
     }
 
     //-----------------------------------------------------------------------------------------------
-    public void AddItem(ItemInfo itemInfo) //인벤토리를 변경하는 메서드
+    public ItemInstance AddItem(ItemInfo itemInfo, int count = 1) //인벤토리를 변경하는 메서드
     {   
-        ItemInstance existItem = myItems.Find(item => item.itemInfo == itemInfo);
-        if (existItem != null)
+        ItemInstance itemInstance = myItems.Find(item => item.itemInfo == itemInfo);
+        if (itemInstance != null)
         {
-            existItem.count++;
+            itemInstance.count += count;
         }
         else
         {
-            myItems.Add(new ItemInstance()
+            itemInstance = new ItemInstance()
             {
                 itemInfo = itemInfo,
-                count = 1,
-                upgradeLevel = 1
-            });
+                count = count,
+            };
+            myItems.Add(itemInstance);
         }
 
-        OnInventoryChanged?.Invoke(); 
+        OnInventoryChanged?.Invoke();
+        return itemInstance;
+    }
+
+    public ItemInstance RemoveItem(ItemInfo itemInfo, int count = 1)
+    {
+        ItemInstance itemInstance = myItems.Find(item => item.itemInfo == itemInfo);
+        if (itemInstance != null)
+        {
+            if (itemInstance.count < count)
+                throw new Exception($"Not enough item : {itemInfo.name}");
+
+            itemInstance.count -= count;
+        }
+        else
+        {
+            throw new Exception($"Don't have item : {itemInfo.name}");
+        }
+
+        OnInventoryChanged?.Invoke();
+        return itemInstance;
     }
 
    
