@@ -218,6 +218,7 @@ public class SkillUI : MonoBehaviour
             }
         }
 
+        //★인벤토리 데이터 저장 기능?
         for (int i = 0; i < SkillInventoryManager.instance.equippedActiveSkills.Count; ++i)
         {
             SkillInstance equipSkill = SkillInventoryManager.instance.equippedActiveSkills[i];

@@ -2107,7 +2107,7 @@ Transform:
   - {fileID: 1482847678}
   - {fileID: 1666768069}
   m_Father: {fileID: 107958414}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &174796500
 SpriteRenderer:
@@ -15238,6 +15238,7 @@ MonoBehaviour:
   lockedSprite: {fileID: 21300000, guid: ad5725231980c644db158504c6023362, type: 3}
   activeSkillSlotParent: {fileID: 76356266}
   passiveSkillSlotParent: {fileID: 698039717}
+  skills: []
 --- !u!114 &766666611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38420,6 +38421,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4526183615447572, guid: ff726cbf10a6436a8c11071a7641036f, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 95570845223693640, guid: ff726cbf10a6436a8c11071a7641036f, type: 3}
       propertyPath: m_Controller
       value: 
@@ -45734,6 +45739,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 622718925}
+  colleaguePoly: []
   _Attack: {fileID: 1043605803}
   _HP: {fileID: 655029644}
   _HPRecovery: {fileID: 2048602600}
@@ -45741,8 +45747,8 @@ MonoBehaviour:
   _Criticalprobability: {fileID: 1113200955}
   _MP: {fileID: 2116738963}
   _MPRecovery: {fileID: 1281923835}
-  _Coin: {fileID: 722760579}
-  _Exp: {fileID: 1997807059}
+  _CoinGetAmount: {fileID: 0}
+  _ExpGetAmount: {fileID: 0}
   characterUI: {fileID: 424015533}
   characterUIClose: {fileID: 0}
   equipWeaponSlot: {fileID: 187726321}
