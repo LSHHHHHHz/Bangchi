@@ -3424,7 +3424,7 @@ MonoBehaviour:
   - {fileID: 365539308}
   - {fileID: 710796767}
   - {fileID: 178083423}
-  colleagueType: 0
+  colleagueType: 3
   First_stat: 0
   First_stat_LV: 0
   Second_stat: 0
@@ -5830,7 +5830,7 @@ MonoBehaviour:
   - {fileID: 768525949}
   - {fileID: 144928137}
   - {fileID: 653091665}
-  colleagueType: 0
+  colleagueType: 2
   First_stat: 0
   First_stat_LV: 0
   Second_stat: 0
@@ -14955,7 +14955,7 @@ MonoBehaviour:
   - {fileID: 1487879394}
   - {fileID: 1379980272}
   - {fileID: 2017919436}
-  colleagueType: 0
+  colleagueType: 1
   First_stat: 0
   First_stat_LV: 0
   Second_stat: 0
@@ -27455,6 +27455,7 @@ MonoBehaviour:
   shieldParent: {fileID: 412444476}
   lockedSprite: {fileID: 21300000, guid: 38c6ff7be2f581a47843418f0d908c5a, type: 3}
   characterStats: {fileID: 2015431681}
+  runGacha: 0
 --- !u!1 &1237864596
 GameObject:
   m_ObjectHideFlags: 0
@@ -38428,7 +38429,7 @@ PrefabInstance:
     - target: {fileID: 95570845223693640, guid: ff726cbf10a6436a8c11071a7641036f, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: b3d911bfb55932945bf0c48a749697a5, type: 2}
+      objectReference: {fileID: 9100000, guid: c5efe7f3580ca47408e220f50c5b4c20, type: 2}
     - target: {fileID: 210551130634140330, guid: ff726cbf10a6436a8c11071a7641036f, type: 3}
       propertyPath: m_SortingOrder
       value: 1
@@ -45739,7 +45740,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 622718925}
-  colleaguePoly: []
+  colleaguePoly:
+  - {fileID: 1494332872}
+  - {fileID: 747975976}
+  - {fileID: 347732384}
+  - {fileID: 213325316}
   _Attack: {fileID: 1043605803}
   _HP: {fileID: 655029644}
   _HPRecovery: {fileID: 2048602600}
@@ -45747,8 +45752,8 @@ MonoBehaviour:
   _Criticalprobability: {fileID: 1113200955}
   _MP: {fileID: 2116738963}
   _MPRecovery: {fileID: 1281923835}
-  _CoinGetAmount: {fileID: 0}
-  _ExpGetAmount: {fileID: 0}
+  _CoinGetAmount: {fileID: 457565911}
+  _ExpGetAmount: {fileID: 955273493}
   characterUI: {fileID: 424015533}
   characterUIClose: {fileID: 0}
   equipWeaponSlot: {fileID: 187726321}

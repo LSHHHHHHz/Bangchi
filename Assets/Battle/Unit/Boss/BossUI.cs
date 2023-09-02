@@ -10,23 +10,12 @@ using System;
 public class BossUI : MonoBehaviour
 {
     public EXP_Cristal exp;
-
     public float fadeTime = 1;
     public CanvasGroup canvasGroup;
     public RectTransform rectTransform;
-
     public GameObject backGround;
     public GameObject Bar;
-
     public bool isTimerActive = false;
-
-    private void Awake()
-    {
-    }
-    private void Update()
-    {
-        
-    }
     public void PanelFadeIn()
     {
         canvasGroup.alpha = 0;

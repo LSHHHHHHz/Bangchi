@@ -57,10 +57,10 @@ public class CharacterStats : MonoBehaviour
 
         //★ 왜 에러가 발생하는거지
 
-        //_CoinGetAmount.text = colleaguePoly[1].Third_stat.ToString();
+        _CoinGetAmount.text = colleaguePoly[1].Third_stat.ToString();
 
 
-        //_ExpGetAmount.text = colleaguePoly[0].Third_stat + "";
+        _ExpGetAmount.text = colleaguePoly[0].Third_stat + "";
     }
 
     public void characterOpen()

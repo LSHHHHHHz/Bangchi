@@ -27,7 +27,7 @@ public class EquipmentUI : MonoBehaviour
     public Sprite lockedSprite;
 
     public CharacterStats characterStats;
-
+    public bool runGacha = false;
     
     GachaPopup gachaPopup;
     GachaResult gachaResult;
@@ -132,33 +132,36 @@ public class EquipmentUI : MonoBehaviour
     }
     private void RunGacha(int count, ItemType type, Action<int> oneMoreTime)
     {
-
-        if (gachaPopup == null)
+        if (!runGacha)
         {
-            //GachaPopup1 GameObject를 불러와서 prefab 변수에 넣는다.
-            var prefab = Resources.Load<GameObject>("GachaPopup");
+            runGacha = true;
+            if (gachaPopup == null)
+            {
+                //GachaPopup1 GameObject를 불러와서 prefab 변수에 넣는다.
+                var prefab = Resources.Load<GameObject>("GachaPopup");
 
-            // Instantiate(prefab) : prefab을 Instantiate 한다.
-            // Instantiate 함수 원형 : GameObject Instantiate(GameObject original);
-            // prefab을 Instantiate한 후 해당 GameObect를 반환하고 이 GameObject에서
-            // GachaPopup GetComponent를 가져와서 gachaPopup에 넣는다.
-            gachaPopup = Instantiate(prefab).GetComponent<GachaPopup>();
+                // Instantiate(prefab) : prefab을 Instantiate 한다.
+                // Instantiate 함수 원형 : GameObject Instantiate(GameObject original);
+                // prefab을 Instantiate한 후 해당 GameObect를 반환하고 이 GameObject에서
+                // GachaPopup GetComponent를 가져와서 gachaPopup에 넣는다.
+                gachaPopup = Instantiate(prefab).GetComponent<GachaPopup>();
 
+            }
+
+            GachaResult gachaResult = GachaCalculator.Calculate(itemDb, count, type);
+
+            // 가챠를 통해 얻은 아이템을 인벤토리에 하나씩 추가
+            foreach (var item in gachaResult.items)
+            {
+                InventoryManager.instance.AddItem(item);
+            }
+
+            // 인벤토리에 다 추가했으면 저장
+            InventoryManager.instance.Save();
+
+            // 가챠팝업에서 뽑은 아이템들을 보여줘야 하므로 gachaResult를 넘김.
+            gachaPopup.Initialize(gachaResult, oneMoreTime);
         }
-
-        GachaResult gachaResult = GachaCalculator.Calculate(itemDb, count, type);
-
-        // 가챠를 통해 얻은 아이템을 인벤토리에 하나씩 추가
-        foreach (var item in gachaResult.items)
-        {
-            InventoryManager.instance.AddItem(item);
-        }
-
-        // 인벤토리에 다 추가했으면 저장
-        InventoryManager.instance.Save();
-
-        // 가챠팝업에서 뽑은 아이템들을 보여줘야 하므로 gachaResult를 넘김.
-        gachaPopup.Initialize(gachaResult, oneMoreTime);
     }
 
     public void RunGacha_Sword(int count)

@@ -10,41 +10,21 @@ using UnityEngine.UI;
 
 public class ColleagueWater : ColleaguePoly
 {
-    
-
     public override void Update()
     {
-        Load();
         base.Update();
         ColleagueStatsNameText[0].text = "MP";
         ColleagueStatsNameText[1].text = "MP 회복";
         ColleagueStatsNameText[2].text = "추가 경험치";
-
-
     }
-    public override void ColleagueStatusBuy(int index)
+
+    public override int GetCoin()
     {
-        int price = ColleagueStatsPrice[index];
-        if (Player.instance.ColleageCoinWater > price)
-        {
-            switch (index)
-            {
-                case 0:
-                    First_stat_LV += 1;
-                    First_stat += First_stat_LV;
-                    break;
-                case 1:
-                    Second_stat_LV += 1;
-                    Second_stat += Second_stat_LV;
-                    break;
-                case 2:
-                    Third_stat_LV += 1;
-                    Third_stat += Third_stat_LV;
-                    break;
-            }
-            ColleagueStatsPrice[index] += 100 * (index + 1);
-            ColleagueStatsPriceText[index].text = ColleagueStatsPrice[index].ToString();
-            save();
-        }
+        return Player.instance.ColleageCoinWater;
+    }
+
+    public override void SetCoin(int coin)
+    {
+        Player.instance.ColleageCoinWater = coin;
     }
 }

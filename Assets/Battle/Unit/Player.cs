@@ -181,26 +181,26 @@ public class Player : BaseUnit
 
     public void statDataSave()
     {
-        PlayerPrefs.SetFloat("Current_Attack", Current_Attack);
-        PlayerPrefs.SetInt("AttackLevel", AttackLevel);
+        PlayerPrefs.SetFloat(nameof(Current_Attack), Current_Attack);
+        PlayerPrefs.SetInt(nameof(AttackLevel), AttackLevel);
 
-        PlayerPrefs.SetInt("Current_HP", Max_HP);
-        PlayerPrefs.SetInt("HPLevel", HPLevel);
+        PlayerPrefs.SetInt(nameof(Current_HP), Max_HP);
+        PlayerPrefs.SetInt(nameof(HPLevel), HPLevel);
 
-        PlayerPrefs.SetInt("RecoveryHP", RecoveryHP);
-        PlayerPrefs.SetInt("RecoveryLevel", RecoveryLevel);
+        PlayerPrefs.SetInt(nameof(RecoveryHP), RecoveryHP);
+        PlayerPrefs.SetInt(nameof(RecoveryLevel), RecoveryLevel);
 
-        PlayerPrefs.SetFloat("Current_CriticalDamage", Current_CriticalDamage);
-        PlayerPrefs.SetInt("CriticalDamageLevel", CriticalDamageLevel);
+        PlayerPrefs.SetFloat(nameof(Current_CriticalDamage), Current_CriticalDamage);
+        PlayerPrefs.SetInt(nameof(CriticalDamageLevel), CriticalDamageLevel);
 
-        PlayerPrefs.SetFloat("Current_Criticalprobability", Current_Criticalprobability);
-        PlayerPrefs.SetInt("CriticalprobabilityLevel", CriticalprobabilityLevel);
+        PlayerPrefs.SetFloat(nameof(Current_Criticalprobability), Current_Criticalprobability);
+        PlayerPrefs.SetInt(nameof(CriticalprobabilityLevel), CriticalprobabilityLevel);
 
-        PlayerPrefs.SetInt("LV", LV);
-        PlayerPrefs.SetInt("Exp", Exp);
-        PlayerPrefs.SetInt("Current_Exp", Current_Exp);
+        PlayerPrefs.SetInt(nameof(LV), LV);
+        PlayerPrefs.SetInt(nameof(Exp), Exp);
+        PlayerPrefs.SetInt(nameof(Current_Exp), Current_Exp);
 
-        PlayerPrefs.SetInt("Coin", Coin);
+        PlayerPrefs.SetInt(nameof(Coin), Coin);
 
         int abliltyCoinLengh = ability.ablityPrice.Length;
         PlayerPrefs.SetInt("abliltyCoinLengh", abliltyCoinLengh);
@@ -210,38 +210,43 @@ public class Player : BaseUnit
             int value = ability.ablityPrice[i];
             PlayerPrefs.SetInt(key, value);
         }
-       
+
+        PlayerPrefs.SetInt(nameof(ColleageCoinFire), ColleageCoinFire);
+        PlayerPrefs.SetInt(nameof(ColleageCoinSoil), ColleageCoinSoil);
+        PlayerPrefs.SetInt(nameof(ColleageCoinWater), ColleageCoinWater);
+        PlayerPrefs.SetInt(nameof(ColleageCoinWind), ColleageCoinWind);
+
         // PlayerPrefs에 저장된 값을 디스크에 기록
         PlayerPrefs.Save();
     }
 
     public void statDataLoad()
     {
-        Current_Attack = PlayerPrefs.GetFloat("Current_Attack", 0);
-        AttackLevel = PlayerPrefs.GetInt("AttackLevel", 0);
+        Current_Attack = PlayerPrefs.GetFloat(nameof(Current_Attack), 0);
+        AttackLevel = PlayerPrefs.GetInt(nameof(AttackLevel), 0);
 
-        Max_HP = PlayerPrefs.GetInt("Current_HP", 0);
-        HPLevel = PlayerPrefs.GetInt("HPLevel", 0);
+        Max_HP = PlayerPrefs.GetInt(nameof(Current_HP), 0);
+        HPLevel = PlayerPrefs.GetInt(nameof(HPLevel), 0);
 
-        RecoveryHP = PlayerPrefs.GetInt("RecoveryHP", 0);
-        RecoveryLevel = PlayerPrefs.GetInt("RecoveryLevel", 0);
+        RecoveryHP = PlayerPrefs.GetInt(nameof(RecoveryHP), 0);
+        RecoveryLevel = PlayerPrefs.GetInt(nameof(RecoveryLevel), 0);
 
-        Current_CriticalDamage = PlayerPrefs.GetFloat("Current_CriticalDamage", 0);
-        CriticalDamageLevel = PlayerPrefs.GetInt("CriticalDamageLevel", 0);
+        Current_CriticalDamage = PlayerPrefs.GetFloat(nameof(Current_CriticalDamage), 0);
+        CriticalDamageLevel = PlayerPrefs.GetInt(nameof(CriticalDamageLevel), 0);
 
-        Current_Criticalprobability = PlayerPrefs.GetFloat("Current_Criticalprobability", 0);
-        CriticalprobabilityLevel = PlayerPrefs.GetInt("CriticalprobabilityLevel", 0);
+        Current_Criticalprobability = PlayerPrefs.GetFloat(nameof(Current_Criticalprobability), 0);
+        CriticalprobabilityLevel = PlayerPrefs.GetInt(nameof(CriticalprobabilityLevel), 0);
 
-        LV = PlayerPrefs.GetInt("LV", 0);
-        Exp = PlayerPrefs.GetInt("Exp", 0);
-        Current_Exp = PlayerPrefs.GetInt("Current_Exp", 0);
+        LV = PlayerPrefs.GetInt(nameof(LV), 0);
+        Exp = PlayerPrefs.GetInt(nameof(Exp), 0);
+        Current_Exp = PlayerPrefs.GetInt(nameof(Current_Exp), 0);
 
 
-        Coin = PlayerPrefs.GetInt("Coin", 0);
+        Coin = PlayerPrefs.GetInt(nameof(Coin), 0);
 
         if (PlayerPrefs.HasKey("abliltyCoinLengh"))
         {
-            int abliltyCoinLengh = PlayerPrefs.GetInt("abliltyCoinLengh", 0);
+            int abliltyCoinLengh = PlayerPrefs.GetInt(nameof(abliltyCoinLengh), 0);
             ability.ablityPrice = new int[abliltyCoinLengh];
             for (int i = 0; i < abliltyCoinLengh; i++)
             {
@@ -250,7 +255,16 @@ public class Player : BaseUnit
                 ability.ablityPrice[i] = value;
             }
         }
-        
+
+        if (PlayerPrefs.HasKey(nameof(ColleageCoinFire)))
+            ColleageCoinFire = PlayerPrefs.GetInt(nameof(ColleageCoinFire));
+        if (PlayerPrefs.HasKey(nameof(ColleageCoinSoil)))
+            ColleageCoinSoil = PlayerPrefs.GetInt(nameof(ColleageCoinSoil));
+        if (PlayerPrefs.HasKey(nameof(ColleageCoinWater)))
+            ColleageCoinWater = PlayerPrefs.GetInt(nameof(ColleageCoinWater));
+        if (PlayerPrefs.HasKey(nameof(ColleageCoinWind)))
+            ColleageCoinWind = PlayerPrefs.GetInt(nameof(ColleageCoinWind));
+
     }
 
 
@@ -355,7 +369,7 @@ public class Player : BaseUnit
 
             if (hit.collider.gameObject.layer == LayerMask.NameToLayer("enemy"))
             {
-                anim.SetTrigger("doSwing");
+                anim.SetTrigger("Hit");
                 fightStartTime = Time.time;
                 return true;
             }
