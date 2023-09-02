@@ -1,3 +1,4 @@
+using Assets.Making.scripts;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,7 @@ public class Equips : MonoBehaviour
   
     public void EnterEquip()
     {
+        UIManager.instance.OnBottomButtonClicked();
         uiGroup.anchoredPosition = new Vector3(0, 0, 0);
         Debug.Log("Å¬¸¯");
     }

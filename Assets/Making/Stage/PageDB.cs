@@ -11,4 +11,20 @@ using UnityEngine.UI;
 public class PageDB : ScriptableObject
 {
     public List<PageInfo> stagePage;
+
+    public StageInfo FindStageInfo(int stageNumber)
+    {
+        foreach (PageInfo page in stagePage)
+        {
+            foreach (StageInfo stageInfo in page.stages)
+            {
+                if (stageInfo.StageNumber == stageNumber)
+                {
+                    return stageInfo;
+                }
+            }
+        }
+
+        return null;
+    }
 }

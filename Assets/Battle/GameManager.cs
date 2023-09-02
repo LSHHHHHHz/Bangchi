@@ -9,16 +9,25 @@ public class GameManager : MonoBehaviour
     public PoolManager pool;
     public Player player;
 
-    public StageInfo stageInfo; // StageInfo 객체를 할당하기 위한 변수
+    public PageDB pageDB;
     private void Awake()
     {
         Instance = this;
+        
+        
     }
 
     private void Start()
     {
         // DropItem 게임 오브젝트 찾기
         DropItem dropItem = FindObjectOfType<DropItem>();
+
+        int playStage = 1;
+        if (PlayerPrefs.HasKey("LastStage"))
+        {
+            playStage = PlayerPrefs.GetInt("LastStage");
+        }
+        StageInfo stageInfo = pageDB.FindStageInfo(playStage);
 
         if (dropItem != null && stageInfo != null)
         {
@@ -27,6 +36,14 @@ public class GameManager : MonoBehaviour
             dropItem.exp = stageInfo.exp;
         }
 
-        BattleManager.instance.StartStage(stageInfo);
+        if (stageInfo != null)
+        {
+            BattleManager.instance.StartStage(stageInfo);
+        }
+    }
+
+    private void OnApplicationQuit()
+    {
+        PlayerPrefs.SetInt("LastStage", BattleManager.instance.currentStageInfo.StageNumber);
     }
 }

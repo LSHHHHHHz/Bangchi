@@ -100,6 +100,8 @@ public class Player : BaseUnit
 
     private bool isFighting;
     private float fightStartTime;
+    private bool isSkillCasting;
+    private float skillCastTime;
 
     Weapons weapons1;
     public Ability ability;
@@ -136,6 +138,7 @@ public class Player : BaseUnit
         Move();
         rayCast();
         Fighting();
+        SkillCasting();
     }
 
 
@@ -313,7 +316,7 @@ public class Player : BaseUnit
 
     void Move()
     {
-        if (isFighting)
+        if (isFighting || isSkillCasting)
             return;
 
         Vector2 moveVec = new Vector2(playerSpeed, 0);
@@ -348,6 +351,17 @@ public class Player : BaseUnit
         }
     }
 
+    public void SkillCasting()
+    {
+        if (isSkillCasting == false)
+            return;
+
+        if (Time.time - skillCastTime > 0.5f)
+        {
+            isSkillCasting = false;
+        }
+    }
+
     // 내가 전투해야 하는지, 아닌지 검사하는 함수.
     private bool NeedToFight()
     {
@@ -369,13 +383,20 @@ public class Player : BaseUnit
 
             if (hit.collider.gameObject.layer == LayerMask.NameToLayer("enemy"))
             {
-                anim.SetTrigger("Hit");
+                anim.SetTrigger("doSwing");
                 fightStartTime = Time.time;
                 return true;
             }
         }
 
         return false;
+    }
+
+    public void OnUseSkill(BaseSkill skill)
+    {
+        isSkillCasting = true;
+        skillCastTime = Time.time;
+        anim.SetTrigger("doSkill");
     }
 
     private void OnTriggerEnter(Collider collision)

@@ -160,7 +160,7 @@ public class EquipmentUI : MonoBehaviour
             InventoryManager.instance.Save();
 
             // °¡Ã­ÆË¾÷¿¡¼­ »ÌÀº ¾ÆÀÌÅÛµéÀ» º¸¿©Áà¾ß ÇÏ¹Ç·Î gachaResult¸¦ ³Ñ±è.
-            gachaPopup.Initialize(gachaResult, oneMoreTime);
+            gachaPopup.Initialize(gachaResult, oneMoreTime, () => runGacha = false);
         }
     }
 

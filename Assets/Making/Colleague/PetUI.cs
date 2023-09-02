@@ -1,5 +1,6 @@
 ﻿using Assets.Battle;
 using Assets.Item1;
+using Assets.Making.scripts;
 using Assets.Making.Stage;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ using UnityEngine.UI;
 public class PetUI : MonoBehaviour
 {
 
+    public static PetUI instance;
     public RectTransform petUI;
 
     public PetType type;
@@ -28,7 +30,7 @@ public class PetUI : MonoBehaviour
     public Grid gird;
     public void Awake()
     {
-        
+        instance = this;
     }
 
     public void Update()
@@ -70,6 +72,7 @@ public class PetUI : MonoBehaviour
 
     public void petUIopen()
     {
+        UIManager.instance.OnBottomButtonClicked();
         petUI.localPosition = new Vector3(-900, 0, 0);
     }
     public void petUIClose()

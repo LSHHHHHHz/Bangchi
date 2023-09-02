@@ -111,6 +111,7 @@ public class IngameSkillList : MonoBehaviour
                 if (skillPrefab == null)
                 {
                     Debug.LogError($"SkillPrefab is null : {equipSkill.skillInfo.name}");
+                    skillsList.Add(null);
                 }
                 else
                 {
@@ -151,6 +152,7 @@ public class IngameSkillList : MonoBehaviour
         if (skill != null)
         {
             skill.Execute();
+            Player.instance.OnUseSkill(skill);
         }
     }
 }

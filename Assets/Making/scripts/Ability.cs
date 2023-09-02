@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.UIElements;
+using Assets.Making.scripts;
 
 public class Ability : MonoBehaviour
 {
@@ -44,6 +45,7 @@ public class Ability : MonoBehaviour
     }
     public void EnterAblity() 
     {
+        UIManager.instance.OnBottomButtonClicked();
         uiGroup.gameObject.SetActive(true);
         uiGroup.anchoredPosition = new Vector3(283.8f, 231.5f, 0f);
     }

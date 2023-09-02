@@ -16,10 +16,11 @@ public class GachaPopup : MonoBehaviour //가차 결과를 보여주는 UI
     private List<GameObject> children = new List<GameObject>();
 
     private Action<int> oneMoreTimeAction; // oneMoreTime 전달받은 값을 저장하기 위해 따로 멤버 필드로 가지고 있음.
+    private Action onDoneAction;
 
     private bool isCoroutineDone = true;
 
-    public void Initialize(GachaResult gachaResult, Action<int> oneMoreTime)
+    public void Initialize(GachaResult gachaResult, Action<int> oneMoreTime, Action onDone)
     {
         // 이전에 보관해뒀던 아이템 UI들을 파괴
         foreach (GameObject child in children)
@@ -30,6 +31,7 @@ public class GachaPopup : MonoBehaviour //가차 결과를 보여주는 UI
 
         // 나중에 다시 뽑기 버튼 누르면 호출하기 위해 클래스의 멤버 필드인 oneMoreTimeAction에 값을 저장한다.
         this.oneMoreTimeAction = oneMoreTime;
+        this.onDoneAction = onDone;
 
         isCoroutineDone = false;
         StartCoroutine(SetupCoroutine(gachaResult));
@@ -71,6 +73,7 @@ public class GachaPopup : MonoBehaviour //가차 결과를 보여주는 UI
 
         }
         isCoroutineDone = true;
+        onDoneAction?.Invoke();
     }
     public void Close()
     {

@@ -1,3 +1,4 @@
+using Assets.Making.scripts;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class Skill : MonoBehaviour
 
     public void EnterSkill()
     {
+        UIManager.instance.OnBottomButtonClicked();
         uiGroup.anchoredPosition = new Vector3(0, 0, 0);
     }
 
