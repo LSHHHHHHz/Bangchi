@@ -63,7 +63,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.5, y: 1.5, z: 1.5}
-  m_Center: {x: 0, y: 0.73, z: 0}
+  m_Center: {x: 0, y: -0.2, z: 0}
 --- !u!212 &4843015256551559331
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -130,6 +130,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Current_HP: 20
   _Max_HP: 20
+  hudDamageText: {fileID: 5409452494351892200, guid: ac4ab4100988f28478bf69a2f6c8b7c9, type: 3}
   MonsterExp: 10
   collider: {fileID: -5460100367022941955}
   expIconPrefab: {fileID: 2078815229775703815, guid: 52b4657d96be3e9448808544cae73f4a, type: 3}

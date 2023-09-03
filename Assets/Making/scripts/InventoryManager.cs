@@ -6,16 +6,16 @@ using System;
 using System.Linq;
 
 [Serializable] // 클래스를 json등 데이터로 저장할 때 [Serializable]을 붙여줘야 함.
-public class InventoryData //이것도 뭐지
+public class InventoryData 
 {
-    public List<ItemInstance> myItems = new();  //유니티 Inventory Manager에서 My Items는 어디에 있고 어떻게 쓰는건지
+    public List<ItemInstance> myItems = new();  
     public List<ItemInstance> equippedItems = new();
     public List<ItemInstance> colleague = new();
 
 }
 public class InventoryManager : MonoBehaviour
 {
-    public event Action OnInventoryChanged; //event 있고 없고 차이 확인
+    public event Action OnInventoryChanged; 
     public event Action OnEquippedItemChanged;
 
     public static InventoryManager instance;
@@ -29,8 +29,6 @@ public class InventoryManager : MonoBehaviour
         instance = this;
         Load();
     }
-
-    //-----------------------------------------------------------------------------------------------
     public ItemInstance AddItem(ItemInfo itemInfo, int count = 1) //인벤토리를 변경하는 메서드
     {   
         ItemInstance itemInstance = myItems.Find(item => item.itemInfo == itemInfo);
@@ -70,11 +68,6 @@ public class InventoryManager : MonoBehaviour
         OnInventoryChanged?.Invoke();
         return itemInstance;
     }
-
-   
-    //-----------------------------------------------------------------------------------------------
-
-    // 게임을 저장할 때, 아이템 획득시 저장해주면 됨
     public void Save()   
     {
         var inventoryData = new InventoryData();
@@ -82,18 +75,13 @@ public class InventoryManager : MonoBehaviour
         inventoryData.equippedItems = equippedItems;
         string json = JsonUtility.ToJson(inventoryData);
 
-
-        // PlayerPrefs : 데이터를 저장하고 불러오는데 쓰는 클래스
         PlayerPrefs.SetString("InventoryData", json);
         PlayerPrefs.Save();
     }
-
-    // 게임을 처음에 켰을 때 내 아이템들 불러오기
     private void Load()
     {
         string json = PlayerPrefs.GetString("InventoryData");
-        // 게임을 처음할 때는 저장된 데이터가 없을 수 있으니
-        // 문자열이 비어있지 않을 때에만 처리
+
         if (string.IsNullOrEmpty(json) == false)
         {
             // json이 값이 들어있다는 뜻
@@ -115,22 +103,18 @@ public class InventoryManager : MonoBehaviour
 
                 equippedItems.Add(item);
             }
-
-            //myItems = inventoryData.myItems;
         }
     }
  
 
     public void Equip(ItemInfo itemInfo)
     {
-        ItemInstance existItem = myItems.Find(item => item.itemInfo == itemInfo); //
-        //IEnumerable<ItemInstance> existItems = myItems.Where(item => item.itemInfo == itemInfo);
+        ItemInstance existItem = myItems.Find(item => item.itemInfo == itemInfo); 
         if (existItem == null)
         {
             // 아이템을 가지고 있지 않다는 것!
             throw new Exception($"Item not found : {itemInfo.name}");
         }
-
 
         equippedItems.Add(existItem);
         OnEquippedItemChanged?.Invoke();
@@ -151,6 +135,4 @@ public class InventoryManager : MonoBehaviour
         OnEquippedItemChanged?.Invoke();
         Save();
     }
-
-
 }

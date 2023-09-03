@@ -10,7 +10,6 @@ public class PetGachaResult
 {
     public List<PetInfo> pets = new List<PetInfo>();
 }
-
 internal class PetGachaCalculator
 {
     public static PetGachaResult Calculate(int count, PetDB petDB)
@@ -23,8 +22,6 @@ internal class PetGachaCalculator
             PetInfo petSelected = pets[UnityEngine.Random.Range(0, pets.Count)];
             result.pets.Add(petSelected);
         }
-
         return result;
     }
-
 }

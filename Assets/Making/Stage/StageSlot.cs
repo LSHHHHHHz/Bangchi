@@ -26,11 +26,8 @@ namespace Assets.Making.Stage
         {
             this.stageInfo = StageInfo;
             icon.sprite = Resources.Load<Sprite>(StageInfo.stageIconPath);
-            
         }
         
-
-        //
         public void StageSelect()
         {
             //BattleManager battleManager = new BattleManager();

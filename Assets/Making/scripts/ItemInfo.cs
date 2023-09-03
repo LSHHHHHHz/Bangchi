@@ -15,9 +15,6 @@ namespace Assets.Item1
         B,
         A,
         S
-
-
-
     }
 
     public enum PetType
@@ -44,6 +41,6 @@ namespace Assets.Item1
         public PetType petType;
         public string name;
         public string iconPath;
-        public int Number; // 인벤토리에서 몇번째 아이템인지를 나타냄. 예를 들어 인벤토리의 좌상단 아이템은 Number == 1이다.
+        public int Number; // 인벤토리에서 몇번째 아이템인지를 나타냄
     }
 }

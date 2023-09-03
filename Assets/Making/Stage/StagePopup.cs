@@ -27,11 +27,8 @@ public class StagePopup : MonoBehaviour
         stagePageLeftButton.onClick.AddListener(StageUI.instance.LeftStageChange);
         stagePageRightButton.onClick.AddListener(StageUI.instance.RightStageChange);
 
-
         instance = this;
     }
-    //Page 변경 파라미터 필요
-    //버튼 누를 때 이벤트 쓰고 이벤트가 호출될 때마다 이전에 보관되어있던 UI 파괴
     public void Initialize(PageInfo pageInfo)
     {
         foreach (GameObject child in children)
@@ -50,15 +47,7 @@ public class StagePopup : MonoBehaviour
 
             children.Add(stageSlot.gameObject);
         }
-
-
-
-        //버튼(page 이동 버튼 클릭 시) 이벤트 함수 호출
-        //가차팝업에서 원몰타임이랑 비슷하면서도 Page를 변경시켜야함
     }
-
-
-
     public void Exit()
     {
         Destroy(gameObject);

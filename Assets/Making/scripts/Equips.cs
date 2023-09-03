@@ -13,7 +13,6 @@ public class Equips : MonoBehaviour
 
     public RectTransform weaponSlotParent;
 
-  
     public void EnterEquip()
     {
         UIManager.instance.OnBottomButtonClicked();
@@ -35,7 +34,4 @@ public class Equips : MonoBehaviour
     {
         weaponselectuiGroup.anchoredPosition = new Vector3(-1687, 625, 0);
     }
-
-    // 인벤토리에 있는 아이템들을 UI에 설정하는 기능.
-    
 }

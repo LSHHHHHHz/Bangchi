@@ -8,11 +8,7 @@ using UnityEngine;
 [Serializable]
 public class PetInstance
 {
-
-
     public PetInfo petInfo;
     public int count;
     public int upgradeLevel;
-
-    
 }

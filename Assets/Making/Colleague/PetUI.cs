@@ -32,12 +32,6 @@ public class PetUI : MonoBehaviour
     {
         instance = this;
     }
-
-    public void Update()
-    {
-       
-    }
-
     public void RunPet(int count)
     {
         if (PetInventoryManager.Instance.accumulatePets.Count < PetInventoryManager.Instance.maxaccumulatePetsCount)
@@ -67,9 +61,6 @@ public class PetUI : MonoBehaviour
             return;
         }
     }
-
-    
-
     public void petUIopen()
     {
         UIManager.instance.OnBottomButtonClicked();

@@ -35,29 +35,6 @@ public class EquipAndEnforcePopup : MonoBehaviour
     }
     public void Enforce()
     {
-        /*for (int i = 0; i < itemInstance.Count; i++)
-        {
-            if (itemNum.itemInstance.count >= 5)
-            {
-                itemNum.itemInstance.count -= 5;
-
-                // countText를 업데이트합니다.
-                if (itemNum.countText != null)
-                {
-                    itemNum.countText.text = itemNum.itemInstance.count.ToString();
-                }
-                if (itemNum.itemInstance.count == 0)
-                {
-                    itemNum.countText.gameObject.SetActive(false);
-                }
-            }
-            else
-            {
-                return;
-            }
-        }*/
-
-
         var currentSlot = targetSlot;
         if (currentSlot.itemInfo.Number >= EquipmentUI.instance.weaponSlots.Length)
         {
@@ -83,18 +60,8 @@ public class EquipAndEnforcePopup : MonoBehaviour
                 InventoryManager.instance.RemoveItem(currentSlot.itemInfo, 5);
                 InventoryManager.instance.AddItem(nextSlot.itemInfo);
             }
-
             InventoryManager.instance.Save();
         }
-
-        //if (currentSlot.countText != null)
-        //{
-        //    currentSlot.countText.text = currentSlot.count.ToString();
-        //}
-        //if (currentSlot.count == 0)
-        //{
-        //    currentSlot.countText.gameObject.SetActive(false);
-        //}
     }
        
     public void Exit()

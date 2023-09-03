@@ -10,7 +10,6 @@ using UnityEngine.UI;
 
 public class ColleagueFire : ColleaguePoly
 {
-
     public override void Update()
     {
         base.Update();
@@ -18,12 +17,10 @@ public class ColleagueFire : ColleaguePoly
         ColleagueStatsNameText[1].text = "HP";
         ColleagueStatsNameText[2].text = "HP 회복";
     }
-
     public override int GetCoin()
     {
         return Player.instance.ColleageCoinFire;
     }
-
     public override void SetCoin(int coin)
     {
         Player.instance.ColleageCoinFire = coin;

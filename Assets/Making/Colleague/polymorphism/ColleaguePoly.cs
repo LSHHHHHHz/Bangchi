@@ -38,7 +38,6 @@ public abstract class ColleaguePoly : MonoBehaviour
     public Text[] ColleagueStatsNameText;
     public Text[] ColleagueStatsInfoNameText;
 
-
     public ColleagueType colleagueType;
 
     public int First_stat;
@@ -47,13 +46,10 @@ public abstract class ColleaguePoly : MonoBehaviour
     public int Second_stat_LV;
     public int Third_stat;
     public int Third_stat_LV;
-
-
     public virtual void Update()
     {
 
     }
-
     protected void UpdateText()
     {
         ColleagueStatsPriceText[0].text = ColleagueStatsPrice[0].ToString();
@@ -68,8 +64,6 @@ public abstract class ColleaguePoly : MonoBehaviour
         ColleagueStatsInfoNameText[1].text = ColleagueStatsNameText[1].text + "+" + Second_stat.ToString();
         ColleagueStatsInfoNameText[2].text = ColleagueStatsNameText[2].text + "+" + Third_stat.ToString();
     }
-
-
     public void ColleagueStatusBuy(int index)
     {
         int price = ColleagueStatsPrice[index];
@@ -92,15 +86,12 @@ public abstract class ColleaguePoly : MonoBehaviour
             }
             ColleagueStatsPrice[index] += 100 * (index + 1);
             UpdateText();
-            SetCoin(GetCoin()-price);
+            SetCoin(GetCoin() - price);
             save();
         }
     }
-
     public abstract int GetCoin();
     public abstract void SetCoin(int coin);
-   
-
     public void save()
     {
         var colleagueData = new ColleagueData();
@@ -113,7 +104,7 @@ public abstract class ColleaguePoly : MonoBehaviour
         colleagueData.Third_stat = this.Third_stat;
         colleagueData.ColleagueStatsPrice = this.ColleagueStatsPrice;
         string json = JsonUtility.ToJson(colleagueData);
-            
+
         PlayerPrefs.SetString("colleagueData" + colleagueType.ToString(), json);
         PlayerPrefs.Save();
     }
@@ -133,6 +124,6 @@ public abstract class ColleaguePoly : MonoBehaviour
             Third_stat_LV = colleagueData.Third_stat_LV;
             ColleagueStatsPrice = colleagueData.ColleagueStatsPrice;
         }
-    }
 
+    }
 }

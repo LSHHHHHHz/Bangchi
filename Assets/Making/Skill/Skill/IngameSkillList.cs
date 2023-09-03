@@ -16,7 +16,7 @@ public class IngameSkillList : MonoBehaviour
     public RectTransform activeSkillSlotParent;
     public RectTransform passiveSkillSlotParent;
 
-    // ActiveSkill용 슬롯과 PassiveSkill용 슬롯을 저장해둔다.
+    // ActiveSkill용 슬롯과 PassiveSkill용 슬롯을 저장
     private SkillSlot[] activeSkillSlots;
     private SkillSlot[] passiveSkillSlots;
     // 내가 장착한 스킬들의 인스턴스를 가지고 있는다.
@@ -27,8 +27,8 @@ public class IngameSkillList : MonoBehaviour
     {
         instance = this;
         // 슬롯을 얻어오는 과정.
-        // activeSkillSlotParent, passiveSkillSlotParent를 가지고 슬롯을 얻어옴.
-        // Parent의 자식들을 순회하며 SkillSlot을 가져오고 Button 클릭시 처리도 연결한다.
+        // activeSkillSlotParent, passiveSkillSlotParent를 가지고 슬롯을 얻어옴
+        // Parent의 자식들을 순회하며 SkillSlot을 가져오고 Button 클릭시 처리도 연결
         activeSkillSlots = GetChildSlots(activeSkillSlotParent);
         int skillIndex = 0;
         for (int i = 0; i < activeSkillSlots.Length; ++i)
@@ -50,15 +50,14 @@ public class IngameSkillList : MonoBehaviour
             ++skillIndex;
         }
     }
-
-    private SkillSlot[] GetChildSlots(RectTransform parent) //스킬 슬롯에 저장하게 하는 매서드??
+    private SkillSlot[] GetChildSlots(RectTransform parent) 
     {
         List<SkillSlot> childList = new();
 
-        for (int i = 0; i < parent.childCount; ++i) // weaponSlotParent의 자식 개수를 가져오고, 그 개수만큼 for문 반복
+        for (int i = 0; i < parent.childCount; ++i) 
         {
             SkillSlot child = parent.GetChild(i).GetComponent<SkillSlot>();
-            childList.Add(child); // SkillSlot이 있는 자식을 childList에 임시로 넣어둔다.
+            childList.Add(child); 
         }
 
         return childList.ToArray();
@@ -89,18 +88,10 @@ public class IngameSkillList : MonoBehaviour
     {
         var equippedSkillList = skillType  == SkillType.Active ? SkillInventoryManager.instance.equippedActiveSkills : SkillInventoryManager.instance.equippedPassiveSkills;
 
-        // skillSlots : 4개, equippedSkills : 2개
-        // i : 3                             / 0, 1
         for (int i = 0; i < skillSlots.Length; ++i)
         {
             SkillSlot slot = skillSlots[i];
-            // i < equipSkills.Count
-            // 0 < 2 ==> true
-            // 1 < 2 ==> true
-            // 2 < 2 ==> false
-
-            // equippedSkillList가 기본적으로는 4개, 처음 게임을 시작했을 때 / 인벤토리에서 장착을 아직 안했을 때 
-            // i가 equippedSkillList보다 크다면 내가 대응할 수 있는 범위가 아니니까 어차피 장착하지 않은 것이므로 null 값을 사용.
+            
             SkillInstance equipSkill = i < equippedSkillList.Count ? equippedSkillList[i] : null;
             if (equipSkill != null)
             {

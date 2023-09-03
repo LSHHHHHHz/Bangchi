@@ -22,7 +22,6 @@ public class PetSlot : MonoBehaviour
             countText.gameObject.SetActive(false);
         }
     }
-
     public void SetData(PetInstance petInstance)
     {
         SetData(petInstance.petInfo);

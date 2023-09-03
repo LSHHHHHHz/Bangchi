@@ -13,12 +13,9 @@ public class ACT4 : BaseSkill
 
     public override void Execute()
     {
-        // ACT 1 : 5번 공격, 마지막 공격은 더 크게 공격z
         if (!isSkillEwcuted)
         {
             StartCoroutine(SkillCoroutine());
-            // isSkillEwcuted = true; (1111)
-
         }
     }
 

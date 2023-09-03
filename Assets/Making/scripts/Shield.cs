@@ -17,7 +17,6 @@ public class Shield : MonoBehaviour
     {
         totalHP(Shield_HP);
     }
-
     public float totalHP(float shieldHP)
     {
         float totalHP = shieldHP + Player.instance.Current_HP;

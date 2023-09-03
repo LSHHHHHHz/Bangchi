@@ -18,6 +18,7 @@ public enum PetType
     Wind,
     Fire
 }
+
 [CreateAssetMenu(menuName = "My Assets/PetInfo")]
 public class PetInfo : ScriptableObject
 {

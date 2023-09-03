@@ -46,7 +46,7 @@ public class CharacterStats : MonoBehaviour
 
     void Text_Stats()
     {
-        _Attack.text = player.Current_Attack + ""; //이방법 말고 다른방법있는지
+        _Attack.text = player.Current_Attack + ""; 
         _HP.text = player.Max_HP + "";
         _HPRecovery.text = player.RecoveryHP + "";
         _CriticalDamage.text = player.Current_CriticalDamage + "";
@@ -54,8 +54,6 @@ public class CharacterStats : MonoBehaviour
         _MP.text = player.Max_MP + "";
         _MPRecovery.text = player.RecoveryMP + "";
 
-
-        //★ 왜 에러가 발생하는거지
 
         _CoinGetAmount.text = colleaguePoly[1].Third_stat.ToString();
 

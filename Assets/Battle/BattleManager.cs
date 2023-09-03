@@ -13,40 +13,18 @@ namespace Assets.Battle
         public List<ItemInfo> myStages = new List<ItemInfo>();
 
         public static BattleManager instance;
-
         private bool stageEndCheck = false;
         public StageInfo currentStageInfo;
         public GameObject stageRoot;
         float fiveTimeHasPassed;
         bool readToRestartStage = false;
-
         private void Awake()
         {
             instance = this;
             stageRoot = new GameObject("StageRoot");
         }
-
-   
         void Update()
         {
-            /*if (stageEndCheck && IsStageEnded())
-            {
-                stageEndCheck = false;
-
-               // RestartStage();
-                readToRestartStage = true;
-                
-            }
-            if(readToRestartStage)
-            {
-                createdTime += Time.deltaTime;
-                if(createdTime > 5)
-                {
-                    RestartStage();
-                    readToRestartStage = false;
-                }
-            }*/
-
             if (stageEndCheck && IsStageEnded())
             {
                 fiveTimeHasPassed += Time.deltaTime;
@@ -57,9 +35,7 @@ namespace Assets.Battle
                     fiveTimeHasPassed = 0;
                 }
             }
-
         }
-
         public void StartStage(StageInfo stageInfo)
         {
             UnitManager.instance.player.transform.position = UnitManager.instance.playerInitialPosition;
@@ -69,7 +45,6 @@ namespace Assets.Battle
             stageEndCheck = true;
 
         }
-
         public void RestartStage()
         {
             StartStage(currentStageInfo);

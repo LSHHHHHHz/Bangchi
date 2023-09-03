@@ -22,8 +22,6 @@ public class ColleagueStats : MonoBehaviour
     public int[] Third_stat;
     public int[] Third_stat_LV;
 
-
-
     public void Update()
     {
         int typeIndex = (int)colleagueType;
@@ -31,7 +29,6 @@ public class ColleagueStats : MonoBehaviour
         ColleagueStatsPriceText[typeIndex][0].text = ColleagueStatsPrice[0].ToString();
         ColleagueStatsPriceText[typeIndex][1].text = ColleagueStatsPrice[1].ToString();
         ColleagueStatsPriceText[typeIndex][2].text = ColleagueStatsPrice[2].ToString();
-
 
         ColleagueStatsLVText[typeIndex][0].text = First_stat_LV[typeIndex].ToString();
         ColleagueStatsLVText[typeIndex][1].text = Second_stat_LV[typeIndex].ToString();
@@ -68,8 +65,5 @@ public class ColleagueStats : MonoBehaviour
         {
             return;
         }
-
-
     }
-
 }

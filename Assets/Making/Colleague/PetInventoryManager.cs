@@ -16,7 +16,6 @@ public class PetInventoryData
     public List<PetInstance> equipPets = new();
 
     public List<GameObject> inventoryChildren = new List<GameObject>();
-
 }
 public class PetInventoryManager : MonoBehaviour
 {
@@ -65,9 +64,6 @@ public class PetInventoryManager : MonoBehaviour
             Debug.Log("확장 하세요");
         }
     }
-
-    //myPet에 16개밖에 없네 이걸 무제한으로 만들어야함
-
     public void accumulatePet(PetInfo petInfo)
     {
         accumulatePets.Add(new PetInstance()
@@ -98,7 +94,6 @@ public class PetInventoryManager : MonoBehaviour
             });
         }
         OnInventoryChanged?.Invoke();
-       // SetData(); //★여기에 넣어야 되는데 이유 알기
         Save();
     }
     private void OnInventoryChangedCallback()
@@ -141,10 +136,7 @@ public class PetInventoryManager : MonoBehaviour
                 }
                 equipPets.Add(equippet);
             }
-            
         }
-
     }
-
 }
 

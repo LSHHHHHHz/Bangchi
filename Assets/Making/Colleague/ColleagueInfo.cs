@@ -10,7 +10,6 @@ public enum ColleagueGrade
 {
     D, C, B, A
 }
-
 public enum ColleagueType
 {
     Water,
@@ -26,6 +25,5 @@ public class ColleagueInfo : ScriptableObject
     public string name;
     public string iconPath;
     public int Number;
-
 }
 

@@ -60,10 +60,7 @@ public class Ability : MonoBehaviour
 
     private void PlayPrefabEffect(Vector3 position)
     {
-        // 게임 오브젝트 인스턴스 생성
         GameObject effectInstance = Instantiate(prefab, position, Quaternion.identity);
-
-        // 여기서 추가적인 설정이 필요하면 작성
     }
 
     public void OnbuttonPressDown(int index)
@@ -85,12 +82,10 @@ public class Ability : MonoBehaviour
         }
     }
 
-    public void Buy(int index) //index는 어떤 물건인지 확인함
+    public void Buy(int index) 
     { 
-        //RectTransform buyButton = BuyButton.GetComponent<RectTransform>();
         RectTransform buyButton = BuyButton[index];
 
-        // DoTween Sequence를 만듭니다.
         Sequence sequence = DOTween.Sequence();
 
         sequence.Append(buyButton.transform.DOScale(1.2f, 0.1f)); // 1.2배 크기로 0.1초 동안 확장
@@ -175,27 +170,6 @@ public class Ability : MonoBehaviour
         int roll = random.Next(1, 100); // 1~100 사이의 무작위 정수 생성
         return roll <= enterPlayer.Current_Criticalprobability; // 무작위 값이 치명타 확률보다 작거나 같으면 치명타 발생
     }
-
-
-    //회복하는거 
-    /* public void Recovery()
-     {
-         enterPlayer.currentDotTime -= Time.deltaTime;
-         if(enterPlayer.Current_HP < enterPlayer.Max_HP)
-         {
-             if(enterPlayer.currentDotTime<=0)
-             {
-                 enterPlayer.Current_HP += enterPlayer.RecoveryHP;
-                 if(enterPlayer.Current_HP > enterPlayer.Max_HP)
-                 {
-                     enterPlayer.Current_HP = enterPlayer.Max_HP;
-
-                 }
-                 enterPlayer.currentDotTime = 1;
-             }
-         }
-     }*/
-
     private IEnumerator RecoveryRoutine()
         {
         while (true)

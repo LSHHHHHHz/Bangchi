@@ -15,7 +15,6 @@ public class ItemSlot : MonoBehaviour
     public void SetData(ItemInfo itemInfo)
     {
         this.itemInfo = itemInfo;
-        //itemInstance.upgradeLevel = itemInfo.Number;//★강화하려고 사용함
         icon.sprite = Resources.Load<Sprite>(itemInfo.iconPath);
         if (countText != null)
         {
@@ -26,7 +25,6 @@ public class ItemSlot : MonoBehaviour
 
     public void SetData(ItemInstance itemInstance)
     {
-        //this.itemInstance = itemInstance; //★강화하려고 사용함
         this.count = itemInstance.count;
 
         SetData(itemInstance.itemInfo);
@@ -43,9 +41,10 @@ public class ItemSlot : MonoBehaviour
             }
         }
     }
-    public void SetEmpty(Sprite emptySprite)
+
+    public void SetEmpty(Sprite emptySprite) // 기존에 설정된 스킬 데이터를 날린다.
     {
         icon.sprite = emptySprite;
-        itemInfo = null; // 기존에 설정된 스킬 데이터를 날린다.
+        itemInfo = null; 
     }
 }

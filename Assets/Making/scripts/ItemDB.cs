@@ -27,9 +27,7 @@ namespace Assets.Item1
         }
         private static ItemDB _instance;
 
-        public List<ItemInfo> items; //<> 안에 있는 타입 인스턴스를 여러개 갖는다 //★static 으로 바꿔도되는지  :안됨
-
-        //아이템DB에 들어있는 아이템중 특정 아이템 종류만 얻어오는 함수
+        public List<ItemInfo> items;
         public List<ItemInfo> GetItemsByType(ItemType type)
         {
             var result = new List<ItemInfo>();
@@ -40,7 +38,6 @@ namespace Assets.Item1
                     result.Add(item);
                 }           
             }
-
             return result;
         }
 
@@ -55,7 +52,6 @@ namespace Assets.Item1
                     result.Add(item);
                 }
             }
-
             return result;
         }
 
@@ -68,10 +64,7 @@ namespace Assets.Item1
                     return item;
                 }
             }
-
             return null;
         }
     }
-
-    
 }

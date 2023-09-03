@@ -10,8 +10,6 @@ using UnityEngine.UI;
 
 public class ColleagueSoil : ColleaguePoly
 {
-    
-
     public override void Update()
     {
         base.Update();
@@ -24,7 +22,6 @@ public class ColleagueSoil : ColleaguePoly
     {
         return Player.instance.ColleageCoinSoil;
     }
-
     public override void SetCoin(int coin)
     {
         Player.instance.ColleageCoinSoil = coin;

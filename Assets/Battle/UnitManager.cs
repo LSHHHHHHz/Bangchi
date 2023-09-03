@@ -13,16 +13,11 @@ namespace Assets.Battle
         public Vector3 playerInitialPosition;
         public PoolManager pool;
 
-       
-
         private void Awake()
         {
             instance = this;
-          //  pool = FindObjectOfType<PoolManager>();
             playerInitialPosition = player.transform.position;
         }
-
-       
 
         public void RegisterMonster(Monster monster)
         {
@@ -33,6 +28,5 @@ namespace Assets.Battle
         {
             monsterList.Remove(monster);
         }
-        
     }
 }

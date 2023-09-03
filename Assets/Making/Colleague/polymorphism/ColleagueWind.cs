@@ -17,12 +17,10 @@ public class ColleagueWind : ColleaguePoly
         ColleagueStatsNameText[1].text = "이동속도";
         ColleagueStatsNameText[2].text = "Pet 코인";
     }
-
     public override int GetCoin()
     {
         return Player.instance.ColleageCoinWind;
     }
-
     public override void SetCoin(int coin)
     {
         Player.instance.ColleageCoinWind = coin;

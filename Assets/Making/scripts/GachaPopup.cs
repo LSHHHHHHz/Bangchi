@@ -79,16 +79,12 @@ public class GachaPopup : MonoBehaviour //가차 결과를 보여주는 UI
     {
         Destroy(gameObject);
     }
-
-    // 다시 뽑기 버튼 누르면 호출됨
     public void OneMoreTime1()
     {
         oneMoreTimeAction?.Invoke(1);
     }
-
     public void OneMoreTime11()
     {
         oneMoreTimeAction?.Invoke(11);
     }
-
 }

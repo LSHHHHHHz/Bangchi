@@ -26,7 +26,7 @@ namespace Assets.Battle
 
         private void Awake()
         {
-            createdTime = Time.time; //30
+            createdTime = Time.time;            
         }
         private void Start()
         {
@@ -37,29 +37,14 @@ namespace Assets.Battle
         {
             if(target != null)
             {
-                // 40 - 30
-                // 내 나이 = 현재 날짜(가변) - 내 출생 날짜(불변)
                 float createdElapsed = Time.time - createdTime; // 아이템이 생성된 후 흐른 시간.
                 float moveElapsed = createdElapsed - moveWaitTime; // 움직이기 시작한 시간.
 
-                // Lerp : (시작값, 끝값, 현재 시간)
-                // 0,  10,  0.5 --> 5
-                // 3, 7, 0.5 --> 5
-                // 0, 30, 0.1 --> 3
-                // 0, 30, 0.2 --> 6
-                // 0, 30, 1 -->   30
                 float currentSpeed = Mathf.Lerp(startSpeed, maxSpeed, moveElapsed);
                 Vector3 posGap = target.position - transform.position;
                 Vector3 dir = (posGap).normalized;
                 currentSpeed = Mathf.Lerp(0, currentSpeed, posGap.magnitude);
                 transform.Translate(dir * currentSpeed * Time.deltaTime, Space.World);
-                // 아이템을 움직이는 코드. 정해진 만큼 움직임.
-                // 만약 플레이어랑 아이템이랑 굉장히 가까운 상태면 정해진 만큼 움직였을 때 플레이어를 지나칠수도 있음.
-                // 그것을 방지하기 위해서  currentSpeed = Mathf.Lerp(0, currentSpeed, posGap.magnitude); <-- 이 구문을 넣었음.
-                // posGap.magnitude : 아이템과 플레이어 사이의 거리.
-                // Mathf.Lerp(0, 10, 1) : 10
-                // Mathf.Lerp(0, 10, 0.3) 3
-                // Mathf.Lerp(0, 10, 0.1) 1
             }
         }
 
@@ -76,10 +61,6 @@ namespace Assets.Battle
 
         private void OnTriggerEnter(Collider other)
         {
-            //// 생성되자말자 플레이어한테 먹히지 않게끔 생성된 후 1초가 지나야 먹을 수 있다.
-            //if (Time.time - createdTime < 1f)
-            //    return;
-
             var player = other.transform.GetComponent<Player>();
             if (player == null)
                 return;

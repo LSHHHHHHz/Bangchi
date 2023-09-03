@@ -14,7 +14,6 @@ public class Weapons : MonoBehaviour
 
     public ItemGrade grade;
 
-
     void Start()
     {
         

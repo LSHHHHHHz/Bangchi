@@ -22,19 +22,15 @@ namespace Assets.Making.Colleague
         public int Third_stat;
         public int Third_stat_LV;
 
-
-
         public void Update()
         {
             ColleagueStatsPriceText[0].text = ColleagueStatsPrice[0].ToString();
             ColleagueStatsPriceText[1].text = ColleagueStatsPrice[1].ToString();
             ColleagueStatsPriceText[2].text = ColleagueStatsPrice[2].ToString();
 
-
             ColleagueStatsLVText[0].text = First_stat_LV.ToString();
             ColleagueStatsLVText[1].text = Second_stat_LV.ToString();
             ColleagueStatsLVText[2].text = Third_stat_LV.ToString();
-
         }
         public void ColleagueStatusBuy(int statButtonIndex)
         {

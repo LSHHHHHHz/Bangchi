@@ -10,6 +10,5 @@ using UnityEngine;
 public class PetDB : ScriptableObject
 {
     public List<PetInfo> pets = new List<PetInfo>();
-
 }
 

@@ -24,7 +24,6 @@ public class SkillGachaPopup : MonoBehaviour
 
     public void Initialize(SkillGachaResult skillgachaResult, Action<int> oneMoreTime)
     {
-        //transform.localScale = Vector3.zero;
         transform.position = new Vector3(360,-500 ,0);
         
         // 이전에 보관해뒀던 아이템 UI들을 파괴
@@ -32,9 +31,8 @@ public class SkillGachaPopup : MonoBehaviour
         {
             Destroy(child); //객체 파괴
         }
-        children.Clear(); // 리스트 비우는것
+        children.Clear(); // 리스트 비움
 
-        // 나중에 다시 뽑기 버튼 누르면 호출하기 위해 클래스의 멤버 필드인 oneMoreTimeAction에 값을 저장한다.
         this.oneMoreTimeAction = oneMoreTime;
 
         isCoroutineDone = false;
@@ -43,15 +41,8 @@ public class SkillGachaPopup : MonoBehaviour
 
     private IEnumerator SetupCoroutine(SkillGachaResult skillgachaResult)
     {
-        //var popupSequence = DOTween.Sequence();
-        //popupSequence.Append(transform.DOScale(1, 0.5f));
-        //popupSequence.Play();
-        //transform.DOScale(1, 0.5f) <-- 한개만 사용할 때 이렇게 사용해도됨
-        //yield return transform.DOScale(1, 0.5f).Play().WaitForCompletion();
         yield return transform.DOLocalMoveY(0, 2f).Play().WaitForCompletion();
         
-
-        //GameObject effectPrefab = Resources.Load<GameObject>("EpicItemEffect");
         for (int i = 0; i < skillgachaResult.items.Count; ++i)
         {
             SkillInfo skillInfo = skillgachaResult.items[i];
@@ -61,10 +52,7 @@ public class SkillGachaPopup : MonoBehaviour
             SkillSlot skillitemSlot = Instantiate(itemPrefab, grid.transform).GetComponent<SkillSlot>();
             // 아이템 슬롯에 뽑은 아이템 데이터 적용
             skillitemSlot.SetData(skillInfo);
-            GameObject effect = Instantiate(gachaEffectPrefab, skillitemSlot.transform);
-            var effectCanvas = effect.GetComponent<Canvas>();
-            if (effectCanvas != null)
-                effectCanvas.overrideSorting = true;
+            
 
             var sequence = DOTween.Sequence();
             skillitemSlot.transform.localScale = Vector3.one * 3f;
@@ -78,17 +66,14 @@ public class SkillGachaPopup : MonoBehaviour
             sequence.Play();
             
 
-            // 아이템 프리팹이 원래 Active:false였으니 이것도 false인 상태. true로 바꿔서 보이게 한다.
             skillitemSlot.gameObject.SetActive(true);
 
-            // 나중에 삭제해야되니까 children에 넣어서 관리
             children.Add(skillitemSlot.gameObject);
 
             yield return new WaitForSeconds(0.1f);
 
             yield return sequence.WaitForCompletion();
 
-            //Destroy(effect.gameObject);
         }
 
         isCoroutineDone = true;

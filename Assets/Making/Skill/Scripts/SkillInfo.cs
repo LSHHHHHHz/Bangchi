@@ -32,6 +32,5 @@ namespace Assets.Item1
         public string iconPath;
         public int Number;
 
-        //스킬 등급, 타입, 이름, 경로, 숫자(변경되지 않는 정보?)
     }
 }

@@ -8,13 +8,10 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public PoolManager pool;
     public Player player;
-
     public PageDB pageDB;
     private void Awake()
     {
         Instance = this;
-        
-        
     }
 
     private void Start()
@@ -35,13 +32,11 @@ public class GameManager : MonoBehaviour
             dropItem.coin = stageInfo.coin;
             dropItem.exp = stageInfo.exp;
         }
-
         if (stageInfo != null)
         {
             BattleManager.instance.StartStage(stageInfo);
         }
     }
-
     private void OnApplicationQuit()
     {
         PlayerPrefs.SetInt("LastStage", BattleManager.instance.currentStageInfo.StageNumber);

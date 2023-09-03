@@ -22,7 +22,6 @@ public class ColleagueWater : ColleaguePoly
     {
         return Player.instance.ColleageCoinWater;
     }
-
     public override void SetCoin(int coin)
     {
         Player.instance.ColleageCoinWater = coin;

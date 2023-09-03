@@ -39,11 +39,8 @@ public class SkillUI : MonoBehaviour
     {
         instance = this;
 
-        // 무기 슬롯이 16개가 있는데, 그것의 부모 GameObject가 weaponSlotParent이다.
-        // 반대로 말하면 weaponSlotParent의 자식들을 가지고 오면 그것들은 무기 슬롯이다.
-
         List<SkillSlot> childList = new();
-        for (int i = 0; i < activeSkillSlotParent.childCount; ++i) // weaponSlotParent의 자식 개수를 가져오고, 그 개수만큼 for문 반복
+        for (int i = 0; i < activeSkillSlotParent.childCount; ++i) 
         {
             SkillSlot child = activeSkillSlotParent.GetChild(i).GetComponent<SkillSlot>();
             var button = child.GetComponent<Button>();
@@ -51,22 +48,14 @@ public class SkillUI : MonoBehaviour
             {
                 EquipOrUnequip(child);
             });
-            childList.Add(child); // 자식을 childList에 임시로 넣어둔다.
+            childList.Add(child);
         }
         activeSkillSlots = GetChildSlots(activeSkillSlotParent);
-        /*
-        //SkillSlot타입을 갖는 리스트를 childList변수에 넣음.
-        //activeSkillSlotParent의 child 수만큼 for문을 돌림
-        //activeSkillSlotParent의 child의 SkillSlot 컴포넌트를 갖고온 후 child 변수에 넣음(0~childCount)
-        //child의 Button 컴포넌트를 button변수에 넣음
-        //button이 호출될 때 EquipOrUnequip(child)가 호출되어 child는 SkillSlot타입을 갖는 slot변수에 넣어짐
-        //childList에 child를 추가함
-        */
 
 
 
         childList = new();
-        for (int i = 0; i < passiveSkillSlotParent.childCount; ++i) // weaponSlotParent의 자식 개수를 가져오고, 그 개수만큼 for문 반복
+        for (int i = 0; i < passiveSkillSlotParent.childCount; ++i) 
         {
             SkillSlot child = passiveSkillSlotParent.GetChild(i).GetComponent<SkillSlot>();
             var button = child.GetComponent<Button>();
@@ -74,61 +63,41 @@ public class SkillUI : MonoBehaviour
             {
                 EquipOrUnequip(child);
             });
-            childList.Add(child); // 자식을 childList에 임시로 넣어둔다.
+            childList.Add(child);
         }
-        passiveSkillSlots = childList.ToArray(); //자식들이 들어있는 childList를 배열 변환로 변환한다.
+        passiveSkillSlots = childList.ToArray(); 
 
         childList = new();
-        for (int i = 0; i < equippedActiveSkillSlotParent.childCount; ++i) // weaponSlotParent의 자식 개수를 가져오고, 그 개수만큼 for문 반복
+        for (int i = 0; i < equippedActiveSkillSlotParent.childCount; ++i) 
         {
             SkillSlot child = equippedActiveSkillSlotParent.GetChild(i).GetComponent<SkillSlot>();
-            childList.Add(child); // 자식을 childList에 임시로 넣어둔다.
+            childList.Add(child); 
         }
-        equippedActiveSkillSlots = childList.ToArray(); //자식들이 들어있는 childList를 배열 변환로 변환한다.
+        equippedActiveSkillSlots = childList.ToArray();
 
         childList = new();
-        for (int i = 0; i < equippedPassiveSkillSlotParent.childCount; ++i) // weaponSlotParent의 자식 개수를 가져오고, 그 개수만큼 for문 반복
+        for (int i = 0; i < equippedPassiveSkillSlotParent.childCount; ++i) 
         {
             SkillSlot child = equippedPassiveSkillSlotParent.GetChild(i).GetComponent<SkillSlot>();
-            childList.Add(child); // 자식을 childList에 임시로 넣어둔다.
+            childList.Add(child); 
         }
-        equippedPassiveSkillSlots = childList.ToArray(); //자식들이 들어있는 childList를 배열 변환로 변환한다.
-
-        //activeSkillSlots = GetChildSlots(activeSkillSlotParent);
-        //passiveSkillSlots = GetChildSlots(passiveSkillSlotParent);
-        //equippedActiveSkillSlots = GetChildSlots(equippedActiveSkillSlotParent);
-        //equippedPassiveSkillSlots = GetChildSlots(equippedPassiveSkillSlotParent);
+        equippedPassiveSkillSlots = childList.ToArray();
     }
     private SkillSlot[] GetChildSlots(RectTransform parent)
     {
         List<SkillSlot> childList = new();
 
-        for (int i = 0; i < parent.childCount; ++i) // weaponSlotParent의 자식 개수를 가져오고, 그 개수만큼 for문 반복
+        for (int i = 0; i < parent.childCount; ++i)
         {
             SkillSlot child = parent.GetChild(i).GetComponent<SkillSlot>();
-            childList.Add(child); // 자식을 childList에 임시로 넣어둔다.
+            childList.Add(child); 
         }
 
         return childList.ToArray();
     }
-    /*
-    //SkillSlot 배열 타입을 갖는 GetChildSlots 매서드
-    //SkillSlot 타입의 리스트 객체인 childList
-    //RectTransform parent 매개변수 안에 변수를 넣음?
-    //넣어진 변수(부모)의 자식 개수를 for으로 돌림
-    //parent의 GetChild(i)의 SkillSlot 컴포넌트를 갖고와서 child 변수에 넣음
-    //childList에 child를 넣음
-    //넣어진 child는 childList에서 관리하며 이걸 배열 형식으로 변환시켜 반환함
-    */
-
     private void Start()
     {
-        // 4-16
-        // 인벤토리가 바뀌었을 때 UI를 갱신할 수 있도록 이벤트 콜백(특정 시점에 호출되는 함수) 등록.
         SkillInventoryManager.instance.OnSkillInventoryChanged += OnSkillInventoryChangedCallback;
-        // 4-16
-
-        // 인벤토리가 로드된 이후 데이터를 설정해야 해서 Awake가 아닌 Start에다가 함수 추가
         SetData();
     }
 
@@ -136,7 +105,7 @@ public class SkillUI : MonoBehaviour
     {
         if (skillgachaPopup == null)
         {
-            var prefab = Resources.Load<GameObject>("SkillPopup"); //Resources 말고 다른곳에서 저장하는방법
+            var prefab = Resources.Load<GameObject>("SkillPopup"); 
             
             skillgachaPopup = Instantiate(prefab, RootCanvas.Instance.transform).GetComponent<SkillGachaPopup>();
 
@@ -149,11 +118,8 @@ public class SkillUI : MonoBehaviour
         {
             SkillInventoryManager.instance.AddSkill(item);
         }
-
-        // 인벤토리에 다 추가했으면 저장
         SkillInventoryManager.instance.Save();
 
-        // 가챠팝업에서 뽑은 아이템들을 보여줘야 하므로 gachaResult를 넘김.
         skillgachaPopup.Initialize(skillgachaResult, this.RunGacha);
     }
 
@@ -185,26 +151,13 @@ public class SkillUI : MonoBehaviour
 
             SkillInventoryManager.instance.ChangeEquipSkillSet(SkillType.Passive, equippedSkills);
         }
-        
-        //if (isEquiped)
-        //{
-        //    SkillInventoryManager.instance.EquipSkill(slot.skillInfo);
-        //}
-        //else
-        //{
-        //    SkillInventoryManager.instance.UnEquipSkill(slot.skillInfo);
-        //}
     }
 
     // 인벤토리에 있는 아이템들을 UI에 설정하는 기능.
     public void SetData()
     {
-        // 내가 갖고 있는 아이템들을 foreach문으로 순회한다.
-        // 내가 갖고 있는 아이템은 InventoryManager.instance.myItems에 들어있다.
         foreach (SkillInstance item in SkillInventoryManager.instance.myItems)
         {
-            // number : 2 /  weaponSlots 배열엔 0~15까지 들어있다. number2에 해당하는 weaponSlots 값은 1이다.(0부터 시작하니까 -1을 해줌).
-            // number값  : 1부터 시작, 배열은 0부터 시작하기 때문에 -1을 해줘야 값이 맞음.
             int number = item.skillInfo.Number;
             if (item.skillInfo.type == SkillType.Active)
             {
@@ -218,7 +171,6 @@ public class SkillUI : MonoBehaviour
             }
         }
 
-        //★인벤토리 데이터 저장 기능?
         for (int i = 0; i < SkillInventoryManager.instance.equippedActiveSkills.Count; ++i)
         {
             SkillInstance equipSkill = SkillInventoryManager.instance.equippedActiveSkills[i];
@@ -246,15 +198,6 @@ public class SkillUI : MonoBehaviour
                 equipSlot.SetEmpty(lockedSprite);
             }
         }
-        //foreach (SkillInstance equipedItem in SkillInventoryManager.instance.equippedActiveSkills)
-        //{
-        //    SetEquipSlot(SkillType.Active, equipedItem?.skillInfo, out bool isEquiped);
-        //}
-
-        //foreach (SkillInstance equipedItem in SkillInventoryManager.instance.equippedPassiveSkills)
-        //{
-        //    SetEquipSlot(SkillType.Passive, equipedItem?.skillInfo, out bool isEquiped);
-        //}
     }
 
     private void SetEquipSlot(SkillType type, SkillInfo skillInfo, out bool isEquiped)
@@ -319,7 +262,6 @@ public class SkillUI : MonoBehaviour
                 SkillSlot emptySlot = equippedPassiveSkillSlots[emptyIndex];
                 emptySlot.SetData(skillInfo);
                 isEquiped = true;
-                //equippedPassiveSkillSlots[emptyIndex].SetData(slot.skillInfo);
             }
             else
             {
@@ -327,14 +269,6 @@ public class SkillUI : MonoBehaviour
             }
         }
     }
-
-    /*
-    //SkillInventoryManager에 들어있는 myItems들을 foreach문을 돌려 SkillInstance 타입의 item 변수에 넣는다.
-    //number변수에 item의 스킬정보 Number를 넣는다.
-    //만약 SkillType가 Active라면 SkillSlot 타입의 slot변수에 activeSkillSlots에 들어있는 childList에 들어있는 것을 넣는다.
-    //item은 SkillInstance로 받았으며, SkillSlot에 있는 SetData(SkillInstance skillInstance) 매개변수가 호출되어 사용된다.
-    */
-
     public void PassiveSkillOn()
     {
         passiveSkillUI.localPosition = new Vector3(0, 0, 0);

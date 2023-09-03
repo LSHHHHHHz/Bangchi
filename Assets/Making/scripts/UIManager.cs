@@ -15,7 +15,6 @@ namespace Assets.Making.scripts
         {
             instance = this;
         }
-
         public void OnBottomButtonClicked()
         {
             if (BossUI.instance.isShowing)
