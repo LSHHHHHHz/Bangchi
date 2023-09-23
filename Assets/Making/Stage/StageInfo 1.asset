@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74478469e3740484aa7cb2b496303ca4, type: 3}
   m_Name: StageInfo 1
   m_EditorClassIdentifier: 
-  stageName: Stage2dsdsdsdsds22
+  stageName: Stage2
   StageNumber: 2
   coin: 0
   exp: 0
@@ -21,11 +21,11 @@ MonoBehaviour:
   stageIconPath: 
   pageIconPath: 
   monsterSpawnInfos:
-  - prefab: {fileID: 2507269854294887217, guid: 3a9b9b38a7694e24d89317f7722c2e24, type: 3}
+  - prefab: {fileID: 8945634601225786196, guid: 0b847587959cdcb45b44a266ef3cb6f6, type: 3}
     position: {x: 3, y: 0, z: 0}
   - prefab: {fileID: 2507269854294887217, guid: 3a9b9b38a7694e24d89317f7722c2e24, type: 3}
-    position: {x: 4, y: 0, z: 0}
+    position: {x: 4, y: 0.5, z: 0}
   - prefab: {fileID: 2507269854294887217, guid: 3a9b9b38a7694e24d89317f7722c2e24, type: 3}
-    position: {x: 5, y: 0, z: 0}
+    position: {x: 5, y: 0.5, z: 0}
   - prefab: {fileID: 2507269854294887217, guid: 3a9b9b38a7694e24d89317f7722c2e24, type: 3}
-    position: {x: 6, y: 0, z: 0}
+    position: {x: 6, y: 0.5, z: 0}
