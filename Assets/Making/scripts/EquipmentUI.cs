@@ -142,10 +142,12 @@ public class EquipmentUI : MonoBehaviour
     public void RunGacha_Sword(int count)
     {
         RunGacha(count, ItemType.Sword, RunGacha_Sword);
+        Achievement.instance.ItemGachaCount += count;
     }
     public void RunGacha_Shield(int count)
     {
         RunGacha(count, ItemType.Shield, RunGacha_Shield);
+        Achievement.instance.ItemGachaCount += count;
     }
     public void weaponInventoryOn()
     {

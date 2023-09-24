@@ -44,6 +44,7 @@ public class EquipAndEnforcePopup : MonoBehaviour
         var nextSlot = EquipmentUI.instance.weaponSlots[currentSlot.itemInfo.Number];
         if (currentSlot.count >= 5) 
         {
+            Achievement.instance.FusionCount += 1;
             if (nextSlot.itemInfo == null)
             {
                 int nextItemNumber = currentSlot.itemInfo.Number + 1;

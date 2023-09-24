@@ -27,6 +27,7 @@ namespace Assets.Battle
         public void UnregisterMonster(Monster monster)
         {
             monsterList.Remove(monster);
+            Achievement.instance.MonsterKilledCount += 1;
         }
     }
 }
