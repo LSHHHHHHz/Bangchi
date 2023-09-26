@@ -31,8 +31,16 @@ namespace Assets.Making.Stage
         public void StageSelect()
         {
             //BattleManager battleManager = new BattleManager();
-            BattleManager battleManager = BattleManager.instance;
-            battleManager.StartStage(stageInfo);
+            if (stageInfo.Type == StageType.Boss)
+            {
+                BossStageProcessor.instance.RunBossStage(stageInfo);
+            }
+            else
+            {
+                BattleManager battleManager = BattleManager.instance;
+                battleManager.StartStage(stageInfo);
+            }
+            StagePopup.instance.Exit();
         }
     }
 }

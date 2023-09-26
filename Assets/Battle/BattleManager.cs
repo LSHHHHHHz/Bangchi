@@ -12,6 +12,8 @@ namespace Assets.Battle
     {
         public List<ItemInfo> myStages = new List<ItemInfo>();
 
+        public event Action<StageInfo> OnStageDone;
+
         public static BattleManager instance;
         private bool stageEndCheck = false;
         public StageInfo currentStageInfo;
@@ -27,12 +29,21 @@ namespace Assets.Battle
         {
             if (stageEndCheck && IsStageEnded())
             {
-                fiveTimeHasPassed += Time.deltaTime;
-                if (fiveTimeHasPassed > 5)
+                OnStageDone?.Invoke(currentStageInfo);
+                if (currentStageInfo.Type != StageType.Boss)
                 {
                     stageEndCheck = false;
-                    RestartStage();
                     fiveTimeHasPassed = 0;
+                }
+                else
+                {
+                    fiveTimeHasPassed += Time.deltaTime;
+                    if (fiveTimeHasPassed > 5)
+                    {
+                        stageEndCheck = false;
+                        RestartStage();
+                        fiveTimeHasPassed = 0;
+                    }
                 }
             }
         }
