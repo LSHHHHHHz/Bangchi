@@ -20,7 +20,7 @@ public class GachaPopup : MonoBehaviour //가차 결과를 보여주는 UI
 
     private bool isCoroutineDone = true;
 
-    public void Initialize(GachaResult gachaResult, Action<int> oneMoreTime, Action onDone)
+    public void Initialize(GachaResult gachaResult, Action<int> oneMoreTime, Action onDone) //Action onDone 연출(코루틴)이 끝났을 때 호출되는 함수
     {
         // 이전에 보관해뒀던 아이템 UI들을 파괴
         foreach (GameObject child in children)
@@ -77,6 +77,13 @@ public class GachaPopup : MonoBehaviour //가차 결과를 보여주는 UI
     }
     public void Close()
     {
+        StopAllCoroutines(); // 돌아가고 있는 코루틴이 있다면 멈춘다.
+        if (isCoroutineDone == false)
+        {
+            isCoroutineDone = true;
+            onDoneAction?.Invoke();
+        }
+
         Destroy(gameObject);
     }
     public void OneMoreTime1()

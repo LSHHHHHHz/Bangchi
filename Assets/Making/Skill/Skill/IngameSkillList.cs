@@ -95,6 +95,12 @@ public class IngameSkillList : MonoBehaviour
             SkillInstance equipSkill = i < equippedSkillList.Count ? equippedSkillList[i] : null;
             if (equipSkill != null)
             {
+                if (equipSkill.skillInfo == null)
+                {
+                    Debug.LogError("Skillinfo null");
+                    continue;
+                }
+
                 // 장착할 스킬이 있음
                 slot.SetData(equipSkill); // 스킬 슬롯에 내가 장착한 스킬을 설정한다.
 

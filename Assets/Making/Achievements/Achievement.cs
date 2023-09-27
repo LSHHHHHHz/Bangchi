@@ -1,6 +1,8 @@
 using Assets.HeroEditor.Common.Scripts.Common;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +10,7 @@ public class Achievement : MonoBehaviour
 {
     public static Achievement instance;
     float elapsedTime = 0;
+    private DateTime lastLoginDate;
 
     public RectTransform AchivementUIGroup;
 
@@ -27,6 +30,10 @@ public class Achievement : MonoBehaviour
     private Color[] originalMainImageColors;
     private List<Color[]> originalChildImageColors = new List<Color[]>();
 
+    public Text NowTime;
+    public Text CheckTime;
+    public string CurrentCheckTime;
+    public bool isDateChange;
     public void Awake()
     {
         instance = this;
@@ -35,42 +42,80 @@ public class Achievement : MonoBehaviour
         originColor();
         ButtonActiveFalse();
     }
+    private void Start()
+    {
 
+        if (lastLoginDate < DateTime.Today)
+        {
+            elapsedTime = 0;
+        }
+
+        for (int i = 0; i < DailyButton.Length; i++)
+        {
+            int buttonIndex = i; 
+            DailyButton[i].onClick.AddListener(() => AchiveButtonClick(buttonIndex));
+        }
+    }
+    void OnApplicationQuit()
+    {
+        SaveData(); 
+    }
     private void Update()
     {
+        elapsedTime += Time.deltaTime;
         FillAmountImages();
         AchiveButton();
         ChangeColor();
+        TimeCheck();
+
+        if(isDateChange)
+        {
+            ResetData();
+            SaveData();
+        }
+    }
+    void TimeCheck()
+    {
+        string today = DateTime.Today.ToString();
+
+        if (CurrentCheckTime != today)
+        {
+            CurrentCheckTime = today;
+            isDateChange = true;
+        }
+
+        CheckTime.text = CurrentCheckTime;
+        isDateChange = false;
     }
 
     public void FillAmountImages()
     {
-        elapsedTime += Time.deltaTime;
+        NowTime.text = DateTime.Now.ToString();
         DailyFillAmountImageBar[0].fillAmount = elapsedTime / 180;
         int secondsElapsed = Mathf.RoundToInt(elapsedTime);
         DailyFillAmountText[0].text = secondsElapsed.ToString() + " / 180";
-        DailyFillAmountText[1].text = secondsElapsed.ToString() + " / 180";
+        //DailyFillAmountText[1].text = secondsElapsed.ToString() + " / 180";
 
         DailyFillAmountImageBar[1].fillAmount = ItemGachaCount / 30f;
-        DailyFillAmountText[2].text = ItemGachaCount.ToString() + " / 30";
-        DailyFillAmountText[3].text = ItemGachaCount.ToString() + " / 30";
+        DailyFillAmountText[1].text = ItemGachaCount.ToString() + " / 30";
+        //DailyFillAmountText[3].text = ItemGachaCount.ToString() + " / 30";
 
         DailyFillAmountImageBar[2].fillAmount = FusionCount / 30f;
-        DailyFillAmountText[4].text = FusionCount.ToString() + " / 30";
-        DailyFillAmountText[5].text = FusionCount.ToString() + " / 30";
+        DailyFillAmountText[2].text = FusionCount.ToString() + " / 30";
+        //DailyFillAmountText[5].text = FusionCount.ToString() + " / 30";
 
         DailyFillAmountImageBar[3].fillAmount = MonsterKilledCount / 180f;
-        DailyFillAmountText[6].text = MonsterKilledCount.ToString() + " / 180";
-        DailyFillAmountText[7].text = MonsterKilledCount.ToString() + " / 180";
+        DailyFillAmountText[3].text = MonsterKilledCount.ToString() + " / 180";
+        //DailyFillAmountText[7].text = MonsterKilledCount.ToString() + " / 180";
 
         DailyFillAmountImageBar[4].fillAmount = AchievementCount / 4f;
-        DailyFillAmountText[8].text = AchievementCount.ToString() + " / 4";
-        DailyFillAmountText[9].text = AchievementCount.ToString() + " / 4";
+        DailyFillAmountText[4].text = AchievementCount.ToString() + " / 4";
+        //DailyFillAmountText[9].text = AchievementCount.ToString() + " / 4";
     }
 
-    void ButtonActiveFalse()
+    void ButtonActiveFalse() //시작할 때 비활성화 -> 00시에 비활성화 시켜야함
     {
-        for(int i = 0; i < DailyButton.Length; i++)
+        for (int i = 0; i < DailyButton.Length; i++)
         {
             DailyButton[i].enabled = false;
         }
@@ -81,7 +126,6 @@ public class Achievement : MonoBehaviour
         {
             if (!isQuestCompleted[i] && DailyFillAmountImageBar[i].fillAmount >= 1 && !isGainDieAmond[i])
             {
-                Debug.Log("Entering the condition for index: " + i);
                 AchievementCount += 1;
                 DailyButton[i].enabled = true;
                 isQuestCompleted[i] = true;
@@ -90,12 +134,11 @@ public class Achievement : MonoBehaviour
     }
     public void AchiveButtonClick(int index)
     {
-        for(int i= 0; i< DailyButton.Length; i++)
-        {
-            DailyButton[i].enabled = false;
-            isQuestCompleted[i] = false;
-            isGainDieAmond[i] = true;
-        }
+        Player.instance.Diemond += 500;
+        DailyButton[index].enabled = false;
+        isQuestCompleted[index] = false;
+        isGainDieAmond[index] = true;
+
     }
     void originColor()
     {
@@ -157,8 +200,40 @@ public class Achievement : MonoBehaviour
         }
     }
 
+    void LoadData()
+    {
+        if (PlayerPrefs.HasKey("LastLogin"))
+        {
+            lastLoginDate = DateTime.Parse(PlayerPrefs.GetString("LastLogin"));
+            elapsedTime = PlayerPrefs.GetFloat("ElapsedTime");
+            ItemGachaCount = PlayerPrefs.GetInt("ItemGachaCount");
+            FusionCount= PlayerPrefs.GetInt("FusionCount");
+            MonsterKilledCount= PlayerPrefs.GetInt("MonsterKilledCount");
+            AchievementCount= PlayerPrefs.GetInt("AchievementCount");
+        }
+        else
+        {
+            lastLoginDate = DateTime.MinValue;
+        }
+    }
+    void SaveData()
+    {
+        PlayerPrefs.SetString("LastLogin", DateTime.Now.ToString());
+        PlayerPrefs.SetFloat("ElapsedTime", elapsedTime);
+        PlayerPrefs.SetInt("ItemGachaCount", ItemGachaCount);
+        PlayerPrefs.SetInt("FusionCount", FusionCount);
+        PlayerPrefs.SetInt("MonsterKilledCount", MonsterKilledCount);
+        PlayerPrefs.SetInt("AchievementCount", AchievementCount);
 
-    // fillamount가 1이라면 활성화 색변경시키고 시키고 클릭 가능 클릭하면 원래색으로
+    }
+    void ResetData()
+    {
+        elapsedTime = 0;
+        ItemGachaCount = 0;
+        FusionCount = 0;
+        MonsterKilledCount = 0;
+        AchievementCount = 0;
+    }
     public void AchiveMentUIOpen()
     {
         AchivementUIGroup.localPosition = new Vector3(0.0f, 130f, 0f);

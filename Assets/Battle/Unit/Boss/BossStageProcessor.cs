@@ -39,34 +39,41 @@ public class BossStageProcessor : MonoBehaviour
         });
     }
 
+    private void OnBossStageDone()
+    {
+        // 보스스테이지가 끝났으니 다시 원래 하던 스테이지(lastStage)로 돌아간다.
+        RunFadeOutIn(() =>
+        {
+            BattleManager.instance.StartStage(lastStage);
+        });
+    }
+
     private void RunFadeOutIn(TweenCallback fadeOutDoneCallback)
     {
         var sequence = DOTween.Sequence();
         Time.timeScale = 0f;
         fadeImage.enabled = true;
         fadeImage.color = new Color(0f, 0f, 0f, 0f);
-        sequence.Append(fadeImage.DOColor(new Color(0f, 0f, 0f, 1f), 1f).SetUpdate(isIndependentUpdate: true));
+
+        // 화면 1초동안 까매지기
+        sequence.Append(fadeImage.DOColor(new Color(0f, 0f, 0f, 1f), 1f));
 
         // 캐릭터 옮기기, 보스 소환하기
         sequence.AppendCallback(fadeOutDoneCallback);
 
+        // 2초 대기
         sequence.AppendInterval(2f);
 
-        sequence.Append(fadeImage.DOColor(new Color(0f, 0f, 0f, 0f), 1f).SetUpdate(isIndependentUpdate: true));
+        // 화면 1초동안 원상 복구
+        sequence.Append(fadeImage.DOColor(new Color(0f, 0f, 0f, 0f), 1f));
         sequence.onComplete += () =>
         {
             fadeImage.enabled = false;
             Time.timeScale = 1f;
         };
+
+        // 원래 DoTween이 timeScale의 영향을 받음. 아래처럼 Update 규칙을 true로 설정해주면 timeScale의 영향을 안받고 독립적인 Update를 수행함.
         sequence.SetUpdate(isIndependentUpdate: true);
         sequence.Play();
-    }
-
-    private void OnBossStageDone()
-    {
-        RunFadeOutIn(() =>
-        {
-            BattleManager.instance.StartStage(lastStage);
-        });
     }
 }
