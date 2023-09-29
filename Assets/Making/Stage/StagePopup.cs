@@ -52,6 +52,4 @@ public class StagePopup : MonoBehaviour
     {
         Destroy(gameObject);
     }
-
-
 }

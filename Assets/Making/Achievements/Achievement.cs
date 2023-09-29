@@ -34,13 +34,13 @@ public class Achievement : MonoBehaviour
     public Text CheckTime;
     public string CurrentCheckTime;
     public bool isDateChange;
+    public bool[] canClickButton = new bool[5]; // 조건 만족시 true
     public void Awake()
     {
         instance = this;
         isQuestCompleted = new bool[DailyFillAmountImageBar.Length];
         isGainDieAmond = new bool[DailyButton.Length];
         originColor();
-        ButtonActiveFalse();
     }
     private void Start()
     {
@@ -64,7 +64,7 @@ public class Achievement : MonoBehaviour
     {
         elapsedTime += Time.deltaTime;
         FillAmountImages();
-        AchiveButton();
+        isDailyMissionClear();
         ChangeColor();
         TimeCheck();
 
@@ -87,6 +87,7 @@ public class Achievement : MonoBehaviour
         CheckTime.text = CurrentCheckTime;
         isDateChange = false;
     }
+   
 
     public void FillAmountImages()
     {
@@ -113,84 +114,67 @@ public class Achievement : MonoBehaviour
         //DailyFillAmountText[9].text = AchievementCount.ToString() + " / 4";
     }
 
-    void ButtonActiveFalse() //시작할 때 비활성화 -> 00시에 비활성화 시켜야함
-    {
-        for (int i = 0; i < DailyButton.Length; i++)
-        {
-            DailyButton[i].enabled = false;
-        }
-    }
-    public void AchiveButton()
+    public void isDailyMissionClear()
     {
         for (int i = 0; i < DailyFillAmountImageBar.Length; i++)
         {
-            if (!isQuestCompleted[i] && DailyFillAmountImageBar[i].fillAmount >= 1 && !isGainDieAmond[i])
+            if (DailyFillAmountImageBar[i].fillAmount >= 1 && !isGainDieAmond[i])
             {
-                AchievementCount += 1;
-                DailyButton[i].enabled = true;
-                isQuestCompleted[i] = true;
+                if (!isQuestCompleted[i] && canClickButton[i] == true) // 퀘스트를 완료한 상태가 아니라면
+                {
+                    AchievementCount += 1;
+                    canClickButton[i] = false;
+                    isQuestCompleted[i] = true; // 퀘스트 완료 상태로 변경
+                }
             }
         }
     }
     public void AchiveButtonClick(int index)
     {
-        Player.instance.Diemond += 500;
-        DailyButton[index].enabled = false;
-        isQuestCompleted[index] = false;
-        isGainDieAmond[index] = true;
-
+        if (canClickButton[index] == true && !isGainDieAmond[index]) // 특정 인덱스만 확인
+        {
+            Player.instance.Diemond += 500;
+            canClickButton[index] = true;
+            isGainDieAmond[index] = true;
+        }
     }
     void originColor()
     {
-        // 이미지의 원래 색상을 저장할 배열을 초기화합니다.
         originalMainImageColors = new Color[colorChange.Length];
 
-        // 모든 colorChange 이미지를 순회합니다.
         for (int i = 0; i < colorChange.Length; i++)
         {
-            // 각 메인 이미지의 원래 색상을 저장합니다.
             originalMainImageColors[i] = colorChange[i].color;
 
-            // 현재 메인 이미지의 모든 자식 이미지를 가져옵니다.
             Image[] childImages = colorChange[i].GetComponentsInChildren<Image>();
 
-            // 각 자식 이미지의 색상을 저장할 배열을 초기화합니다.
             Color[] childColors = new Color[childImages.Length];
-
-            // 모든 자식 이미지를 순회합니다.
             for (int j = 0; j < childImages.Length; j++)
             {
-                // 각 자식 이미지의 원래 색상을 저장합니다.
                 childColors[j] = childImages[j].color;
             }
 
-            // 자식 이미지의 색상 배열을 리스트에 추가합니다.
             originalChildImageColors.Add(childColors);
         }
     }
 
     void ChangeColor()
     {
-        // 모든 colorChange 이미지를 순회합니다.
         for (int i = 0; i < colorChange.Length; i++)
         {
-            // 현재 메인 이미지와 자식 이미지를 가져옵니다.
             Image mainImage = colorChange[i];
             Image[] childImages = mainImage.GetComponentsInChildren<Image>();
 
-            // 퀘스트가 완료되지 않았다면
-            if (!isQuestCompleted[i])
+            if (!canClickButton[i])
             {
-                // 메인 이미지와 자식 이미지의 색상을 변경합니다.
                 mainImage.color = new Color(0.4f, 0.4f, 0.4f);
                 foreach (Image childImage in childImages)
                 {
                     childImage.color = new Color(0.4f, 0.4f, 0.4f);
                 }
             }
-            else // 퀘스트가 완료되었다면
+            else 
             {
-                // 메인 이미지와 자식 이미지의 색상을 원래 색상으로 되돌립니다.
                 mainImage.color = originalMainImageColors[i];
                 for (int j = 0; j < childImages.Length; j++)
                 {
@@ -233,6 +217,11 @@ public class Achievement : MonoBehaviour
         FusionCount = 0;
         MonsterKilledCount = 0;
         AchievementCount = 0;
+        for (int i = 0; i < canClickButton.Length; i++)
+        {
+            canClickButton[i] = false;
+            isQuestCompleted[i] = false;
+        }
     }
     public void AchiveMentUIOpen()
     {

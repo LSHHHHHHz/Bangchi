@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94f0e6032d5e40048a29c53155cff422, type: 3}
+  m_Name: SunBossLevel 1
+  m_EditorClassIdentifier: 
+  SunBossPageLevel: 1
+  SunBossInfo:
+  - {fileID: 11400000, guid: 71576cf8f90186e45997bd2465ef2c85, type: 2}
+  - {fileID: 11400000, guid: e04125573abdf844cb42244a0098e85d, type: 2}
+  - {fileID: 11400000, guid: 8ab707df146445847b8b4132c297ef26, type: 2}
