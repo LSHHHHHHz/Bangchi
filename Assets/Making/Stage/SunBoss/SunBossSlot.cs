@@ -14,7 +14,6 @@ public class SunBossSlot : MonoBehaviour
 
     private void Awake()
     {
-        gridCount = SunBossUI.instance.GetGridCount();
         sunBossClickButton = sunBossButton.GetComponent<Button>();
         BossLevel = new int[gridCount];
     }

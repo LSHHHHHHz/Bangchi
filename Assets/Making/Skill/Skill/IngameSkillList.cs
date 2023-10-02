@@ -97,7 +97,7 @@ public class IngameSkillList : MonoBehaviour
             {
                 if (equipSkill.skillInfo == null)
                 {
-                    Debug.LogError("Skillinfo null");
+                    Debug.LogError("Skillinfo null" + i);
                     continue;
                 }
 

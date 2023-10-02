@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: DamageBoss 1
   m_EditorClassIdentifier: 
   bossType: 0
-  SunBossLevel: 0
-  PlusDamage: 0
+  SunBossLevel: 1
+  PlusDamage: 10000
   PlusHP: 0
   PlusRecovered: 0
   BossHP: 0
-  BossTime: 0
+  BasicBossTime: 30
   MonsterSpawn:
     prefab: {fileID: 0}
     position: {x: 0, y: 0, z: 0}

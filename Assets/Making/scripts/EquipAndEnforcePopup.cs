@@ -19,6 +19,16 @@ public class EquipAndEnforcePopup : MonoBehaviour
     {
         
     }
+    private void OnEnable()
+    {
+        Equips.OnExitEquip += Exit;
+    }
+
+    private void OnDisable()
+    {
+        Equips.OnExitEquip -= Exit;
+    }
+
     public static void EquipAndEnforce(ItemSlot item)
     {
         if (instance == null)

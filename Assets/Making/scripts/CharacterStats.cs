@@ -1,4 +1,4 @@
-using Assets.HeroEditor.InventorySystem.Scripts.Elements;
+
 using Assets.Item1;
 using System.Collections;
 using System.Collections.Generic;
@@ -79,7 +79,7 @@ public class CharacterStats : MonoBehaviour
         }
     }
 
-    private void OnEquipItem(Assets.Item1.ItemInfo itemInfo)
+    private void OnEquipItem(ItemInfo itemInfo)
     {
         if (itemInfo.type == ItemType.Sword)
         {

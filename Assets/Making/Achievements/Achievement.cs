@@ -92,20 +92,20 @@ public class Achievement : MonoBehaviour
     public void FillAmountImages()
     {
         NowTime.text = DateTime.Now.ToString();
-        DailyFillAmountImageBar[0].fillAmount = elapsedTime / 180;
+        DailyFillAmountImageBar[0].fillAmount = elapsedTime / 18;
         int secondsElapsed = Mathf.RoundToInt(elapsedTime);
         DailyFillAmountText[0].text = secondsElapsed.ToString() + " / 180";
         //DailyFillAmountText[1].text = secondsElapsed.ToString() + " / 180";
 
-        DailyFillAmountImageBar[1].fillAmount = ItemGachaCount / 30f;
+        DailyFillAmountImageBar[1].fillAmount = ItemGachaCount / 3f;
         DailyFillAmountText[1].text = ItemGachaCount.ToString() + " / 30";
         //DailyFillAmountText[3].text = ItemGachaCount.ToString() + " / 30";
 
-        DailyFillAmountImageBar[2].fillAmount = FusionCount / 30f;
+        DailyFillAmountImageBar[2].fillAmount = FusionCount / 3f;
         DailyFillAmountText[2].text = FusionCount.ToString() + " / 30";
         //DailyFillAmountText[5].text = FusionCount.ToString() + " / 30";
 
-        DailyFillAmountImageBar[3].fillAmount = MonsterKilledCount / 180f;
+        DailyFillAmountImageBar[3].fillAmount = MonsterKilledCount / 18f;
         DailyFillAmountText[3].text = MonsterKilledCount.ToString() + " / 180";
         //DailyFillAmountText[7].text = MonsterKilledCount.ToString() + " / 180";
 
@@ -120,11 +120,12 @@ public class Achievement : MonoBehaviour
         {
             if (DailyFillAmountImageBar[i].fillAmount >= 1 && !isGainDieAmond[i])
             {
+                canClickButton[i] = true;
                 if (!isQuestCompleted[i] && canClickButton[i] == true) // 퀘스트를 완료한 상태가 아니라면
                 {
-                    AchievementCount += 1;
                     canClickButton[i] = false;
                     isQuestCompleted[i] = true; // 퀘스트 완료 상태로 변경
+                    
                 }
             }
         }
@@ -134,8 +135,13 @@ public class Achievement : MonoBehaviour
         if (canClickButton[index] == true && !isGainDieAmond[index]) // 특정 인덱스만 확인
         {
             Player.instance.Diemond += 500;
-            canClickButton[index] = true;
+            canClickButton[index] = false;
             isGainDieAmond[index] = true;
+            AchievementCount += 1;
+            if(index ==4)
+            {
+                AchievementCount -= 1;
+            }
         }
     }
     void originColor()

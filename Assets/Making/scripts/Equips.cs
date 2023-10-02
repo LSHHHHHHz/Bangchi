@@ -1,4 +1,5 @@
 using Assets.Making.scripts;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,8 @@ public class Equips : MonoBehaviour
 
     public RectTransform weaponSlotParent;
 
+    public static event Action OnExitEquip;
+    
     public void EnterEquip()
     {
         UIManager.instance.OnBottomButtonClicked();
@@ -23,6 +26,7 @@ public class Equips : MonoBehaviour
     public void ExitEquip()
     {
         uiGroup.anchoredPosition = new Vector3(2049, -1607, 0);
+        OnExitEquip?.Invoke();
     }
 
     public void EnterWeaponSelect()

@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a45ecc210e903c428c812bced9ca5e7, type: 3}
   m_Name: HPBoss 1
   m_EditorClassIdentifier: 
-  bossType: 0
-  SunBossLevel: 0
+  bossType: 1
+  SunBossLevel: 1
   PlusDamage: 0
-  PlusHP: 0
+  PlusHP: 10000
   PlusRecovered: 0
   BossHP: 0
-  BossTime: 0
+  BasicBossTime: 30
   MonsterSpawn:
     prefab: {fileID: 0}
     position: {x: 0, y: 0, z: 0}

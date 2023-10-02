@@ -39,7 +39,6 @@ internal class GachaCalculator
 
             result.items.Add(selected);
         }
-
         return result;
     }
 }

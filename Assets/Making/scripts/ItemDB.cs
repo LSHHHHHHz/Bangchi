@@ -28,18 +28,7 @@ namespace Assets.Item1
         private static ItemDB _instance;
 
         public List<ItemInfo> items;
-        public List<ItemInfo> GetItemsByType(ItemType type)
-        {
-            var result = new List<ItemInfo>();
-            foreach (ItemInfo item in items)
-            {
-                if (item.type == type)
-                {
-                    result.Add(item);
-                }           
-            }
-            return result;
-        }
+        
 
         public List<ItemInfo> GetItemGradeAndType(ItemGrade itemGrade, ItemType type)
         {

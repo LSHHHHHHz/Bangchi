@@ -59,7 +59,7 @@ public class EquipmentUI : MonoBehaviour
             var button = child.GetComponent<Button>();
             button.onClick.AddListener(() =>
             {
-                EquipOrUnequip(child);
+                EquipAndEnforcePopup.EquipAndEnforce(child);
             });
 
             shieldChildList.Add(child);
@@ -83,7 +83,7 @@ public class EquipmentUI : MonoBehaviour
         InventoryManager.instance.Equip(item.itemInfo); // 장착.
     }
 
-
+    //인벤토리 UI 아이템들을 보여줌
     public void SetData()
     {
         foreach (ItemInstance item in InventoryManager.instance.myItems)

@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1b5716bdae75fb4a96a6c2a82f94550, type: 3}
   m_Name: SunBossDB
   m_EditorClassIdentifier: 
-  stagePage: []
+  Stages:
+  - {fileID: 11400000, guid: 8efe4b425f75ba64aa88fbb705312b27, type: 2}

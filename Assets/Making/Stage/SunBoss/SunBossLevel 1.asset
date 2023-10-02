@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SunBossLevel 1
   m_EditorClassIdentifier: 
   SunBossPageLevel: 1
-  SunBossInfo:
+  sunBossInfos:
   - {fileID: 11400000, guid: 71576cf8f90186e45997bd2465ef2c85, type: 2}
   - {fileID: 11400000, guid: e04125573abdf844cb42244a0098e85d, type: 2}
   - {fileID: 11400000, guid: 8ab707df146445847b8b4132c297ef26, type: 2}
