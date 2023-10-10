@@ -93,6 +93,7 @@ public class IngameSkillList : MonoBehaviour
             SkillSlot slot = skillSlots[i];
             
             SkillInstance equipSkill = i < equippedSkillList.Count ? equippedSkillList[i] : null;
+            // 내가 장착한 스킬이 있다면?
             if (equipSkill != null)
             {
                 if (equipSkill.skillInfo == null)
@@ -118,6 +119,7 @@ public class IngameSkillList : MonoBehaviour
                     skillsList.Add(skill);
                 }
             }
+            // 내가 장착한 스킬이 없다면?
             else
             {
                 // 장착할 스킬이 없음

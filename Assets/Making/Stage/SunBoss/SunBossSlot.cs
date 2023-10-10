@@ -1,3 +1,4 @@
+using Assets.Battle;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,8 +6,7 @@ using UnityEngine.UI;
 
 public class SunBossSlot : MonoBehaviour
 {
-    int[] BossLevel;
-    int gridCount;
+    public int bossLevel;
     public SunBossInfo sunBossInfo;
     public GameObject sunBossButton;
     public BossType bossType;
@@ -15,7 +15,10 @@ public class SunBossSlot : MonoBehaviour
     private void Awake()
     {
         sunBossClickButton = sunBossButton.GetComponent<Button>();
-        BossLevel = new int[gridCount];
+        sunBossClickButton.onClick.AddListener(() =>
+        {
+            SelectBoss(bossLevel);
+        });
     }
 
     public void SetData(SunBossInfo subBossInfo)
@@ -24,17 +27,18 @@ public class SunBossSlot : MonoBehaviour
     }
     public void SelectBoss(int stageLevel)
     {
-        if(sunBossInfo.bossType == BossType.DamageBoss)
-        {
+        BattleManager.instance.StartSunbossStage(sunBossInfo, stageLevel);
+        //if(sunBossInfo.bossType == BossType.DamageBoss)
+        //{
 
-        }
-        if (sunBossInfo.bossType == BossType.HPBoss)
-        {
+        //}
+        //if (sunBossInfo.bossType == BossType.HPBoss)
+        //{
 
-        }
-        if (sunBossInfo.bossType == BossType.RecoveryBoss)
-        {
+        //}
+        //if (sunBossInfo.bossType == BossType.RecoveryBoss)
+        //{
 
-        }
+        //}
     }
 }

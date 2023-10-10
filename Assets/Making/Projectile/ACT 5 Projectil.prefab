@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 6933676403622890752}
   - component: {fileID: 6933676403604539458}
   - component: {fileID: 6933676403604517346}
+  - component: {fileID: 1302191998839527953}
   m_Layer: 0
   m_Name: ACT 5 Projectil
-  m_TagString: Untagged
+  m_TagString: Skill
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4825,6 +4826,23 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &1302191998839527953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6933676403622990112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fe6b5cff6078b24b9300d3be1bcc7b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  owner: {fileID: 0}
+  damage: 1
+  lifetime: 1
+  speed: 1
+  direction: {x: 0, y: 0, z: 0}
 --- !u!1 &6933676403622990114
 GameObject:
   m_ObjectHideFlags: 0

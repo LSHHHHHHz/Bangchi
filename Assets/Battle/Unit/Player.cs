@@ -396,7 +396,7 @@ public class Player : BaseUnit
     {
         isSkillCasting = true;
         skillCastTime = Time.time;
-        anim.SetTrigger("doSkill");
+
     }
 
     private void OnTriggerEnter(Collider collision)

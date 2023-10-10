@@ -123,7 +123,7 @@ public class EquipmentUI : MonoBehaviour
                 gachaPopup = Instantiate(prefab).GetComponent<GachaPopup>();
 
             }
-
+            gachaPopup.PanelFadeIn();
             GachaResult gachaResult = GachaCalculator.Calculate(itemDb, count, type);
 
             // 가챠를 통해 얻은 아이템을 인벤토리에 하나씩 추가

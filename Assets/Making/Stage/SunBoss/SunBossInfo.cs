@@ -8,24 +8,15 @@ public enum BossType
     RecoveryBoss
 }
 [CreateAssetMenu(menuName = "My Assets/SunBossInfo")]
-public class SunBossInfo : ScriptableObject
+public class SunBossInfo : StageInfo
 {
     public BossType bossType;
 
     public int SunBossLevel;
-    public int PlusDamage;
-    public int PlusHP;
-    public int PlusRecovered;
+    public int RewardDamage;
+    public int RewardHP;
+    public int RewardHPRecovery;
 
-    public int BossHP;
+    public int[] BossHPByLevel;
     public float BasicBossTime = 30f;
-
-    public MonsterSpawnInfo MonsterSpawn;
-
-    [System.Serializable]
-    public class MonsterSpawnInfo
-    {
-        public GameObject prefab;
-        public Vector3 position;
-    }
 } 

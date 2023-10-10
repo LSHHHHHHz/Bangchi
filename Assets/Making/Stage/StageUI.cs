@@ -27,14 +27,12 @@ public class StageUI : MonoBehaviour
         instance = this;
         stageChangeDelegate = RunStage;
     }
-
     public void RunStage(int pageIndex)
     {
         if (pageIndex >= pageDB.stagePage.Count || pageIndex < 0)
         {
             return;
         }
-
         this.currentPage = pageIndex;
 
         var prefab = Resources.Load<GameObject>("StagePopup");
@@ -50,8 +48,6 @@ public class StageUI : MonoBehaviour
             PageInfo selectedPage = pageDB.stagePage[pageNumber];
             StagePopup.instance.pageIcon.sprite = Resources.Load<Sprite>(selectedPage.pageIconPath);
         }
-
-
     }
     public void RightStageChange()
     {
@@ -64,12 +60,9 @@ public class StageUI : MonoBehaviour
         {
             Destroy(stagePopup.gameObject);
         }
-
         // RunStage 호출하여 페이지 업데이트
         stageChangeDelegate.Invoke(currentPage);
     }
-
-
     public void LeftStageChange()
     {
         currentPage--;

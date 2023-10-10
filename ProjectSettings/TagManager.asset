@@ -9,6 +9,7 @@ TagManager:
   - Melee
   - ExpIcon
   - CoinIcon
+  - Skill
   layers:
   - Default
   - TransparentFX

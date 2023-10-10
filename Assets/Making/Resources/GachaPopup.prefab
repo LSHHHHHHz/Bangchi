@@ -457,6 +457,7 @@ GameObject:
   - component: {fileID: 2204950546215935071}
   - component: {fileID: 3674552803106038636}
   - component: {fileID: 4785936069910895285}
+  - component: {fileID: 2746484798299137608}
   m_Layer: 5
   m_Name: GachaPopup
   m_TagString: Untagged
@@ -560,6 +561,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grid: {fileID: 8081610327507258317}
   itemPrefab: {fileID: 1304311911501168271, guid: 53507ba9141ab0b448f4d01f7cbda848, type: 3}
+  fadeTime: 1
+  canvasGroup: {fileID: 2746484798299137608}
+  rectTransform: {fileID: 6656384436225517867}
+--- !u!225 &2746484798299137608
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4354538440421500544}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &5128225446017059060
 GameObject:
   m_ObjectHideFlags: 0

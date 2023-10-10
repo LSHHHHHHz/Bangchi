@@ -7,18 +7,15 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class StagePopup : MonoBehaviour
-
 {
     public static StagePopup instance;
 
     public Image pageIcon;
     public GridLayoutGroup grid;
     public GameObject stagePrefab; //StageSlot 프리펩임
-
     public StageUI stageUI;
     public Button stagePageLeftButton;
     public Button stagePageRightButton;
-
     private List<GameObject> children = new List<GameObject>();
     private void Awake()
     {    
@@ -26,7 +23,6 @@ public class StagePopup : MonoBehaviour
 
         stagePageLeftButton.onClick.AddListener(StageUI.instance.LeftStageChange);
         stagePageRightButton.onClick.AddListener(StageUI.instance.RightStageChange);
-
         instance = this;
     }
     public void Initialize(PageInfo pageInfo)
@@ -36,7 +32,6 @@ public class StagePopup : MonoBehaviour
             Destroy(child);
         }
         children.Clear();
-
 
         for (int i = 0; i < pageInfo.stages.Count; i++)
         {

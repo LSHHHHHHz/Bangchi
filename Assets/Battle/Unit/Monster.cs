@@ -1,4 +1,5 @@
 using Assets.Battle;
+using Assets.Battle.Projectile;
 using Assets.Battle.Unit;
 using System.Collections;
 using System.Collections.Generic;
@@ -99,6 +100,14 @@ public class Monster : BaseUnit
             GameObject hudeText = Instantiate(hudDamageText);
             hudeText.transform.position = transform.position + new Vector3(0, 1, 0);
             hudeText.GetComponent<DamageText>().damage = (int)weapons.Current_totalDamage;
+        }
+        if(other.tag == "Skill")
+        {
+            BaseProjectile skill = other.GetComponent<BaseProjectile>();
+            _Current_HP -= skill.damage;
+            GameObject hudText = Instantiate(hudDamageText);
+            hudText.transform.position = transform.position + new Vector3(0, 1, 0);
+            hudText.GetComponent<DamageText>().damage = (int)skill.damage;
         }
     }
 

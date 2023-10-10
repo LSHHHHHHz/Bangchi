@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class SunBossUI : MonoBehaviour
 {
     SunBossPopup sunBossPopup;
-    public SunBossDB sunBossDB;
     public static SunBossUI instance;
     public GridLayoutGroup gird;
 

@@ -11,7 +11,6 @@ public class SkillGachaPopup : MonoBehaviour
     public Action runGacha1Action;
     public Action runGacha11Action;
 
-
     public GameObject gachaEffectPrefab;
     public GridLayoutGroup grid;
     public GameObject itemPrefab;

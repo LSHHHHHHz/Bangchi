@@ -8,28 +8,31 @@ public class SunBossPopup : MonoBehaviour
     public static SunBossPopup instance;
     public GridLayoutGroup grid;
     public GameObject sunBossSlotPrefab;
+    public SunBossPageInfo pageInfo;
     private List<GameObject> children = new List<GameObject>();
 
     private void Awake()
     {
         instance = this;
+        Initialize();
     }
 
-    public void Initialize(SunBossPageInfo pageInfo)
+    public void Initialize()
     {
         // 모든 SunBossStage를 순회
         foreach (Transform sunBossStage in grid.transform)
         {
-            int sunBossInfoIndex = 0;
-
             // 각 SunBossStage의 자식들을 순회
             foreach (Transform sunBossSlotTransform in sunBossStage)
             {
                 SunBossSlot slot = sunBossSlotTransform.GetComponent<SunBossSlot>();
-                if (slot != null && sunBossInfoIndex < pageInfo.sunBossInfos.Count)
+                if (slot == null)
+                    continue;
+
+                SunBossInfo sunBossInfo = pageInfo.sunBossInfos.Find(bossInfo => bossInfo.bossType == slot.bossType);
+                if (sunBossInfo != null)
                 {
-                    slot.SetData(pageInfo.sunBossInfos[sunBossInfoIndex]);
-                    sunBossInfoIndex++;
+                    slot.SetData(sunBossInfo);
                 }
             }
         }

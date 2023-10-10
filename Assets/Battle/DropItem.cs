@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Item1;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,10 @@ namespace Assets.Battle
         public int exp;
         public int coin;
         public int enforceCoin;
+
+        public ItemInfo droppedItemInfo;
+        public ItemDB itemDB;
+
 
         Rigidbody prefabRigid;
         Transform target;
@@ -35,20 +40,20 @@ namespace Assets.Battle
         }
         private void Update()
         {
+            //
             if(target != null)
             {
                 float createdElapsed = Time.time - createdTime; // 아이템이 생성된 후 흐른 시간.
                 float moveElapsed = createdElapsed - moveWaitTime; // 움직이기 시작한 시간.
 
                 float currentSpeed = Mathf.Lerp(startSpeed, maxSpeed, moveElapsed);
+               // float currentSpeed = 30;
                 Vector3 posGap = target.position - transform.position;
                 Vector3 dir = (posGap).normalized;
-                currentSpeed = Mathf.Lerp(0, currentSpeed, posGap.magnitude);
+                //currentSpeed = Mathf.Lerp(0, currentSpeed, posGap.magnitude);
                 transform.Translate(dir * currentSpeed * Time.deltaTime, Space.World);
             }
         }
-
-
         IEnumerator SearchPlayer()
         {
             // 0.5초 대기했다가, Rigidody를 파괴해 더이상 물리적인 움직임을 하지 않도록 한다.
@@ -68,6 +73,12 @@ namespace Assets.Battle
             player.Exp += exp;
             player.Coin += coin;
             player.enforceCoin += enforceCoin;
+
+            if (droppedItemInfo != null && droppedItemInfo.type == ItemType.Sword)
+            {
+                InventoryManager.instance.AddItem(droppedItemInfo);
+            }
+
             Destroy(gameObject);
         }
     }

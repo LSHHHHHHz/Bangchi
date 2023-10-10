@@ -20,6 +20,16 @@ public class GachaPopup : MonoBehaviour //가차 결과를 보여주는 UI
 
     private bool isCoroutineDone = true;
 
+    public float fadeTime = 1f;
+    public CanvasGroup canvasGroup;
+    public RectTransform rectTransform;
+
+    public void PanelFadeIn()
+    {
+        canvasGroup.alpha = 0;
+        canvasGroup.DOFade(1, fadeTime);
+    }
+
     public void Initialize(GachaResult gachaResult, Action<int> oneMoreTime, Action onDone) //Action onDone 연출(코루틴)이 끝났을 때 호출되는 함수
     {
         // 이전에 보관해뒀던 아이템 UI들을 파괴

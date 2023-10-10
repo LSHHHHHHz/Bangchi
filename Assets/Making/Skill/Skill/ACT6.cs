@@ -6,10 +6,15 @@ using UnityEngine;
 public class ACT6 : BaseSkill
 {
     public GameObject projectilePrefab;
-    bool isSkill = false;
+    public bool isSkill = false;
     public float TimePass = 0;
     public float CoolTime = 2;
 
+    public static ACT6 instance;
+    private void Awake()
+    {
+        instance = this;
+    }
     public void Update()
     {
         waitSkillCoolTime();
@@ -18,6 +23,7 @@ public class ACT6 : BaseSkill
     {
         if (!isSkill)
         {
+            Player.instance.anim.SetTrigger("doSkill");
             isSkill = true;
             var projectile = Instantiate(projectilePrefab).GetComponent<BaseProjectile>();
             projectile.transform.position = owner.transform.position;
@@ -30,6 +36,7 @@ public class ACT6 : BaseSkill
     {
         if(isSkill)
         {
+           
             TimePass += Time.deltaTime;
             if(TimePass > CoolTime)
             {
