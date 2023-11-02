@@ -67,12 +67,10 @@ public class Monster : BaseUnit
     public void monsterDeathIcon(GameObject whatIcon)
     {
         Vector3 offset = new Vector3(0f, 0.5f, 0f);
-        float power = 1f;
         GameObject Icon = Instantiate(whatIcon, transform.position + offset, Quaternion.identity);
         Rigidbody IconRigid = Icon.GetComponent<Rigidbody>();
 
         Vector3 powerVector = Vector3.right + Vector3.up * Random.Range(1, 2);
-        powerVector *= power;
         IconRigid.AddForce(powerVector, ForceMode.Impulse);
     }
 

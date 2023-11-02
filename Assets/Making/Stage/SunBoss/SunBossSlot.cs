@@ -28,17 +28,5 @@ public class SunBossSlot : MonoBehaviour
     public void SelectBoss(int stageLevel)
     {
         BattleManager.instance.StartSunbossStage(sunBossInfo, stageLevel);
-        //if(sunBossInfo.bossType == BossType.DamageBoss)
-        //{
-
-        //}
-        //if (sunBossInfo.bossType == BossType.HPBoss)
-        //{
-
-        //}
-        //if (sunBossInfo.bossType == BossType.RecoveryBoss)
-        //{
-
-        //}
     }
 }

@@ -6,7 +6,6 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    public PoolManager pool;
     public Player player;
     public PageDB pageDB;
     private void Awake()

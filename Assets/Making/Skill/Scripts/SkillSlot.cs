@@ -13,6 +13,9 @@ public class SkillSlot : MonoBehaviour
     public void SetData(SkillInfo skillInfo)
     {
         this.skillInfo = skillInfo;
+        if (skillInfo == null)
+            return;
+
         icon.sprite = Resources.Load<Sprite>(skillInfo.iconPath);
         if (countText != null)
         {

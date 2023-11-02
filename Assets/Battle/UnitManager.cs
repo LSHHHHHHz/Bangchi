@@ -11,7 +11,6 @@ namespace Assets.Battle
        
         public Player player;
         public Vector3 playerInitialPosition;
-        public PoolManager pool;
 
         private void Awake()
         {

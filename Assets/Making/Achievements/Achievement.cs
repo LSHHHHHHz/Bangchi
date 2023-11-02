@@ -44,12 +44,10 @@ public class Achievement : MonoBehaviour
     }
     private void Start()
     {
-
         if (lastLoginDate < DateTime.Today)
         {
             elapsedTime = 0;
         }
-
         for (int i = 0; i < DailyButton.Length; i++)
         {
             int buttonIndex = i; 

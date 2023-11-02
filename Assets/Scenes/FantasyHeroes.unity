@@ -8471,7 +8471,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -782, y: 455}
+  m_AnchoredPosition: {x: -620, y: 455}
   m_SizeDelta: {x: 650, y: 620}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &424015534
@@ -17719,7 +17719,6 @@ MonoBehaviour:
   monsterList: []
   player: {fileID: 622718925}
   playerInitialPosition: {x: 0, y: 0, z: 0}
-  pool: {fileID: 0}
 --- !u!114 &763275229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17734,6 +17733,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myStages: []
   currentStageInfo: {fileID: 0}
+  LastStageInfo: {fileID: 0}
   stageRoot: {fileID: 0}
 --- !u!114 &763275230
 MonoBehaviour:
@@ -17761,6 +17761,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35004b3e33b940847b6a870e1b4f699f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isEventRegistered: 0
   poolManager: {fileID: 0}
   spawnPoint:
   - {fileID: 0}
@@ -17792,7 +17793,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15ad867b84d5f1a459f1be705e2317ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sunBossDB: {fileID: 11400000, guid: 828819f0f4383964ab2cd912d124d653, type: 2}
   gird: {fileID: 0}
 --- !u!1 &766666605
 GameObject:
@@ -50417,6 +50417,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1894159805}
   - component: {fileID: 1894159804}
+  - component: {fileID: 1894159806}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -50436,7 +50437,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fad4e523b36d2f458c63f9eb55f0c2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pool: {fileID: 0}
   player: {fileID: 0}
   pageDB: {fileID: 11400000, guid: c7fc1b415aa95c94b96341ee5c2fbac2, type: 2}
 --- !u!4 &1894159805
@@ -50454,6 +50454,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1894159806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1894159803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a21e8691f3de84347bc23d7fa1ce3f97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabs:
+  - {fileID: 7122588463523522965, guid: 1919c62f8fe64ab4480fe10cc0051d65, type: 3}
 --- !u!1 &1896158434
 GameObject:
   m_ObjectHideFlags: 0
@@ -52897,7 +52911,7 @@ MonoBehaviour:
   myPets: []
   equipPets: []
   accumulatePets: []
-  maxaccumulatePetsCount: 50
+  maxaccumulatePetsCount: 51
   PetSlotParent: {fileID: 1113528644}
 --- !u!1 &2015431676
 GameObject:

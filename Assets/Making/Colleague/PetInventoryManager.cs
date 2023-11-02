@@ -22,7 +22,6 @@ public class PetInventoryManager : MonoBehaviour
     public static PetInventoryManager Instance;
     public List<PetInstance> myPets = new();
     public List<PetInstance> equipPets = new();
-    public List<PetInstance> accumulatePets = new();
 
     public int maxaccumulatePetsCount = 50;
 
@@ -30,6 +29,7 @@ public class PetInventoryManager : MonoBehaviour
     public event Action OnInventoryChanged;
     public RectTransform PetSlotParent;
     PetSlot[] petSlots;
+    List<PetSlot> petSlotsList = new();
     public void Awake()
     {
         Instance = this;
@@ -45,28 +45,67 @@ public class PetInventoryManager : MonoBehaviour
     private void Start()
     {
         OnInventoryChanged += OnInventoryChangedCallback;
+        Load();
         SetData();
+        SortSlots();
+       
+    }
+    private void Update()
+    {
+       
+    }
+    private void SortSlots()
+    {
+        bool isActive = Array.Exists(petSlots, x => x.petInfo != null);
+        petSlotsList.Clear();
+        foreach (PetSlot slot in petSlots)
+        {
+            if(slot.petInfo != null)
+            {
+                petSlotsList.Add(slot);
+            }
+        }
+
+        if (isActive)
+        {
+            petSlotsList.Sort((x,y)=> x.petInfo.Number.CompareTo(y.petInfo.Number));
+            //petSlots = petSlotsList.ToArray();
+            for (int i = 0; i < petSlotsList.Count; ++i)
+            {
+                PetSlot slot = petSlotsList[i];
+                slot.transform.SetSiblingIndex(i);
+            }
+        }
     }
 
     public void SetData()
     {
-        if (accumulatePets.Count < maxaccumulatePetsCount+1)
-        {
-            for (int i = 0; i < accumulatePets.Count; i++)
+            /*for (int i = 0; i < accumulatePets.Count; i++)
             {
                 PetSlot slot = petSlots[i];
                 slot.SetData(accumulatePets[i]);
                 slot.SetActive(true);
-            }
-        }
-        else
+            }*/ //수정 전
+
+
+        int slotCount = petSlots.Length; // 
+
+        for (int i = 0; i < myPets.Count; i++)
         {
-            Debug.Log("확장 하세요");
+            if (i >= slotCount) // 이 조건을 추가하여 i가 petSlots의 범위를 초과하는지 확인
+            {
+                Debug.LogWarning("확장필요");
+                break; 
+            }
+
+            PetSlot slot = petSlots[i];
+            slot.SetData(myPets[i]);
+            slot.SetActive(true);
         }
     }
-    public void accumulatePet(PetInfo petInfo)
+    public void AddPet(PetInfo petInfo)
     {
-        accumulatePets.Add(new PetInstance()
+        myPets.Add(new PetInstance()
         {
             petInfo = petInfo,
             count = 1,
@@ -76,29 +115,11 @@ public class PetInventoryManager : MonoBehaviour
         OnInventoryChanged?.Invoke();
     }
 
-    public void AddPet(PetInfo petInfo)
-    {
-        PetInstance existPet = myPets.Find(myPet => myPet.petInfo == petInfo);
 
-        if (existPet != null)
-        {
-            existPet.count++;
-        }
-        else
-        {
-            myPets.Add(new PetInstance()
-            {
-                petInfo = petInfo,
-                count = 1,
-                upgradeLevel = 1
-            });
-        }
-        OnInventoryChanged?.Invoke();
-        Save();
-    }
     private void OnInventoryChangedCallback()
     {
         SetData();
+        SortSlots();
     }
     public void Save()
     {

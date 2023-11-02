@@ -48,9 +48,7 @@ public class EquipmentUI : MonoBehaviour
 
             childList.Add(child); // 자식을 childList에 임시로 넣어둔다.
         }
-
         weaponSlots = childList.ToArray(); //자식들이 들어있는 childList를 배열 변환로 변환한다.
-
 
         List<ItemSlot> shieldChildList = new List<ItemSlot>();
         for (int i = 0; i < shieldSlotParent.childCount; ++i)
@@ -69,20 +67,14 @@ public class EquipmentUI : MonoBehaviour
     private void Start() 
     {
         InventoryManager.instance.OnInventoryChanged += OnInventoryChangedCallback;
-
         SetData();
     }
-
-
-    //------------------------------------------------------------------------------------------------
-   
     public void EquipOrUnequip(ItemSlot item)
     {
         SetEquipSlot(item.itemInfo);
         InventoryManager.instance.UnEquip(item.itemInfo); // 장착하고 있던 칼이나 방패등 장착 해제.
         InventoryManager.instance.Equip(item.itemInfo); // 장착.
     }
-
     //인벤토리 UI 아이템들을 보여줌
     public void SetData()
     {
@@ -102,7 +94,6 @@ public class EquipmentUI : MonoBehaviour
             }
         }
     }
-
     private void SetEquipSlot(ItemInfo itemInfo) //캐릭터 상태창 넣기
     {
         //characterStats.OnEquipItem(itemInfo);

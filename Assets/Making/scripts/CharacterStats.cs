@@ -41,9 +41,6 @@ public class CharacterStats : MonoBehaviour
     {
         Text_Stats();
     }
-
-
-
     void Text_Stats()
     {
         _Attack.text = player.Current_Attack + ""; 
@@ -53,22 +50,8 @@ public class CharacterStats : MonoBehaviour
         _Criticalprobability.text = player.Current_Criticalprobability + "";
         _MP.text = player.Max_MP + "";
         _MPRecovery.text = player.RecoveryMP + "";
-
-
         _CoinGetAmount.text = colleaguePoly[1].Third_stat.ToString();
-
-
         _ExpGetAmount.text = colleaguePoly[0].Third_stat + "";
-    }
-
-    public void characterOpen()
-    {
-        characterUI.localPosition = new Vector3(310, 455, 0);
-    }
-
-    public void characterClose()
-    {
-        characterUI.localPosition = new Vector3(-782, 455, 0);
     }
 
     private void RefreshWeapon()

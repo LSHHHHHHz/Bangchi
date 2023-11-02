@@ -31,7 +31,7 @@ namespace Assets.Making.Stage
             //BattleManager battleManager = new BattleManager();
             if (stageInfo.Type == StageType.Boss)
             {
-                BossStageProcessor.instance.RunBossStage(stageInfo);
+                //BossStageProcessor.instance.RunBossStage(stageInfo);
             }
             else
             {

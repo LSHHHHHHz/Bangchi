@@ -34,7 +34,7 @@ public class PetUI : MonoBehaviour
     }
     public void RunPet(int count)
     {
-        if (PetInventoryManager.Instance.accumulatePets.Count < PetInventoryManager.Instance.maxaccumulatePetsCount)
+        if (PetInventoryManager.Instance.myPets.Count < PetInventoryManager.Instance.maxaccumulatePetsCount)
         {
             if (petPopup == null)
             {
@@ -49,7 +49,7 @@ public class PetUI : MonoBehaviour
             foreach (var pet in petGachaResult.pets)
             {
                 //PetInventoryManager.Instance.AddPet(pet); <--펫 인벤토리에서는 딱히 필요없음 count가 필요 없기 때문
-                PetInventoryManager.Instance.accumulatePet(pet);
+                PetInventoryManager.Instance.AddPet(pet);
 
             }
             PetInventoryManager.Instance.Save();

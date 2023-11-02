@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static UnityEditorInternal.VersionControl.ListControl;
 
 namespace Assets.Battle
 {
@@ -17,6 +18,7 @@ namespace Assets.Battle
         public static BattleManager instance;
         private bool stageEndCheck = false;
         public StageInfo currentStageInfo;
+        public StageInfo LastStageInfo;
         public GameObject stageRoot;
         float stageRestartDelay = 0;
         bool readToRestartStage = false;
@@ -42,6 +44,7 @@ namespace Assets.Battle
                 }
                 else
                 {
+                    currentStageInfo = LastStageInfo;
                     stageRestartDelay = 5;
                 }
             }
@@ -65,6 +68,7 @@ namespace Assets.Battle
             UnitManager.instance.player.transform.position = UnitManager.instance.playerInitialPosition;
 
             currentStageInfo = stageInfo;
+            LastStageInfo = stageInfo;
             StageInfoUtility.PrepareStage(stageRoot, stageInfo);
             stageEndCheck = true;
 
@@ -72,11 +76,13 @@ namespace Assets.Battle
 
         public void StartSunbossStage(SunBossInfo sunBossInfo, int level)
         {
+            
             int hp = sunBossInfo.BossHPByLevel[level];
             StartStage(sunBossInfo);
             var boss = UnitManager.instance.monsterList[0];
             boss._Max_HP = hp;
             boss._Current_HP = hp;
+            stageEndCheck = true;
         }
 
         public void RestartStage()
