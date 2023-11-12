@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stageName: 
   StageNumber: 0
-  Type: 0
+  Type: 1
   coin: 0
   exp: 0
   weaponProbability: 0

@@ -22,6 +22,12 @@ namespace Assets.Battle
         public GameObject stageRoot;
         float stageRestartDelay = 0;
         bool readToRestartStage = false;
+
+
+        //GameManger가 Stage시작을 모르니 BattleManager로 옮김
+        public int GetLastPlayedNormalStage() => PlayerPrefs.GetInt("LastPlayedNormalStage", defaultValue: 1);
+        public void SetLastPlayedNormalStage(int value) => PlayerPrefs.SetInt("LastPlayedNormalStage", value);
+
         private void Awake()
         {
             instance = this;
@@ -38,14 +44,13 @@ namespace Assets.Battle
                 stageEndCheck = false;
 
                 // 스테이지 재시작에 걸리는 대기 시간을 설정해준다.
-                if (currentStageInfo.Type != StageType.Boss)
+                if (currentStageInfo.Type == StageType.Boss)
                 {
-                    stageRestartDelay = 2;
+                    stageRestartDelay = 0;
                 }
                 else
                 {
-                    currentStageInfo = LastStageInfo;
-                    stageRestartDelay = 5;
+                    stageRestartDelay = 2;
                 }
             }
 
@@ -72,6 +77,11 @@ namespace Assets.Battle
             StageInfoUtility.PrepareStage(stageRoot, stageInfo);
             stageEndCheck = true;
 
+
+            if (stageInfo.Type == StageType.Normal)
+            {
+                SetLastPlayedNormalStage(stageInfo.StageNumber);
+            }
         }
 
         public void StartSunbossStage(SunBossInfo sunBossInfo, int level)

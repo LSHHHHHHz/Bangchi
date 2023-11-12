@@ -18,11 +18,7 @@ public class GameManager : MonoBehaviour
         // DropItem 게임 오브젝트 찾기
         DropItem dropItem = FindObjectOfType<DropItem>();
 
-        int playStage = 1;
-        if (PlayerPrefs.HasKey("LastStage"))
-        {
-            playStage = PlayerPrefs.GetInt("LastStage");
-        }
+        int playStage = BattleManager.instance.GetLastPlayedNormalStage();
         StageInfo stageInfo = pageDB.FindStageInfo(playStage);
 
         if (dropItem != null && stageInfo != null)
@@ -35,9 +31,5 @@ public class GameManager : MonoBehaviour
         {
             BattleManager.instance.StartStage(stageInfo);
         }
-    }
-    private void OnApplicationQuit()
-    {
-        PlayerPrefs.SetInt("LastStage", BattleManager.instance.currentStageInfo.StageNumber);
     }
 }

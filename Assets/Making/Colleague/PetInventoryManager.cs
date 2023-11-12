@@ -8,6 +8,7 @@ using static Unity.VisualScripting.Metadata;
 using Unity.VisualScripting;
 using UnityEngine.Profiling.Memory.Experimental;
 using Assets.HeroEditor.Common.Scripts.Common;
+using System.Linq;
 
 [Serializable] // 클래스를 json등 데이터로 저장할 때 [Serializable]을 붙여줘야 함.
 public class PetInventoryData
@@ -25,7 +26,7 @@ public class PetInventoryManager : MonoBehaviour
 
     public int maxaccumulatePetsCount = 50;
 
-    
+
     public event Action OnInventoryChanged;
     public RectTransform PetSlotParent;
     PetSlot[] petSlots;
@@ -48,11 +49,11 @@ public class PetInventoryManager : MonoBehaviour
         Load();
         SetData();
         SortSlots();
-       
+
     }
     private void Update()
     {
-       
+
     }
     private void SortSlots()
     {
@@ -60,7 +61,7 @@ public class PetInventoryManager : MonoBehaviour
         petSlotsList.Clear();
         foreach (PetSlot slot in petSlots)
         {
-            if(slot.petInfo != null)
+            if (slot.petInfo != null)
             {
                 petSlotsList.Add(slot);
             }
@@ -68,26 +69,97 @@ public class PetInventoryManager : MonoBehaviour
 
         if (isActive)
         {
-            petSlotsList.Sort((x,y)=> x.petInfo.Number.CompareTo(y.petInfo.Number));
-            //petSlots = petSlotsList.ToArray();
+            // number만 가지고 정렬
+            //petSlotsList.Sort((x, y) => x.petInfo.Number.CompareTo(y.petInfo.Number));
+            //petSlotsList.Sort((x, y) => x.petInfo.petgrade.CompareTo(y.petInfo.petgrade));
+            //petSlotsList.Sort((x, y) =>
+            //{
+            //    int petTypeCompare = x.petInfo.petType.CompareTo(y.petInfo.petType);
+            //    if (petTypeCompare != 0)
+            //        return petTypeCompare;
+
+            //    return x.petInfo.Number.CompareTo(y.petInfo.Number);
+            //});
+
+            var strings = new List<string>() { "abvasd", "dwwqeq2333", "cvvxv" };
+            strings.Sort((x, y) => x.Length.CompareTo(y.Length));
+
+
+            petSlotsList.Sort((x, y) =>
+            {
+                int petNumberCompare = y.petInfo.Number.CompareTo(x.petInfo.Number);
+                if(petNumberCompare!= 0) return petNumberCompare;
+
+                return x.petInfo.petType.CompareTo(y.petInfo.petType);
+            });
+
+
             for (int i = 0; i < petSlotsList.Count; ++i)
             {
                 PetSlot slot = petSlotsList[i];
                 slot.transform.SetSiblingIndex(i);
             }
+            // grade로 먼저 정렬, 같은 grade라면 number로 정렬한다.
+
+            //List<PetSlot> num1 = sortNumber(petSlotsList, 1);
+            //List<PetSlot> num2 = sortNumber(petSlotsList, 2);
+            //List<PetSlot> num3 = sortNumber(petSlotsList, 3);
+            //List<PetSlot> num4 = sortNumber(petSlotsList, 4);
+
+            //num1.Sort((x, y) => ((int)x.petInfo.petType).CompareTo((int)y.petInfo.petType));
+            //num2.Sort((x, y) => ((int)x.petInfo.petType).CompareTo((int)y.petInfo.petType));
+            //num3.Sort((x, y) => ((int)x.petInfo.petType).CompareTo((int)y.petInfo.petType));
+            //num4.Sort((x, y) => ((int)x.petInfo.petType).CompareTo((int)y.petInfo.petType));
+
+
+            //for (int i = 0; i < num1.Count; ++i)
+            //{
+            //    PetSlot slot = num1[i];
+            //    slot.transform.SetSiblingIndex(i);
+            //}
+            //for (int i = 0; i < num2.Count; ++i)
+            //{
+            //    PetSlot slot = num2[i];
+            //    slot.transform.SetSiblingIndex(i);
+            //}
+            //for (int i = 0; i < num3.Count; ++i)
+            //{
+            //    PetSlot slot = num3[i];
+            //    slot.transform.SetSiblingIndex(i);
+            //}
+            //for (int i = 0; i < num4.Count; ++i)
+            //{
+            //    PetSlot slot = num4[i];
+            //    slot.transform.SetSiblingIndex(i);
+            //}
+
+            //petSlots = petSlotsList.ToArray();
+            /*for (int i = 0; i < petSlotsList.Count; ++i)
+            {
+                PetSlot slot = petSlotsList[i];
+                slot.transform.SetSiblingIndex(i);
+            }*/
         }
+    }
+
+
+    private List<PetSlot> sortNumber(List<PetSlot> petinfo, int number)
+    {
+        var list = new List<PetSlot>();
+
+        foreach(var pet in petinfo)
+        {
+            if(pet.petInfo.Number ==number)
+            {
+                list.Add(pet);
+            }
+        }
+
+        return list;
     }
 
     public void SetData()
     {
-            /*for (int i = 0; i < accumulatePets.Count; i++)
-            {
-                PetSlot slot = petSlots[i];
-                slot.SetData(accumulatePets[i]);
-                slot.SetActive(true);
-            }*/ //수정 전
-
-
         int slotCount = petSlots.Length; // 
 
         for (int i = 0; i < myPets.Count; i++)
@@ -95,7 +167,7 @@ public class PetInventoryManager : MonoBehaviour
             if (i >= slotCount) // 이 조건을 추가하여 i가 petSlots의 범위를 초과하는지 확인
             {
                 Debug.LogWarning("확장필요");
-                break; 
+                break;
             }
 
             PetSlot slot = petSlots[i];

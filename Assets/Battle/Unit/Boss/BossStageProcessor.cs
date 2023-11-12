@@ -30,12 +30,12 @@ public class BossStageProcessor : MonoBehaviour
         }
     }
 
-    public void RunBossStage(StageInfo stageInfo)
+    public void RunBossStage(SunBossInfo sunBossInfo, int level)
     {
         lastStage = BattleManager.instance.currentStageInfo;
         RunFadeOutIn(() =>
         {
-            BattleManager.instance.StartStage(stageInfo);
+            BattleManager.instance.StartSunbossStage(sunBossInfo, level);
         });
     }
 
@@ -44,7 +44,8 @@ public class BossStageProcessor : MonoBehaviour
         // 보스스테이지가 끝났으니 다시 원래 하던 스테이지(lastStage)로 돌아간다.
         RunFadeOutIn(() =>
         {
-            BattleManager.instance.StartStage(lastStage);
+            if (lastStage != null)
+                BattleManager.instance.StartStage(lastStage);
         });
     }
 
