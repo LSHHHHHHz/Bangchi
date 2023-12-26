@@ -1,4 +1,4 @@
-using Assets.HeroEditor.InventorySystem.Scripts.Enums;
+ï»¿using Assets.HeroEditor.InventorySystem.Scripts.Enums;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,15 +8,16 @@ using DG.Tweening;
 using Assets.Item1;
 using Unity.VisualScripting;
 
-public class GachaPopup : MonoBehaviour //°¡Â÷ °á°ú¸¦ º¸¿©ÁÖ´Â UI
+public class GachaPopup : MonoBehaviour //ê°€ì°¨ ê²°ê³¼ë¥¼ ë³´ì—¬ì£¼ëŠ” UI
 {
     public GridLayoutGroup grid;
     public GameObject itemPrefab;
 
     private List<GameObject> children = new List<GameObject>();
 
-    private Action<int> oneMoreTimeAction; // oneMoreTime Àü´Ş¹ŞÀº °ªÀ» ÀúÀåÇÏ±â À§ÇØ µû·Î ¸â¹ö ÇÊµå·Î °¡Áö°í ÀÖÀ½.
+    private Action<int> oneMoreTimeAction; // oneMoreTime ì „ë‹¬ë°›ì€ ê°’ì„ ì €ì¥í•˜ê¸° ìœ„í•´ ë”°ë¡œ ë©¤ë²„ í•„ë“œë¡œ ê°€ì§€ê³  ìˆìŒ.
     private Action onDoneAction;
+
 
     private bool isCoroutineDone = true;
 
@@ -30,21 +31,22 @@ public class GachaPopup : MonoBehaviour //°¡Â÷ °á°ú¸¦ º¸¿©ÁÖ´Â UI
         canvasGroup.DOFade(1, fadeTime);
     }
 
-    public void Initialize(GachaResult gachaResult, Action<int> oneMoreTime, Action onDone) //Action onDone ¿¬Ãâ(ÄÚ·çÆ¾)ÀÌ ³¡³µÀ» ¶§ È£ÃâµÇ´Â ÇÔ¼ö
+    public void Initialize(GachaResult gachaResult, Action<int> oneMoreTime, Action onDone) //Action onDone ì—°ì¶œ(ì½”ë£¨í‹´)ì´ ëë‚¬ì„ ë•Œ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜
     {
-        // ÀÌÀü¿¡ º¸°üÇØµ×´ø ¾ÆÀÌÅÛ UIµéÀ» ÆÄ±«
+        // ì´ì „ì— ë³´ê´€í•´ë’€ë˜ ì•„ì´í…œ UIë“¤ì„ íŒŒê´´
         foreach (GameObject child in children)
         {
-            Destroy(child); //°´Ã¼ ÆÄ±«
+            Destroy(child); //ê°ì²´ íŒŒê´´
         }
-        children.Clear(); // ¸®½ºÆ® ºñ¿ì´Â°Í
+        children.Clear(); // ë¦¬ìŠ¤íŠ¸ ë¹„ìš°ëŠ”ê²ƒ
 
-        // ³ªÁß¿¡ ´Ù½Ã »Ì±â ¹öÆ° ´©¸£¸é È£ÃâÇÏ±â À§ÇØ Å¬·¡½ºÀÇ ¸â¹ö ÇÊµåÀÎ oneMoreTimeAction¿¡ °ªÀ» ÀúÀåÇÑ´Ù.
+        // ë‚˜ì¤‘ì— ë‹¤ì‹œ ë½‘ê¸° ë²„íŠ¼ ëˆ„ë¥´ë©´ í˜¸ì¶œí•˜ê¸° ìœ„í•´ í´ë˜ìŠ¤ì˜ ë©¤ë²„ í•„ë“œì¸ oneMoreTimeActionì— ê°’ì„ ì €ì¥í•œë‹¤.
         this.oneMoreTimeAction = oneMoreTime;
         this.onDoneAction = onDone;
 
         isCoroutineDone = false;
         StartCoroutine(SetupCoroutine(gachaResult));
+        isCoroutineDone = true;
     }
     private IEnumerator SetupCoroutine(GachaResult gachaResult)
     {
@@ -54,11 +56,11 @@ public class GachaPopup : MonoBehaviour //°¡Â÷ °á°ú¸¦ º¸¿©ÁÖ´Â UI
         {
             ItemInfo itemInfo = gachaResult.items[i];
             bool isHigeGrade = (int)itemInfo.grade >= (int)ItemGrade.C;
-
-            // ¾ÆÀÌÅÛ ½½·Ô »ı¼º
+            
+            // ì•„ì´í…œ ìŠ¬ë¡¯ ìƒì„±
             ItemSlot itemSlot = Instantiate(itemPrefab, grid.transform).GetComponent<ItemSlot>();
 
-            // ¾ÆÀÌÅÛ ½½·Ô¿¡ »ÌÀº ¾ÆÀÌÅÛ µ¥ÀÌÅÍ Àû¿ë
+            // ì•„ì´í…œ ìŠ¬ë¡¯ì— ë½‘ì€ ì•„ì´í…œ ë°ì´í„° ì ìš©
             itemSlot.SetData(gachaResult.items[i]);
 
             var sequence = DOTween.Sequence();
@@ -72,10 +74,10 @@ public class GachaPopup : MonoBehaviour //°¡Â÷ °á°ú¸¦ º¸¿©ÁÖ´Â UI
 
             sequence.Play();
 
-            // ¾ÆÀÌÅÛ ÇÁ¸®ÆÕÀÌ ¿ø·¡ Active:false¿´À¸´Ï ÀÌ°Íµµ falseÀÎ »óÅÂ. true·Î ¹Ù²ã¼­ º¸ÀÌ°Ô ÇÑ´Ù.
+            // ì•„ì´í…œ í”„ë¦¬íŒ¹ì´ ì›ë˜ Active:falseì˜€ìœ¼ë‹ˆ ì´ê²ƒë„ falseì¸ ìƒíƒœ. trueë¡œ ë°”ê¿”ì„œ ë³´ì´ê²Œ í•œë‹¤.
             itemSlot.gameObject.SetActive(true);
 
-            // ³ªÁß¿¡ »èÁ¦ÇØ¾ßµÇ´Ï±î children¿¡ ³Ö¾î¼­ °ü¸®
+            // ë‚˜ì¤‘ì— ì‚­ì œí•´ì•¼ë˜ë‹ˆê¹Œ childrenì— ë„£ì–´ì„œ ê´€ë¦¬
             children.Add(itemSlot.gameObject);
             yield return itemSlot.transform.DOScale(Vector3.one, 0.1f).WaitForCompletion();
 
@@ -87,7 +89,7 @@ public class GachaPopup : MonoBehaviour //°¡Â÷ °á°ú¸¦ º¸¿©ÁÖ´Â UI
     }
     public void Close()
     {
-        StopAllCoroutines(); // µ¹¾Æ°¡°í ÀÖ´Â ÄÚ·çÆ¾ÀÌ ÀÖ´Ù¸é ¸ØÃá´Ù.
+        StopAllCoroutines(); // ëŒì•„ê°€ê³  ìˆëŠ” ì½”ë£¨í‹´ì´ ìˆë‹¤ë©´ ë©ˆì¶˜ë‹¤.
         if (isCoroutineDone == false)
         {
             isCoroutineDone = true;
