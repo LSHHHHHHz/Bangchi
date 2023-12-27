@@ -1,4 +1,4 @@
-﻿using Assets.HeroEditor.InventorySystem.Scripts.Enums;
+using Assets.HeroEditor.InventorySystem.Scripts.Enums;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,9 +11,13 @@ using Unity.VisualScripting;
 public class GachaPopup : MonoBehaviour //가차 결과를 보여주는 UI
 {
     public GridLayoutGroup grid;
+    public GridLayoutGroup effectGrid;
     public GameObject itemPrefab;
+    public GameObject effectPrefab;
+    public GameObject noneffectPrefab;
 
     private List<GameObject> children = new List<GameObject>();
+    private List<GameObject> effectchildren = new List<GameObject>();
 
     private Action<int> oneMoreTimeAction; // oneMoreTime 전달받은 값을 저장하기 위해 따로 멤버 필드로 가지고 있음.
     private Action onDoneAction;
@@ -27,7 +31,7 @@ public class GachaPopup : MonoBehaviour //가차 결과를 보여주는 UI
 
     public void PanelFadeIn()
     {
-        canvasGroup.alpha = 0;
+        canvasGroup.alpha = 1;
         canvasGroup.DOFade(1, fadeTime);
     }
 
@@ -39,6 +43,11 @@ public class GachaPopup : MonoBehaviour //가차 결과를 보여주는 UI
             Destroy(child); //객체 파괴
         }
         children.Clear(); // 리스트 비우는것
+        foreach (GameObject child in effectchildren)
+        {
+            Destroy(child); 
+        }
+        effectchildren.Clear();
 
         // 나중에 다시 뽑기 버튼 누르면 호출하기 위해 클래스의 멤버 필드인 oneMoreTimeAction에 값을 저장한다.
         this.oneMoreTimeAction = oneMoreTime;
@@ -50,7 +59,7 @@ public class GachaPopup : MonoBehaviour //가차 결과를 보여주는 UI
     }
     private IEnumerator SetupCoroutine(GachaResult gachaResult)
     {
-        yield return transform.DOLocalMoveX(0, 2f).Play().WaitForCompletion();
+        yield return transform.DOLocalMoveX(0, 1f).Play().WaitForCompletion();
 
         for (int i = 0; i < gachaResult.items.Count; ++i)
         {
@@ -59,18 +68,39 @@ public class GachaPopup : MonoBehaviour //가차 결과를 보여주는 UI
             
             // 아이템 슬롯 생성
             ItemSlot itemSlot = Instantiate(itemPrefab, grid.transform).GetComponent<ItemSlot>();
-
             // 아이템 슬롯에 뽑은 아이템 데이터 적용
             itemSlot.SetData(gachaResult.items[i]);
 
-            var sequence = DOTween.Sequence();
-            itemSlot.transform.localScale = Vector3.one * 3;
-            
             if (isHigeGrade)
             {
-                sequence.Append(itemSlot.transform.DOScale(1.5f, 0.2f).SetLoops(4));
-                sequence.Append(itemSlot.transform.DOScale(1f, 0.2f));
+                var effect = Instantiate(effectPrefab, effectGrid.transform);
+                effectchildren.Add(effect);
             }
+            else
+            {
+                var noneffect = Instantiate(noneffectPrefab, effectGrid.transform);
+                effectchildren.Add(noneffect);
+            }
+
+            itemSlot.effectImage.gameObject.SetActive(true);
+            itemSlot.effectImage.color = new Color(1, 1, 1, 0); //첫 색깔 설정
+            var effectImageSequence = DOTween.Sequence();
+
+            itemSlot.icon.gameObject.SetActive(false);
+            effectImageSequence.Append(itemSlot.effectImage.DOFade(1, 0.5f)); // 흰색 보이기
+            effectImageSequence.AppendCallback(() => itemSlot.icon.gameObject.SetActive(true));
+            effectImageSequence.Append(itemSlot.effectImage.DOFade(0, 0.5f)); // 흰색 사라지기
+            effectImageSequence.Play();
+
+
+            var sequence = DOTween.Sequence();
+            itemSlot.transform.localScale = Vector3.one * 6;
+            
+            //if (isHigeGrade)
+            //{
+            //    sequence.Append(itemSlot.transform.DOScale(1.5f, 0.2f).SetLoops(4));
+            //    sequence.Append(itemSlot.transform.DOScale(1f, 0.2f));
+            //}
 
             sequence.Play();
 
@@ -79,7 +109,7 @@ public class GachaPopup : MonoBehaviour //가차 결과를 보여주는 UI
 
             // 나중에 삭제해야되니까 children에 넣어서 관리
             children.Add(itemSlot.gameObject);
-            yield return itemSlot.transform.DOScale(Vector3.one, 0.1f).WaitForCompletion();
+            yield return itemSlot.transform.DOScale(Vector3.one, 0.2f).WaitForCompletion();
 
             yield return sequence.WaitForCompletion();
 

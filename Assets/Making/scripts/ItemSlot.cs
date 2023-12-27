@@ -8,6 +8,7 @@ public class ItemSlot : MonoBehaviour
 {
     public ItemInfo itemInfo;
     public Image icon;
+    public Image effectImage;
     public Text countText;
     public int count;
     public int upgradeLevel;
@@ -42,7 +43,7 @@ public class ItemSlot : MonoBehaviour
         }
     }
 
-    public void SetEmpty(Sprite emptySprite) // ±‚¡∏ø° º≥¡§µ» Ω∫≈≥ µ•¿Ã≈Õ∏¶ ≥Ø∏∞¥Ÿ.
+    public void SetEmpty(Sprite emptySprite) // Í∏∞Ï°¥Ïóê ÏÑ§Ï†ïÎêú Ïä§ÌÇ¨ Îç∞Ïù¥ÌÑ∞Î•º ÎÇ†Î¶∞Îã§.
     {
         icon.sprite = emptySprite;
         itemInfo = null; 
