@@ -14,6 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grade: 0
   type: 1
+  petType: 0
   name: item2
   iconPath: ItemIcon/Sheild/SHF2
+  backgroundiconPath: 
   Number: 2
+  Attack: 0
+  HP: 500
+  HP_recovery: 50

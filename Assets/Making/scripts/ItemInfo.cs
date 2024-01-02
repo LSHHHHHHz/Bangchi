@@ -31,7 +31,7 @@ namespace Assets.Item1
     }
 
     /// <summary>
-    /// °ÔÀÓ¿¡ µîÀåÇÏ´Â ¾ÆÀÌÅÛ °¢°¢ ÇÏ³ªÇÏ³ª¸¦ ³ªÅ¸³»´Â µ¥ÀÌÅÍ.
+    /// ê²Œì„ì— ë“±ì¥í•˜ëŠ” ì•„ì´í…œ ê°ê° í•˜ë‚˜í•˜ë‚˜ë¥¼ ë‚˜íƒ€ë‚´ëŠ” ë°ì´í„°.
     /// </summary>
     [CreateAssetMenu(menuName = "My Assets/ItemInfo")]
     public class ItemInfo : ScriptableObject
@@ -41,6 +41,10 @@ namespace Assets.Item1
         public PetType petType;
         public string name;
         public string iconPath;
-        public int Number; // ÀÎº¥Åä¸®¿¡¼­ ¸î¹øÂ° ¾ÆÀÌÅÛÀÎÁö¸¦ ³ªÅ¸³¿
+        public string backgroundiconPath;
+        public int Number; // ì¸ë²¤í† ë¦¬ì—ì„œ ëª‡ë²ˆì§¸ ì•„ì´í…œì¸ì§€ë¥¼ ë‚˜íƒ€ëƒ„
+        public int Attack;
+        public int HP;
+        public int HP_recovery;
     }
 }

@@ -343,15 +343,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
+    m_Left: 30
+    m_Right: 30
+    m_Top: 20
     m_Bottom: 0
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 100, y: 100}
-  m_Spacing: {x: 0, y: 0}
+  m_Spacing: {x: 40, y: 40}
   m_Constraint: 0
   m_ConstraintCount: 2
 --- !u!1 &1995371391699742584
@@ -419,7 +419,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.16037738, g: 0.16037738, b: 0.16037738, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -636,6 +636,7 @@ MonoBehaviour:
   itemPrefab: {fileID: 1304311911501168271, guid: 53507ba9141ab0b448f4d01f7cbda848, type: 3}
   effectPrefab: {fileID: 1545806602296978, guid: 02ecabfd5abdbc44caa73f10f206c0fe, type: 3}
   noneffectPrefab: {fileID: 1545806602296978, guid: 3a3a57226ffdd4540b68c7e9bca2e507, type: 3}
+  highgradeeffect: {fileID: 1545806602296978, guid: 02ecabfd5abdbc44caa73f10f206c0fe, type: 3}
   fadeTime: 1
   canvasGroup: {fileID: 2746484798299137608}
   rectTransform: {fileID: 6656384436225517867}
@@ -664,7 +665,7 @@ GameObject:
   - component: {fileID: 3784736415340660997}
   - component: {fileID: 8792618788833875352}
   m_Layer: 5
-  m_Name: Ok Button (1)
+  m_Name: Close Button (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -775,7 +776,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4785936069910895285}
         m_TargetAssemblyTypeName: GachaPopup, Assembly-CSharp
-        m_MethodName: Close
+        m_MethodName: isposibbleCloss
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

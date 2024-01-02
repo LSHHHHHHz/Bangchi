@@ -15,16 +15,14 @@ public class Monster : BaseUnit
     Rigidbody2D rigid;
     public Collider collider;
 
-    public GameObject expIconPrefab; //°æÇèÄ¡ ¾ÆÀÌÄÜ
-    public GameObject coinIconPrefab; //°ñµå ¾ÆÀÌÄÜ
-    public GameObject enforceCoinPrefab; //°­È­¼® ¾ÆÀÌÄÜ
+    public GameObject expIconPrefab; //ê²½í—˜ì¹˜ ì•„ì´ì½˜
+    public GameObject coinIconPrefab; //ê³¨ë“œ ì•„ì´ì½˜
+    public GameObject enforceCoinPrefab; //ê°•í™”ì„ ì•„ì´ì½˜
 
     public GameObject weaponPrefab;
     public float weaponPrefabProbability;
     public GameObject shieldPrefab;
     public float shieldPrefabProbability;
-
-
     public void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -34,14 +32,14 @@ public class Monster : BaseUnit
         PrintName(collider);
 
         Object obj = null;
-        obj = rigid; // rigid º¯¼öÀÇ Å¸ÀÔ Rigidbody2D´Â Object·ÎºÎÅÍ ÆÄ»ıµÈ Å¸ÀÔÀÌ±â ¶§¹®¿¡ Object Å¸ÀÔ º¯¼ö obj¿¡ ÇÒ´ç °¡´É
+        obj = rigid; // rigid ë³€ìˆ˜ì˜ íƒ€ì… Rigidbody2DëŠ” Objectë¡œë¶€í„° íŒŒìƒëœ íƒ€ì…ì´ê¸° ë•Œë¬¸ì— Object íƒ€ì… ë³€ìˆ˜ objì— í• ë‹¹ ê°€ëŠ¥
 
         UnitManager.instance.RegisterMonster(this);
     }
 
     private void OnDestroy()
     {
-        //»ì¾ÆÀÖ´Â ¸ó½ºÅÍ¸¸ UnitManager¿¡ µî·ÏµÇ¾î ÀÖ¾î¾ß ÇÏ±â ¶§¹®¿¡, Á×Àº ¸ó½ºÅÍ´Â UnregisterMonster()¸¦ ÅëÇØ UnitManager¿¡¼­ µî·Ï ÇØÁ¦
+        //ì‚´ì•„ìˆëŠ” ëª¬ìŠ¤í„°ë§Œ UnitManagerì— ë“±ë¡ë˜ì–´ ìˆì–´ì•¼ í•˜ê¸° ë•Œë¬¸ì—, ì£½ì€ ëª¬ìŠ¤í„°ëŠ” UnregisterMonster()ë¥¼ í†µí•´ UnitManagerì—ì„œ ë“±ë¡ í•´ì œ
         UnitManager.instance.UnregisterMonster(this);
     }
 

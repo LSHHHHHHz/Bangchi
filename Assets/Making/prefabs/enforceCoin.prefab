@@ -112,7 +112,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 3904003793980084416}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.435
   m_Height: 0.87
   m_Direction: 1
@@ -133,6 +133,8 @@ MonoBehaviour:
   exp: 0
   coin: 0
   enforceCoin: 100
+  droppedItemInfo: {fileID: 0}
+  itemDB: {fileID: 0}
   layerMask:
     serializedVersion: 2
     m_Bits: 128

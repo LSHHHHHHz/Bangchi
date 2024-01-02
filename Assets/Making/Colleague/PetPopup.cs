@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+using Assets.HeroEditor.InventorySystem.Scripts.Elements;
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -44,15 +45,25 @@ public class PetPopup : MonoBehaviour
             
             petSlot.SetData(petInfo);
 
-            var sequence = DOTween.Sequence();
-            petSlot.transform.localScale = Vector3.one * 3f;
-            sequence.Append(petSlot.transform.DOScale(1, 0.2f).SetEase(Ease.OutQuad));
-            sequence.Play();
+            petSlot.effecticon.transform.localScale = Vector3.one * 7;
+
 
             // 아이템 프리팹이 원래 Active:false였으니 이것도 false인 상태. true로 바꿔서 보이게 한다.
             petSlot.gameObject.SetActive(true);
+            var sequence = DOTween.Sequence();
+
+            petSlot.effecticon.transform.DOScale(1, 0.2f);
+            sequence.AppendCallback(() => petSlot.effecticon.gameObject.SetActive(true));
+            sequence.Append(petSlot.effecticon.DOFade(1, 0.2f));
+            sequence.AppendCallback(() => petSlot.icon.gameObject.SetActive(true));
+            sequence.Append(petSlot.effecticon.DOFade(0, 0.3f)); // 흰색 사라지기
+
+            sequence.Play();
+
+          
          
             children.Add(petSlot.gameObject);
+            
             yield return new WaitForSeconds(0.1f);
             yield return sequence.WaitForCompletion();
         }

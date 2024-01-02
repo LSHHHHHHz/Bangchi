@@ -17,4 +17,8 @@ MonoBehaviour:
   petType: 0
   name: item7
   iconPath: ItemIcon/B3
+  backgroundiconPath: GradeBackGround/Green
   Number: 7
+  Attack: 0
+  HP: 0
+  HP_recovery: 0

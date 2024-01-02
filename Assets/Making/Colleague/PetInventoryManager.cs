@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Assets.Item1;
@@ -17,6 +17,8 @@ public class PetInventoryData
     public List<PetInstance> equipPets = new();
 
     public List<GameObject> inventoryChildren = new List<GameObject>();
+
+    public int petCount;
 }
 public class PetInventoryManager : MonoBehaviour
 {
@@ -25,7 +27,7 @@ public class PetInventoryManager : MonoBehaviour
     public List<PetInstance> equipPets = new();
 
     public int maxaccumulatePetsCount = 50;
-
+    public int petCount;
 
     public event Action OnInventoryChanged;
     public RectTransform PetSlotParent;
@@ -42,13 +44,15 @@ public class PetInventoryManager : MonoBehaviour
             childList.Add(child);
         }
         petSlots = childList.ToArray();
+        Load();
     }
     private void Start()
     {
         OnInventoryChanged += OnInventoryChangedCallback;
-        Load();
+        
         SetData();
         SortSlots();
+        maxaccumulatePetsCount += petCount; //펫 확장
 
     }
     private void Update()
@@ -164,7 +168,7 @@ public class PetInventoryManager : MonoBehaviour
 
         for (int i = 0; i < myPets.Count; i++)
         {
-            if (i >= slotCount) // 이 조건을 추가하여 i가 petSlots의 범위를 초과하는지 확인
+            if (i >= slotCount) // i가 petSlots의 범위를 초과하는지 확인
             {
                 Debug.LogWarning("확장필요");
                 break;
@@ -198,6 +202,7 @@ public class PetInventoryManager : MonoBehaviour
         PetInventoryData petInventoryData = new PetInventoryData();
         petInventoryData.myPets = myPets;
         petInventoryData.equipPets = equipPets;
+        petInventoryData.petCount = petCount;
 
         string json = JsonUtility.ToJson(petInventoryData);
 
@@ -229,6 +234,8 @@ public class PetInventoryManager : MonoBehaviour
                 }
                 equipPets.Add(equippet);
             }
+            petCount = data.petCount;
+
         }
     }
 }

@@ -17,20 +17,20 @@ public class SkillGachaPopup : MonoBehaviour
 
     private List<GameObject> children = new List<GameObject>();
 
-    private Action<int> oneMoreTimeAction; // oneMoreTime Àü´Ş¹ŞÀº °ªÀ» ÀúÀåÇÏ±â À§ÇØ µû·Î ¸â¹ö ÇÊµå·Î °¡Áö°í ÀÖÀ½.
+    private Action<int> oneMoreTimeAction; // oneMoreTime ì „ë‹¬ë°›ì€ ê°’ì„ ì €ì¥í•˜ê¸° ìœ„í•´ ë”°ë¡œ ë©¤ë²„ í•„ë“œë¡œ ê°€ì§€ê³  ìˆìŒ.
     private bool isCoroutineDone = true;
+    private bool isCoroutineActive = false;
 
 
     public void Initialize(SkillGachaResult skillgachaResult, Action<int> oneMoreTime)
     {
-        transform.position = new Vector3(360,-500 ,0);
         
-        // ÀÌÀü¿¡ º¸°üÇØµ×´ø ¾ÆÀÌÅÛ UIµéÀ» ÆÄ±«
+        // ì´ì „ì— ë³´ê´€í•´ë’€ë˜ ì•„ì´í…œ UIë“¤ì„ íŒŒê´´
         foreach (GameObject child in children)
         {
-            Destroy(child); //°´Ã¼ ÆÄ±«
+            Destroy(child); //ê°ì²´ íŒŒê´´
         }
-        children.Clear(); // ¸®½ºÆ® ºñ¿ò
+        children.Clear(); // ë¦¬ìŠ¤íŠ¸ ë¹„ì›€
 
         this.oneMoreTimeAction = oneMoreTime;
 
@@ -40,26 +40,23 @@ public class SkillGachaPopup : MonoBehaviour
 
     private IEnumerator SetupCoroutine(SkillGachaResult skillgachaResult)
     {
-        yield return transform.DOLocalMoveY(0, 2f).Play().WaitForCompletion();
-        
+               
         for (int i = 0; i < skillgachaResult.items.Count; ++i)
         {
             SkillInfo skillInfo = skillgachaResult.items[i];
             bool isDelayShowing = (int)skillInfo.grade >= (int)SkillGrade.B;
 
-            // ¾ÆÀÌÅÛ ½½·Ô »ı¼º
+            // ì•„ì´í…œ ìŠ¬ë¡¯ ìƒì„±
             SkillSlot skillitemSlot = Instantiate(itemPrefab, grid.transform).GetComponent<SkillSlot>();
-            // ¾ÆÀÌÅÛ ½½·Ô¿¡ »ÌÀº ¾ÆÀÌÅÛ µ¥ÀÌÅÍ Àû¿ë
+            // ì•„ì´í…œ ìŠ¬ë¡¯ì— ë½‘ì€ ì•„ì´í…œ ë°ì´í„° ì ìš©
             skillitemSlot.SetData(skillInfo);
             
 
             var sequence = DOTween.Sequence();
             skillitemSlot.transform.localScale = Vector3.one * 3f;
-            sequence.Append(skillitemSlot.transform.DOScale(1, 0.5f).SetEase(Ease.OutQuad));
+            sequence.Append(skillitemSlot.transform.DOScale(1, 0.2f).SetEase(Ease.OutQuad));
             if (isDelayShowing)
             {
-                sequence.Append(skillitemSlot.transform.DOScale(1.5f, 0.2f).SetLoops(4));
-                sequence.Append(skillitemSlot.transform.DOScale(1f, 0.2f));
             }
 
             sequence.Play();
@@ -77,13 +74,19 @@ public class SkillGachaPopup : MonoBehaviour
 
         isCoroutineDone = true;
     }
-
+     public void isposibbleCloss()
+    {
+        if (isCoroutineDone)
+        {
+            Close();
+        }
+    }
     public void Close()
     {
         Destroy(gameObject);
     }
 
-    // ´Ù½Ã »Ì±â ¹öÆ° ´©¸£¸é È£ÃâµÊ
+    // ë‹¤ì‹œ ë½‘ê¸° ë²„íŠ¼ ëˆ„ë¥´ë©´ í˜¸ì¶œë¨
     public void OneMoreTime1()
     {
         if (isCoroutineDone == false)

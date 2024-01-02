@@ -1,4 +1,4 @@
-﻿using Assets.Item1;
+using Assets.Item1;
 using Assets.Making;
 using System;
 using System.Collections;
@@ -37,6 +37,7 @@ namespace Assets.Battle
         private void Start()
         {
             prefabRigid = GetComponent<Rigidbody>();
+            StartCoroutine(ColliderDelay(transform.gameObject,0.2f));
             StartCoroutine(SearchPlayer());
         }
         private void Update()
@@ -64,7 +65,16 @@ namespace Assets.Battle
             Destroy(GetComponent<Rigidbody>());
             GetComponent<Collider>().isTrigger = true;
         }
-
+        private IEnumerator ColliderDelay(GameObject icon, float delay)
+        {  //컬라이더 처음에 꺼졌다가 켜지는걸로
+            CapsuleCollider iconCollider = icon.GetComponent<CapsuleCollider>();
+            if (iconCollider != null)
+            {
+                iconCollider.enabled = false;
+                yield return new WaitForSeconds(delay);
+                iconCollider.enabled = true;
+            }
+        }
         private void OnTriggerEnter(Collider other)
         {
             var player = other.transform.GetComponent<Player>();

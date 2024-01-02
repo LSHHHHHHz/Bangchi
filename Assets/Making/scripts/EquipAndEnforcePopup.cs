@@ -1,6 +1,7 @@
-﻿
+
 using Assets.Item1;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,12 +9,15 @@ using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class EquipAndEnforcePopup : MonoBehaviour
 {
     public ItemSlot targetSlot;
     private static EquipAndEnforcePopup instance;
+    private bool buttonPressed = false;
+    public float interval = 0.1f;
     
     private void Awake()
     {
@@ -29,6 +33,23 @@ public class EquipAndEnforcePopup : MonoBehaviour
         Equips.OnExitEquip -= Exit;
     }
 
+    public void OnPressDown()
+    {
+        buttonPressed = true;
+        StartCoroutine(RepeatEnforce());
+    }
+    public void OnPointerUp()
+    {
+        buttonPressed = false;
+    }
+    private IEnumerator RepeatEnforce()
+    {
+        while (buttonPressed)
+        {
+            Enforce(); // 반복적으로 호출하고 싶은 함수
+            yield return new WaitForSeconds(interval);
+        }
+    }
     public static void EquipAndEnforce(ItemSlot item)
     {
         if (instance == null)

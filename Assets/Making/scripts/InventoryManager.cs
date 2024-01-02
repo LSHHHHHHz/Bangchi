@@ -5,7 +5,7 @@ using Assets.Item1;
 using System;
 using System.Linq;
 
-[Serializable] // Å¬·¡½º¸¦ jsonµî µ¥ÀÌÅÍ·Î ÀúÀåÇÒ ¶§ [Serializable]À» ºÙ¿©Áà¾ß ÇÔ.
+[Serializable] // í´ë˜ìŠ¤ë¥¼ jsonë“± ë°ì´í„°ë¡œ ì €ì¥í•  ë•Œ [Serializable]ì„ ë¶™ì—¬ì¤˜ì•¼ í•¨.
 public class InventoryData 
 {
     public List<ItemInstance> myItems = new();  
@@ -20,16 +20,16 @@ public class InventoryManager : MonoBehaviour
 
     public static InventoryManager instance;
     public List<ItemInstance> myItems = new();
-    public List<ItemInstance> equippedItems = new(); //ÀåÂø ¾ÆÀÌÅÛ ¸®½ºÆ®
+    public List<ItemInstance> equippedItems = new(); //ì¥ì°© ì•„ì´í…œ ë¦¬ìŠ¤íŠ¸
     public List<ItemInstance> colleague = new();
 
-    
+    ItemInstance currentItem = null;
     public void Awake()
     {
         instance = this;
         Load();
     }
-    public ItemInstance AddItem(ItemInfo itemInfo, int count = 1) //ÀÎº¥Åä¸®¸¦ º¯°æÇÏ´Â ¸Ş¼­µå
+    public ItemInstance AddItem(ItemInfo itemInfo, int count = 1) //ì¸ë²¤í† ë¦¬ë¥¼ ë³€ê²½í•˜ëŠ” ë©”ì„œë“œ
     {   
         ItemInstance itemInstance = myItems.Find(item => item.itemInfo == itemInfo);
         if (itemInstance != null)
@@ -84,7 +84,7 @@ public class InventoryManager : MonoBehaviour
 
         if (string.IsNullOrEmpty(json) == false)
         {
-            // jsonÀÌ °ªÀÌ µé¾îÀÖ´Ù´Â ¶æ
+            // jsonì´ ê°’ì´ ë“¤ì–´ìˆë‹¤ëŠ” ëœ»
             var inventoryData = JsonUtility.FromJson<InventoryData>(json);
             for (int i = 0; i < inventoryData.myItems.Count; ++i)
             {
@@ -112,7 +112,7 @@ public class InventoryManager : MonoBehaviour
         ItemInstance existItem = myItems.Find(item => item.itemInfo == itemInfo); 
         if (existItem == null)
         {
-            // ¾ÆÀÌÅÛÀ» °¡Áö°í ÀÖÁö ¾Ê´Ù´Â °Í!
+            // ì•„ì´í…œì„ ê°€ì§€ê³  ìˆì§€ ì•Šë‹¤ëŠ” ê²ƒ!
             throw new Exception($"Item not found : {itemInfo.name}");
         }
 
@@ -127,7 +127,7 @@ public class InventoryManager : MonoBehaviour
         ItemInstance existItem = equippedItems.Find(item => item.itemInfo == itemInfo);
         if (existItem == null)
         {
-            // ÀåÂøÀ» ¾ÈÇß´Ù´Â ¾ê±â
+            // ì¥ì°©ì„ ì•ˆí–ˆë‹¤ëŠ” ì–˜ê¸°
             return;
         }
 

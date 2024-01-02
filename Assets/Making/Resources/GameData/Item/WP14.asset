@@ -17,4 +17,8 @@ MonoBehaviour:
   petType: 0
   name: item14
   iconPath: ItemIcon/S2
+  backgroundiconPath: GradeBackGround/Blue
   Number: 14
+  Attack: 0
+  HP: 0
+  HP_recovery: 0

@@ -1,4 +1,4 @@
-﻿using Assets.Item1;
+using Assets.Item1;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +11,7 @@ public class PetSlot : MonoBehaviour
 {
     public PetInfo petInfo;
     public Image icon;
+    public Image effecticon;
     public Text countText;
 
     public void SetData(PetInfo petInfo)

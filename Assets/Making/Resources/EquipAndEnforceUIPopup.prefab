@@ -248,7 +248,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5318609b1d9457540a23f64f32c93032, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemNum: {fileID: 0}
+  targetSlot: {fileID: 0}
+  interval: 0.1
 --- !u!1 &2374049736013145654
 GameObject:
   m_ObjectHideFlags: 0
@@ -634,6 +635,7 @@ GameObject:
   - component: {fileID: 2538742707728574264}
   - component: {fileID: 461924297238244235}
   - component: {fileID: 768580601125028406}
+  - component: {fileID: 3996662162010341629}
   m_Layer: 5
   m_Name: Enforce
   m_TagString: Untagged
@@ -746,7 +748,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2038765271921851719}
         m_TargetAssemblyTypeName: EquipAndEnforcePopup, Assembly-CSharp
-        m_MethodName: Enforce
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -756,6 +758,51 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3996662162010341629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7979093431766843059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2038765271921851719}
+          m_TargetAssemblyTypeName: EquipAndEnforcePopup, Assembly-CSharp
+          m_MethodName: OnPressDown
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2038765271921851719}
+          m_TargetAssemblyTypeName: EquipAndEnforcePopup, Assembly-CSharp
+          m_MethodName: OnPointerUp
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &8172969246260070098
 GameObject:
   m_ObjectHideFlags: 0

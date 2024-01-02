@@ -34,7 +34,7 @@ public class Achievement : MonoBehaviour
     public Text CheckTime;
     public string CurrentCheckTime;
     public bool isDateChange;
-    public bool[] canClickButton = new bool[5]; // Á¶°Ç ¸¸Á·½Ã true
+    public bool[] canClickButton = new bool[5]; // ì¡°ê±´ ë§Œì¡±ì‹œ true
     public void Awake()
     {
         instance = this;
@@ -119,10 +119,10 @@ public class Achievement : MonoBehaviour
             if (DailyFillAmountImageBar[i].fillAmount >= 1 && !isGainDieAmond[i])
             {
                 canClickButton[i] = true;
-                if (!isQuestCompleted[i] && canClickButton[i] == true) // Äù½ºÆ®¸¦ ¿Ï·áÇÑ »óÅÂ°¡ ¾Æ´Ï¶ó¸é
+                if (!isQuestCompleted[i] && canClickButton[i] == true) // í€˜ìŠ¤íŠ¸ë¥¼ ì™„ë£Œí•œ ìƒíƒœê°€ ì•„ë‹ˆë¼ë©´
                 {
                     canClickButton[i] = false;
-                    isQuestCompleted[i] = true; // Äù½ºÆ® ¿Ï·á »óÅÂ·Î º¯°æ
+                    isQuestCompleted[i] = true; // í€˜ìŠ¤íŠ¸ ì™„ë£Œ ìƒíƒœë¡œ ë³€ê²½
                     
                 }
             }
@@ -130,9 +130,9 @@ public class Achievement : MonoBehaviour
     }
     public void AchiveButtonClick(int index)
     {
-        if (canClickButton[index] == true && !isGainDieAmond[index]) // Æ¯Á¤ ÀÎµ¦½º¸¸ È®ÀÎ
+        if (canClickButton[index] == true && !isGainDieAmond[index]) // íŠ¹ì • ì¸ë±ìŠ¤ë§Œ í™•ì¸
         {
-            Player.instance.Diemond += 500;
+            Player.instance.Diamond += 500;
             canClickButton[index] = false;
             isGainDieAmond[index] = true;
             AchievementCount += 1;

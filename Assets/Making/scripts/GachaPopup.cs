@@ -15,6 +15,7 @@ public class GachaPopup : MonoBehaviour //가차 결과를 보여주는 UI
     public GameObject itemPrefab;
     public GameObject effectPrefab;
     public GameObject noneffectPrefab;
+    public GameObject highgradeeffect;
 
     private List<GameObject> children = new List<GameObject>();
     private List<GameObject> effectchildren = new List<GameObject>();
@@ -55,7 +56,6 @@ public class GachaPopup : MonoBehaviour //가차 결과를 보여주는 UI
 
         isCoroutineDone = false;
         StartCoroutine(SetupCoroutine(gachaResult));
-        isCoroutineDone = true;
     }
     private IEnumerator SetupCoroutine(GachaResult gachaResult)
     {
@@ -65,15 +65,36 @@ public class GachaPopup : MonoBehaviour //가차 결과를 보여주는 UI
         {
             ItemInfo itemInfo = gachaResult.items[i];
             bool isHigeGrade = (int)itemInfo.grade >= (int)ItemGrade.C;
-            
+            if (isHigeGrade)
+            {
+                var effectwait = Instantiate(effectPrefab, effectGrid.transform);
+                yield return new WaitForSeconds(2);
+                Destroy(effectwait);
+            }
+
             // 아이템 슬롯 생성
             ItemSlot itemSlot = Instantiate(itemPrefab, grid.transform).GetComponent<ItemSlot>();
             // 아이템 슬롯에 뽑은 아이템 데이터 적용
             itemSlot.SetData(gachaResult.items[i]);
-
             if (isHigeGrade)
             {
+               
                 var effect = Instantiate(effectPrefab, effectGrid.transform);
+                ParticleSystem particleSystem = effect.GetComponent<ParticleSystem>();
+                var mainModule = particleSystem.main;
+
+                switch (itemInfo.grade)
+                {
+                    case ItemGrade.B:
+                        mainModule.startColor = Color.red; // 빨간색
+                        break;
+                    case ItemGrade.A:
+                        mainModule.startColor = Color.blue; // 파란색
+                        break;
+                    case ItemGrade.S:
+                        mainModule.startColor = Color.yellow; // 금색
+                        break;
+                }
                 effectchildren.Add(effect);
             }
             else
@@ -87,14 +108,14 @@ public class GachaPopup : MonoBehaviour //가차 결과를 보여주는 UI
             var effectImageSequence = DOTween.Sequence();
 
             itemSlot.icon.gameObject.SetActive(false);
-            effectImageSequence.Append(itemSlot.effectImage.DOFade(1, 0.5f)); // 흰색 보이기
+            effectImageSequence.Append(itemSlot.effectImage.DOFade(1, 0.2f)); // 흰색 보이기
             effectImageSequence.AppendCallback(() => itemSlot.icon.gameObject.SetActive(true));
-            effectImageSequence.Append(itemSlot.effectImage.DOFade(0, 0.5f)); // 흰색 사라지기
+            effectImageSequence.Append(itemSlot.effectImage.DOFade(0, 0.3f)); // 흰색 사라지기
             effectImageSequence.Play();
 
 
             var sequence = DOTween.Sequence();
-            itemSlot.transform.localScale = Vector3.one * 6;
+            itemSlot.transform.localScale = Vector3.one * 7;
             
             //if (isHigeGrade)
             //{
@@ -117,15 +138,15 @@ public class GachaPopup : MonoBehaviour //가차 결과를 보여주는 UI
         isCoroutineDone = true;
         onDoneAction?.Invoke();
     }
+    public void isposibbleCloss()
+    {
+        if (isCoroutineDone)
+        {
+            Close();
+        }
+    }
     public void Close()
     {
-        StopAllCoroutines(); // 돌아가고 있는 코루틴이 있다면 멈춘다.
-        if (isCoroutineDone == false)
-        {
-            isCoroutineDone = true;
-            onDoneAction?.Invoke();
-        }
-
         Destroy(gameObject);
     }
     public void OneMoreTime1()

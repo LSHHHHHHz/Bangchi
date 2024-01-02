@@ -14,6 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grade: 0
   type: 0
+  petType: 0
   name: item2
   iconPath: ItemIcon/F2
+  backgroundiconPath: GradeBackGround/Gray
   Number: 2
+  Attack: 500
+  HP: 0
+  HP_recovery: 0

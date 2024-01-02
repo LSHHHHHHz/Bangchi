@@ -1,5 +1,6 @@
 using Assets.Battle;
 using Assets.Battle.Unit;
+using Assets.HeroEditor.InventorySystem.Scripts.Elements;
 using Assets.Item1;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,25 +15,26 @@ public class Player : BaseUnit
 
     public GameObject[] weapons;
     public GameObject[] shiled;
+    public int weponsIndex;
 
     Monster monsters;
     Rigidbody rigid;
     DropItem prefabs;
     public Animator anim;
 
-    //Æ®·£½ºÆûÀ» ´ãÀ» º¯¼ö
+    //íŠ¸ëœìŠ¤í¼ì„ ë‹´ì„ ë³€ìˆ˜
     public Transform tr;
-    //·¹ÀÌ ±æÀÌ
+    //ë ˆì´ ê¸¸ì´
     public float raycastDistance;
-    //Ãæµ¹ Á¤º¸¸¦ °¡Á®¿Ã ·¹ÀÌÄ³½ºÆ® È÷Æ®
+    //ì¶©ëŒ ì •ë³´ë¥¼ ê°€ì ¸ì˜¬ ë ˆì´ìºìŠ¤íŠ¸ íˆíŠ¸
     public RaycastHit hit;
-    //Ãæµ¹ Á¤º¸¸¦ ¿©·Á°³ ´ãÀ» È÷Æ®¹è¿­
+    //ì¶©ëŒ ì •ë³´ë¥¼ ì—¬ë ¤ê°œ ë‹´ì„ íˆíŠ¸ë°°ì—´
     public RaycastHit[] hits;
-    //·¹ÀÌ¾î ¸¶½ºÅ©¸¦ ÁöÁ¤ÇÒ º¯¼ö
+    //ë ˆì´ì–´ ë§ˆìŠ¤í¬ë¥¼ ì§€ì •í•  ë³€ìˆ˜
     public LayerMask layerMask = -1;
 
 
-    //´É·Â Ã¢
+    //ëŠ¥ë ¥ ì°½
     public float Current_Attack;
     public int AttackLevel;
 
@@ -56,18 +58,18 @@ public class Player : BaseUnit
     public int RecoveryMP;
     public int RecoveryMPLevel;
 
-    //°æÇèÄ¡
+    //ê²½í—˜ì¹˜
     public int Exp = 100;
     public int Current_Exp;
     //public Image Exp_Bar;
-    public UnityEngine.UI.Image Exp_Bar; //ÀÌ·¸°Ô ÇØ¾ß ¿¡·¯°¡ ¾È»ı±è
+    public UnityEngine.UI.Image Exp_Bar; //ì´ë ‡ê²Œ í•´ì•¼ ì—ëŸ¬ê°€ ì•ˆìƒê¹€
     public Text LV_txt;
 
 
-    //·¹º§
+    //ë ˆë²¨
     public int LV = 1;
 
-    //È¸º¹
+    //íšŒë³µ
     public float currentDotTime = 0;
     public float dotTime = 1;
 
@@ -77,10 +79,10 @@ public class Player : BaseUnit
     public int ColleageCoinSoil;
     public int ColleageCoinWind;
     public int ColleageCoinFire;
-    public int Diemond;
+    public int Diamond;
     public int enforceCoin;
 
-    //Ablity °ñµå ½ºÅİ »óÅÂÃ¢
+    //Ablity ê³¨ë“œ ìŠ¤í…Ÿ ìƒíƒœì°½
     public Text _Attack;
     public Text _AttackLevel;
     public Text _HP;
@@ -92,6 +94,11 @@ public class Player : BaseUnit
     public Text _CriticalDamageLevel;
     public Text _Criticalprobability;
     public Text _CriticalprobabilityLevel;
+
+    //ê¸°ë³¸ ìŠ¤í…Ÿ ì°½ ê³¨ë“œ, ê°•í™”ì„, ë‹¤ì´ì•„
+    public Text _TopGold;
+    public Text _TopEnforceCoin;
+    public Text _TopDia;
 
     public Text _MP;
 
@@ -108,6 +115,7 @@ public class Player : BaseUnit
 
     public static Player instance;
 
+
     void Awake()
     {
         instance = this;
@@ -120,11 +128,11 @@ public class Player : BaseUnit
 
     private void Start()
     {
-        Player_XP(); //°æÇèÄ¡
-        _Attack.text = Current_Attack + " ¡æ " + (AttackLevel + Current_Attack);
-        _HP.text = Max_HP + " ¡æ " + (HPLevel + Max_HP);
+        Player_XP(); //ê²½í—˜ì¹˜
+        _Attack.text = Current_Attack + " â†’ " + (AttackLevel + Current_Attack);
+        _HP.text = Max_HP + " â†’ " + (HPLevel + Max_HP);
 
-        RefreshWeapon();
+        RefreshWeapon(); //ì´ê±¸ ë¹¼ë©´ ìºë¦­í„°ì— ë¬´ê¸°ê°€ ì¥ì°©ë˜ì–´ìˆì§€ ì•ŠìŒ
         InventoryManager.instance.OnEquippedItemChanged += RefreshWeapon;
     }
 
@@ -139,9 +147,19 @@ public class Player : BaseUnit
         rayCast();
         Fighting();
         SkillCasting();
+        TopStatus();
     }
 
+    private void TopStatus()
+    {
+        _TopGold.text = Coin.ToString("N0");
+        _TopEnforceCoin.text = enforceCoin.ToString("N0");
+        _TopDia.text = Diamond.ToString("N0");
+    }
 
+    private ItemInstance previousEquippedWeapon = null;
+    private ItemInstance previousEquippedShield = null;
+    bool isrestarts = false;
 
     private void RefreshWeapon()
     {
@@ -151,36 +169,62 @@ public class Player : BaseUnit
             {
                 int weaponIndex = equippedItem.itemInfo.Number - 1;
 
-                for (int i = 0; i < weapons.Length; ++i)
+                //ì•„ì´í…œì„ ì¥ì°©í•˜ì§€ ì•Šì•˜ê±°ë‚˜, ê¸°ì¡´ ì¥ì°© ì•„ì´í…œ ì •ë³´ì™€ ìƒˆë¡œìš´ ì•„ì´í…œ ì •ë³´ê°€ ë‹¤ë¥¼ë•Œë§Œ ì‹¤í–‰
+                if (previousEquippedWeapon == null || previousEquippedWeapon.itemInfo != equippedItem.itemInfo)
                 {
-                    if (i == weaponIndex)
+                    // ì´ì „ì— ì¥ì°©ëœ ì•„ì´í…œì˜ ê³µê²©ë ¥ ì œê±°
+                    if (previousEquippedWeapon != null)
                     {
-                        weapons[i].SetActive(true);
+                        Current_Attack -= previousEquippedWeapon.itemInfo.Attack;
                     }
-                    else
+
+                    // ìƒˆ ì•„ì´í…œ ì¥ì°©
+                    for (int i = 0; i < weapons.Length; ++i)
                     {
-                        weapons[i].SetActive(false);
+                        weapons[i].SetActive(i == weaponIndex);
                     }
+                    // ìƒˆ ì•„ì´í…œ ê³µê²©ë ¥ ì¶”ê°€
+
+                    Current_Attack += equippedItem.itemInfo.Attack;
+                                     
+                    previousEquippedWeapon = equippedItem;
                 }
             }
-            // ¹æÆĞµµ ¿©±â¼­ ³¢±â
-            if(equippedItem.itemInfo.type == ItemType.Shield)
+            // ë°©íŒ¨ë„ ì—¬ê¸°ì„œ ë¼ê¸°
+            if (equippedItem.itemInfo.type == ItemType.Shield)
             {
                 int shiledIndex = equippedItem.itemInfo.Number - 1;
-                for (int i = 0; i < shiled.Length; ++i)
+                //ì•„ì´í…œì„ ì¥ì°©í•˜ì§€ ì•Šì•˜ê±°ë‚˜, ê¸°ì¡´ ì¥ì°© ì•„ì´í…œ ì •ë³´ì™€ ìƒˆë¡œìš´ ì•„ì´í…œ ì •ë³´ê°€ ë‹¤ë¥¼ë•Œë§Œ ì‹¤í–‰
+                if(previousEquippedShield == null || previousEquippedShield.itemInfo != equippedItem.itemInfo)
                 {
-                    if (i == shiledIndex)
+                    if(previousEquippedShield != null)
                     {
-                        shiled[i].SetActive(true);
+                        Max_HP -= previousEquippedShield.itemInfo.HP;
+                        RecoveryHP -= previousEquippedShield.itemInfo.HP_recovery;
                     }
-                    else
+                    for (int i = 0; i < shiled.Length; ++i) 
                     {
-                        shiled[i].SetActive(false);
+                        shiled[i].SetActive(i == shiledIndex);
                     }
+                    Max_HP += equippedItem.itemInfo.HP;
+                    RecoveryHP += equippedItem.itemInfo.HP_recovery;
+
+                    previousEquippedShield = equippedItem;
                 }
             }
         }
     }
+                //for (int i = 0; i < shiled.Length; ++i)
+                //{
+                //    if (i == shiledIndex)
+                //    {
+                //        shiled[i].SetActive(true);
+                //    }
+                //    else
+                //    {
+                //        shiled[i].SetActive(false);
+                //    }
+                //}
 
     public void statDataSave()
     {
@@ -219,7 +263,7 @@ public class Player : BaseUnit
         PlayerPrefs.SetInt(nameof(ColleageCoinWater), ColleageCoinWater);
         PlayerPrefs.SetInt(nameof(ColleageCoinWind), ColleageCoinWind);
 
-        // PlayerPrefs¿¡ ÀúÀåµÈ °ªÀ» µğ½ºÅ©¿¡ ±â·Ï
+        // PlayerPrefsì— ì €ì¥ëœ ê°’ì„ ë””ìŠ¤í¬ì— ê¸°ë¡
         PlayerPrefs.Save();
     }
 
@@ -280,7 +324,7 @@ public class Player : BaseUnit
     {
         if (Current_Exp >= Exp)
         {
-            Current_Exp -= Exp; //ÇöÀç °æÇèÄ¡ - ÃÑ °æÇèÄ¡
+            Current_Exp -= Exp; //í˜„ì¬ ê²½í—˜ì¹˜ - ì´ ê²½í—˜ì¹˜
             LV++;
             Player_XP();
 
@@ -294,19 +338,19 @@ public class Player : BaseUnit
 
     void ablityUpdate()
     {
-        _Attack.text = Current_Attack + " ¡æ " + (AttackLevel + Current_Attack);
+        _Attack.text = Current_Attack + " â†’ " + (AttackLevel + Current_Attack);
         _AttackLevel.text = "LV" + AttackLevel;
 
-        _HP.text = Max_HP + " ¡æ " + (HPLevel + Max_HP);
+        _HP.text = Max_HP + " â†’ " + (HPLevel + Max_HP);
         _HPLevel.text = "LV" + HPLevel;
 
-        _Recovery.text = RecoveryHP + " ¡æ " + (RecoveryLevel + RecoveryHP);
+        _Recovery.text = RecoveryHP + " â†’ " + (RecoveryLevel + RecoveryHP);
         _RecoveryLevel.text = "LV" + RecoveryLevel;
 
-        _CriticalDamage.text = $"{Current_CriticalDamage:F1} ¡æ {(0.1f + Current_CriticalDamage):F1}";
+        _CriticalDamage.text = $"{Current_CriticalDamage:F1} â†’ {(0.1f + Current_CriticalDamage):F1}";
         _CriticalDamageLevel.text = "LV" + CriticalDamageLevel;
 
-        _Criticalprobability.text = Current_Criticalprobability + " ¡æ " + (CriticalprobabilityLevel + Current_Criticalprobability);
+        _Criticalprobability.text = Current_Criticalprobability + " â†’ " + (CriticalprobabilityLevel + Current_Criticalprobability);
         _CriticalprobabilityLevel.text = "LV" + CriticalprobabilityLevel;
 
         statDataSave();
@@ -320,7 +364,7 @@ public class Player : BaseUnit
             return;
 
         Vector2 moveVec = new Vector2(playerSpeed, 0);
-        //rigid.velocity = moveVec * playerSpeed * Time.deltaTime; // ¹°¸®ÀûÀÎ ÈûÀ¸·Î ¿òÁ÷ÀÌ°Ô²û ÇÏ´Â °Í, ÀÌ ÇÃ·¹ÀÌ¾î´Â ±×·² ÇÊ¿ä°¡ ¾ø¾î¼­ Translate·Î °­Á¦·Î ÀÌµ¿½ÃÅ°±â.
+        //rigid.velocity = moveVec * playerSpeed * Time.deltaTime; // ë¬¼ë¦¬ì ì¸ í˜ìœ¼ë¡œ ì›€ì§ì´ê²Œë” í•˜ëŠ” ê²ƒ, ì´ í”Œë ˆì´ì–´ëŠ” ê·¸ëŸ´ í•„ìš”ê°€ ì—†ì–´ì„œ Translateë¡œ ê°•ì œë¡œ ì´ë™ì‹œí‚¤ê¸°.
         transform.Translate(moveVec * Time.deltaTime);
     }
 
@@ -338,12 +382,12 @@ public class Player : BaseUnit
         if (isFighting == false)
             return;
 
-        // ³»°¡ ÀüÅõ°¡ ³¡³­Áö ¾Æ´ÑÁö 1ÃÊ¸¶´Ù °Ë»ç.
+        // ë‚´ê°€ ì „íˆ¬ê°€ ëë‚œì§€ ì•„ë‹Œì§€ 1ì´ˆë§ˆë‹¤ ê²€ì‚¬.
         if (Time.time - fightStartTime > 1f)
         {
             isFighting = NeedToFight();
 
-            // ÀüÅõ°¡ ³¡³­ °Í.
+            // ì „íˆ¬ê°€ ëë‚œ ê²ƒ.
             if (isFighting == false)
             {
                 anim.SetTrigger("battleEnd");
@@ -362,24 +406,24 @@ public class Player : BaseUnit
         }
     }
 
-    // ³»°¡ ÀüÅõÇØ¾ß ÇÏ´ÂÁö, ¾Æ´ÑÁö °Ë»çÇÏ´Â ÇÔ¼ö.
+    // ë‚´ê°€ ì „íˆ¬í•´ì•¼ í•˜ëŠ”ì§€, ì•„ë‹Œì§€ ê²€ì‚¬í•˜ëŠ” í•¨ìˆ˜.
     private bool NeedToFight()
     {
-        //·¹ÀÌ ¼¼ÆÃ
+        //ë ˆì´ ì„¸íŒ…
         Ray ray = new Ray();
-        //·¹ÀÌ ½ÃÀÛ ÁöÁ¡
+        //ë ˆì´ ì‹œì‘ ì§€ì 
         ray.origin = tr.position;
-        //¹æÇâ ¼³Á¤
+        //ë°©í–¥ ì„¤ì •
         ray.direction = tr.right;
-        //·¹ÀÌ »ç¿ë ¹æ¹ı(·¹ÀÌ¿¡ °ËÃâµÇ´Â °ÍÀÌ ÀÖ´Ù¸é)
+        //ë ˆì´ ì‚¬ìš© ë°©ë²•(ë ˆì´ì— ê²€ì¶œë˜ëŠ” ê²ƒì´ ìˆë‹¤ë©´)
 
-        //RaycastAllÀº RaycastHits[] ¸¦ ¹İÈ¯ÇÑ´Ù
-        // Physics.Raycast <-- 1°³¸¸ ¹İÈ¯, RayCastAllÀº ¿©·¯°³¸¦ ¹İÈ¯.
+        //RaycastAllì€ RaycastHits[] ë¥¼ ë°˜í™˜í•œë‹¤
+        // Physics.Raycast <-- 1ê°œë§Œ ë°˜í™˜, RayCastAllì€ ì—¬ëŸ¬ê°œë¥¼ ë°˜í™˜.
         hits = Physics.RaycastAll(ray, raycastDistance, layerMask);
         for (int i = 0; i < hits.Length; ++i)
         {
             RaycastHit hit = hits[i];
-            print(hit.collider.name + "¸¦ Ãæµ¹Ã¼·Î °ËÃâ");
+            print(hit.collider.name + "ë¥¼ ì¶©ëŒì²´ë¡œ ê²€ì¶œ");
 
             if (hit.collider.gameObject.layer == LayerMask.NameToLayer("enemy"))
             {
@@ -401,18 +445,5 @@ public class Player : BaseUnit
 
     private void OnTriggerEnter(Collider collision)
     {
-        DropItem prefab = collision.GetComponent<DropItem>();
-        if (collision.CompareTag("ExpIcon"))
-        {
-            //Prefabs prefab = new Prefabs();
-            Current_Exp += prefab.exp;
-            Destroy(collision.gameObject);
-        }
-        else if(collision.CompareTag("CoinIcon"))
-        {
-            Coin += prefab.coin;
-            Destroy(collision.gameObject);
-        }
     }
-
 }

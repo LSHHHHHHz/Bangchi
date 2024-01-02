@@ -21,13 +21,13 @@ public class CharacterStats : MonoBehaviour
     public Text _Criticalprobability;
     public Text _MP;
     public Text _MPRecovery;
-    public Text _CoinGetAmount; //È¹µæ·®Àº ¿©±â¼­¸¸ Á¶Àı
-    public Text _ExpGetAmount;  //È¹µæ·®Àº ¿©±â¼­¸¸ Á¶Àı
+    public Text _CoinGetAmount; //íšë“ëŸ‰ì€ ì—¬ê¸°ì„œë§Œ ì¡°ì ˆ
+    public Text _ExpGetAmount;  //íšë“ëŸ‰ì€ ì—¬ê¸°ì„œë§Œ ì¡°ì ˆ
 
     public RectTransform characterUI;
     public RectTransform characterUIClose;
 
-    public ItemSlot equipWeaponSlot; //¹«±â ½½·ÔÀ» ´ãÀ» º¯¼ö
+    public ItemSlot equipWeaponSlot; //ë¬´ê¸° ìŠ¬ë¡¯ì„ ë‹´ì„ ë³€ìˆ˜
     public ItemSlot equipShieldSLot;
 
 
@@ -50,8 +50,8 @@ public class CharacterStats : MonoBehaviour
         _Criticalprobability.text = player.Current_Criticalprobability + "";
         _MP.text = player.Max_MP + "";
         _MPRecovery.text = player.RecoveryMP + "";
-        _CoinGetAmount.text = colleaguePoly[1].Third_stat.ToString();
-        _ExpGetAmount.text = colleaguePoly[0].Third_stat + "";
+        _CoinGetAmount.text = player.Coin.ToString("N0");
+        _ExpGetAmount.text = player.Exp.ToString("N0");
     }
 
     private void RefreshWeapon()
@@ -89,6 +89,14 @@ public class CharacterStats : MonoBehaviour
                 equipShieldSLot.SetData(itemInfo);
             }
         }
+    }
+    public void statsUIopen()
+    {
+        characterUI.localPosition = new Vector3(306, 422, 0);
+    }
+    public void statsUIclose()
+    {
+        characterUI.localPosition = new Vector3(-620, 455, 0);
     }
 
 }
