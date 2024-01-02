@@ -135,18 +135,13 @@ public class GachaPopup : MonoBehaviour //가차 결과를 보여주는 UI
             yield return sequence.WaitForCompletion();
 
         }
-        isCoroutineDone = true;
         onDoneAction?.Invoke();
-    }
-    public void isposibbleCloss()
-    {
-        if (isCoroutineDone)
-        {
-            Close();
-        }
+        onDoneAction = null;
+        isCoroutineDone = true;
     }
     public void Close()
     {
+        onDoneAction?.Invoke();
         Destroy(gameObject);
     }
     public void OneMoreTime1()

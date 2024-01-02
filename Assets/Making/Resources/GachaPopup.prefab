@@ -776,7 +776,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4785936069910895285}
         m_TargetAssemblyTypeName: GachaPopup, Assembly-CSharp
-        m_MethodName: isposibbleCloss
+        m_MethodName: Close
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
