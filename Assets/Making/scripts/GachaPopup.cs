@@ -64,7 +64,7 @@ public class GachaPopup : MonoBehaviour //가차 결과를 보여주는 UI
         for (int i = 0; i < gachaResult.items.Count; ++i)
         {
             ItemInfo itemInfo = gachaResult.items[i];
-            bool isHigeGrade = (int)itemInfo.grade >= (int)ItemGrade.C;
+            bool isHigeGrade = (int)itemInfo.grade >= (int)ItemGrade.B;
             if (isHigeGrade)
             {
                 var effectwait = Instantiate(effectPrefab, effectGrid.transform);
@@ -146,10 +146,10 @@ public class GachaPopup : MonoBehaviour //가차 결과를 보여주는 UI
     }
     public void OneMoreTime1()
     {
-        oneMoreTimeAction?.Invoke(1);
+        oneMoreTimeAction?.Invoke(10);
     }
     public void OneMoreTime11()
     {
-        oneMoreTimeAction?.Invoke(11);
+        oneMoreTimeAction?.Invoke(33);
     }
 }

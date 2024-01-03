@@ -17,7 +17,7 @@ MonoBehaviour:
   petType: 0
   name: item2
   iconPath: ItemIcon/Sheild/SHF2
-  backgroundiconPath: 
+  backgroundiconPath: GradeBackGround/Gray
   Number: 2
   Attack: 0
   HP: 500

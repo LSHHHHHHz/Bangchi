@@ -1,4 +1,5 @@
 
+using Assets.HeroEditor.Common.Scripts.Common;
 using Assets.Item1;
 using System.Collections;
 using System.Collections.Generic;
@@ -74,6 +75,7 @@ public class CharacterStats : MonoBehaviour
             else
             {
                 equipWeaponSlot.SetData(itemInfo);
+                equipSlot.backgroundImage.SetActive(false);
             }
 
         }
@@ -87,6 +89,7 @@ public class CharacterStats : MonoBehaviour
             else
             {
                 equipShieldSLot.SetData(itemInfo);
+                equipSlot.backgroundImage.SetActive(false);
             }
         }
     }

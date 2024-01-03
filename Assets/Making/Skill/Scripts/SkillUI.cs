@@ -19,10 +19,10 @@ public class SkillUI : MonoBehaviour
 
     public SkillDB skillDB;
     public Sprite lockedSprite;
-    public RectTransform activeSkillSlotParent; //ÀÎº¥Åä¸®¿¡¼­ ¿¢Æ¼ºê ½½·ÔµéÀÇ ºÎ¸ğ 
-    public RectTransform passiveSkillSlotParent; //ÀÎº¥Åä¸®¿¡¼­ ÆĞ½Ãºê ½½·ÔµéÀÇ ºÎ¸ğ
-    public RectTransform equippedActiveSkillSlotParent; //¿¢Æ¼ºê ½ºÅ³ ½½·Ô
-    public RectTransform equippedPassiveSkillSlotParent; //ÆĞ½Ãºê ½ºÅ³ ½½·Ô
+    public RectTransform activeSkillSlotParent; //ì¸ë²¤í† ë¦¬ì—ì„œ ì—‘í‹°ë¸Œ ìŠ¬ë¡¯ë“¤ì˜ ë¶€ëª¨ 
+    public RectTransform passiveSkillSlotParent; //ì¸ë²¤í† ë¦¬ì—ì„œ íŒ¨ì‹œë¸Œ ìŠ¬ë¡¯ë“¤ì˜ ë¶€ëª¨
+    public RectTransform equippedActiveSkillSlotParent; //ì—‘í‹°ë¸Œ ìŠ¤í‚¬ ìŠ¬ë¡¯
+    public RectTransform equippedPassiveSkillSlotParent; //íŒ¨ì‹œë¸Œ ìŠ¤í‚¬ ìŠ¬ë¡¯
 
     public RectTransform passiveSkillUI;
     public RectTransform activeSkillUI;
@@ -32,8 +32,8 @@ public class SkillUI : MonoBehaviour
     SkillSlot[] activeSkillSlots;
     SkillSlot[] passiveSkillSlots;
 
-    SkillSlot[] equippedActiveSkillSlots; // 4Ä­
-    SkillSlot[] equippedPassiveSkillSlots; // 4Ä­
+    SkillSlot[] equippedActiveSkillSlots; // 4ì¹¸
+    SkillSlot[] equippedPassiveSkillSlots; // 4ì¹¸
 
     private void Awake()
     {
@@ -71,7 +71,8 @@ public class SkillUI : MonoBehaviour
         for (int i = 0; i < equippedActiveSkillSlotParent.childCount; ++i) 
         {
             SkillSlot child = equippedActiveSkillSlotParent.GetChild(i).GetComponent<SkillSlot>();
-            childList.Add(child); 
+            childList.Add(child);
+            
         }
         equippedActiveSkillSlots = childList.ToArray();
 
@@ -113,7 +114,7 @@ public class SkillUI : MonoBehaviour
 
         SkillGachaResult skillgachaResult = SkillGGachaCalculator.Calculate(skillDB, count);
 
-        // °¡Ã­¸¦ ÅëÇØ ¾òÀº ¾ÆÀÌÅÛÀ» ÀÎº¥Åä¸®¿¡ ÇÏ³ª¾¿ Ãß°¡
+        // ê°€ì± ë¥¼ í†µí•´ ì–»ì€ ì•„ì´í…œì„ ì¸ë²¤í† ë¦¬ì— í•˜ë‚˜ì”© ì¶”ê°€
         foreach (var item in skillgachaResult.items)
         {
             SkillInventoryManager.instance.AddSkill(item);
@@ -128,7 +129,7 @@ public class SkillUI : MonoBehaviour
         SetData();
     }
 
-    // ÀåÂø È¤Àº ÀåÂø ÇØÁ¦
+    // ì¥ì°© í˜¹ì€ ì¥ì°© í•´ì œ
     private void EquipOrUnequip(SkillSlot slot)
     {
         SetEquipSlot(slot.skillInfo.type, slot.skillInfo, out bool isEquiped);
@@ -153,7 +154,7 @@ public class SkillUI : MonoBehaviour
         }
     }
 
-    // ÀÎº¥Åä¸®¿¡ ÀÖ´Â ¾ÆÀÌÅÛµéÀ» UI¿¡ ¼³Á¤ÇÏ´Â ±â´É.
+    // ì¸ë²¤í† ë¦¬ì— ìˆëŠ” ì•„ì´í…œë“¤ì„ UIì— ì„¤ì •í•˜ëŠ” ê¸°ëŠ¥.
     public void SetData()
     {
         foreach (SkillInstance item in SkillInventoryManager.instance.myItems)
@@ -178,6 +179,7 @@ public class SkillUI : MonoBehaviour
             if (equipSkill != null)
             {
                 equipSlot.SetData(equipSkill);
+                equipSlot.countText.SetActive(false);
             }
             else
             {
@@ -192,6 +194,7 @@ public class SkillUI : MonoBehaviour
             if (equipSkill != null)
             {
                 equipSlot.SetData(equipSkill);
+                equipSlot.countText.SetActive(false);
             }
             else
             {
@@ -211,7 +214,7 @@ public class SkillUI : MonoBehaviour
                 SkillSlot equipSlot = equippedActiveSkillSlots[i];
                 if (equipSlot.skillInfo == skillInfo)
                 {
-                    // ÀåÂøµÅÀÖ´Ù´Â ¶æ, ÀåÂø ÇØÁ¦.
+                    // ì¥ì°©ë¼ìˆë‹¤ëŠ” ëœ», ì¥ì°© í•´ì œ.
                     equipSlot.SetEmpty(lockedSprite);
                     equipSlot.skillInfo = null;
                     isEquiped = false;
@@ -219,13 +222,13 @@ public class SkillUI : MonoBehaviour
 
                     return;
                 }
-                if (emptyIndex == -1 && equipSlot.skillInfo == null) //slot´Â ÀÎº¥Åä¸®, equipslot´Â ÀåÂø½½·Ô
-                                                                     //    if (equipSlot.skillInfo == null) //slot´Â ÀÎº¥Åä¸®, equipslot´Â ÀåÂø½½·Ô
+                if (emptyIndex == -1 && equipSlot.skillInfo == null) //slotëŠ” ì¸ë²¤í† ë¦¬, equipslotëŠ” ì¥ì°©ìŠ¬ë¡¯
+                                                                     //    if (equipSlot.skillInfo == null) //slotëŠ” ì¸ë²¤í† ë¦¬, equipslotëŠ” ì¥ì°©ìŠ¬ë¡¯
                 {
-                    emptyIndex = i; // ¸¸¾à ºñ¾îÀÖ´Â Ä­ÀÌ ÀÖ´Ù¸é index ÀúÀå                    
+                    emptyIndex = i; // ë§Œì•½ ë¹„ì–´ìˆëŠ” ì¹¸ì´ ìˆë‹¤ë©´ index ì €ì¥                    
                 }
             }
-            // ÀúÀåµÈ ºñ¾îÀÖ´Â Ä­ÀÌ ÀÖ´Ù¸é »ç¿ë
+            // ì €ì¥ëœ ë¹„ì–´ìˆëŠ” ì¹¸ì´ ìˆë‹¤ë©´ ì‚¬ìš©
             if (emptyIndex != -1)
             {
                 equippedActiveSkillSlots[emptyIndex].SetData(skillInfo);
@@ -233,7 +236,7 @@ public class SkillUI : MonoBehaviour
             }
             else
             {
-                // ºóÄ­ÀÌ ¾ø´Ù´Â ¶æ.
+                // ë¹ˆì¹¸ì´ ì—†ë‹¤ëŠ” ëœ».
             }
         }
         else if (type == SkillType.Passive)
@@ -244,19 +247,19 @@ public class SkillUI : MonoBehaviour
                 SkillSlot equipSlot = equippedPassiveSkillSlots[i];
                 if (equipSlot.skillInfo == skillInfo)
                 {
-                    // ÀåÂøµÅÀÖ´Ù´Â ¶æ, ÀåÂø ÇØÁ¦.
+                    // ì¥ì°©ë¼ìˆë‹¤ëŠ” ëœ», ì¥ì°© í•´ì œ.
                     equipSlot.SetEmpty(lockedSprite);
                     equipSlot.skillInfo = null;
                     isEquiped = false;
                     return;
                 }
 
-                if (emptyIndex == -1 && equipSlot.skillInfo == null) //slot´Â ÀÎº¥Åä¸®, equipslot´Â ÀåÂø½½·Ô
+                if (emptyIndex == -1 && equipSlot.skillInfo == null) //slotëŠ” ì¸ë²¤í† ë¦¬, equipslotëŠ” ì¥ì°©ìŠ¬ë¡¯
                                                                      //if (equipSlot.skillInfo == null)
-                    emptyIndex = i; // ¸¸¾à ºñ¾îÀÖ´Â Ä­ÀÌ ÀÖ´Ù¸é index ÀúÀå
+                    emptyIndex = i; // ë§Œì•½ ë¹„ì–´ìˆëŠ” ì¹¸ì´ ìˆë‹¤ë©´ index ì €ì¥
             }
 
-            // ÀúÀåµÈ ºñ¾îÀÖ´Â Ä­ÀÌ ÀÖ´Ù¸é »ç¿ë
+            // ì €ì¥ëœ ë¹„ì–´ìˆëŠ” ì¹¸ì´ ìˆë‹¤ë©´ ì‚¬ìš©
             if (emptyIndex != -1)
             {
                 SkillSlot emptySlot = equippedPassiveSkillSlots[emptyIndex];
@@ -265,7 +268,7 @@ public class SkillUI : MonoBehaviour
             }
             else
             {
-                // ºóÄ­ÀÌ ¾ø´Ù´Â ¶æ.
+                // ë¹ˆì¹¸ì´ ì—†ë‹¤ëŠ” ëœ».
             }
         }
     }

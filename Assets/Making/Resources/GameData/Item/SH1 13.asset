@@ -17,4 +17,8 @@ MonoBehaviour:
   petType: 0
   name: item13
   iconPath: ItemIcon/Sheild/SHS1
+  backgroundiconPath: GradeBackGround/Blue
   Number: 13
+  Attack: 0
+  HP: 0
+  HP_recovery: 0

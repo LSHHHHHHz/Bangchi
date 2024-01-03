@@ -17,4 +17,8 @@ MonoBehaviour:
   petType: 0
   name: item5
   iconPath: ItemIcon/Sheild/SHB1
+  backgroundiconPath: GradeBackGround/Green
   Number: 5
+  Attack: 0
+  HP: 0
+  HP_recovery: 0

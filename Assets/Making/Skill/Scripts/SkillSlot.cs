@@ -4,10 +4,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//아래 using을 쓰니 backGroundImage SetActive 사용 가능해짐
+using Assets.HeroEditor.Common.Scripts.Common;
+
+
 public class SkillSlot : MonoBehaviour
 {
     public SkillInfo skillInfo;
     public Image icon;
+    public Image backGroundImage;
+    public Image effectImage;
     public Text countText;
 
     public void SetData(SkillInfo skillInfo)
@@ -17,6 +23,8 @@ public class SkillSlot : MonoBehaviour
             return;
 
         icon.sprite = Resources.Load<Sprite>(skillInfo.iconPath);
+        backGroundImage.sprite = Resources.Load<Sprite>(skillInfo.backGroundIconPath);
+        this.backGroundImage.SetActive(true);
         if (countText != null)
         {
             countText.gameObject.SetActive(false);

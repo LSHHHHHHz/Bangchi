@@ -1,3 +1,4 @@
+using Assets.HeroEditor.Common.Scripts.Common;
 using Assets.Item1;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,13 +15,17 @@ public class ItemSlot : MonoBehaviour
     public int count;
     public int upgradeLevel;
 
+
+    //캐릭터 상태창에 넣는데이터를 따로 넣어야 하는지
+    //가차 실행 후 흰색 네모가 fadeOff 하면서 뒷 배경이 보이도록 하고 싶은데
+    //이러면 캐릭터 상태창에도 동일하게 적용될 것 같아서 안함
     public void SetData(ItemInfo itemInfo)
     {
         this.itemInfo = itemInfo;
         icon.sprite = Resources.Load<Sprite>(itemInfo.iconPath);
-       // backgroundImage.sprite = Resources.Load<Sprite>(itemInfo.backgroundiconPath);
-      
-
+        backgroundImage.sprite = Resources.Load<Sprite>(itemInfo.backgroundiconPath);
+        this.backgroundImage.SetActive(true);
+        
         if (countText != null)
         {
             countText.gameObject.SetActive(false);

@@ -20,7 +20,7 @@ namespace Assets.Item1
     }
 
     /// <summary>
-    /// °ÔÀÓ¿¡ µîÀåÇÏ´Â ¾ÆÀÌÅÛ °¢°¢ ÇÏ³ªÇÏ³ª¸¦ ³ªÅ¸³»´Â µ¥ÀÌÅÍ.
+    /// ê²Œì„ì— ë“±ì¥í•˜ëŠ” ì•„ì´í…œ ê°ê° í•˜ë‚˜í•˜ë‚˜ë¥¼ ë‚˜íƒ€ë‚´ëŠ” ë°ì´í„°.
     /// </summary>
     [CreateAssetMenu(menuName = "My Assets/SkillInfo")]
     public class SkillInfo : ScriptableObject
@@ -30,6 +30,7 @@ namespace Assets.Item1
         public SkillType type;
         public string name;
         public string iconPath;
+        public string backGroundIconPath;
         public int Number;
 
     }

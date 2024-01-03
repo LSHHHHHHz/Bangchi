@@ -35,9 +35,11 @@ public class EquipmentUI : MonoBehaviour
     public static EquipmentUI instance;
     private void Awake()
     {
+        
         instance = this;
+        
         List<ItemSlot> childList = new();
-        for (int i = 0; i < weaponSlotParent.childCount; ++i) // weaponSlotParentÀÇ ÀÚ½Ä °³¼ö¸¦ °¡Á®¿À°í, ±× °³¼ö¸¸Å­ for¹® ¹İº¹
+        for (int i = 0; i < weaponSlotParent.childCount; ++i) // weaponSlotParentì˜ ìì‹ ê°œìˆ˜ë¥¼ ê°€ì ¸ì˜¤ê³ , ê·¸ ê°œìˆ˜ë§Œí¼ forë¬¸ ë°˜ë³µ
         {
             ItemSlot child = weaponSlotParent.GetChild(i).GetComponent<ItemSlot>();
             var button = child.GetComponent<Button>();
@@ -46,9 +48,9 @@ public class EquipmentUI : MonoBehaviour
                 EquipAndEnforcePopup.EquipAndEnforce(child);
             });
 
-            childList.Add(child); // ÀÚ½ÄÀ» childList¿¡ ÀÓ½Ã·Î ³Ö¾îµĞ´Ù.
+            childList.Add(child); // ìì‹ì„ childListì— ì„ì‹œë¡œ ë„£ì–´ë‘”ë‹¤.
         }
-        weaponSlots = childList.ToArray(); //ÀÚ½ÄµéÀÌ µé¾îÀÖ´Â childList¸¦ ¹è¿­ º¯È¯·Î º¯È¯ÇÑ´Ù.
+        weaponSlots = childList.ToArray(); //ìì‹ë“¤ì´ ë“¤ì–´ìˆëŠ” childListë¥¼ ë°°ì—´ ë³€í™˜ë¡œ ë³€í™˜í•œë‹¤.
 
         List<ItemSlot> shieldChildList = new List<ItemSlot>();
         for (int i = 0; i < shieldSlotParent.childCount; ++i)
@@ -72,10 +74,10 @@ public class EquipmentUI : MonoBehaviour
     public void EquipOrUnequip(ItemSlot item)
     {
         SetEquipSlot(item.itemInfo);
-        InventoryManager.instance.UnEquip(item.itemInfo); // ÀåÂøÇÏ°í ÀÖ´ø Ä®ÀÌ³ª ¹æÆĞµî ÀåÂø ÇØÁ¦.
-        InventoryManager.instance.Equip(item.itemInfo); // ÀåÂø.
+        InventoryManager.instance.UnEquip(item.itemInfo); // ì¥ì°©í•˜ê³  ìˆë˜ ì¹¼ì´ë‚˜ ë°©íŒ¨ë“± ì¥ì°© í•´ì œ.
+        InventoryManager.instance.Equip(item.itemInfo); // ì¥ì°©.
     }
-    //ÀÎº¥Åä¸® UI ¾ÆÀÌÅÛµéÀ» º¸¿©ÁÜ
+    //ì¸ë²¤í† ë¦¬ UI ì•„ì´í…œë“¤ì„ ë³´ì—¬ì¤Œ
     public void SetData()
     {
         foreach (ItemInstance item in InventoryManager.instance.myItems)
@@ -94,7 +96,7 @@ public class EquipmentUI : MonoBehaviour
             }
         }
     }
-    private void SetEquipSlot(ItemInfo itemInfo) //Ä³¸¯ÅÍ »óÅÂÃ¢ ³Ö±â
+    private void SetEquipSlot(ItemInfo itemInfo) //ìºë¦­í„° ìƒíƒœì°½ ë„£ê¸°
     {
         //characterStats.OnEquipItem(itemInfo);
     }
@@ -117,16 +119,16 @@ public class EquipmentUI : MonoBehaviour
             gachaPopup.PanelFadeIn();
             GachaResult gachaResult = GachaCalculator.Calculate(itemDb, count, type);
 
-            // °¡Ã­¸¦ ÅëÇØ ¾òÀº ¾ÆÀÌÅÛÀ» ÀÎº¥Åä¸®¿¡ ÇÏ³ª¾¿ Ãß°¡
+            // ê°€ì± ë¥¼ í†µí•´ ì–»ì€ ì•„ì´í…œì„ ì¸ë²¤í† ë¦¬ì— í•˜ë‚˜ì”© ì¶”ê°€
             foreach (var item in gachaResult.items)
             {
                 InventoryManager.instance.AddItem(item);
             }
 
-            // ÀÎº¥Åä¸®¿¡ ´Ù Ãß°¡ÇßÀ¸¸é ÀúÀå
+            // ì¸ë²¤í† ë¦¬ì— ë‹¤ ì¶”ê°€í–ˆìœ¼ë©´ ì €ì¥
             InventoryManager.instance.Save();
 
-            // °¡Ã­ÆË¾÷¿¡¼­ »ÌÀº ¾ÆÀÌÅÛµéÀ» º¸¿©Áà¾ß ÇÏ¹Ç·Î gachaResult¸¦ ³Ñ±è.
+            // ê°€ì± íŒì—…ì—ì„œ ë½‘ì€ ì•„ì´í…œë“¤ì„ ë³´ì—¬ì¤˜ì•¼ í•˜ë¯€ë¡œ gachaResultë¥¼ ë„˜ê¹€.
             gachaPopup.Initialize(gachaResult, oneMoreTime, () => runGacha = false);
         }
     }

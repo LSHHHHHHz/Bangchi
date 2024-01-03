@@ -17,4 +17,8 @@ MonoBehaviour:
   petType: 0
   name: item11
   iconPath: ItemIcon/Sheild/SHA3
+  backgroundiconPath: GradeBackGround/Red
   Number: 11
+  Attack: 0
+  HP: 0
+  HP_recovery: 0

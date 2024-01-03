@@ -1,4 +1,4 @@
-﻿using Assets.Battle;
+using Assets.Battle;
 using Assets.Item1;
 using System;
 using System.Collections.Generic;
@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using Assets.HeroEditor.Common.Scripts.Common;
 
 public class IngameSkillList : MonoBehaviour
 {
@@ -104,7 +105,10 @@ public class IngameSkillList : MonoBehaviour
 
                 // 장착할 스킬이 있음
                 slot.SetData(equipSkill); // 스킬 슬롯에 내가 장착한 스킬을 설정한다.
-
+                //인게임 스킬 창은 필요없는 것들 false 처리
+                slot.backGroundImage.SetActive(false);
+                slot.countText.SetActive(false);
+              
                 GameObject skillPrefab = equipSkill.skillInfo.skillPrefab;
                 if (skillPrefab == null)
                 {
