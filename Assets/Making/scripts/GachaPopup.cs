@@ -105,12 +105,14 @@ public class GachaPopup : MonoBehaviour //가차 결과를 보여주는 UI
 
             itemSlot.effectImage.gameObject.SetActive(true);
             itemSlot.effectImage.color = new Color(1, 1, 1, 0); //첫 색깔 설정
+            itemSlot.backgroundImage.color = new Color(1, 1, 1, 0);
             var effectImageSequence = DOTween.Sequence();
 
             itemSlot.icon.gameObject.SetActive(false);
             effectImageSequence.Append(itemSlot.effectImage.DOFade(1, 0.2f)); // 흰색 보이기
             effectImageSequence.AppendCallback(() => itemSlot.icon.gameObject.SetActive(true));
             effectImageSequence.Append(itemSlot.effectImage.DOFade(0, 0.3f)); // 흰색 사라지기
+            effectImageSequence.Join(itemSlot.backgroundImage.DOFade(1, 0.2f));// 뒷배경 보이기
             effectImageSequence.Play();
 
 

@@ -1,3 +1,4 @@
+using Assets.HeroEditor.Common.Scripts.Common;
 using Assets.HeroEditor.InventorySystem.Scripts.Elements;
 using DG.Tweening;
 using System;
@@ -13,9 +14,14 @@ public class PetPopup : MonoBehaviour
 {
     public event Action OnInitialize;
     public GridLayoutGroup gird;
+    public GridLayoutGroup effectgird;
     public GameObject petPrefab;
+    public GameObject effectPrefab;
+    public GameObject noneffectPrefab;
 
     private List<GameObject> children = new List<GameObject>();
+    private List<GameObject> effectchildren = new List<GameObject>();
+
     private Action<int> oneMoreTimeAction;
 
     private bool isCoroutineDone = true;
@@ -24,9 +30,14 @@ public class PetPopup : MonoBehaviour
         transform.position = new Vector3(0, -1000, 0);
         foreach (GameObject child in children)
         {
-            Destroy(child); 
+            Destroy(child);
         }
-        children.Clear();
+        children.Clear(); 
+        foreach (GameObject child in effectchildren)
+        {
+            Destroy(child);
+        }
+        effectchildren.Clear();
 
         this.oneMoreTimeAction = oneMoreTime;
         isCoroutineDone = false;
@@ -39,24 +50,36 @@ public class PetPopup : MonoBehaviour
 
         for (int i = 0; i < petGachaResult2.pets.Count; i++)
         {
-
             PetInfo petInfo = petGachaResult2.pets[i];
+            bool isHighGrade = (int)petInfo.petgrade >= (int)PetGrade.A;
+            if (isHighGrade)
+            {
+                GameObject effect = Instantiate(effectPrefab, effectgird.transform);
+                yield return new WaitForSeconds(2f);
+                Destroy(effect);
+            }
+            var noneffect = Instantiate(noneffectPrefab, effectgird.transform);
+            effectchildren.Add(noneffect);
+          
             PetSlot petSlot = Instantiate(petPrefab, gird.transform).GetComponent<PetSlot>();
             
             petSlot.SetData(petInfo);
 
             petSlot.effecticon.transform.localScale = Vector3.one * 7;
 
+    
 
             // 아이템 프리팹이 원래 Active:false였으니 이것도 false인 상태. true로 바꿔서 보이게 한다.
             petSlot.gameObject.SetActive(true);
+            petSlot.icon.color = new Color(1, 1, 1, 0);
             var sequence = DOTween.Sequence();
 
             petSlot.effecticon.transform.DOScale(1, 0.2f);
             sequence.AppendCallback(() => petSlot.effecticon.gameObject.SetActive(true));
-            sequence.Append(petSlot.effecticon.DOFade(1, 0.2f));
+     
             sequence.AppendCallback(() => petSlot.icon.gameObject.SetActive(true));
-            sequence.Append(petSlot.effecticon.DOFade(0, 0.3f)); // 흰색 사라지기
+            sequence.Append(petSlot.icon.DOFade(1, 0.2f));
+            sequence.Append(petSlot.effecticon.DOFade(0, 0.1f)); // 흰색 사라지기
 
             sequence.Play();
 
@@ -64,7 +87,6 @@ public class PetPopup : MonoBehaviour
          
             children.Add(petSlot.gameObject);
             
-            yield return new WaitForSeconds(0.1f);
             yield return sequence.WaitForCompletion();
         }
         isCoroutineDone = true;

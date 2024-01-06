@@ -16,6 +16,8 @@ public class SkillSlot : MonoBehaviour
     public Image effectImage;
     public Text countText;
 
+    public Image hideIcon;
+    private Coroutine cooldownCoroutine;
     public void SetData(SkillInfo skillInfo)
     {
         this.skillInfo = skillInfo;
@@ -44,6 +46,39 @@ public class SkillSlot : MonoBehaviour
     public void SetEmpty(Sprite emptySprite)
     {
         icon.sprite = emptySprite;
-        skillInfo = null; 
+        backGroundImage.sprite = null;
+        skillInfo = null;
+    } 
+    
+    // 스킬 쿨다운 시작
+    public void StartSkillCooldown(float duration)
+    {
+        if (cooldownCoroutine != null)
+        {
+            StopCoroutine(cooldownCoroutine);
+        }
+        cooldownCoroutine = StartCoroutine(CooldownCoroutine(duration));
+    }
+
+    // 스킬 쿨다운 종료
+    public void EndSkillCooldown()
+    {
+        if (cooldownCoroutine != null)
+        {
+            StopCoroutine(cooldownCoroutine);
+        }
+        hideIcon.fillAmount = 0f; // 쿨다운 아이콘 리셋
+    }
+
+    private IEnumerator CooldownCoroutine(float duration)
+    {
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            hideIcon.fillAmount = 1f - (elapsed / duration);
+            yield return null;
+        }
+        hideIcon.fillAmount = 0f; // 쿨다운 종료
     }
 }

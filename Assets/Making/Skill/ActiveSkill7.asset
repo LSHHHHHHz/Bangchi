@@ -17,4 +17,5 @@ MonoBehaviour:
   type: 0
   name: skill7
   iconPath: ACT 7
+  backGroundIconPath: GradeBackGround/Blue
   Number: 7

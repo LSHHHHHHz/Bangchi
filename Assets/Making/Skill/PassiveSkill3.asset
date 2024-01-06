@@ -16,5 +16,6 @@ MonoBehaviour:
   grade: 1
   type: 1
   name: skill3
-  iconPath: PAS3
+  iconPath: PAS 3
+  backGroundIconPath: GradeBackGround/Green
   Number: 3

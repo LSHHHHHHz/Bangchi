@@ -15,5 +15,5 @@ MonoBehaviour:
   petgrade: 0
   petType: 2
   name: WindD
-  iconPath: PetIcon(Popup)/1.Wind(Popup)
+  iconPath: PetIcon/1.Wind
   Number: 1

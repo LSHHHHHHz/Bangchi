@@ -17,4 +17,5 @@ MonoBehaviour:
   type: 0
   name: skill2
   iconPath: ACT 2
+  backGroundIconPath: GradeBackGround/Gray
   Number: 2

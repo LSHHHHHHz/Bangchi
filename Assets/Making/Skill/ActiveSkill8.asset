@@ -17,4 +17,5 @@ MonoBehaviour:
   type: 0
   name: skill8
   iconPath: ACT 8
+  backGroundIconPath: GradeBackGround/Blue
   Number: 8

@@ -17,4 +17,5 @@ MonoBehaviour:
   type: 0
   name: skill5
   iconPath: ACT 5
+  backGroundIconPath: GradeBackGround/Red
   Number: 5

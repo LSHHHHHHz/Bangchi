@@ -35,7 +35,7 @@ public class Player : BaseUnit
 
 
     //능력 창
-    public float Current_Attack;
+    public float Current_Attack =1;
     public int AttackLevel;
 
     public int Max_HP;
@@ -149,7 +149,7 @@ public class Player : BaseUnit
         SkillCasting();
         TopStatus();
     }
-
+   
     private void TopStatus()
     {
         _TopGold.text = Coin.ToString("N0");

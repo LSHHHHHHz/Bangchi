@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 380040524108044534}
   - component: {fileID: 6983741721240234903}
   - component: {fileID: 6247600158199355317}
+  - component: {fileID: 2428397232417594800}
   m_Layer: 5
   m_Name: SkillSlot
   m_TagString: Untagged
@@ -58,7 +59,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1304311911501168271}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -71,8 +72,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -98,6 +99,20 @@ MonoBehaviour:
   backGroundImage: {fileID: 5393017850531572736}
   effectImage: {fileID: 6127830285971768438}
   countText: {fileID: 8952769452713095080}
+  hideIcon: {fileID: 0}
+--- !u!114 &2428397232417594800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1304311911501168271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowMaskGraphic: 1
 --- !u!1 &4713670814334411307
 GameObject:
   m_ObjectHideFlags: 0

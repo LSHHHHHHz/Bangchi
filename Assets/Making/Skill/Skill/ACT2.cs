@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +24,7 @@ public class ACT2 : BaseSkill
 
     private IEnumerator SkillCoroutine()
     {
+        Debug.Log("시작하나");
         isSkillEwcuted = true;
 
         List<GameObject> effectList = new List<GameObject>();

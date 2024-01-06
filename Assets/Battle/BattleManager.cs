@@ -1,4 +1,4 @@
-﻿using Assets.HeroEditor.InventorySystem.Scripts.Elements;
+using Assets.HeroEditor.InventorySystem.Scripts.Elements;
 using Assets.Making.Stage;
 using System;
 using System.Collections;
@@ -14,6 +14,7 @@ namespace Assets.Battle
         public List<ItemInfo> myStages = new List<ItemInfo>();
 
         public event Action<StageInfo> OnStageDone;
+        public event Action OnStageRestart;
 
         public static BattleManager instance;
         private bool stageEndCheck = false;
@@ -21,7 +22,7 @@ namespace Assets.Battle
         public StageInfo LastStageInfo;
         public GameObject stageRoot;
         float stageRestartDelay = 0;
-        bool readToRestartStage = false;
+        public bool isRestartStage = false;
 
 
         //GameManger가 Stage시작을 모르니 BattleManager로 옮김
@@ -40,6 +41,7 @@ namespace Assets.Battle
             {
                 // 끝났다면 OnStageDone 이벤트 발생
                 OnStageDone?.Invoke(currentStageInfo);
+
                 // 더이상 스테이지가 끝났는지 체크 안하도록 stageEndCheck 변수 false로 바꿔주기
                 stageEndCheck = false;
 
@@ -80,10 +82,13 @@ namespace Assets.Battle
 
             if (stageInfo.Type == StageType.Normal)
             {
+                isRestartStage = true;
                 SetLastPlayedNormalStage(stageInfo.StageNumber);
+                OnStageRestart?.Invoke();
             }
+            isRestartStage = false;
         }
-
+        
         public void StartSunbossStage(SunBossInfo sunBossInfo, int level)
         {
             

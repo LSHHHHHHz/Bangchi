@@ -17,5 +17,11 @@ MonoBehaviour:
   stages:
   - {fileID: 11400000, guid: a4a8fe8d789fbd14ba47bbe13647dfeb, type: 2}
   - {fileID: 11400000, guid: 343f5d62e4711f04f9521bb85ca8db29, type: 2}
-  - {fileID: 11400000, guid: 3b50d54d5f3c1784fb64621b5bad3a5d, type: 2}
-  - {fileID: 11400000, guid: 3b50d54d5f3c1784fb64621b5bad3a5d, type: 2}
+  - {fileID: 11400000, guid: 60c404b1229ba4645a3a8ae14f62de3a, type: 2}
+  - {fileID: 11400000, guid: ccdafeb29e1479d429a6981fb0043afb, type: 2}
+  - {fileID: 11400000, guid: 157f0dc3d78beaa48942e83dd3ea0fbb, type: 2}
+  - {fileID: 11400000, guid: d327ec963577cc642a5dbf49e7974a6d, type: 2}
+  - {fileID: 11400000, guid: 1f34968445d987c469b4dcd9fa83e627, type: 2}
+  - {fileID: 11400000, guid: e744f6926d5d4f3428e6406e696b9c05, type: 2}
+  - {fileID: 11400000, guid: 1b7d0589c970ecf439d8b1b20741d240, type: 2}
+  - {fileID: 11400000, guid: 79147d2143ab9d341bf69f69f885830d, type: 2}

@@ -11,6 +11,12 @@ using Assets.HeroEditor.Common.Scripts.Common;
 
 public class IngameSkillList : MonoBehaviour
 {
+    bool isAllskillAutomatic = false;
+    public GameObject AutomaticON;
+    public GameObject AutomaticOFF;
+
+    public event Action setempty1;
+
     public static IngameSkillList instance;
 
     public Sprite lockedSprite;
@@ -18,11 +24,13 @@ public class IngameSkillList : MonoBehaviour
     public RectTransform passiveSkillSlotParent;
 
     // ActiveSkill용 슬롯과 PassiveSkill용 슬롯을 저장
-    private SkillSlot[] activeSkillSlots;
-    private SkillSlot[] passiveSkillSlots;
+    public SkillSlot[] activeSkillSlots;
+    public SkillSlot[] passiveSkillSlots;
     // 내가 장착한 스킬들의 인스턴스를 가지고 있는다.
     // 가지고 있다가 스킬 버튼이 눌리면 스킬을 실행한다.
     public BaseSkill[] skills;
+
+    private bool isPassiveOn = false;
 
     private void Awake()
     {
@@ -49,6 +57,66 @@ public class IngameSkillList : MonoBehaviour
             int index = skillIndex;
             button.onClick.AddListener(() => OnSkillButtonClicked(index));
             ++skillIndex;
+        }
+    }
+    private void Update()
+    {
+        if (isAllskillAutomatic)
+        {
+            allskillAutomatic();
+        }
+    }
+
+    public void AutomaticOn()
+    {
+        isAllskillAutomatic = true;
+        AutomaticON.SetActive(false);
+        AutomaticOFF.SetActive(true);
+    }
+    public void AutomaticOff()
+    {
+        isAllskillAutomatic = false;
+        AutomaticON.SetActive(true);
+        AutomaticOFF.SetActive(false);
+    }
+    public void allskillAutomatic()
+    {
+        // 엑티브 스킬 처리
+        for (int i = 0; i < activeSkillSlots.Length; i++)
+        {
+            SkillSlot slot = activeSkillSlots[i];
+            if (slot != null && slot.skillInfo != null)
+            {
+                OnSkillButtonClicked(i);
+            }
+        }
+
+        for (int i = 0; i < passiveSkillSlots.Length; i++)
+        {
+            SkillSlot slot = passiveSkillSlots[i];
+            if (slot != null && slot.skillInfo != null)
+            {
+                OnSkillButtonClicked(i + activeSkillSlots.Length);
+            }
+        }
+    }
+
+    public void test()
+    {//패시브만
+        for (int i = 0; i < passiveSkillSlots.Length; i++)
+        {
+            int passcount = 4;
+
+            SkillSlot slot = passiveSkillSlots[i];
+            if (slot != null)
+            {
+                OnSkillButtonClicked(passcount);
+            }
+            passcount++;
+            if (passcount == 7)
+            {
+                passcount = 4;
+            }
         }
     }
     private SkillSlot[] GetChildSlots(RectTransform parent) 
@@ -87,14 +155,15 @@ public class IngameSkillList : MonoBehaviour
 
     public void SetSkills(SkillSlot[] skillSlots, List<BaseSkill> skillsList, SkillType skillType)
     {
-        var equippedSkillList = skillType  == SkillType.Active ? SkillInventoryManager.instance.equippedActiveSkills : SkillInventoryManager.instance.equippedPassiveSkills;
+        var equippedSkillList = skillType  == SkillType.Active ? SkillInventoryManager.instance.equippedActiveSkills
+                                                               : SkillInventoryManager.instance.equippedPassiveSkills;
 
         for (int i = 0; i < skillSlots.Length; ++i)
         {
             SkillSlot slot = skillSlots[i];
             
             SkillInstance equipSkill = i < equippedSkillList.Count ? equippedSkillList[i] : null;
-            // 내가 장착한 스킬이 있다면?
+            // 내가 장착한 스킬이 없다면
             if (equipSkill != null)
             {
                 if (equipSkill.skillInfo == null)
@@ -112,7 +181,14 @@ public class IngameSkillList : MonoBehaviour
                 GameObject skillPrefab = equipSkill.skillInfo.skillPrefab;
                 if (skillPrefab == null)
                 {
-                    Debug.LogError($"SkillPrefab is null : {equipSkill.skillInfo.name}");
+                    if (slot.skillInfo.type == SkillType.Active)
+                    {
+                        Debug.LogError($"SkillPrefab is null : {equipSkill.skillInfo.name}");
+                    }
+                    else
+                    {
+                        Debug.Log("Passive Skill");
+                    }
                     skillsList.Add(null);
                 }
                 else
@@ -123,16 +199,30 @@ public class IngameSkillList : MonoBehaviour
                     skillsList.Add(skill);
                 }
             }
-            // 내가 장착한 스킬이 없다면?
+            // 장착한 스킬이 있다면
             else
             {
-                // 장착할 스킬이 없음
-                slot.icon.sprite = lockedSprite;
+                for(int p = 0; p<8; p++)
+                {
+                    if(slot.skillInfo.Number == p && slot.skillInfo.type == SkillType.Passive)
+                    {
+                        setempty1?.Invoke();
+                    }
+                }
+
+                if(slot.skillInfo.Number==1)
+                {
+                    setempty1?.Invoke();
+                }
+                //이부분 저장이 안됨 껏다 켰을 때
+
+                // 장착할 스킬해제
+                slot.SetEmpty(lockedSprite);
+                //slot.icon.sprite = lockedSprite;
                 skillsList.Add(null);
             }
         }
     }
-
     private void ClearSkills()
     {
         if (skills == null)
@@ -148,14 +238,16 @@ public class IngameSkillList : MonoBehaviour
 
         skills = null;
     }
-
     private void OnSkillButtonClicked(int index)
     {
-        BaseSkill skill = skills[index];
-        if (skill != null)
+        if (index >= 0 && index < skills.Length) //length가 잘못도미
         {
-            skill.Execute();
-            Player.instance.OnUseSkill(skill);
+            BaseSkill skill = skills[index];
+            if (skill != null)
+            {
+                skill.Execute();
+                //Player.instance.OnUseSkill(skill);
+            }
         }
     }
 }

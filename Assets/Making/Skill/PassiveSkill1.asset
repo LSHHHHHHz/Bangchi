@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b77716afe1b29b2428fcf61567d356d5, type: 3}
   m_Name: PassiveSkill1
   m_EditorClassIdentifier: 
-  skillPrefab: {fileID: 0}
+  skillPrefab: {fileID: 2769186315298664327, guid: edfd03b6b154fb949b4a805c9c73facd, type: 3}
   grade: 0
   type: 1
   name: skill1
-  iconPath: PAS1
+  iconPath: PAS 1
+  backGroundIconPath: GradeBackGround/Gray
   Number: 1

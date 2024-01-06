@@ -1,4 +1,4 @@
-﻿using Assets.Battle;
+using Assets.Battle;
 using Assets.Item1;
 using System.Collections;
 using System.Collections.Generic;
@@ -23,7 +23,7 @@ namespace Assets.Making.Stage
         public void SetData(StageInfo StageInfo)
         {
             this.stageInfo = StageInfo;
-            icon.sprite = Resources.Load<Sprite>(StageInfo.stageIconPath);
+            //icon.sprite = Resources.Load<Sprite>(StageInfo.stageIconPath);
         }
         
         public void StageSelect()

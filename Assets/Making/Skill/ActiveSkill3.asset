@@ -17,4 +17,5 @@ MonoBehaviour:
   type: 0
   name: skill3
   iconPath: ACT 3
+  backGroundIconPath: GradeBackGround/Green
   Number: 3
