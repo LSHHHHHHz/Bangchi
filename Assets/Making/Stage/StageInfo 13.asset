@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74478469e3740484aa7cb2b496303ca4, type: 3}
   m_Name: StageInfo 13
   m_EditorClassIdentifier: 
+  pageNumber: 2
   stageName: Stage13
   StageNumber: 13
   Type: 0

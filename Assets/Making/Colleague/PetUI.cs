@@ -15,6 +15,7 @@ using UnityEngine.UI;
 
 public class PetUI : MonoBehaviour
 {
+    petinfoPopup petinfopopup;
 
     public static PetUI instance;
     public RectTransform petUI;
@@ -164,7 +165,7 @@ public class PetUI : MonoBehaviour
             image.color = new Color(image.color.r, image.color.g, image.color.b, 0);
         }
     }
-
+   
     public void petUIopen()
     {
         //★이거 있으니 에러 발생, gridSizeUp을 instance위에 놓으면 에러 아래에 놓으면 에러X

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74478469e3740484aa7cb2b496303ca4, type: 3}
   m_Name: StageInfo 10
   m_EditorClassIdentifier: 
+  pageNumber: 1
   stageName: Stage10
   StageNumber: 10
   Type: 0
@@ -19,7 +20,7 @@ MonoBehaviour:
   exp: 0
   weaponProbability: 0
   shieldProbability: 0
-  stageIconPath: 
+  stageIconPath: PAS1
   pageIconPath: 
   monsterSpawnInfos:
   - prefab: {fileID: 813962370647176663, guid: 204cd2f81f35fa042ab74096cfa15aa6, type: 3}

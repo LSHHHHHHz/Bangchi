@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74478469e3740484aa7cb2b496303ca4, type: 3}
   m_Name: StageInfo 1
   m_EditorClassIdentifier: 
+  pageNumber: 1
   stageName: Stage1
   StageNumber: 1
   Type: 0
@@ -19,7 +20,7 @@ MonoBehaviour:
   exp: 0
   weaponProbability: 0
   shieldProbability: 0
-  stageIconPath: 
+  stageIconPath: GradeBackGround/Gray
   pageIconPath: 
   monsterSpawnInfos:
   - prefab: {fileID: 5907892117749421993, guid: 1465fa0cb9ceb544a8127680dda0e246, type: 3}

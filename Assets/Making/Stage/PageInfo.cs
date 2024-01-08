@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +7,7 @@ public class PageInfo : ScriptableObject
 {
     public int PageNumber;
     public string pageIconPath;
+    public string backGroundIconPath;
 
     public List<StageInfo> stages = new();
 }

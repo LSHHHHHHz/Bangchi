@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PageNumber: 1
   pageIconPath: ItemIcon/PAS3
+  backGroundIconPath: BackGroundImage/Stage1
   stages:
   - {fileID: 11400000, guid: a4a8fe8d789fbd14ba47bbe13647dfeb, type: 2}
   - {fileID: 11400000, guid: 343f5d62e4711f04f9521bb85ca8db29, type: 2}

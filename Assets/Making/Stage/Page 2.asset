@@ -14,3 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PageNumber: 2
   pageIconPath: ItemIcon/PAS4
+  stages:
+  - {fileID: 11400000, guid: be66e163928cafe48b1b45a61825e2a8, type: 2}
+  - {fileID: 11400000, guid: c0b722f40cd85b748a37d8b8818c2e3d, type: 2}
+  - {fileID: 11400000, guid: 24f5a4043c639e7478c240e531946fdf, type: 2}
+  - {fileID: 11400000, guid: 8f88301291f34e844b5432032c99cc40, type: 2}
+  - {fileID: 11400000, guid: da788b75bc10e5944a740d2e392b5934, type: 2}
+  - {fileID: 11400000, guid: dfe6035ca3878404594ab6f84723479f, type: 2}
+  - {fileID: 11400000, guid: 494f1fc4ab489cf4c9b0a913704bee01, type: 2}
+  - {fileID: 11400000, guid: 44500e2af2e2449488acb01dd64db932, type: 2}
+  - {fileID: 11400000, guid: 3664298089e5f184e86ffa0362429b3f, type: 2}
+  - {fileID: 11400000, guid: 3b7b2e1f0f579564ca80646cabbda0b0, type: 2}

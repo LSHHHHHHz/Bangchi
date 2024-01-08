@@ -24,10 +24,12 @@ namespace Assets.Battle
         float stageRestartDelay = 0;
         public bool isRestartStage = false;
 
+        public BGScroller BGscroller;
 
         //GameManger가 Stage시작을 모르니 BattleManager로 옮김
         public int GetLastPlayedNormalStage() => PlayerPrefs.GetInt("LastPlayedNormalStage", defaultValue: 1);
         public void SetLastPlayedNormalStage(int value) => PlayerPrefs.SetInt("LastPlayedNormalStage", value);
+
 
         private void Awake()
         {

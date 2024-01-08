@@ -16,8 +16,6 @@ public class PetInventoryData
     public List<PetInstance> myPets = new();
     public List<PetInstance> equipPets = new();
 
-    public List<GameObject> inventoryChildren = new List<GameObject>();
-
     public int petCount;
 }
 public class PetInventoryManager : MonoBehaviour
@@ -25,14 +23,19 @@ public class PetInventoryManager : MonoBehaviour
     public static PetInventoryManager Instance;
     public List<PetInstance> myPets = new();
     public List<PetInstance> equipPets = new();
+    public List<petinfoPopup> petinfoPopup = new(); //petequipSlot에서도 없애버리려고 사용함
 
     public int maxaccumulatePetsCount = 50;
     public int petCount;
+
+    public event Action OnEquippedPetChanged;
 
     public event Action OnInventoryChanged;
     public RectTransform PetSlotParent;
     PetSlot[] petSlots;
     List<PetSlot> petSlotsList = new();
+
+
     public void Awake()
     {
         Instance = this;
@@ -49,7 +52,7 @@ public class PetInventoryManager : MonoBehaviour
     private void Start()
     {
         OnInventoryChanged += OnInventoryChangedCallback;
-        
+
         SetData();
         SortSlots();
         maxaccumulatePetsCount += petCount; //펫 확장
@@ -58,6 +61,14 @@ public class PetInventoryManager : MonoBehaviour
     private void Update()
     {
 
+    }
+    public void DestroyPetInfoPopup(petinfoPopup popupInstance)
+    {
+        if (petinfoPopup.Contains(popupInstance))
+        {
+            Destroy(popupInstance.gameObject);
+            petinfoPopup.Remove(popupInstance);
+        }
     }
     private void SortSlots()
     {
@@ -191,7 +202,20 @@ public class PetInventoryManager : MonoBehaviour
         OnInventoryChanged?.Invoke();
     }
 
+    public void EquipPet(PetInfo petinfo)
+    {
+        PetInstance existItem = myPets.Find(item => item.petInfo == petinfo);
+        if (existItem == null)
+        {
+            // 아이템을 가지고 있지 않다는 것!
+            throw new Exception($"Item not found : {petinfo.name}");
+        }
 
+        equipPets.Add(existItem);
+        OnEquippedPetChanged?.Invoke();
+
+        Save();
+    }
     private void OnInventoryChangedCallback()
     {
         SetData();

@@ -11,6 +11,7 @@ public enum StageType
 [CreateAssetMenu(menuName = "My Assets/StageInfo")]
 public class StageInfo : ScriptableObject
 {
+    public int pageNumber;
     public string stageName;
     public int StageNumber;
     public StageType Type;
@@ -21,7 +22,7 @@ public class StageInfo : ScriptableObject
     public string stageIconPath;
     public string pageIconPath;
 
-    //Stage¿¡ ¸ó½ºÅÍ¸¦ ¼ÒÈ¯ÇÏ±â À§ÇØ °®°íÀÖ´Â µ¥ÀÌÅÍ
+    //Stageì— ëª¬ìŠ¤í„°ë¥¼ ì†Œí™˜í•˜ê¸° ìœ„í•´ ê°–ê³ ìˆëŠ” ë°ì´í„°
     public List<MonsterSpawnInfo> monsterSpawnInfos = new List<MonsterSpawnInfo>();
     
 }
