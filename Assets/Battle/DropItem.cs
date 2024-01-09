@@ -81,7 +81,7 @@ namespace Assets.Battle
             if (player == null)
                 return;
 
-            player.Exp += exp;
+            player.Current_Exp += exp;
             player.Coin += coin;
             player.enforceCoin += enforceCoin;
 

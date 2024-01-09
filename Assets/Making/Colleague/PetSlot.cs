@@ -16,8 +16,6 @@ public class PetSlot : MonoBehaviour
     public Text countText;
     public Button button;
 
-    //펫을 눌렀을 때 그 정보를 넘겨주면 됨.
-    //GameManger에 데이터를 잠시 넣어두면되나
     private void Awake()
     {
         if (button != null)
@@ -44,7 +42,14 @@ public class PetSlot : MonoBehaviour
             countText.text = petInstance.count.ToString();
         }
     }
-    public void PetInfoPopup()
+    public void ResetData()
+    {
+        this.petInfo = null;
+        icon.sprite = null;
+        effecticon.sprite = null;
+        this.gameObject.SetActive(false);
+    }
+        public void PetInfoPopup()
     {
         GameObject prefab = Resources.Load<GameObject>("PetInfoPopup");
 
@@ -60,7 +65,7 @@ public class PetSlot : MonoBehaviour
         }
         else
         {
-            Debug.LogError("PetInfoPopup prefab not found.");
+            Debug.LogError("프리펩 확인 불가");
         }
        
     }

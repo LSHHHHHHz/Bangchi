@@ -6,7 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
+
 
 public class Player : BaseUnit
 {
@@ -38,12 +38,12 @@ public class Player : BaseUnit
     public float Current_Attack =1;
     public int AttackLevel;
 
-    public int Max_HP;
-    public int Current_HP;
+    public float Max_HP;
+    public float Current_HP;
     public int HPLevel;
 
     public int RecoveryHP;
-    public int RecoveryLevel;
+    public int RecoveryHPLevel;
 
     public float Current_CriticalDamage;
     public int CriticalDamageLevel;
@@ -51,27 +51,29 @@ public class Player : BaseUnit
     public float Current_Criticalprobability;
     public int CriticalprobabilityLevel;
 
-    public int Max_MP;
-    public int Current_MP;
+    public float Max_MP;
+    public float Current_MP;
     public int MPLevel;
 
     public int RecoveryMP;
     public int RecoveryMPLevel;
 
-    //경험치
-    public int Exp = 100;
-    public int Current_Exp;
-    //public Image Exp_Bar;
-    public UnityEngine.UI.Image Exp_Bar; //이렇게 해야 에러가 안생김
-    public Text LV_txt;
 
+    //경험치
+    public int Max_Exp = 100;
+    public int Current_Exp;
+    public Image Exp_Bar;
+    public Text Exp_status;
 
     //레벨
     public int LV = 1;
+    public Text LV_txt;
+    bool isLevelUp;
 
     //회복
-    public float currentDotTime = 0;
-    public float dotTime = 1;
+    public float recoveryRate = 1;
+    public Image HPFillAmountImage;
+    public Image MPFillAmountImage;
 
     public int Coin;
     public int PetCoin;
@@ -128,12 +130,13 @@ public class Player : BaseUnit
 
     private void Start()
     {
-        Player_XP(); //경험치
         _Attack.text = Current_Attack + " → " + (AttackLevel + Current_Attack);
         _HP.text = Max_HP + " → " + (HPLevel + Max_HP);
-
+        LV_txt.text = "LV" + LV;
+        Exp_status.text = Current_Exp + "/" + Max_Exp + "(" + Current_Exp / Max_Exp + ")";  
         RefreshWeapon(); //이걸 빼면 캐릭터에 무기가 장착되어있지 않음
         InventoryManager.instance.OnEquippedItemChanged += RefreshWeapon;
+        StartCoroutine(RecoveryRoutine());
     }
 
 
@@ -141,13 +144,12 @@ public class Player : BaseUnit
     void Update()
     {
         ablityUpdate();
-        LV_txt.text = "LV" + LV;
-        Exp_Bar.fillAmount = Exp == 0 ? 0 : (float)Current_Exp / Exp;
         Move();
         rayCast();
         Fighting();
         SkillCasting();
         TopStatus();
+        ExpAndLevel();
     }
    
     private void TopStatus()
@@ -231,11 +233,19 @@ public class Player : BaseUnit
         PlayerPrefs.SetFloat(nameof(Current_Attack), Current_Attack);
         PlayerPrefs.SetInt(nameof(AttackLevel), AttackLevel);
 
-        PlayerPrefs.SetInt(nameof(Current_HP), Max_HP);
+        PlayerPrefs.SetFloat(nameof(Max_HP), Max_HP);
+        PlayerPrefs.SetFloat(nameof(Current_HP), Current_HP);
         PlayerPrefs.SetInt(nameof(HPLevel), HPLevel);
 
-        PlayerPrefs.SetInt(nameof(RecoveryHP), RecoveryHP);
-        PlayerPrefs.SetInt(nameof(RecoveryLevel), RecoveryLevel);
+        PlayerPrefs.SetInt(nameof(RecoveryMP), RecoveryHP);
+        PlayerPrefs.SetInt(nameof(RecoveryHPLevel), RecoveryHPLevel);
+
+        PlayerPrefs.SetFloat(nameof(Max_MP), Max_MP);
+        PlayerPrefs.SetFloat(nameof(Current_MP), Current_MP);
+        PlayerPrefs.SetInt(nameof(MPLevel), MPLevel);
+
+        PlayerPrefs.SetInt(nameof(RecoveryMP), RecoveryMP);
+        PlayerPrefs.SetInt(nameof(RecoveryMPLevel), RecoveryMPLevel);
 
         PlayerPrefs.SetFloat(nameof(Current_CriticalDamage), Current_CriticalDamage);
         PlayerPrefs.SetInt(nameof(CriticalDamageLevel), CriticalDamageLevel);
@@ -244,7 +254,7 @@ public class Player : BaseUnit
         PlayerPrefs.SetInt(nameof(CriticalprobabilityLevel), CriticalprobabilityLevel);
 
         PlayerPrefs.SetInt(nameof(LV), LV);
-        PlayerPrefs.SetInt(nameof(Exp), Exp);
+        PlayerPrefs.SetInt(nameof(Max_Exp), Max_Exp);
         PlayerPrefs.SetInt(nameof(Current_Exp), Current_Exp);
 
         PlayerPrefs.SetInt(nameof(Coin), Coin);
@@ -272,11 +282,20 @@ public class Player : BaseUnit
         Current_Attack = PlayerPrefs.GetFloat(nameof(Current_Attack), 0);
         AttackLevel = PlayerPrefs.GetInt(nameof(AttackLevel), 0);
 
-        Max_HP = PlayerPrefs.GetInt(nameof(Current_HP), 0);
+        Max_HP = PlayerPrefs.GetFloat(nameof(Max_HP), 0);
+        Current_HP = PlayerPrefs.GetFloat(nameof(Current_HP), 0);
         HPLevel = PlayerPrefs.GetInt(nameof(HPLevel), 0);
 
         RecoveryHP = PlayerPrefs.GetInt(nameof(RecoveryHP), 0);
-        RecoveryLevel = PlayerPrefs.GetInt(nameof(RecoveryLevel), 0);
+        RecoveryHPLevel = PlayerPrefs.GetInt(nameof(RecoveryHPLevel), 0);
+
+        Max_MP = PlayerPrefs.GetFloat(nameof(Max_MP), 0);
+        Current_MP = PlayerPrefs.GetFloat(nameof(Current_MP), 0);
+        MPLevel = PlayerPrefs.GetInt(nameof(HPLevel), 0);
+
+        RecoveryMP = PlayerPrefs.GetInt(nameof(RecoveryMP), 0);
+        RecoveryMPLevel = PlayerPrefs.GetInt(nameof(RecoveryMPLevel), 0);
+
 
         Current_CriticalDamage = PlayerPrefs.GetFloat(nameof(Current_CriticalDamage), 0);
         CriticalDamageLevel = PlayerPrefs.GetInt(nameof(CriticalDamageLevel), 0);
@@ -285,7 +304,7 @@ public class Player : BaseUnit
         CriticalprobabilityLevel = PlayerPrefs.GetInt(nameof(CriticalprobabilityLevel), 0);
 
         LV = PlayerPrefs.GetInt(nameof(LV), 0);
-        Exp = PlayerPrefs.GetInt(nameof(Exp), 0);
+        Max_Exp = PlayerPrefs.GetInt(nameof(Max_Exp), 0);
         Current_Exp = PlayerPrefs.GetInt(nameof(Current_Exp), 0);
 
 
@@ -313,23 +332,6 @@ public class Player : BaseUnit
             ColleageCoinWind = PlayerPrefs.GetInt(nameof(ColleageCoinWind));
 
     }
-
-
-    public void Player_XP()
-    {
-        Exp = LV * 100;
-    }
-
-    public void LV_UP()
-    {
-        if (Current_Exp >= Exp)
-        {
-            Current_Exp -= Exp; //현재 경험치 - 총 경험치
-            LV++;
-            Player_XP();
-
-        }
-    }
     void Attack_weapon()
     {
         fireDelay += Time.deltaTime;
@@ -344,8 +346,8 @@ public class Player : BaseUnit
         _HP.text = Max_HP + " → " + (HPLevel + Max_HP);
         _HPLevel.text = "LV" + HPLevel;
 
-        _Recovery.text = RecoveryHP + " → " + (RecoveryLevel + RecoveryHP);
-        _RecoveryLevel.text = "LV" + RecoveryLevel;
+        _Recovery.text = RecoveryHP + " → " + (RecoveryHPLevel + RecoveryHP);
+        _RecoveryLevel.text = "LV" + RecoveryHPLevel;
 
         _CriticalDamage.text = $"{Current_CriticalDamage:F1} → {(0.1f + Current_CriticalDamage):F1}";
         _CriticalDamageLevel.text = "LV" + CriticalDamageLevel;
@@ -435,7 +437,56 @@ public class Player : BaseUnit
 
         return false;
     }
+    private IEnumerator RecoveryRoutine()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(recoveryRate);
 
+            // HP 회복
+            if (Current_HP < Max_HP)
+            {
+                Current_HP += RecoveryHP;
+                if (Current_HP > Max_HP)
+                {
+                    Current_HP = Max_HP;
+                }
+            }
+            HPFillAmountImage.fillAmount = Current_HP / Max_HP;
+
+            // MP 회복
+            if (Current_MP < Max_MP)
+            {
+                Current_MP += RecoveryMP;
+                if (Current_MP > Max_MP)
+                {
+                    Current_MP = Max_MP;
+                }
+            }
+
+            MPFillAmountImage.fillAmount = Current_MP / Max_MP;
+        }
+    }
+
+    public void LevelUpButton()
+    {
+        isLevelUp = true;
+    }
+
+    public void ExpAndLevel()
+    {
+        if(Current_Exp>=Max_Exp && isLevelUp)
+        {
+            Current_Exp -= Max_Exp;
+            LV += 1;
+            isLevelUp = false;
+            LV_txt.text = "LV" + LV;
+            Max_Exp += LV;
+        }
+        Exp_Bar.fillAmount = (float)Current_Exp / Max_Exp;
+        float percent = (float)Current_Exp / Max_Exp * 100;
+        Exp_status.text = Current_Exp + "/" + Max_Exp + "(" + percent.ToString("F2") + "%)";
+    }
     public void OnUseSkill(BaseSkill skill)
     {
         isSkillCasting = true;

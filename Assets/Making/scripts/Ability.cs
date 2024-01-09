@@ -9,30 +9,30 @@ using Assets.Making.scripts;
 
 public class Ability : MonoBehaviour
 {
-    public float recoveryRate = 1; // 1ÃÊ¸¶´Ù È¸º¹µÇµµ·Ï ¼³Á¤
+    public float recoveryRate = 1; // 1ì´ˆë§ˆë‹¤ íšŒë³µë˜ë„ë¡ ì„¤ì •
 
     public RectTransform uiGroup;
-    public RectTransform[] BuyButton;
+    public RectTransform[] BuyButton; //êµ¬ë§¤ ë²„íŠ¼
     public GameObject prefab;
     public Text talkText;
     public string[] talkData;
-    public int[] ablityPrice; //¾îºô¸®Æ¼ ±¸¸Å °¡°İ
-    public GameObject[] itemObj; // Èû,Ã¼·Â, È¸º¹·Â µîµî
-
+    public int[] ablityPrice; //ì–´ë¹Œë¦¬í‹° êµ¬ë§¤ ê°€ê²©
     public Text[] abilityPriceText;
+    public GameObject[] itemObj; // í˜,ì²´ë ¥, íšŒë³µë ¥ ë“±ë“±
+
 
     public Player enterPlayer;
 
     bool isButtonPress = false;
     public Ability()
     {
-        ablityPrice = new int[5]; // ±æÀÌ°¡ 5ÀÎ ¹è¿­À» »ı¼º
+        ablityPrice = new int[5]; // ê¸¸ì´ê°€ 5ì¸ ë°°ì—´ì„ ìƒì„±
 
     }
     private void Start()
     {
         // InvokeRepeating("Recovery", 0f, 1f);
-        StartCoroutine(RecoveryRoutine());
+        //StartCoroutine(RecoveryRoutine());
     }
     void Update()
     {
@@ -88,8 +88,8 @@ public class Ability : MonoBehaviour
 
         Sequence sequence = DOTween.Sequence();
 
-        sequence.Append(buyButton.transform.DOScale(1.2f, 0.1f)); // 1.2¹è Å©±â·Î 0.1ÃÊ µ¿¾È È®Àå
-        sequence.Append(buyButton.transform.DOScale(1f, 0.1f)); // ¿ø·¡ Å©±â·Î 0.1ÃÊ µ¿¾È Ãà¼Ò
+        sequence.Append(buyButton.transform.DOScale(1.2f, 0.1f)); // 1.2ë°° í¬ê¸°ë¡œ 0.1ì´ˆ ë™ì•ˆ í™•ì¥
+        sequence.Append(buyButton.transform.DOScale(1f, 0.1f)); // ì›ë˜ í¬ê¸°ë¡œ 0.1ì´ˆ ë™ì•ˆ ì¶•ì†Œ
 
 
         int price = ablityPrice[index];
@@ -105,7 +105,7 @@ public class Ability : MonoBehaviour
             enterPlayer.Current_Attack += enterPlayer.AttackLevel;
             enterPlayer.AttackLevel += 1;
             ablityPrice[index] += 100;
-            abilityPriceText[index].text = ablityPrice[index].ToString();// UI Text¿¡ °¡°İ Á¤º¸ º¸¿©ÁÖ±â
+            abilityPriceText[index].text = ablityPrice[index].ToString();// UI Textì— ê°€ê²© ì •ë³´ ë³´ì—¬ì£¼ê¸°
 
         }
         else if (index == 1)
@@ -114,16 +114,16 @@ public class Ability : MonoBehaviour
             enterPlayer.Max_HP += enterPlayer.HPLevel;
             enterPlayer.HPLevel += 1;
             ablityPrice[index] += 100;
-            abilityPriceText[index].text = ablityPrice[index].ToString();// UI Text¿¡ °¡°İ Á¤º¸ º¸¿©ÁÖ±â
+            abilityPriceText[index].text = ablityPrice[index].ToString();// UI Textì— ê°€ê²© ì •ë³´ ë³´ì—¬ì£¼ê¸°
         
         }
         else if (index == 2)
         {
             enterPlayer.Coin -= price;
-            enterPlayer.RecoveryHP += enterPlayer.RecoveryLevel;
-            enterPlayer.RecoveryLevel += 1;
+            enterPlayer.RecoveryHP += enterPlayer.RecoveryHPLevel;
+            enterPlayer.RecoveryHPLevel += 1;
             ablityPrice[index] += 100;
-            abilityPriceText[index].text = ablityPrice[index].ToString();// UI Text¿¡ °¡°İ Á¤º¸ º¸¿©ÁÖ±â
+            abilityPriceText[index].text = ablityPrice[index].ToString();// UI Textì— ê°€ê²© ì •ë³´ ë³´ì—¬ì£¼ê¸°
 
         }
         else if (index == 3)
@@ -132,7 +132,7 @@ public class Ability : MonoBehaviour
             enterPlayer.Current_CriticalDamage += enterPlayer.CriticalDamageLevel;
             enterPlayer.CriticalDamageLevel += 1;
             ablityPrice[index] += 100;
-            abilityPriceText[index].text = ablityPrice[index].ToString();// UI Text¿¡ °¡°İ Á¤º¸ º¸¿©ÁÖ±â
+            abilityPriceText[index].text = ablityPrice[index].ToString();// UI Textì— ê°€ê²© ì •ë³´ ë³´ì—¬ì£¼ê¸°
 
         }
         else if (index == 4)
@@ -141,7 +141,7 @@ public class Ability : MonoBehaviour
             enterPlayer.Current_Criticalprobability += 0.1f;
             enterPlayer.CriticalprobabilityLevel += 1;
             ablityPrice[index] += 100;
-            abilityPriceText[index].text = ablityPrice[index].ToString();// UI Text¿¡ °¡°İ Á¤º¸ º¸¿©ÁÖ±â
+            abilityPriceText[index].text = ablityPrice[index].ToString();// UI Textì— ê°€ê²© ì •ë³´ ë³´ì—¬ì£¼ê¸°
 
         }
         enterPlayer.statDataSave();
@@ -159,7 +159,7 @@ public class Ability : MonoBehaviour
     {
         if (IsCriticalHit())
         {
-            enterPlayer.Current_Attack *= enterPlayer.Current_CriticalDamage; // Ä¡¸íÅ¸ ¹ß»ı ½Ã µ¥¹ÌÁö¸¦ 2¹è·Î Àû¿ë
+            enterPlayer.Current_Attack *= enterPlayer.Current_CriticalDamage; // ì¹˜ëª…íƒ€ ë°œìƒ ì‹œ ë°ë¯¸ì§€ë¥¼ 2ë°°ë¡œ ì ìš©
             Console.WriteLine("Critical hit!");
         }
     }
@@ -167,34 +167,34 @@ public class Ability : MonoBehaviour
     private bool IsCriticalHit()
     {
         System.Random random = new System.Random();
-        int roll = random.Next(1, 100); // 1~100 »çÀÌÀÇ ¹«ÀÛÀ§ Á¤¼ö »ı¼º
-        return roll <= enterPlayer.Current_Criticalprobability; // ¹«ÀÛÀ§ °ªÀÌ Ä¡¸íÅ¸ È®·üº¸´Ù ÀÛ°Å³ª °°À¸¸é Ä¡¸íÅ¸ ¹ß»ı
+        int roll = random.Next(1, 100); // 1~100 ì‚¬ì´ì˜ ë¬´ì‘ìœ„ ì •ìˆ˜ ìƒì„±
+        return roll <= enterPlayer.Current_Criticalprobability; // ë¬´ì‘ìœ„ ê°’ì´ ì¹˜ëª…íƒ€ í™•ë¥ ë³´ë‹¤ ì‘ê±°ë‚˜ ê°™ìœ¼ë©´ ì¹˜ëª…íƒ€ ë°œìƒ
     }
-    private IEnumerator RecoveryRoutine()
-        {
-        while (true)
-        {
-            yield return new WaitForSeconds(recoveryRate);
+    //private IEnumerator RecoveryRoutine()
+    //    {
+    //    while (true)
+    //    {
+    //        yield return new WaitForSeconds(recoveryRate);
 
-            // HP È¸º¹
-            if (enterPlayer.Current_HP < enterPlayer.Max_HP)
-            {
-                enterPlayer.Current_HP += enterPlayer.RecoveryHP;
-                if (enterPlayer.Current_HP > enterPlayer.Max_HP)
-                {
-                    enterPlayer.Current_HP = enterPlayer.Max_HP;
-                }
-            }
+    //        // HP íšŒë³µ
+    //        if (enterPlayer.Current_HP < enterPlayer.Max_HP)
+    //        {
+    //            enterPlayer.Current_HP += enterPlayer.RecoveryHP;
+    //            if (enterPlayer.Current_HP > enterPlayer.Max_HP)
+    //            {
+    //                enterPlayer.Current_HP = enterPlayer.Max_HP;
+    //            }
+    //        }
 
-            // MP È¸º¹
-            if (enterPlayer.Current_MP < enterPlayer.Max_MP)
-            {
-                enterPlayer.Current_MP += enterPlayer.RecoveryMP;
-                if (enterPlayer.Current_MP > enterPlayer.Max_MP)
-                {
-                    enterPlayer.Current_MP = enterPlayer.Max_MP;
-                }
-            }
-        }
-    }
+    //        // MP íšŒë³µ
+    //        if (enterPlayer.Current_MP < enterPlayer.Max_MP)
+    //        {
+    //            enterPlayer.Current_MP += enterPlayer.RecoveryMP;
+    //            if (enterPlayer.Current_MP > enterPlayer.Max_MP)
+    //            {
+    //                enterPlayer.Current_MP = enterPlayer.Max_MP;
+    //            }
+    //        }
+    //    }
+    //}
 }

@@ -52,7 +52,7 @@ public class CharacterStats : MonoBehaviour
         _MP.text = player.Max_MP + "";
         _MPRecovery.text = player.RecoveryMP + "";
         _CoinGetAmount.text = player.Coin.ToString("N0");
-        _ExpGetAmount.text = player.Exp.ToString("N0");
+        _ExpGetAmount.text = player.Max_Exp.ToString("N0");
     }
 
     private void RefreshWeapon()

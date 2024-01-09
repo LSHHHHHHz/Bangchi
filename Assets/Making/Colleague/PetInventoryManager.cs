@@ -32,7 +32,7 @@ public class PetInventoryManager : MonoBehaviour
 
     public event Action OnInventoryChanged;
     public RectTransform PetSlotParent;
-    PetSlot[] petSlots;
+    public PetSlot[] petSlots;
     List<PetSlot> petSlotsList = new();
 
 
@@ -52,7 +52,9 @@ public class PetInventoryManager : MonoBehaviour
     private void Start()
     {
         OnInventoryChanged += OnInventoryChangedCallback;
-
+        //--
+        //OnEquippedPetChanged += OnInventoryChangedCallback;
+        //--
         SetData();
         SortSlots();
         maxaccumulatePetsCount += petCount; //펫 확장
@@ -70,7 +72,7 @@ public class PetInventoryManager : MonoBehaviour
             petinfoPopup.Remove(popupInstance);
         }
     }
-    private void SortSlots()
+    public void SortSlots()
     {
         bool isActive = Array.Exists(petSlots, x => x.petInfo != null);
         petSlotsList.Clear();
@@ -211,6 +213,9 @@ public class PetInventoryManager : MonoBehaviour
             throw new Exception($"Item not found : {petinfo.name}");
         }
 
+        //---
+       
+        //--
         equipPets.Add(existItem);
         OnEquippedPetChanged?.Invoke();
 

@@ -5,17 +5,25 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;
+    public static GameManager instance;
     public Player player;
     public PageDB pageDB;
     private void Awake()
     {
-        Instance = this;
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Start()
     {
-        // DropItem °ÔÀÓ ¿ÀºêÁ§Æ® Ã£±â
+        // DropItem ê²Œì„ ì˜¤ë¸Œì íŠ¸ ì°¾ê¸°
         DropItem dropItem = FindObjectOfType<DropItem>();
 
         int playStage = BattleManager.instance.GetLastPlayedNormalStage();
@@ -23,7 +31,7 @@ public class GameManager : MonoBehaviour
 
         if (dropItem != null && stageInfo != null)
         {
-            // StageInfoÀÇ coin°ú exp °ªÀ» DropItemÀÇ ÇÊµå¿¡ ÇÒ´ç
+            // StageInfoì˜ coinê³¼ exp ê°’ì„ DropItemì˜ í•„ë“œì— í• ë‹¹
             dropItem.coin = stageInfo.coin;
             dropItem.exp = stageInfo.exp;
         }

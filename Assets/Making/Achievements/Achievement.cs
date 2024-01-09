@@ -116,9 +116,9 @@ public class Achievement : MonoBehaviour
     {
         for (int i = 0; i < DailyFillAmountImageBar.Length; i++)
         {
-            if (DailyFillAmountImageBar[i].fillAmount >= 1 && !isGainDieAmond[i])
+            if (DailyFillAmountImageBar[i].fillAmount >= 1 && !isGainDieAmond[i]) //게이지 차고 다이아 획득 안했다면
             {
-                canClickButton[i] = true;
+                canClickButton[i] = true; //누를 수 있는 버튼 true
                 if (!isQuestCompleted[i] && canClickButton[i] == true) // 퀘스트를 완료한 상태가 아니라면
                 {
                     canClickButton[i] = false;

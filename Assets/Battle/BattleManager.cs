@@ -33,7 +33,15 @@ namespace Assets.Battle
 
         private void Awake()
         {
-            instance = this;
+            if (instance == null)
+            {
+                instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else if (instance != this)
+            {
+                Destroy(gameObject);
+            }
             stageRoot = new GameObject("StageRoot");
         }
         void Update()

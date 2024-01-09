@@ -202,7 +202,8 @@ public class IngameSkillList : MonoBehaviour
             // 장착한 스킬이 있다면
             else
             {
-                for(int p = 0; p<8; p++)
+                //★★★
+                /*for(int p = 0; p<8; p++)
                 {
                     if(slot.skillInfo.Number == p && slot.skillInfo.type == SkillType.Passive)
                     {
@@ -213,7 +214,7 @@ public class IngameSkillList : MonoBehaviour
                 if(slot.skillInfo.Number==1)
                 {
                     setempty1?.Invoke();
-                }
+                }*/
                 //이부분 저장이 안됨 껏다 켰을 때
 
                 // 장착할 스킬해제
