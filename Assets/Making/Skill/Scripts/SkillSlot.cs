@@ -18,6 +18,9 @@ public class SkillSlot : MonoBehaviour
 
     public Image hideIcon;
     private Coroutine cooldownCoroutine;
+
+    public bool IsCooldown { get; private set; }
+
     public void SetData(SkillInfo skillInfo)
     {
         this.skillInfo = skillInfo;
@@ -45,14 +48,16 @@ public class SkillSlot : MonoBehaviour
 
     public void SetEmpty(Sprite emptySprite)
     {
+        backGroundImage.sprite = emptySprite;
         icon.sprite = emptySprite;
-        backGroundImage.sprite = null;
         skillInfo = null;
     } 
     
     // 스킬 쿨다운 시작
     public void StartSkillCooldown(float duration)
     {
+        IsCooldown = true;
+        hideIcon.gameObject.SetActive(true);
         if (cooldownCoroutine != null)
         {
             StopCoroutine(cooldownCoroutine);
@@ -63,11 +68,13 @@ public class SkillSlot : MonoBehaviour
     // 스킬 쿨다운 종료
     public void EndSkillCooldown()
     {
+        IsCooldown = false;
+        hideIcon.gameObject.SetActive(false);
         if (cooldownCoroutine != null)
         {
             StopCoroutine(cooldownCoroutine);
         }
-        hideIcon.fillAmount = 0f; // 쿨다운 아이콘 리셋
+        hideIcon.fillAmount = 0f; 
     }
 
     private IEnumerator CooldownCoroutine(float duration)
@@ -79,6 +86,7 @@ public class SkillSlot : MonoBehaviour
             hideIcon.fillAmount = 1f - (elapsed / duration);
             yield return null;
         }
-        hideIcon.fillAmount = 0f; // 쿨다운 종료
+        hideIcon.fillAmount = 0f;
+        IsCooldown = false;
     }
 }

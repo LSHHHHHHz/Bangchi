@@ -45,7 +45,7 @@ public class IngameSkillList : MonoBehaviour
             SkillSlot activeSkillSlot = activeSkillSlots[i];
             var button = activeSkillSlot.GetComponent<Button>();
             int index = skillIndex;
-            button.onClick.AddListener(() => OnSkillButtonClicked(index));
+            button.onClick.AddListener(() => OnSkillButtonClicked(activeSkillSlot, index));
             ++skillIndex;
         }
 
@@ -55,7 +55,7 @@ public class IngameSkillList : MonoBehaviour
             SkillSlot passiveSkillSlot = passiveSkillSlots[i];
             var button = passiveSkillSlot.GetComponent<Button>();
             int index = skillIndex;
-            button.onClick.AddListener(() => OnSkillButtonClicked(index));
+            button.onClick.AddListener(() => OnSkillButtonClicked(passiveSkillSlot, index));
             ++skillIndex;
         }
     }
@@ -87,7 +87,7 @@ public class IngameSkillList : MonoBehaviour
             SkillSlot slot = activeSkillSlots[i];
             if (slot != null && slot.skillInfo != null)
             {
-                OnSkillButtonClicked(i);
+                OnSkillButtonClicked(slot, i);
             }
         }
 
@@ -96,7 +96,7 @@ public class IngameSkillList : MonoBehaviour
             SkillSlot slot = passiveSkillSlots[i];
             if (slot != null && slot.skillInfo != null)
             {
-                OnSkillButtonClicked(i + activeSkillSlots.Length);
+                OnSkillButtonClicked(slot, i + activeSkillSlots.Length);
             }
         }
     }
@@ -110,7 +110,7 @@ public class IngameSkillList : MonoBehaviour
             SkillSlot slot = passiveSkillSlots[i];
             if (slot != null)
             {
-                OnSkillButtonClicked(passcount);
+                OnSkillButtonClicked(slot, passcount);
             }
             passcount++;
             if (passcount == 7)
@@ -167,8 +167,9 @@ public class IngameSkillList : MonoBehaviour
             if (equipSkill != null)
             {
                 if (equipSkill.skillInfo == null)
-                {
+                {//원래 이쪽으로 들어오면 안됨
                     Debug.LogError("Skillinfo null" + i);
+                    skillsList.Add(null);
                     continue;
                 }
 
@@ -215,6 +216,8 @@ public class IngameSkillList : MonoBehaviour
                 {
                     setempty1?.Invoke();
                 }*/
+
+
                 //이부분 저장이 안됨 껏다 켰을 때
 
                 // 장착할 스킬해제
@@ -239,11 +242,18 @@ public class IngameSkillList : MonoBehaviour
 
         skills = null;
     }
-    private void OnSkillButtonClicked(int index)
+    private void OnSkillButtonClicked(SkillSlot slot, int index)
     {
+        if (slot.IsCooldown)
+            return;
+
         if (index >= 0 && index < skills.Length) //length가 잘못도미
         {
             BaseSkill skill = skills[index];
+            float cooldownSeconds = slot.skillInfo.CooldownSeconds;
+            if (cooldownSeconds > 0f)
+                slot.StartSkillCooldown(cooldownSeconds);
+
             if (skill != null)
             {
                 skill.Execute();
