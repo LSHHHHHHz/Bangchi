@@ -18,8 +18,8 @@ public class SkillInventoryManager : MonoBehaviour
 
     public static SkillInventoryManager instance;
     public List<SkillInstance> myItems = new();
-    public List<SkillInstance> equippedActiveSkills = new(); //ÀåÂø ½ºÅ³ ¸®½ºÆ®
-    public List<SkillInstance> equippedPassiveSkills = new(); //ÀåÂø ½ºÅ³ ¸®½ºÆ®
+    public List<SkillInstance> equippedActiveSkills = new(); //ì¥ì°© ìŠ¤í‚¬ ë¦¬ìŠ¤íŠ¸
+    public List<SkillInstance> equippedPassiveSkills = new(); //ì¥ì°© ìŠ¤í‚¬ ë¦¬ìŠ¤íŠ¸
     public const int MaxEquipCount = 8;
 
     public void Awake()
@@ -73,7 +73,7 @@ public class SkillInventoryManager : MonoBehaviour
         SkillInstance existItem = equippedSkillList.Find(item => item.skillInfo == skillInfo);
         if (existItem == null)
         {
-            // ÀåÂøÀ» ¾ÈÇß´Ù´Â ¾ê±â
+            // ì¥ì°©ì„ ì•ˆí–ˆë‹¤ëŠ” ì–˜ê¸°
             return;
         }
 
@@ -83,7 +83,7 @@ public class SkillInventoryManager : MonoBehaviour
         Save();
     }
 
-    // °ÔÀÓÀ» ÀúÀåÇÒ ¶§, ¾ÆÀÌÅÛ È¹µæ½Ã ÀúÀåÇØÁÖ¸é µÊ
+    // ê²Œì„ì„ ì €ì¥í•  ë•Œ, ì•„ì´í…œ íšë“ì‹œ ì €ì¥í•´ì£¼ë©´ ë¨
     public void Save()
     {
         var skillInventoryData = new SkillInventoryData();
@@ -116,12 +116,18 @@ public class SkillInventoryManager : MonoBehaviour
             for (int i = 0; i < data.equippedActiveSkills.Count; ++i)
             {
                 var item = data.equippedActiveSkills[i];
+                if (item.skillInfo == null)
+                    continue;
+
                 equippedActiveSkills.Add(item);
             }
 
             for (int i = 0; i < data.equippedPassiveSkills.Count; ++i)
             {
                 var item = data.equippedPassiveSkills[i];
+                if (item.skillInfo == null)
+                    continue;
+
                 equippedPassiveSkills.Add(item);
             }
         }
