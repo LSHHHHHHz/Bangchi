@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6933676403604539458}
   - component: {fileID: 6933676403604517346}
   - component: {fileID: 1302191998839527953}
+  - component: {fileID: 1039347827185974962}
   m_Layer: 0
   m_Name: ACT 5 Projectil
   m_TagString: Skill
@@ -4838,11 +4839,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fe6b5cff6078b24b9300d3be1bcc7b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Skillnumber: 5
   owner: {fileID: 0}
-  damage: 1
+  damage: 5
   lifetime: 1
   speed: 1
   direction: {x: 0, y: 0, z: 0}
+  startPos: {x: 0, y: 0, z: 0}
+  movePos: {x: 0, y: 0, z: 0}
+  distance: 10000
+--- !u!65 &1039347827185974962
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6933676403622990112}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6933676403622990114
 GameObject:
   m_ObjectHideFlags: 0

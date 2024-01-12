@@ -121,6 +121,7 @@ public class Player : BaseUnit
     void Awake()
     {
         instance = this;
+        DontDestroyOnLoad(this);
         prefabs = new DropItem();
         rigid = GetComponent<Rigidbody>();
         tr = GetComponent<Transform>();

@@ -28,7 +28,7 @@ public class PetSlot : MonoBehaviour
     {
         this.petInfo = petInfo;
         icon.sprite = Resources.Load<Sprite>(petInfo.iconPath);
-        if(countText != null)
+        if (countText != null)
         {
             countText.gameObject.SetActive(false);
         }
@@ -36,7 +36,7 @@ public class PetSlot : MonoBehaviour
     public void SetData(PetInstance petInstance)
     {
         SetData(petInstance.petInfo);
-        if(countText != null)
+        if (countText != null)
         {
             countText.gameObject.SetActive(true);
             countText.text = petInstance.count.ToString();
@@ -49,7 +49,9 @@ public class PetSlot : MonoBehaviour
         effecticon.sprite = null;
         this.gameObject.SetActive(false);
     }
-        public void PetInfoPopup()
+
+  
+    public void PetInfoPopup()
     {
         GameObject prefab = Resources.Load<GameObject>("PetInfoPopup");
 
@@ -61,13 +63,13 @@ public class PetSlot : MonoBehaviour
 
             PetSlot petinfopopup = instance.GetComponent<PetSlot>();
             petinfopopup.SetData(petInfo);
-           
+
         }
         else
         {
             Debug.LogError("프리펩 확인 불가");
         }
-       
+
     }
 
 }

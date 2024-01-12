@@ -55,12 +55,13 @@ public class PAS1 : BaseSkill
 
     private IEnumerator SkillCoroutine()
     {
-        while (isSkillExecuted)
+        while (isSkillExecuted && skillCount<8)
         {
             addAttack = originalAttack * passiveAttackIncrease;
             Player.instance.Current_Attack += addAttack;
             Debug.Log($"Current Attack: {Player.instance.Current_Attack}");
             yield return new WaitForSeconds(4f);
+            skillCount++;
         }
         //EndSkillCooldown(); // 쿨다운 종료
     }
@@ -74,6 +75,8 @@ public class PAS1 : BaseSkill
             StopCoroutine(runningSkillCoroutine);
             Player.instance.Current_Attack = originalAttack; // 공격력 초기화
             Player.instance.statDataSave();
+            skillCount = 0;
+
         }
     }
    

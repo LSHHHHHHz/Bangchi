@@ -19,3 +19,4 @@ MonoBehaviour:
   iconPath: ACT 3
   backGroundIconPath: GradeBackGround/Green
   Number: 3
+  CooldownSeconds: 8

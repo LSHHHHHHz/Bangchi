@@ -44,4 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71caea639e9283b45834806b62344d15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectPrefab: {fileID: 1845240806346120, guid: a0d88a7e841516247ba96bd972aedb9c, type: 3}
+  owner: {fileID: 0}
+  damage: 0
+  skillCount: 0
+  effectPrefab: {fileID: 1845240806346120, guid: 2bff6ee6c605d2549a3caaa6069c9b90, type: 3}

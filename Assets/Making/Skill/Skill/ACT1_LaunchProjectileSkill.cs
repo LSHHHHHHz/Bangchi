@@ -1,4 +1,5 @@
-﻿using Assets.Battle.Projectile;
+using Assets.Battle.Projectile;
+using Assets.HeroEditor.Common.Scripts.ExampleScripts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,13 @@ namespace Assets.Battle.Skill
     public class ACT1_LaunchProjectileSkill : BaseSkill
     {
         public GameObject projectilePrefab;
+        private void Awake()
+        {
+        }
+        private void Update()
+        {
+
+        }
         public override void Execute()
         {
             var projectile = Instantiate(projectilePrefab).GetComponent<BaseProjectile>();

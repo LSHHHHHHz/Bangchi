@@ -5,9 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class GameScenesMove : MonoBehaviour
 {
+
+    public void ExpBossSceeneFadeOutMove()
+    {
+        BossStageProcessor.instance.RunFadeOutIn(() => ExpBossSceneMove(), 1);
+    }
     public void ExpBossSceneMove()
     {
         SceneManager.LoadScene("ExpBoss");
+        gameObject.SetActive(false);
     }
 
     public void BasicSceneMove()

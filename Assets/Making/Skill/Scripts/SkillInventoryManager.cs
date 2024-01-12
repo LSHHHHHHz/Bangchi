@@ -26,6 +26,7 @@ public class SkillInventoryManager : MonoBehaviour
     {
         instance = this;
         Load();
+        
     }
 
 
@@ -133,5 +134,11 @@ public class SkillInventoryManager : MonoBehaviour
         }
 
         OnEquippedSkillsChanged?.Invoke();
+    }
+    public void ClearSavedData()
+    {
+        PlayerPrefs.DeleteKey("SkillInventoryData");
+
+        PlayerPrefs.Save();
     }
 }

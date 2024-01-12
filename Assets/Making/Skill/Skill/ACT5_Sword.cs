@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,11 +26,11 @@ public class ACT5_Sword : BaseSkill
         isSkillEwcuted = true;
 
         GameObject effect = new();
-        float skillPos = 3;
+        float skillPos = 1;
         Vector3 playerPosition = Player.instance.transform.position;
-        Vector3 spawnPos = playerPosition + new Vector3(skillPos, 1.2f, 0);
+        Vector3 spawnPos = playerPosition + new Vector3(skillPos, 0, 0);
         GameObject act3Skill = Instantiate(effectPrefab, spawnPos, Quaternion.identity);
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
 
         Destroy(act3Skill);
         isSkillEwcuted = false;

@@ -19,3 +19,4 @@ MonoBehaviour:
   iconPath: ACT 7
   backGroundIconPath: GradeBackGround/Blue
   Number: 7
+  CooldownSeconds: 2

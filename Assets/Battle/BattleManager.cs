@@ -89,7 +89,6 @@ namespace Assets.Battle
             StageInfoUtility.PrepareStage(stageRoot, stageInfo);
             stageEndCheck = true;
 
-
             if (stageInfo.Type == StageType.Normal)
             {
                 isRestartStage = true;

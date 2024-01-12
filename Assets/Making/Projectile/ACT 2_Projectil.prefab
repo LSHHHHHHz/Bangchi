@@ -4811,11 +4811,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fe6b5cff6078b24b9300d3be1bcc7b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Skillnumber: 2
   owner: {fileID: 0}
-  damage: 1
-  lifetime: 5
+  damage: 100
+  lifetime: 10.1
   speed: 1
   direction: {x: 0, y: 0, z: 0}
+  startPos: {x: 0, y: 0, z: 0}
+  movePos: {x: 0, y: 0, z: 0}
+  distance: 100
 --- !u!65 &3879585189732341984
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4825,7 +4829,7 @@ BoxCollider:
   m_GameObject: {fileID: 3834871998375402681}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.57210207, y: 0.5718241, z: 1.5508235}
   m_Center: {x: -0.00023534894, y: -0.0007484854, z: 0.49851266}

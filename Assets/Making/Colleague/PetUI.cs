@@ -1,4 +1,5 @@
 using Assets.Battle;
+using Assets.HeroEditor.Common.Scripts.Common;
 using Assets.Item1;
 using Assets.Making.scripts;
 using Assets.Making.Stage;
@@ -19,12 +20,14 @@ public class PetUI : MonoBehaviour
 
     public static PetUI instance;
     public RectTransform petUI;
+    public RectTransform PetAndColleagueUI;
+
     public GameObject GridUI;
 
     public GameObject BuyPetSlot;
     public RectTransform petInventorySizeUpButton;
     public Text petInventorySizeStatus;
-    public RectTransform diamondLack;
+    public RectTransform diamondLackBackGround;
     public RectTransform diamondLackText;
 
     public PetType type;
@@ -37,14 +40,14 @@ public class PetUI : MonoBehaviour
 
     public RectTransform isBuy;
 
-    public Grid gird;
+    public GridLayoutGroup grid;
     public void Awake()
     {
         instance = this;
     }
     public void Start()
     {
-        gridSizeUP();
+        gridSizeChange();
     }
     public void Update()
     {
@@ -53,10 +56,10 @@ public class PetUI : MonoBehaviour
 
     //펫이 늘어날 때마다 그리드 사이즈 크게하려고 만듬
     //gridSizeUP 때문에 PetInventoryManager에서 Load를 awake로 바꿈 문제없는지
-    public void gridSizeUP()
+    public void gridSizeChange()
     {
         //펫인벤토리의 개수가 초과했을 때 160을 증가시키고 4개 증가 때마다 160 증가
-        //기본 디폴트값 800
+        //기본값 800
         RectTransform rectTransform = GridUI.GetComponent<RectTransform>();
         Vector2 size = rectTransform.sizeDelta;
          int count = PetInventoryManager.Instance.myPets.Count / 4;
@@ -90,7 +93,7 @@ public class PetUI : MonoBehaviour
             PetInventoryManager.Instance.Save();
 
             petPopup.Initialize(petGachaResult, this.RunPet);
-            gridSizeUP();
+            gridSizeChange();
         }
         else
         {
@@ -107,6 +110,11 @@ public class PetUI : MonoBehaviour
     }
     public void PetInventorySizeBuing()
     {
+        if (grid.transform.childCount <= PetInventoryManager.Instance.maxaccumulatePetsCount)
+        { //5개를 샀을 때 최대치보다ㅏ 커지면 안됨
+            Debug.Log("최대치");
+            return;
+        }
         if (Player.instance.Diamond >= 3000)
         {
             Player.instance.Diamond -= 3000;
@@ -114,13 +122,14 @@ public class PetUI : MonoBehaviour
             PetInventoryManager.Instance.petCount+= 5;
             PetInventoryManager.Instance.Save();
         }
-        else
+        else if(Player.instance.Diamond<3000)
         {
-            StartCoroutine(FadeOutDiamondLackRectTransform(1, diamondLack));
+            StartCoroutine(FadeOutDiamondLackRectBackGround(1, diamondLackBackGround));
             StartCoroutine(FadeOutDiamondLackText(1, diamondLackText));
         }
+        
     }
-    IEnumerator FadeOutDiamondLackRectTransform(float duration, RectTransform objects)
+    IEnumerator FadeOutDiamondLackRectBackGround(float duration, RectTransform objects)
     {
         objects.localPosition = new Vector3(0, 0, 0);
         Image image = objects.GetComponent<Image>();
@@ -166,15 +175,26 @@ public class PetUI : MonoBehaviour
         }
     }
    
+    public void PetAndColleagueOpen()
+    {
+        PetAndColleagueUI.localPosition = new Vector3(3727, 250, 0);
+        PetAndColleagueUI.SetActive(true);
+        
+    }
     public void petUIopen()
     {
         //★이거 있으니 에러 발생, gridSizeUp을 instance위에 놓으면 에러 아래에 놓으면 에러X
        // UIManager.instance.OnBottomButtonClicked();
-        petUI.localPosition = new Vector3(3605, 0, 0);
+        petUI.localPosition = new Vector3(3727, 0, 0);
+        PetAndColleagueUI.SetActive(false);
     }
     public void petUIClose()
     {
         petUI.localPosition = new Vector3(-3600, 0, 0);
+    }
+    public void collegurClose()
+    {
+        PetAndColleagueUI.localPosition = new Vector3(-3600, 0, 0);
     }
 }
 

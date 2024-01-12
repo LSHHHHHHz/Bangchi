@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,17 +23,11 @@ public class ACT3_Boom : BaseSkill
 
     private IEnumerator SkillCoroutine()
     {
-        isSkillEwcuted = true;
-
-        GameObject effect = new();
-        float skillPos = 3;
         Vector3 playerPosition = Player.instance.transform.position;
-        Vector3 spawnPos = playerPosition + new Vector3(skillPos, 1.2f, 0);
+        Vector3 spawnPos = playerPosition + new Vector3(1, 0.1f, 0); 
         GameObject act3Skill = Instantiate(effectPrefab, spawnPos, Quaternion.identity);
         yield return new WaitForSeconds(3f);
 
-        Destroy(act3Skill);
-        isSkillEwcuted = false;
     }
 }
 

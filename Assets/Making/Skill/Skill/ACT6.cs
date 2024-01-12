@@ -17,7 +17,6 @@ public class ACT6 : BaseSkill
     }
     public void Update()
     {
-        waitSkillCoolTime();
     }
     public override void Execute()
     {
@@ -31,31 +30,5 @@ public class ACT6 : BaseSkill
             projectile.direction = Vector3.right;
         }
 
-    }
-    public void waitSkillCoolTime()
-    {
-        if(isSkill)
-        {
-           
-            TimePass += Time.deltaTime;
-            if(TimePass > CoolTime)
-            {
-                isSkill = false;
-                TimePass = 0;
-            }
-        }
-    }
-
-
-    //ÀÌÀü
-    public void waitSkillTime()
-    {
-        isSkill = true;
-        TimePass = Time.deltaTime;
-        if(TimePass > CoolTime)
-        {
-            isSkill = false;
-            TimePass = 0;
-        }
     }
 }

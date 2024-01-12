@@ -19,3 +19,4 @@ MonoBehaviour:
   iconPath: PAS 8
   backGroundIconPath: GradeBackGround/Blue
   Number: 8
+  CooldownSeconds: 2

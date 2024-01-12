@@ -1,20 +1,27 @@
-﻿using System;
+using Assets.Battle.Projectile;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEditor.UIElements;
 using UnityEngine;
 
 public class ACT7 : BaseSkill
 {
     public GameObject effectPrefab;
     private bool isSkillEwcuted = false;
+    Vector3 playerPosition;
 
+    private void Update()
+    {
+    }
     public override void Execute()
     {
         if (!isSkillEwcuted)
         {
+            playerPosition = Player.instance.transform.position;
             StartCoroutine(SkillCoroutine());
 
         }
@@ -22,24 +29,29 @@ public class ACT7 : BaseSkill
 
     private IEnumerator SkillCoroutine()
     {
+       
         isSkillEwcuted = true; 
         List<GameObject> effectList = new List<GameObject>();
        
         for (int i = 0; i < 5; ++i)
         {
-            Vector3 playerPosition = Player.instance.transform.position;
-            Vector3 spawnPosition = playerPosition + new Vector3(2f, 0f, 0f);
+            
+            Vector3 spawnPosition = playerPosition + new Vector3(1.5f, 0f, 0f);
 
             GameObject effect = Instantiate(effectPrefab, spawnPosition, Quaternion.identity);
             effectList.Add(effect);
 
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.2f);
         }
-        Vector3 playerPosition2 = Player.instance.transform.position;
-        Vector3 spawnPosition2 = playerPosition2 + new Vector3(2f, 0f, 0f);
+      
+        Vector3 spawnPosition2 = playerPosition + new Vector3(1.5f, 0f, 0f);
 
         yield return new WaitForSeconds(1f);
+        
         GameObject lastEffect = Instantiate(effectPrefab, spawnPosition2, Quaternion.identity);
+        BaseProjectile projectile= lastEffect.GetComponent<BaseProjectile>();
+        projectile.damage *= 2;
+
         lastEffect.transform.localScale = Vector3.one * 2f; // 2배 더 크게
         effectList.Add(lastEffect);
 

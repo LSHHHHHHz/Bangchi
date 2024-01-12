@@ -57,8 +57,6 @@ public class PetInventoryManager : MonoBehaviour
         //--
         SetData();
         SortSlots();
-        maxaccumulatePetsCount += petCount; //펫 확장
-
     }
     private void Update()
     {

@@ -8,21 +8,20 @@ public class BossStageProcessor : MonoBehaviour
 {
     public static BossStageProcessor instance;
 
+    public int bossTime = 2;
+    public int petInfoTime = 1;
+
+
     [SerializeField]
     private Image fadeImage;
 
     private StageInfo lastStage;
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else if (instance != this)
-        {
-            Destroy(gameObject);
-        }
+
+        instance = this;
+        DontDestroyOnLoad(gameObject);
+      
     }
 
     private void Start()
@@ -44,7 +43,7 @@ public class BossStageProcessor : MonoBehaviour
         RunFadeOutIn(() =>
         {
             BattleManager.instance.StartSunbossStage(sunBossInfo, level);
-        });
+        },2);
     }
 
     private void OnBossStageDone()
@@ -54,24 +53,24 @@ public class BossStageProcessor : MonoBehaviour
         {
             if (lastStage != null)
                 BattleManager.instance.StartStage(lastStage);
-        });
+        },2);
     }
 
-    private void RunFadeOutIn(TweenCallback fadeOutDoneCallback)
+    public void RunFadeOutIn(TweenCallback fadeOutDoneCallback,float fadeOutTime)
     {
         var sequence = DOTween.Sequence();
         Time.timeScale = 0f;
         fadeImage.enabled = true;
         fadeImage.color = new Color(0f, 0f, 0f, 0f);
 
-        // 화면 1초동안 까매지기
-        sequence.Append(fadeImage.DOColor(new Color(0f, 0f, 0f, 1f), 1f));
+        // 화면 fadeOutTime초동안 까매지기
+        sequence.Append(fadeImage.DOColor(new Color(0f, 0f, 0f, 1f), fadeOutTime));
 
         // 캐릭터 옮기기, 보스 소환하기
         sequence.AppendCallback(fadeOutDoneCallback);
 
         // 2초 대기
-        sequence.AppendInterval(2f);
+        sequence.AppendInterval(2);
 
         // 화면 1초동안 원상 복구
         sequence.Append(fadeImage.DOColor(new Color(0f, 0f, 0f, 0f), 1f));

@@ -1,4 +1,4 @@
-﻿using Assets.Battle.Unit;
+using Assets.Battle.Unit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +12,7 @@ public abstract class BaseSkill : MonoBehaviour
     // 스킬을 실행하는 함수
     public BaseUnit owner;
     public int damage;
+    public int skillCount = 0;
     public abstract void Execute();
 
     private void OnTriggerEnter(Collider other)
