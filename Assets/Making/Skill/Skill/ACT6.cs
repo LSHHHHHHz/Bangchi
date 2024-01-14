@@ -20,15 +20,12 @@ public class ACT6 : BaseSkill
     }
     public override void Execute()
     {
-        if (!isSkill)
-        {
-            Player.instance.anim.SetTrigger("doSkill");
-            isSkill = true;
-            var projectile = Instantiate(projectilePrefab).GetComponent<BaseProjectile>();
-            projectile.transform.position = owner.transform.position;
-            projectile.owner = owner;
-            projectile.direction = Vector3.right;
-        }
+        Player.instance.anim.SetTrigger("doSkill");
+        var projectile = Instantiate(projectilePrefab).GetComponent<BaseProjectile>();
+        projectile.transform.position = owner.transform.position;
+        projectile.owner = owner;
+        projectile.direction = Vector3.right;
+
 
     }
 }

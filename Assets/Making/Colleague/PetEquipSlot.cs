@@ -1,3 +1,5 @@
+using Assets.Battle;
+using Assets.HeroEditor.Common.Scripts.Common;
 using Assets.Item1;
 using System;
 using System.Collections.Generic;
@@ -18,9 +20,19 @@ public class PetEquipSlot : MonoBehaviour
     public int Num;
     public GridLayoutGroup grid;
     public List<PetEquipSlot> pets;
-   
+    private Image myImage;
+    private DropItem dropitem;
+
+
+    public int originAttack = 0;
+    public int originHp = 0;
+    public int originplusExp = 0;
+    public int originplusCoin = 0;
     private void Awake()
     {
+        dropitem = FindObjectOfType<DropItem>();
+
+        myImage = GetComponent<Image>();
         pets = new List<PetEquipSlot>(3);
         for(int i = 0; i< grid.transform.childCount; i++)
         {
@@ -76,10 +88,6 @@ public class PetEquipSlot : MonoBehaviour
         {
             equipPet();
         }
-        else if(petinfo != null)
-        {
-            SetEmpty(petinfo);
-        }
     }
 
     public void popupClose()
@@ -91,10 +99,37 @@ public class PetEquipSlot : MonoBehaviour
           
         }
     }
+
+    //펫 정보를 드랍아이템매니저에 넘김
+    //몬스터가 파괴됐을 때 그 아이테 정보를 드랍아이템매니저에 넘김
+    //드랍아이템 매니저의 update에서 펫 정보와 아이템 정보를 합침
+    //이 합져진 것들을 플레이어가 먹었을 때 합처진 정보를 플레이어가 갖음
     public void equipPet()
     {
         this.petinfo = PetInventoryManager.Instance.equipPets[0].petInfo;
         SetData(petinfo);
+        PetManager.instance.AddPetInfo(petinfo);
+
+        for (int i = 0; i < PetManager.instance.petInfos.Count; i++)
+        {
+            if (petinfo.petType == PetManager.instance.petInfos[i].petType && petinfo.petgrade == PetManager.instance.petInfos[i].petgrade )
+            {
+                Player.instance.Current_Attack += PetManager.instance.petInfos[i].petAttack - originAttack;
+                Player.instance.Max_HP += PetManager.instance.petInfos[i].petHP - originHp;
+                Player.instance.AddExp += PetManager.instance.petInfos[i].petExp - originplusExp;
+                Player.instance.AddCoin += PetManager.instance.petInfos[i].petCoin - originplusCoin;
+
+                originAttack = PetManager.instance.petInfos[i].petAttack;
+                originHp = PetManager.instance.petInfos[i].petHP;
+                originplusExp = PetManager.instance.petInfos[i].petExp;
+                originplusCoin = PetManager.instance.petInfos[i].petCoin;
+               
+            }
+        }
+        //변경되면 기존 펫 정보 삭제 후 추가
+
+
+
         PetInventoryManager.Instance.equipPets.Clear();
 
         //어짜피 순서에 상관 없으니 First 사용해서 같은 것이 있는지 확인
@@ -121,6 +156,7 @@ public class PetEquipSlot : MonoBehaviour
     {
         this.petinfo = petInfo;
         icon.sprite = Resources.Load<Sprite>(petInfo.iconPath);
+        myImage.color = new Color(1, 1, 1, 1);
     }
     public void SetEmpty(PetInfo petInfo)
     {

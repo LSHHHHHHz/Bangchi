@@ -1,4 +1,4 @@
-﻿using Assets.HeroEditor.Common.Scripts.Common;
+using Assets.HeroEditor.Common.Scripts.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +16,8 @@ public class ColleagueWind : ColleaguePoly
         ColleagueStatsNameText[0].text = "공격속도";
         ColleagueStatsNameText[1].text = "이동속도";
         ColleagueStatsNameText[2].text = "Pet 코인";
+
+        UpdateText();
     }
     public override int GetCoin()
     {

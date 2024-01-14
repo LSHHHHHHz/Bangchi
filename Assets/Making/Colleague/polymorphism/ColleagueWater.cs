@@ -1,4 +1,4 @@
-﻿using Assets.HeroEditor.Common.Scripts.Common;
+using Assets.HeroEditor.Common.Scripts.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +16,8 @@ public class ColleagueWater : ColleaguePoly
         ColleagueStatsNameText[0].text = "MP";
         ColleagueStatsNameText[1].text = "MP 회복";
         ColleagueStatsNameText[2].text = "추가 경험치";
+
+        UpdateText();
     }
 
     public override int GetCoin()

@@ -20,3 +20,4 @@ MonoBehaviour:
   backGroundIconPath: GradeBackGround/Gray
   Number: 1
   CooldownSeconds: 4
+  colldownCount: 4

@@ -27,6 +27,9 @@ public class PetInfo : ScriptableObject
     public string name;
     public string iconPath;
     public int Number;
-
+    public int petAttack;
+    public int petHP;
+    public int petExp;
+    public int petCoin;
 }
 

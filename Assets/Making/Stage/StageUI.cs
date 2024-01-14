@@ -47,7 +47,6 @@ public class StageUI : MonoBehaviour
         {
             PageInfo selectedPage = pageDB.stagePage[pageNumber];
             StagePopup.instance.pageIcon.sprite = Resources.Load<Sprite>(selectedPage.pageIconPath);
-            BattleManager.instance.BGscroller.backgroundImage.sprite = Resources.Load<Sprite>(selectedPage.backGroundIconPath);
         }
     }
     public void RightStageChange()

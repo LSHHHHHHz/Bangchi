@@ -24,7 +24,6 @@ namespace Assets.Battle
         float stageRestartDelay = 0;
         public bool isRestartStage = false;
 
-        public BGScroller BGscroller;
 
         //GameManger가 Stage시작을 모르니 BattleManager로 옮김
         public int GetLastPlayedNormalStage() => PlayerPrefs.GetInt("LastPlayedNormalStage", defaultValue: 1);
@@ -36,7 +35,6 @@ namespace Assets.Battle
             if (instance == null)
             {
                 instance = this;
-                DontDestroyOnLoad(gameObject);
             }
             else if (instance != this)
             {
@@ -91,9 +89,11 @@ namespace Assets.Battle
 
             if (stageInfo.Type == StageType.Normal)
             {
+                FadeInOutStageProcessor.instance.RunFadeOutIn(0.5f);
                 isRestartStage = true;
                 SetLastPlayedNormalStage(stageInfo.StageNumber);
                 OnStageRestart?.Invoke();
+
             }
             isRestartStage = false;
         }

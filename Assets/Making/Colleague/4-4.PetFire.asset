@@ -17,3 +17,7 @@ MonoBehaviour:
   name: WindA
   iconPath: PetIcon/4.Fire
   Number: 4
+  petAttack: 0
+  petHP: 0
+  petExp: 4
+  petCoin: 4

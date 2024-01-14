@@ -33,5 +33,6 @@ namespace Assets.Item1
         public string backGroundIconPath;
         public int Number;
         public float CooldownSeconds;
+        public int colldownCount;
     }
 }

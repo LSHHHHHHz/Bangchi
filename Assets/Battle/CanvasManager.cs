@@ -10,7 +10,6 @@ public class CanvasManager : MonoBehaviour
     {
 
         instance = this;
-        DontDestroyOnLoad(gameObject);
 
     }
 }

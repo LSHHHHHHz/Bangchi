@@ -2,6 +2,7 @@ using Assets.Battle;
 using Assets.Battle.Unit;
 using Assets.HeroEditor.InventorySystem.Scripts.Elements;
 using Assets.Item1;
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,7 +36,7 @@ public class Player : BaseUnit
 
 
     //능력 창
-    public float Current_Attack =1;
+    public float Current_Attack;
     public int AttackLevel;
 
     public float Max_HP;
@@ -58,12 +59,18 @@ public class Player : BaseUnit
     public int RecoveryMP;
     public int RecoveryMPLevel;
 
+    public float AttackSpeed = 1f;
+
 
     //경험치
     public int Max_Exp = 100;
     public int Current_Exp;
     public Image Exp_Bar;
     public Text Exp_status;
+
+    public int AddExp;
+    public int AddCoin;
+    public Text AddExpText;
 
     //레벨
     public int LV = 1;
@@ -113,24 +120,24 @@ public class Player : BaseUnit
     private float skillCastTime;
 
     Weapons weapons1;
-    public Ability ability;
+    public CoinStatAbility ability;
 
     public static Player instance;
-
-
     void Awake()
     {
         instance = this;
-        DontDestroyOnLoad(this);
         prefabs = new DropItem();
         rigid = GetComponent<Rigidbody>();
         tr = GetComponent<Transform>();
         statDataLoad();
+        Current_HP = Max_HP;
+        Current_MP = Max_MP;
     }
 
 
     private void Start()
     {
+       
         _Attack.text = Current_Attack + " → " + (AttackLevel + Current_Attack);
         _HP.text = Max_HP + " → " + (HPLevel + Max_HP);
         LV_txt.text = "LV" + LV;
@@ -144,7 +151,7 @@ public class Player : BaseUnit
     // Update is called once per frame
     void Update()
     {
-        ablityUpdate();
+        AddExpText.text = AddExp.ToString(); //지워야함
         Move();
         rayCast();
         Fighting();
@@ -153,6 +160,11 @@ public class Player : BaseUnit
         ExpAndLevel();
     }
    
+    public void AddValueReset()
+    {
+        AddCoin = 0;
+        AddExp = 0;
+    }
     private void TopStatus()
     {
         _TopGold.text = Coin.ToString("N0");
@@ -258,16 +270,10 @@ public class Player : BaseUnit
         PlayerPrefs.SetInt(nameof(Max_Exp), Max_Exp);
         PlayerPrefs.SetInt(nameof(Current_Exp), Current_Exp);
 
+        PlayerPrefs.SetFloat(nameof(AttackSpeed), AttackSpeed);
+
         PlayerPrefs.SetInt(nameof(Coin), Coin);
 
-        int abliltyCoinLengh = ability.ablityPrice.Length;
-        PlayerPrefs.SetInt("abliltyCoinLengh", abliltyCoinLengh);
-        for (int i = 0; i < abliltyCoinLengh; i++)
-        {
-            string key = "abliltyCoin_" + i;
-            int value = ability.ablityPrice[i];
-            PlayerPrefs.SetInt(key, value);
-        }
 
         PlayerPrefs.SetInt(nameof(ColleageCoinFire), ColleageCoinFire);
         PlayerPrefs.SetInt(nameof(ColleageCoinSoil), ColleageCoinSoil);
@@ -304,24 +310,14 @@ public class Player : BaseUnit
         Current_Criticalprobability = PlayerPrefs.GetFloat(nameof(Current_Criticalprobability), 0);
         CriticalprobabilityLevel = PlayerPrefs.GetInt(nameof(CriticalprobabilityLevel), 0);
 
+        AttackSpeed = PlayerPrefs.GetFloat(nameof(AttackSpeed), 1);
+
         LV = PlayerPrefs.GetInt(nameof(LV), 0);
         Max_Exp = PlayerPrefs.GetInt(nameof(Max_Exp), 0);
         Current_Exp = PlayerPrefs.GetInt(nameof(Current_Exp), 0);
 
 
         Coin = PlayerPrefs.GetInt(nameof(Coin), 0);
-
-        if (PlayerPrefs.HasKey("abliltyCoinLengh"))
-        {
-            int abliltyCoinLengh = PlayerPrefs.GetInt(nameof(abliltyCoinLengh), 0);
-            ability.ablityPrice = new int[abliltyCoinLengh];
-            for (int i = 0; i < abliltyCoinLengh; i++)
-            {
-                string key = "abliltyCoin_" + i;
-                int value = PlayerPrefs.GetInt(key, 0);
-                ability.ablityPrice[i] = value;
-            }
-        }
 
         if (PlayerPrefs.HasKey(nameof(ColleageCoinFire)))
             ColleageCoinFire = PlayerPrefs.GetInt(nameof(ColleageCoinFire));
@@ -386,7 +382,7 @@ public class Player : BaseUnit
             return;
 
         // 내가 전투가 끝난지 아닌지 1초마다 검사.
-        if (Time.time - fightStartTime > 1f)
+        if (Time.time - fightStartTime > 0.1f)
         {
             isFighting = NeedToFight();
 
@@ -410,6 +406,7 @@ public class Player : BaseUnit
     }
 
     // 내가 전투해야 하는지, 아닌지 검사하는 함수.
+    private bool isSwing;
     private bool NeedToFight()
     {
         //레이 세팅
@@ -423,20 +420,38 @@ public class Player : BaseUnit
         //RaycastAll은 RaycastHits[] 를 반환한다
         // Physics.Raycast <-- 1개만 반환, RayCastAll은 여러개를 반환.
         hits = Physics.RaycastAll(ray, raycastDistance, layerMask);
-        for (int i = 0; i < hits.Length; ++i)
+        if (hits.Length > 0)
         {
-            RaycastHit hit = hits[i];
-            print(hit.collider.name + "를 충돌체로 검출");
-
-            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("enemy"))
+            for (int i = 0; i < hits.Length; ++i)
             {
-                anim.SetTrigger("doSwing");
-                fightStartTime = Time.time;
-                return true;
+                RaycastHit hit = hits[i];
+                print(hit.collider.name + "를 충돌체로 검출");
+
+                if (hit.collider.gameObject.layer == LayerMask.NameToLayer("enemy"))
+                {
+                    if (!isSwing)
+                    {
+                        StartSwingAnimation();
+                    }
+                    return true;
+                }
             }
         }
-
+        isSwing = false;
         return false;
+    }
+    private void StartSwingAnimation()
+    {
+        isSwing = true;
+        anim.SetTrigger("doSwing");
+        float attackSpeed = CalculateAttackSpeed();
+        anim.SetFloat("swingfloat", attackSpeed);
+    }
+    public float CalculateAttackSpeed()
+    {
+        float attckSpeed = AttackSpeed;
+
+        return attckSpeed;
     }
     private IEnumerator RecoveryRoutine()
     {
@@ -453,7 +468,7 @@ public class Player : BaseUnit
                     Current_HP = Max_HP;
                 }
             }
-            HPFillAmountImage.fillAmount = Current_HP / Max_HP;
+            HPFillAmountImage.fillAmount = (float)Current_HP / Max_HP;
 
             // MP 회복
             if (Current_MP < Max_MP)
@@ -465,7 +480,7 @@ public class Player : BaseUnit
                 }
             }
 
-            MPFillAmountImage.fillAmount = Current_MP / Max_MP;
+            MPFillAmountImage.fillAmount = (float)Current_MP / Max_MP;
         }
     }
 

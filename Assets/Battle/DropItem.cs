@@ -32,7 +32,7 @@ namespace Assets.Battle
 
         private void Awake()
         {
-            createdTime = Time.time;            
+            createdTime = Time.time;
         }
         private void Start()
         {
@@ -81,15 +81,14 @@ namespace Assets.Battle
             if (player == null)
                 return;
 
-            player.Current_Exp += exp;
-            player.Coin += coin;
+            player.Current_Exp += exp + player.AddExp;
+            player.Coin += coin + player.AddCoin;
             player.enforceCoin += enforceCoin;
 
             if (droppedItemInfo != null && droppedItemInfo.type == ItemType.Sword)
             {
                 InventoryManager.instance.AddItem(droppedItemInfo);
             }
-
             Destroy(gameObject);
         }
     }

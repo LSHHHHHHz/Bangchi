@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b77716afe1b29b2428fcf61567d356d5, type: 3}
   m_Name: ActiveSkill8
   m_EditorClassIdentifier: 
-  skillPrefab: {fileID: 0}
+  skillPrefab: {fileID: 2769186315298664327, guid: e2b3a2b0a83125540904465d5b57a272, type: 3}
   grade: 3
   type: 0
   name: skill8
@@ -20,3 +20,4 @@ MonoBehaviour:
   backGroundIconPath: GradeBackGround/Blue
   Number: 8
   CooldownSeconds: 2
+  colldownCount: 1

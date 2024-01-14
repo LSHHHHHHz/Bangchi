@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 //아래 using을 쓰니 backGroundImage SetActive 사용 가능해짐
 using Assets.HeroEditor.Common.Scripts.Common;
-
+using Assets.Battle;
 
 public class SkillSlot : MonoBehaviour
 {
@@ -18,9 +18,27 @@ public class SkillSlot : MonoBehaviour
 
     public Image hideIcon;
     private Coroutine cooldownCoroutine;
+    public int skillCollDownCount =0;
+    public bool isMaxSkillcount;
 
     public bool IsCooldown { get; private set; }
 
+    private void Start()
+    {
+        BattleManager.instance.OnStageRestart += EndSkillCooldown;
+    }
+    private void Update()
+    {
+        isMaxSkillCount();
+    }
+    public void isMaxSkillCount()
+    {
+        if (skillInfo != null && skillInfo.colldownCount == skillCollDownCount && skillInfo.type == SkillType.Passive)
+        {
+            isMaxSkillcount = true;
+        }
+
+    }
     public void SetData(SkillInfo skillInfo)
     {
         this.skillInfo = skillInfo;
@@ -62,7 +80,7 @@ public class SkillSlot : MonoBehaviour
         {
             StopCoroutine(cooldownCoroutine);
         }
-        cooldownCoroutine = StartCoroutine(CooldownCoroutine(duration));
+        cooldownCoroutine = StartCoroutine(CooldownCoroutine(duration, skillInfo.colldownCount));
     }
 
     // 스킬 쿨다운 종료
@@ -74,19 +92,27 @@ public class SkillSlot : MonoBehaviour
         {
             StopCoroutine(cooldownCoroutine);
         }
+        skillCollDownCount = 0;
+        isMaxSkillcount = false;
         hideIcon.fillAmount = 0f; 
     }
-
-    private IEnumerator CooldownCoroutine(float duration)
+    //스킬 실행 했을 때 쿨다운 횟수만큼 쿨이 돌게끔 만들어놓음
+    //만약에 쿨다운 최대치가 된다면 못들어오게 해야함
+    //스테이지 변경 시 초기화 시키며 됨
+    private IEnumerator CooldownCoroutine(float duration, int colldownCount)
     {
-        float elapsed = 0f;
-        while (elapsed < duration)
+        for (int i = 0; i < colldownCount; i++)
         {
-            elapsed += Time.deltaTime;
-            hideIcon.fillAmount = 1f - (elapsed / duration);
-            yield return null;
+            float elapsed = 0f;
+            while (elapsed < duration)
+            {
+                elapsed += Time.deltaTime;
+                hideIcon.fillAmount = 1f - (elapsed / duration);
+                yield return null;
+            }
+            hideIcon.fillAmount = 0f;
+            skillCollDownCount++; //쿨다운 돌았을 때
         }
-        hideIcon.fillAmount = 0f;
         IsCooldown = false;
     }
 }

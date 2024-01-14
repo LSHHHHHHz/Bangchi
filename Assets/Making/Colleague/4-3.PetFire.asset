@@ -17,3 +17,7 @@ MonoBehaviour:
   name: WindB
   iconPath: PetIcon/3.Fire
   Number: 3
+  petAttack: 0
+  petHP: 0
+  petExp: 0
+  petCoin: 0

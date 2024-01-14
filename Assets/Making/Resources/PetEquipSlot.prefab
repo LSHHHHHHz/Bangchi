@@ -93,6 +93,9 @@ MonoBehaviour:
   petinfo: {fileID: 0}
   icon: {fileID: 4259632451661528915}
   effecticon: {fileID: 0}
+  Num: 0
+  grid: {fileID: 0}
+  pets: []
 --- !u!114 &-8876622376789191986
 MonoBehaviour:
   m_ObjectHideFlags: 0

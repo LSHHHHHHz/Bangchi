@@ -12,17 +12,29 @@ public class petinfoPopup : MonoBehaviour
     public GameObject petinfo;
     public RectTransform transparencyimage;
     PetSlot slot;
-   
+
+    public Text petinfoAttack;
+    public Text petinfoHP;
+    public Text petinfoExp;
+    public Text petinfoCoin;
 
     private void Awake()
     {
         slot = GetComponent<PetSlot>();
-        
+    }
+    private void Update()
+    {
+        Petinfos();
     }
 
-    //버튼을 누르면 닫힘 -> 선택하는 창 보여지게 함
-    //펫 장착은 펫슬롯으로 하게 되면 안됨
-    //새로운 스크립트 만든 후 동행을 눌렀을 때 데이터를 저장하고 버튼을 누르면 그 데이터가 들어가면서 기존 데이터 삭제
+    public void Petinfos()
+    {
+        petinfoAttack.text = "추가 공격력 +" + slot.petInfo.petAttack.ToString();
+        petinfoHP.text = "추가 체력 +" + slot.petInfo.petHP.ToString();
+        petinfoExp.text = "추가 경험치 +"+ slot.petInfo.petExp.ToString();
+        petinfoCoin.text = "추가 코인 +" + slot.petInfo.petCoin.ToString();
+    }
+
     public void petinfoActiveFalse()
     {
         petinfo.SetActive(false);

@@ -17,3 +17,7 @@ MonoBehaviour:
   name: WaterB
   iconPath: PetIcon/3.Water
   Number: 3
+  petAttack: 0
+  petHP: 0
+  petExp: 0
+  petCoin: 0

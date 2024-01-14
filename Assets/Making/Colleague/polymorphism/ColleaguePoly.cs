@@ -1,4 +1,4 @@
-﻿using Assets.HeroEditor.Common.Scripts.Common;
+using Assets.HeroEditor.Common.Scripts.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +12,7 @@ using System.IO;
 [System.Serializable]
 public class ColleagueData
 {
-    public int First_stat;
+    public float First_stat;
     public int First_stat_LV;
     public int Second_stat;
     public int Second_stat_LV;
@@ -40,7 +40,7 @@ public abstract class ColleaguePoly : MonoBehaviour
 
     public ColleagueType colleagueType;
 
-    public int First_stat;
+    public float First_stat;
     public int First_stat_LV;
     public int Second_stat;
     public int Second_stat_LV;
@@ -72,8 +72,34 @@ public abstract class ColleaguePoly : MonoBehaviour
             switch (index)
             {
                 case 0:
-                    First_stat_LV += 1;
-                    First_stat += First_stat_LV;
+                    if(colleagueType == ColleagueType.Water)
+                    {
+                        float originstat = First_stat;
+                        First_stat_LV += 1;
+                        First_stat += First_stat_LV;
+                        Player.instance.Max_MP += (First_stat - originstat);
+                    }
+                    if (colleagueType == ColleagueType.Soil)
+                    {
+                        float originstat = First_stat;
+                        First_stat_LV += 1;
+                        First_stat += First_stat_LV;
+                        Player.instance.Current_CriticalDamage += (First_stat - originstat);
+                    }
+                    if (colleagueType == ColleagueType.Wind)
+                    {
+                        float originstat = First_stat;
+                        First_stat += 0.01f;
+                        First_stat_LV += 1;
+                        Player.instance.AttackSpeed += (First_stat - originstat);
+                    }
+                    if (colleagueType == ColleagueType.Fire)
+                    {
+                        float originstat = First_stat;
+                        First_stat_LV += 1;
+                        First_stat += First_stat_LV;
+                        Player.instance.Max_HP += (First_stat - originstat);
+                    }
                     break;
                 case 1:
                     Second_stat_LV += 1;

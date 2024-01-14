@@ -25,7 +25,6 @@ public class ACT5_Sword : BaseSkill
     {
         isSkillEwcuted = true;
 
-        GameObject effect = new();
         float skillPos = 1;
         Vector3 playerPosition = Player.instance.transform.position;
         Vector3 spawnPos = playerPosition + new Vector3(skillPos, 0, 0);

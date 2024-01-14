@@ -100,25 +100,6 @@ public class IngameSkillList : MonoBehaviour
             }
         }
     }
-
-    public void test()
-    {//패시브만
-        for (int i = 0; i < passiveSkillSlots.Length; i++)
-        {
-            int passcount = 4;
-
-            SkillSlot slot = passiveSkillSlots[i];
-            if (slot != null)
-            {
-                OnSkillButtonClicked(slot, passcount);
-            }
-            passcount++;
-            if (passcount == 7)
-            {
-                passcount = 4;
-            }
-        }
-    }
     private SkillSlot[] GetChildSlots(RectTransform parent) 
     {
         List<SkillSlot> childList = new();
@@ -244,10 +225,10 @@ public class IngameSkillList : MonoBehaviour
     }
     private void OnSkillButtonClicked(SkillSlot slot, int index)
     {
-        if (slot.IsCooldown)
+        if (slot.IsCooldown || slot.isMaxSkillcount)
             return;
 
-        if (index >= 0 && index < skills.Length) //length가 잘못도미
+        if (index >= 0 && index < skills.Length ) 
         {
             BaseSkill skill = skills[index];
             float cooldownSeconds = slot.skillInfo.CooldownSeconds;

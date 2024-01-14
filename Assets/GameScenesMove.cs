@@ -8,7 +8,7 @@ public class GameScenesMove : MonoBehaviour
 
     public void ExpBossSceeneFadeOutMove()
     {
-        BossStageProcessor.instance.RunFadeOutIn(() => ExpBossSceneMove(), 1);
+        FadeInOutStageProcessor.instance.RunFadeOutIn(() => ExpBossSceneMove(), 1);
     }
     public void ExpBossSceneMove()
     {
