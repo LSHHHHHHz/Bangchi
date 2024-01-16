@@ -28,6 +28,7 @@ public class SunBossSlot : MonoBehaviour
     public void SelectBoss(int stageLevel)
     {
         FadeInOutStageProcessor.instance.RunBossStage(sunBossInfo, stageLevel);
-//        BattleManager.instance.StartSunbossStage(sunBossInfo, stageLevel);
+        FadeInOutStageProcessor.instance.bossstageDone = true;
+        //        BattleManager.instance.StartSunbossStage(sunBossInfo, stageLevel);
     }
 }

@@ -32,10 +32,4 @@ public class Weapons : MonoBehaviour
 
         return Current_totalDamage;
     }
-
-  
-
-    //기본데미지가 있고 등급별로 추가 데미지가 있음
-    //토탈데미지가 실제 데미지
-    
 }

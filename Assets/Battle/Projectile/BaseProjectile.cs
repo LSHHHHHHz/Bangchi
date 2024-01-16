@@ -15,7 +15,7 @@ namespace Assets.Battle.Projectile
         public int Skillnumber;
 
         public BaseUnit owner;
-        public int damage;
+        public float damage;
         public float lifetime;
         public float speed;
         public Vector3 direction;
@@ -33,6 +33,22 @@ namespace Assets.Battle.Projectile
         private float lastUpdateTime;
         protected virtual void Awake()
         {
+            if(Skillnumber ==1)
+            {
+                damage = Player.instance.Current_Attack * 2;
+            }
+            if (Skillnumber == 2)
+            {
+                damage = Player.instance.Current_Attack * 0.5f;
+            }
+            if (Skillnumber == 3)
+            {
+                damage = Player.instance.Current_Attack * 1;
+            }
+            if (Skillnumber == 4)
+            {
+                damage = Player.instance.Current_Attack * 0.5f;
+            }
             boxcollider = GetComponent<BoxCollider>();
 
 

@@ -28,8 +28,6 @@ public class SkillInventoryManager : MonoBehaviour
         Load();
         
     }
-
-
     public void AddSkill(SkillInfo skillInfo)
     {
         SkillInstance existItem = myItems.Find(item => item.skillInfo == skillInfo);

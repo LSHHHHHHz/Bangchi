@@ -47,6 +47,8 @@ namespace Assets.Battle
             // 스테이지가 끝났는지 체크
             if (stageEndCheck && IsStageEnded())
             {
+                FadeInOutStageProcessor.instance.RunFadeOutBoss();
+
                 // 끝났다면 OnStageDone 이벤트 발생
                 OnStageDone?.Invoke(currentStageInfo);
 
@@ -72,10 +74,13 @@ namespace Assets.Battle
                 // 만약 대기 시간이 0보다 작다면 대기가 끝난 것.
                 if (stageRestartDelay < 0)
                 {
-                    // 스테이지 재시작.
-                    RestartStage();
+                    if (FadeInOutStageProcessor.instance.bossstageDone == false)
+                    {
+                        RestartStage();
+                    }
                 }
             }
+            FadeInOutStageProcessor.instance.bossstageDone = false;
         }
 
         public void StartStage(StageInfo stageInfo)
@@ -89,7 +94,7 @@ namespace Assets.Battle
 
             if (stageInfo.Type == StageType.Normal)
             {
-                FadeInOutStageProcessor.instance.RunFadeOutIn(0.5f);
+                
                 isRestartStage = true;
                 SetLastPlayedNormalStage(stageInfo.StageNumber);
                 OnStageRestart?.Invoke();

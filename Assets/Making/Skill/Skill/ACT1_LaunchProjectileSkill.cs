@@ -16,6 +16,9 @@ namespace Assets.Battle.Skill
         private void Awake()
         {
         }
+        private void Start()
+        {
+        }
         private void Update()
         {
 

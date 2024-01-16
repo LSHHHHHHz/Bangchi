@@ -19,5 +19,7 @@ MonoBehaviour:
   iconPath: ACT 3
   backGroundIconPath: GradeBackGround/Green
   Number: 3
-  CooldownSeconds: 8
+  CooldownSeconds: 4
   colldownCount: 1
+  SkillInfoAttack: "\uACF5\uACA9\uB825\uC758 100%, 2\uCD08 \uD6C4 200%\uACF5\uACA9"
+  SkillInfoCount: "4\uCD08\uC5D0 1\uBC88 \uACF5\uACA9"

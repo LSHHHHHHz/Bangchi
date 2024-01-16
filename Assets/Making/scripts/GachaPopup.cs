@@ -36,7 +36,7 @@ public class GachaPopup : MonoBehaviour //가차 결과를 보여주는 UI
         canvasGroup.DOFade(1, fadeTime);
     }
 
-    public void Initialize(GachaResult gachaResult, Action<int> oneMoreTime, Action onDone) //Action onDone 연출(코루틴)이 끝났을 때 호출되는 함수
+    public void Initialize(GachaResult gachaResult, Action<int> oneMoreTime, Action onDone) 
     {
         // 이전에 보관해뒀던 아이템 UI들을 파괴
         foreach (GameObject child in children)
@@ -50,7 +50,6 @@ public class GachaPopup : MonoBehaviour //가차 결과를 보여주는 UI
         }
         effectchildren.Clear();
 
-        // 나중에 다시 뽑기 버튼 누르면 호출하기 위해 클래스의 멤버 필드인 oneMoreTimeAction에 값을 저장한다.
         this.oneMoreTimeAction = oneMoreTime;
         this.onDoneAction = onDone;
 
@@ -119,20 +118,13 @@ public class GachaPopup : MonoBehaviour //가차 결과를 보여주는 UI
             var sequence = DOTween.Sequence();
             itemSlot.transform.localScale = Vector3.one * 7;
             
-            //if (isHigeGrade)
-            //{
-            //    sequence.Append(itemSlot.transform.DOScale(1.5f, 0.2f).SetLoops(4));
-            //    sequence.Append(itemSlot.transform.DOScale(1f, 0.2f));
-            //}
-
             sequence.Play();
 
             // 아이템 프리팹이 원래 Active:false였으니 이것도 false인 상태. true로 바꿔서 보이게 한다.
             itemSlot.gameObject.SetActive(true);
 
-            // 나중에 삭제해야되니까 children에 넣어서 관리
             children.Add(itemSlot.gameObject);
-            yield return itemSlot.transform.DOScale(Vector3.one, 0.2f).WaitForCompletion();
+            yield return itemSlot.transform.DOScale(Vector3.one, 0.15f).WaitForCompletion();
 
             yield return sequence.WaitForCompletion();
 

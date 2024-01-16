@@ -23,7 +23,7 @@ public class InventoryManager : MonoBehaviour
     public List<ItemInstance> equippedItems = new(); //장착 아이템 리스트
     public List<ItemInstance> colleague = new();
 
-    ItemInstance currentItem = null;
+    public int originalWeaponAddDamage = 100;
     public void Awake()
     {
         instance = this;
@@ -117,6 +117,7 @@ public class InventoryManager : MonoBehaviour
         }
 
         equippedItems.Add(existItem);
+        
         OnEquippedItemChanged?.Invoke();
 
         Save();

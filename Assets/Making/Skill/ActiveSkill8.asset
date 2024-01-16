@@ -21,3 +21,5 @@ MonoBehaviour:
   Number: 8
   CooldownSeconds: 2
   colldownCount: 1
+  SkillInfoAttack: 
+  SkillInfoCount: 

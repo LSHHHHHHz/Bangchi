@@ -14,7 +14,7 @@ public class ColleagueData
 {
     public float First_stat;
     public int First_stat_LV;
-    public int Second_stat;
+    public float Second_stat;
     public int Second_stat_LV;
     public int Third_stat;
     public int Third_stat_LV;
@@ -42,7 +42,7 @@ public abstract class ColleaguePoly : MonoBehaviour
 
     public float First_stat;
     public int First_stat_LV;
-    public int Second_stat;
+    public float Second_stat;
     public int Second_stat_LV;
     public int Third_stat;
     public int Third_stat_LV;
@@ -98,16 +98,68 @@ public abstract class ColleaguePoly : MonoBehaviour
                         float originstat = First_stat;
                         First_stat_LV += 1;
                         First_stat += First_stat_LV;
-                        Player.instance.Max_HP += (First_stat - originstat);
+                        Player.instance.Current_Attack += (First_stat - originstat);
                     }
                     break;
                 case 1:
-                    Second_stat_LV += 1;
-                    Second_stat += Second_stat_LV;
+                    if (colleagueType == ColleagueType.Water)
+                    {
+                        float originstat = Second_stat;
+                        Second_stat_LV += 1;
+                        Second_stat += Second_stat_LV;
+                        Player.instance.RecoveryMP += (Second_stat - originstat);
+                    }
+                    if (colleagueType == ColleagueType.Soil)
+                    {
+                        float originstat = Second_stat;
+                        Second_stat_LV += 1;
+                        Second_stat += Second_stat_LV;
+                        Player.instance.Current_Attack += (Second_stat - originstat);
+                    }
+                    if (colleagueType == ColleagueType.Wind)
+                    {
+                        float originstat = Second_stat;
+                        Second_stat_LV += 1;
+                        Second_stat += 0.01f;
+                        Player.instance.playerSpeed += (Second_stat - originstat);
+                    }
+                    if (colleagueType == ColleagueType.Fire)
+                    {
+                        float originstat = Second_stat;
+                        Second_stat_LV += 1;
+                        Second_stat += Second_stat_LV;
+                        Player.instance.Current_HP += (Second_stat - originstat);
+                    }
                     break;
                 case 2:
-                    Third_stat_LV += 1;
-                    Third_stat += Third_stat_LV;
+                    if (colleagueType == ColleagueType.Water)
+                    {
+                        int originstat = Third_stat;
+                        Third_stat_LV += 1;
+                        Third_stat += Third_stat_LV;
+                        Player.instance.AddExp += (Third_stat - originstat);
+                    }
+                    if (colleagueType == ColleagueType.Soil)
+                    {
+                        int originstat = Third_stat;
+                        Third_stat_LV += 1;
+                        Third_stat += Third_stat_LV;
+                        Player.instance.AddCoin += (Third_stat - originstat);
+                    }
+                    if (colleagueType == ColleagueType.Wind)
+                    {
+                        int originstat = Third_stat;
+                        Third_stat_LV += 1;
+                        Third_stat += Third_stat_LV;
+                        Player.instance.PetCoin += (Third_stat - originstat);
+                    }
+                    if (colleagueType == ColleagueType.Fire)
+                    {
+                        int originstat = Third_stat;
+                        Third_stat_LV += 1;
+                        Third_stat += Third_stat_LV;
+                        Player.instance.RecoveryHP += (Third_stat - originstat);
+                    }
                     break;
             }
             ColleagueStatsPrice[index] += 100 * (index + 1);

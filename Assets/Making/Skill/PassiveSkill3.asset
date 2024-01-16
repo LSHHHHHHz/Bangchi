@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b77716afe1b29b2428fcf61567d356d5, type: 3}
   m_Name: PassiveSkill3
   m_EditorClassIdentifier: 
-  skillPrefab: {fileID: 0}
+  skillPrefab: {fileID: 2769186315298664327, guid: c20351267c469274488c23ee1a5ac661, type: 3}
   grade: 1
   type: 1
   name: skill3
   iconPath: PAS 3
   backGroundIconPath: GradeBackGround/Green
   Number: 3
-  CooldownSeconds: 2
-  colldownCount: 10000
+  CooldownSeconds: 6
+  colldownCount: 4
+  SkillInfoAttack: 
+  SkillInfoCount: 

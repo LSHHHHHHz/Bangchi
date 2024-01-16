@@ -34,5 +34,7 @@ namespace Assets.Item1
         public int Number;
         public float CooldownSeconds;
         public int colldownCount;
+        public string SkillInfoAttack;
+        public string SkillInfoCount;
     }
 }

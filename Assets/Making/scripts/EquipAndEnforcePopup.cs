@@ -15,6 +15,7 @@ using UnityEngine.UI;
 public class EquipAndEnforcePopup : MonoBehaviour
 {
     public ItemSlot targetSlot;
+    public ItemInfo originitemInfo;
     private static EquipAndEnforcePopup instance;
     private bool buttonPressed = false;
     public float interval = 0.1f;
@@ -22,6 +23,10 @@ public class EquipAndEnforcePopup : MonoBehaviour
     private void Awake()
     {
         
+    }
+    private void Start()
+    {
+        originitemInfo = InventoryManager.instance.equippedItems[0].itemInfo;
     }
     private void OnEnable()
     {
@@ -59,10 +64,16 @@ public class EquipAndEnforcePopup : MonoBehaviour
         }
         instance.targetSlot = item;
     }
+
+    //플레이어 무기 장착 시 데미지 추가
     public void EquipOrUnEquip()
     {
+        InventoryManager.instance.UnEquip(originitemInfo);
         InventoryManager.instance.UnEquip(targetSlot.itemInfo);
         InventoryManager.instance.Equip(targetSlot.itemInfo);
+        originitemInfo = targetSlot.itemInfo;
+        Player.instance.Current_Attack += targetSlot.itemInfo.Attack;
+        Player.instance.Current_Attack -= originitemInfo.Attack;
     }
     public void Enforce()
     {

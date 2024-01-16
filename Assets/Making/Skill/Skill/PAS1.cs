@@ -16,9 +16,9 @@ public class PAS1 : BaseSkill
     private Coroutine runningSkillCoroutine;
 
     private bool isSkillExecuted = false;
-    public float passiveAttackIncrease = 0.1f; // 공격력이 증가할 비율
-    public float addAttack; //추가 공격력
-    private float originalAttack; // 원래 공격력 값 저장
+    public float passiveHPIncrease = 0.1f; // 체력이 증가할 비율
+    public float addHP; //추가 체력
+    private float originarHP; // 원래 체력 값 저장
     public float timetime;
 
     public SkillSlot skillSlot;
@@ -31,9 +31,8 @@ public class PAS1 : BaseSkill
     }
     private void Start()
     {
-        originalAttack = Player.instance.Current_Attack;
+        originarHP = Player.instance.Max_HP;
         BattleManager.instance.OnStageRestart += ResetSkill;
-        IngameSkillList.instance.setempty1 += ResetSkill;
     }
     private void Update()
     {
@@ -48,7 +47,7 @@ public class PAS1 : BaseSkill
         if (!isSkillExecuted)
         {
             isSkillExecuted = true;
-            originalAttack = Player.instance.Current_Attack;
+            originarHP = Player.instance.Max_HP;
             runningSkillCoroutine = StartCoroutine(SkillCoroutine());
         }
     }
@@ -57,13 +56,12 @@ public class PAS1 : BaseSkill
     {
         while (isSkillExecuted && skillCount<4)
         {
-            addAttack = originalAttack * passiveAttackIncrease;
-            Player.instance.Current_Attack += addAttack;
-            Debug.Log($"Current Attack: {Player.instance.Current_Attack}");
+            addHP = originarHP * passiveHPIncrease;
+            Player.instance.Max_HP += addHP;
+            Debug.Log($"Current Attack: {Player.instance.Current_HP}");
             yield return new WaitForSeconds(4f);
             skillCount++;
         }
-        //EndSkillCooldown(); // 쿨다운 종료
     }
 
     public void ResetSkill()
@@ -73,8 +71,8 @@ public class PAS1 : BaseSkill
         if (runningSkillCoroutine != null)
         {
             StopCoroutine(runningSkillCoroutine);
-            runningSkillCoroutine = null; //
-            Player.instance.Current_Attack = originalAttack; // 공격력 초기화
+            runningSkillCoroutine = null;
+            Player.instance.Max_HP = originarHP;
             Player.instance.statDataSave();
 
         }

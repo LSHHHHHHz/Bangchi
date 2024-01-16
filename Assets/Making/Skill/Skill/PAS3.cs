@@ -6,17 +6,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PAS2 : BaseSkill
+public class PAS3 : BaseSkill
 {
     private Coroutine runningSkillCoroutine;
 
     private bool isSkillExecuted = false;
-    public float passiveSpeedIncrease = 0.1f;
-    public float addSpeed;
-    private float originarSpeed; 
+    public float passiveAttackIncrease = 0.1f;
+    public float addAttack;
+    private float originarAttack; 
 
     public SkillSlot skillSlot;
 
@@ -28,7 +29,7 @@ public class PAS2 : BaseSkill
     }
     private void Start()
     {
-        originarSpeed = Player.instance.playerSpeed;
+        originarAttack = Player.instance.Current_Attack;
         BattleManager.instance.OnStageRestart += ResetSkill;
     }
     private void Update()
@@ -44,18 +45,18 @@ public class PAS2 : BaseSkill
         if (!isSkillExecuted)
         {
             isSkillExecuted = true;
-            originarSpeed = Player.instance.playerSpeed;
+            originarAttack = Player.instance.Current_Attack;
             runningSkillCoroutine = StartCoroutine(SkillCoroutine());
         }
     }
 
     private IEnumerator SkillCoroutine()
     {
-        while (isSkillExecuted && skillCount < 2)
+        while (isSkillExecuted && skillCount < 4)
         {
-            addSpeed = passiveSpeedIncrease;
-            Player.instance.playerSpeed += addSpeed;
-            yield return new WaitForSeconds(4f);
+            addAttack = originarAttack * passiveAttackIncrease;
+            Player.instance.Current_Attack += addAttack;
+            yield return new WaitForSeconds(6f);
             skillCount++;
         }
     }
@@ -67,8 +68,8 @@ public class PAS2 : BaseSkill
         if (runningSkillCoroutine != null)
         {
             StopCoroutine(runningSkillCoroutine);
-            runningSkillCoroutine = null;
-            Player.instance.playerSpeed = originarSpeed;
+            runningSkillCoroutine = null; //
+            Player.instance.Current_Attack = originarAttack; // 공격력 초기화
             Player.instance.statDataSave();
 
         }

@@ -110,8 +110,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4294943325
+  m_fontColor: {r: 0.36320752, g: 0.6335894, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -188,7 +188,7 @@ MonoBehaviour:
   moveSpeed: 1
   alphaSpeed: 2
   destoryTime: 3
-  damage: 10000
+  damage: 0
   weapon:
   - {fileID: 0}
   - {fileID: 0}

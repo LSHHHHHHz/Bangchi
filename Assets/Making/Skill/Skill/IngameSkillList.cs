@@ -15,8 +15,6 @@ public class IngameSkillList : MonoBehaviour
     public GameObject AutomaticON;
     public GameObject AutomaticOFF;
 
-    public event Action setempty1;
-
     public static IngameSkillList instance;
 
     public Sprite lockedSprite;
@@ -30,14 +28,9 @@ public class IngameSkillList : MonoBehaviour
     // 가지고 있다가 스킬 버튼이 눌리면 스킬을 실행한다.
     public BaseSkill[] skills;
 
-    private bool isPassiveOn = false;
-
     private void Awake()
     {
         instance = this;
-        // 슬롯을 얻어오는 과정.
-        // activeSkillSlotParent, passiveSkillSlotParent를 가지고 슬롯을 얻어옴
-        // Parent의 자식들을 순회하며 SkillSlot을 가져오고 Button 클릭시 처리도 연결
         activeSkillSlots = GetChildSlots(activeSkillSlotParent);
         int skillIndex = 0;
         for (int i = 0; i < activeSkillSlots.Length; ++i)
@@ -81,7 +74,6 @@ public class IngameSkillList : MonoBehaviour
     }
     public void allskillAutomatic()
     {
-        // 엑티브 스킬 처리
         for (int i = 0; i < activeSkillSlots.Length; i++)
         {
             SkillSlot slot = activeSkillSlots[i];
@@ -184,26 +176,8 @@ public class IngameSkillList : MonoBehaviour
             // 장착한 스킬이 있다면
             else
             {
-                //★★★
-                /*for(int p = 0; p<8; p++)
-                {
-                    if(slot.skillInfo.Number == p && slot.skillInfo.type == SkillType.Passive)
-                    {
-                        setempty1?.Invoke();
-                    }
-                }
-
-                if(slot.skillInfo.Number==1)
-                {
-                    setempty1?.Invoke();
-                }*/
-
-
-                //이부분 저장이 안됨 껏다 켰을 때
-
                 // 장착할 스킬해제
                 slot.SetEmpty(lockedSprite);
-                //slot.icon.sprite = lockedSprite;
                 skillsList.Add(null);
             }
         }
@@ -227,7 +201,10 @@ public class IngameSkillList : MonoBehaviour
     {
         if (slot.IsCooldown || slot.isMaxSkillcount)
             return;
-
+        if(Player.instance.ishits == false && slot.skillInfo.type == SkillType.Active)
+        {
+            return;
+        }
         if (index >= 0 && index < skills.Length ) 
         {
             BaseSkill skill = skills[index];

@@ -33,7 +33,8 @@ public class Player : BaseUnit
     public RaycastHit[] hits;
     //레이어 마스크를 지정할 변수
     public LayerMask layerMask = -1;
-
+    //hits에 저장된게 있는지 확인
+    public bool ishits = false;
 
     //능력 창
     public float Current_Attack;
@@ -43,7 +44,7 @@ public class Player : BaseUnit
     public float Current_HP;
     public int HPLevel;
 
-    public int RecoveryHP;
+    public float RecoveryHP;
     public int RecoveryHPLevel;
 
     public float Current_CriticalDamage;
@@ -56,7 +57,7 @@ public class Player : BaseUnit
     public float Current_MP;
     public int MPLevel;
 
-    public int RecoveryMP;
+    public float RecoveryMP;
     public int RecoveryMPLevel;
 
     public float AttackSpeed = 1f;
@@ -70,7 +71,6 @@ public class Player : BaseUnit
 
     public int AddExp;
     public int AddCoin;
-    public Text AddExpText;
 
     //레벨
     public int LV = 1;
@@ -151,13 +151,20 @@ public class Player : BaseUnit
     // Update is called once per frame
     void Update()
     {
-        AddExpText.text = AddExp.ToString(); //지워야함
         Move();
         rayCast();
         Fighting();
         SkillCasting();
         TopStatus();
         ExpAndLevel();
+        if(hits.Length> 0)
+        {
+            ishits = true;
+        }
+        else
+        {
+            ishits = false;
+        }
     }
    
     public void AddValueReset()
@@ -250,14 +257,14 @@ public class Player : BaseUnit
         PlayerPrefs.SetFloat(nameof(Current_HP), Current_HP);
         PlayerPrefs.SetInt(nameof(HPLevel), HPLevel);
 
-        PlayerPrefs.SetInt(nameof(RecoveryMP), RecoveryHP);
+        PlayerPrefs.SetFloat(nameof(RecoveryMP), RecoveryHP);
         PlayerPrefs.SetInt(nameof(RecoveryHPLevel), RecoveryHPLevel);
 
         PlayerPrefs.SetFloat(nameof(Max_MP), Max_MP);
         PlayerPrefs.SetFloat(nameof(Current_MP), Current_MP);
         PlayerPrefs.SetInt(nameof(MPLevel), MPLevel);
 
-        PlayerPrefs.SetInt(nameof(RecoveryMP), RecoveryMP);
+        PlayerPrefs.SetFloat(nameof(RecoveryMP), RecoveryMP);
         PlayerPrefs.SetInt(nameof(RecoveryMPLevel), RecoveryMPLevel);
 
         PlayerPrefs.SetFloat(nameof(Current_CriticalDamage), Current_CriticalDamage);

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using static Unity.Burst.Intrinsics.X86.Avx;
@@ -35,6 +36,12 @@ public class SkillUI : MonoBehaviour
     SkillSlot[] equippedActiveSkillSlots; // 4칸
     SkillSlot[] equippedPassiveSkillSlots; // 4칸
 
+    public Text ActiveInfoAttack;
+    public Text ActiveInfoCount;
+    public Text PassiveInfoText;
+    public RectTransform equipOrEnequipPopup;
+    private SkillSlot currentSlot;
+
     private void Awake()
     {
         instance = this;
@@ -46,7 +53,7 @@ public class SkillUI : MonoBehaviour
             var button = child.GetComponent<Button>();
             button.onClick.AddListener(() =>
             {
-                EquipOrUnequip(child);
+                EquipPopupOpen(child);
             });
             childList.Add(child);
         }
@@ -101,7 +108,37 @@ public class SkillUI : MonoBehaviour
         SkillInventoryManager.instance.OnSkillInventoryChanged += OnSkillInventoryChangedCallback;
         SetData();
     }
+    //-----------------------------------------------------
+    public void EquipPopupOpen(SkillSlot slot)
+    {
+        equipOrEnequipPopup.transform.position = new Vector3(360,640,0);
+        isEquipText(slot);
+        currentSlot = slot;
+    }
+    public void EquipButton(SkillSlot slot)
+    {
+        EquipOrUnequip(currentSlot);
+        EquipPopupClose();
 
+    }
+    public void EquipPopupClose()
+    {
+        ActiveInfoAttack.SetActive(false);
+        ActiveInfoCount.SetActive(false);
+        equipOrEnequipPopup.transform.position = new Vector3(-950, 0, 0);
+        
+    }
+    public void isEquipText(SkillSlot slot)
+    {
+        if(slot.skillInfo.type == SkillType.Active)
+        {
+            ActiveInfoAttack.SetActive(true);
+            ActiveInfoCount.SetActive(true);
+            ActiveInfoAttack.text = slot.skillInfo.SkillInfoAttack;
+            ActiveInfoCount.text = slot.skillInfo.SkillInfoCount;
+        }
+    }
+    //-----------------------------------------------------
     public void RunGacha(int count)
     {
         if (skillgachaPopup == null)

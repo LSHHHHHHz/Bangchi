@@ -3,12 +3,16 @@ using Assets.Battle.Projectile;
 using Assets.Battle.Unit;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class Monster : BaseUnit
 {
     public GameObject hudDamageText;
+    GameObject hudTextRoot;
+    GameObject DropItemRoot;
+    bool isMonsterDeath;
 
     public int MonsterExp = 10;
 
@@ -23,8 +27,12 @@ public class Monster : BaseUnit
     public float weaponPrefabProbability;
     public GameObject shieldPrefab;
     public float shieldPrefabProbability;
+
+    private float elapsedTime;
     public void Awake()
     {
+        hudTextRoot = GameObject.Find("hudTextRoot");
+        DropItemRoot = GameObject.Find("DropItemRoot");
         rigid = GetComponent<Rigidbody2D>();
         collider = GetComponent<Collider>();
 
@@ -52,20 +60,25 @@ public class Monster : BaseUnit
     {
         if (_Current_HP <= 0)
         {
-            Destroy(gameObject);
-            monsterDeathIcon(expIconPrefab);
-            monsterDeathIcon(coinIconPrefab);
-            monsterDeathIcon(enforceCoinPrefab);
+            elapsedTime += Time.deltaTime;
+            if (_MonsterInfoType == MonsterInfoType.normar)
+            {
+                Destroy(gameObject);
 
-            monsterDeathIcon(weaponPrefab, weaponPrefabProbability);
-            monsterDeathIcon(shieldPrefab, shieldPrefabProbability);
+                monsterDeathIcon(expIconPrefab);
+                monsterDeathIcon(coinIconPrefab);
+                monsterDeathIcon(enforceCoinPrefab);
+
+                monsterDeathIcon(weaponPrefab, weaponPrefabProbability);
+                monsterDeathIcon(shieldPrefab, shieldPrefabProbability);
+            }
         }
     }
 
     public void monsterDeathIcon(GameObject whatIcon)
     {
         Vector3 offset = new Vector3(0f, 0.5f, 0f);
-        GameObject Icon = Instantiate(whatIcon, transform.position + offset, Quaternion.identity);
+        GameObject Icon = Instantiate(whatIcon, transform.position + offset, Quaternion.identity, DropItemRoot.transform);
         Rigidbody IconRigid = Icon.GetComponent<Rigidbody>();
 
         Vector3 powerVector = Vector3.right + Vector3.up * Random.Range(1, 2);
@@ -78,7 +91,7 @@ public class Monster : BaseUnit
         if (randomValue < probability)
         {
             Vector3 offset = new Vector3(0f, 0.5f, 0f);
-            GameObject Icon = Instantiate(whatIcon, transform.position + offset, Quaternion.identity);
+            GameObject Icon = Instantiate(whatIcon, transform.position + offset, Quaternion.identity, DropItemRoot.transform);
             Rigidbody IconRigid = Icon.GetComponent<Rigidbody>();
             Vector3 IconVec = transform.right * Random.Range(1, 1) + Vector3.up * Random.Range(1, 2);
             IconRigid.AddForce(IconVec, ForceMode.Impulse);
@@ -89,19 +102,24 @@ public class Monster : BaseUnit
     {
         if (other.tag == "Melee")
         {
-            Weapons weapons = other.GetComponent<Weapons>();
+            bool isCriticalHit = UnityEngine.Random.value < Player.instance.Current_Criticalprobability;
+            int damageAmount = isCriticalHit ? (int)Player.instance.Current_CriticalDamage + (int)Player.instance.Current_Attack
+                                             : (int)Player.instance.Current_Attack;
 
-            _Current_HP -= weapons.Current_totalDamage;
+            GameObject hudText = Instantiate(hudDamageText, hudTextRoot.transform);
+            hudText.transform.position = transform.position + new Vector3(0, 1, 0);
 
-            GameObject hudeText = Instantiate(hudDamageText);
-            hudeText.transform.position = transform.position + new Vector3(0, 1, 0);
-            hudeText.GetComponent<DamageText>().damage = (int)weapons.Current_totalDamage;
+            DamageText tmp = hudText.GetComponent<DamageText>();
+            tmp.text.text = damageAmount.ToString();
+            tmp.text.color = isCriticalHit ? Color.red : Color.blue;
+
+            _Current_HP -= damageAmount;
         }
-        if(other.tag == "Skill")
+        if (other.tag == "Skill")
         {
             BaseProjectile skill = other.GetComponent<BaseProjectile>();
             _Current_HP -= skill.damage;
-            GameObject hudText = Instantiate(hudDamageText);
+            GameObject hudText = Instantiate(hudDamageText, hudTextRoot.transform);
             hudText.transform.position = transform.position + new Vector3(0, 1, 0);
             hudText.GetComponent<DamageText>().damage = (int)skill.damage;
         }
