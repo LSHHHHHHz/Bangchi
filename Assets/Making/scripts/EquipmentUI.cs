@@ -46,6 +46,7 @@ public class EquipmentUI : MonoBehaviour
             button.onClick.AddListener(() =>
             {
                 EquipAndEnforcePopup.EquipAndEnforce(child);
+                InventoryManager.instance.EquipItemInfo(child.itemInfo);
             });
 
             childList.Add(child); // 자식을 childList에 임시로 넣어둔다.
@@ -60,6 +61,7 @@ public class EquipmentUI : MonoBehaviour
             button.onClick.AddListener(() =>
             {
                 EquipAndEnforcePopup.EquipAndEnforce(child);
+                InventoryManager.instance.EquipItemInfo(child.itemInfo);
             });
 
             shieldChildList.Add(child);

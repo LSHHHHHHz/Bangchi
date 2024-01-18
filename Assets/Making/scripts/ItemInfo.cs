@@ -46,5 +46,6 @@ namespace Assets.Item1
         public int Attack;
         public int HP;
         public int HP_recovery;
+        public string iteminfoText;
     }
 }

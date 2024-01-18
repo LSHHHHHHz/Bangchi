@@ -64,16 +64,21 @@ public class EquipAndEnforcePopup : MonoBehaviour
         }
         instance.targetSlot = item;
     }
+    //이 인스턴스 파괴해야함
+    //강화 및 장착 팝업이 파괴되면 슬롯 정보도 널로 바꿔야함
 
     //플레이어 무기 장착 시 데미지 추가
     public void EquipOrUnEquip()
     {
-        InventoryManager.instance.UnEquip(originitemInfo);
+        if (originitemInfo != null)
+        {
+            InventoryManager.instance.UnEquip(originitemInfo);
+            Player.instance.Current_Attack -= originitemInfo.Attack;
+        }
         InventoryManager.instance.UnEquip(targetSlot.itemInfo);
         InventoryManager.instance.Equip(targetSlot.itemInfo);
-        originitemInfo = targetSlot.itemInfo;
         Player.instance.Current_Attack += targetSlot.itemInfo.Attack;
-        Player.instance.Current_Attack -= originitemInfo.Attack;
+        originitemInfo = targetSlot.itemInfo;
     }
     public void Enforce()
     {
@@ -109,6 +114,7 @@ public class EquipAndEnforcePopup : MonoBehaviour
        
     public void Exit()
     {
+        InventoryManager.instance.ClearEquipItemInfo();
         Destroy(gameObject);
     }
 }

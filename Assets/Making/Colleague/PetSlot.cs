@@ -51,6 +51,7 @@ public class PetSlot : MonoBehaviour
     }
 
   
+    //버튼을 누르면서 PetInfoPopup에 같이 붙어있는 펫 PetSlot에 PetInfo 데이터를 넣어주고 그 데이터를 쓰게만듬
     public void PetInfoPopup()
     {
         GameObject prefab = Resources.Load<GameObject>("PetInfoPopup");

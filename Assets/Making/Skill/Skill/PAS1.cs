@@ -73,6 +73,7 @@ public class PAS1 : BaseSkill
             StopCoroutine(runningSkillCoroutine);
             runningSkillCoroutine = null;
             Player.instance.Max_HP = originarHP;
+
             Player.instance.statDataSave();
 
         }

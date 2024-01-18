@@ -17,7 +17,7 @@ MonoBehaviour:
   name: SoilA
   iconPath: PetIcon/4.Soil
   Number: 4
-  petAttack: 0
-  petHP: 0
-  petExp: 2
-  petCoin: 2
+  petAttack: 500
+  petHP: 500
+  petExp: 500
+  petCoin: 500

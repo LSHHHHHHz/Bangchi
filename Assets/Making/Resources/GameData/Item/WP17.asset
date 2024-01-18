@@ -19,6 +19,6 @@ MonoBehaviour:
   iconPath: ItemIcon/SSS
   backgroundiconPath: GradeBackGround/Gold
   Number: 17
-  Attack: 0
+  Attack: 1000000
   HP: 0
   HP_recovery: 0

@@ -40,8 +40,8 @@ public class Player : BaseUnit
     public float Current_Attack;
     public int AttackLevel;
 
-    public float Max_HP;
-    public float Current_HP;
+    public float Max_HP = 100;
+    public float Current_HP = 100;
     public int HPLevel;
 
     public float RecoveryHP;
@@ -115,7 +115,7 @@ public class Player : BaseUnit
     public float fireDelay;
 
     private bool isFighting;
-    private float fightStartTime;
+    private float fightStartTime = 0;
     private bool isSkillCasting;
     private float skillCastTime;
 
@@ -137,13 +137,13 @@ public class Player : BaseUnit
 
     private void Start()
     {
-       
+        RefreshWeapon(); //이걸 빼면 캐릭터에 무기가 장착되어있지 않음
+        InventoryManager.instance.OnEquippedItemChanged += RefreshWeapon;
         _Attack.text = Current_Attack + " → " + (AttackLevel + Current_Attack);
         _HP.text = Max_HP + " → " + (HPLevel + Max_HP);
         LV_txt.text = "LV" + LV;
         Exp_status.text = Current_Exp + "/" + Max_Exp + "(" + Current_Exp / Max_Exp + ")";  
-        RefreshWeapon(); //이걸 빼면 캐릭터에 무기가 장착되어있지 않음
-        InventoryManager.instance.OnEquippedItemChanged += RefreshWeapon;
+     
         StartCoroutine(RecoveryRoutine());
     }
 
@@ -166,7 +166,10 @@ public class Player : BaseUnit
             ishits = false;
         }
     }
-   
+    private void OnApplicationQuit()
+    {
+        statDataSave();
+    }
     public void AddValueReset()
     {
         AddCoin = 0;
@@ -181,7 +184,6 @@ public class Player : BaseUnit
 
     private ItemInstance previousEquippedWeapon = null;
     private ItemInstance previousEquippedShield = null;
-    bool isrestarts = false;
 
     private void RefreshWeapon()
     {
@@ -194,21 +196,14 @@ public class Player : BaseUnit
                 //아이템을 장착하지 않았거나, 기존 장착 아이템 정보와 새로운 아이템 정보가 다를때만 실행
                 if (previousEquippedWeapon == null || previousEquippedWeapon.itemInfo != equippedItem.itemInfo)
                 {
-                    // 이전에 장착된 아이템의 공격력 제거
-                    if (previousEquippedWeapon != null)
-                    {
-                        Current_Attack -= previousEquippedWeapon.itemInfo.Attack;
-                    }
-
+                  
                     // 새 아이템 장착
                     for (int i = 0; i < weapons.Length; ++i)
                     {
                         weapons[i].SetActive(i == weaponIndex);
                     }
                     // 새 아이템 공격력 추가
-
-                    Current_Attack += equippedItem.itemInfo.Attack;
-                                     
+  
                     previousEquippedWeapon = equippedItem;
                 }
             }
@@ -250,6 +245,7 @@ public class Player : BaseUnit
 
     public void statDataSave()
     {
+        Debug.Log("Saving Current_Attack: " + Current_Attack);
         PlayerPrefs.SetFloat(nameof(Current_Attack), Current_Attack);
         PlayerPrefs.SetInt(nameof(AttackLevel), AttackLevel);
 
@@ -293,38 +289,38 @@ public class Player : BaseUnit
 
     public void statDataLoad()
     {
-        Current_Attack = PlayerPrefs.GetFloat(nameof(Current_Attack), 0);
-        AttackLevel = PlayerPrefs.GetInt(nameof(AttackLevel), 0);
+        Current_Attack = PlayerPrefs.GetFloat(nameof(Current_Attack), 100);
+        AttackLevel = PlayerPrefs.GetInt(nameof(AttackLevel), 1);
+        Debug.Log("Loaded Current_Attack: " + Current_Attack);
+        Max_HP = PlayerPrefs.GetFloat(nameof(Max_HP), 100);
+        Current_HP = PlayerPrefs.GetFloat(nameof(Current_HP), 100);
+        HPLevel = PlayerPrefs.GetInt(nameof(HPLevel), 1);
 
-        Max_HP = PlayerPrefs.GetFloat(nameof(Max_HP), 0);
-        Current_HP = PlayerPrefs.GetFloat(nameof(Current_HP), 0);
-        HPLevel = PlayerPrefs.GetInt(nameof(HPLevel), 0);
+        RecoveryHP = PlayerPrefs.GetInt(nameof(RecoveryHP), 10);
+        RecoveryHPLevel = PlayerPrefs.GetInt(nameof(RecoveryHPLevel), 1);
 
-        RecoveryHP = PlayerPrefs.GetInt(nameof(RecoveryHP), 0);
-        RecoveryHPLevel = PlayerPrefs.GetInt(nameof(RecoveryHPLevel), 0);
+        Max_MP = PlayerPrefs.GetFloat(nameof(Max_MP), 100);
+        Current_MP = PlayerPrefs.GetFloat(nameof(Current_MP), 100);
+        MPLevel = PlayerPrefs.GetInt(nameof(HPLevel), 1);
 
-        Max_MP = PlayerPrefs.GetFloat(nameof(Max_MP), 0);
-        Current_MP = PlayerPrefs.GetFloat(nameof(Current_MP), 0);
-        MPLevel = PlayerPrefs.GetInt(nameof(HPLevel), 0);
-
-        RecoveryMP = PlayerPrefs.GetInt(nameof(RecoveryMP), 0);
-        RecoveryMPLevel = PlayerPrefs.GetInt(nameof(RecoveryMPLevel), 0);
+        RecoveryMP = PlayerPrefs.GetInt(nameof(RecoveryMP), 10);
+        RecoveryMPLevel = PlayerPrefs.GetInt(nameof(RecoveryMPLevel), 1);
 
 
-        Current_CriticalDamage = PlayerPrefs.GetFloat(nameof(Current_CriticalDamage), 0);
-        CriticalDamageLevel = PlayerPrefs.GetInt(nameof(CriticalDamageLevel), 0);
+        Current_CriticalDamage = PlayerPrefs.GetFloat(nameof(Current_CriticalDamage), 10);
+        CriticalDamageLevel = PlayerPrefs.GetInt(nameof(CriticalDamageLevel), 1);
 
-        Current_Criticalprobability = PlayerPrefs.GetFloat(nameof(Current_Criticalprobability), 0);
-        CriticalprobabilityLevel = PlayerPrefs.GetInt(nameof(CriticalprobabilityLevel), 0);
+        Current_Criticalprobability = PlayerPrefs.GetFloat(nameof(Current_Criticalprobability), 0.1f);
+        CriticalprobabilityLevel = PlayerPrefs.GetInt(nameof(CriticalprobabilityLevel), 1);
 
         AttackSpeed = PlayerPrefs.GetFloat(nameof(AttackSpeed), 1);
 
-        LV = PlayerPrefs.GetInt(nameof(LV), 0);
-        Max_Exp = PlayerPrefs.GetInt(nameof(Max_Exp), 0);
+        LV = PlayerPrefs.GetInt(nameof(LV), 1);
+        Max_Exp = PlayerPrefs.GetInt(nameof(Max_Exp), 100);
         Current_Exp = PlayerPrefs.GetInt(nameof(Current_Exp), 0);
 
 
-        Coin = PlayerPrefs.GetInt(nameof(Coin), 0);
+        Coin = PlayerPrefs.GetInt(nameof(Coin), 100000);
 
         if (PlayerPrefs.HasKey(nameof(ColleageCoinFire)))
             ColleageCoinFire = PlayerPrefs.GetInt(nameof(ColleageCoinFire));
@@ -358,6 +354,7 @@ public class Player : BaseUnit
 
         _Criticalprobability.text = Current_Criticalprobability + " → " + (CriticalprobabilityLevel + Current_Criticalprobability);
         _CriticalprobabilityLevel.text = "LV" + CriticalprobabilityLevel;
+
 
         statDataSave();
     }
@@ -515,9 +512,5 @@ public class Player : BaseUnit
         isSkillCasting = true;
         skillCastTime = Time.time;
 
-    }
-
-    private void OnTriggerEnter(Collider collision)
-    {
     }
 }

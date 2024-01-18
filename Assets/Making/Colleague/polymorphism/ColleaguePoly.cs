@@ -20,6 +20,7 @@ public class ColleagueData
     public int Third_stat_LV;
     public int[] ColleagueStatsPrice;
 }
+
 public abstract class ColleaguePoly : MonoBehaviour
 {
     private void Start()

@@ -58,11 +58,6 @@ public class CoinStatAbility : MonoBehaviour
     }
     private void Start()
     {
-        enterPlayer.Current_Attack += coinAttack;
-        enterPlayer.Current_HP += coinHP;
-        enterPlayer.RecoveryHP += coinRecoveryHP;
-        enterPlayer.Current_CriticalDamage += coinCriticalDamage;
-        enterPlayer.Current_Criticalprobability += coinCriticalprobability;
     }
     void Update()
     {
@@ -173,7 +168,7 @@ public class CoinStatAbility : MonoBehaviour
         }
         else if (index == 4)
         {
-            int originalCriticalProbability = coinCriticalDamage;
+            int originalCriticalProbability = (int)coinCriticalprobability;
             enterPlayer.Coin -= price;
             coinCriticalprobability += 0.1f;
             coinCriticalprobabilityLV += 1;
@@ -197,7 +192,7 @@ public class CoinStatAbility : MonoBehaviour
         _CriticalDamage.text = $"{coinCriticalDamage:F1} → {(0.1f + coinCriticalDamage):F1}";
         _CriticalDamageLevel.text = "LV" + coinCriticalDamageLV;
 
-        _Criticalprobability.text = coinCriticalprobability + " → " + (coinCriticalprobability + coinCriticalprobabilityLV);
+        _Criticalprobability.text = coinCriticalprobability.ToString("F1")+"%" + " → " + (coinCriticalprobability + 0.1f).ToString("F1")+ "%";
         _CriticalprobabilityLevel.text = "LV" + coinCriticalprobabilityLV;
 
        

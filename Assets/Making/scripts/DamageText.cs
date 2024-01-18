@@ -18,7 +18,6 @@ public class DamageText : MonoBehaviour
     void Start()
     {
         text = GetComponent<TextMeshPro>();
-        text.text = damage.ToString();
         alpha = text.color;
         Invoke("DestoryObject", destoryTime);
     }

@@ -19,6 +19,7 @@ MonoBehaviour:
   iconPath: ItemIcon/B3
   backgroundiconPath: GradeBackGround/Green
   Number: 7
-  Attack: 0
+  Attack: 3000
   HP: 0
   HP_recovery: 0
+  iteminfoText: "\uACF5\uACA9\uB825  +3000"

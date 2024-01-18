@@ -4,6 +4,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class FadeInOutStageProcessor : MonoBehaviour
 {
     public bool bossstageDone = false;
@@ -19,7 +20,6 @@ public class FadeInOutStageProcessor : MonoBehaviour
     private StageInfo lastStage;
     private void Awake()
     {
-
         instance = this;
       
     }
@@ -33,16 +33,12 @@ public class FadeInOutStageProcessor : MonoBehaviour
     {
         if (stageInfo.Type == StageType.Boss)
         {
-            OnBossStageDone();
+            //재실행 안되게끔 우선 지우고 스테이지 다시 저장
+            //OnBossStageDone();
+            BattleManager.instance.currentStageInfo = lastStage;
             bossstageDone = true;
         }
     }
-    //문제점 : 보스가 끝날 때 화면이 꺼졋다 커지는게 두번 반복됨
-               //보스가 끝났을 때 꺼짐과동시에 스테이지가 시작되면서 다시 페이드오프가 시작되는것처럼보임
-               //수정 후 문제 지금 스테이지가 끝나면 자동으로 실행되는 무언가가 있는것 같음 그것을 찾으면 됨
-
-
-    //문제점 : 스테이지가 끝나면 3초동안 멈추지 말고 페이드오프를 3초동안 천천히 진행해야함
      
     public void RunBossStage(SunBossInfo sunBossInfo, int level)
     {
@@ -59,13 +55,13 @@ public class FadeInOutStageProcessor : MonoBehaviour
             BattleManager.instance.StartStage(lastStage);
 
     }
-    public void RunFadeOutBoss()
+    public void RunFadeOutStage()
     {
         var sequence = DOTween.Sequence();
 
         fadeImage.enabled = true;
         fadeImage.color = new Color(0f, 0f, 0f, 0f);
-        sequence.Append(fadeImage.DOColor(new Color(0f, 0f, 0f, 1), 3f));
+        sequence.Append(fadeImage.DOColor(new Color(0f, 0f, 0f, 1), 2f));
         sequence.AppendInterval(1);
         sequence.Append(fadeImage.DOColor(new Color(0f, 0f, 0f, 0f), 1f));
         sequence.onComplete += () => { fadeImage.enabled = false; };
@@ -88,7 +84,7 @@ public class FadeInOutStageProcessor : MonoBehaviour
 
         // 2초 대기
         sequence.AppendInterval(2);
-
+        sequence.AppendCallback(onbossStage);
         // 화면 1초동안 원상 복구
         sequence.Append(fadeImage.DOColor(new Color(0f, 0f, 0f, 0f), 3f));
         sequence.onComplete += () =>
@@ -100,6 +96,28 @@ public class FadeInOutStageProcessor : MonoBehaviour
         // 원래 DoTween이 timeScale의 영향을 받음. 아래처럼 Update 규칙을 true로 설정해주면 timeScale의 영향을 안받고 독립적인 Update를 수행함.
         sequence.SetUpdate(isIndependentUpdate: true);
         sequence.Play();
+    }
+    private void onbossStage()
+    {
+        GameObject backGroundImage = GameObject.Find("BackGroundImage");
+        if (backGroundImage != null)
+        {
+            foreach (Transform child in backGroundImage.transform)
+            {
+                PageBackGroundScript pageScript = child.GetComponent<PageBackGroundScript>();
+                if (pageScript != null)
+                {
+                    if (pageScript.stageType == StageType.Boss)
+                    {
+                        child.gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        child.gameObject.SetActive(false);
+                    }
+                }
+            }
+        }
     }
     public void RunFadeOutIn(float fadeOutTime)
     {

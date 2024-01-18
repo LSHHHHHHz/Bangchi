@@ -17,7 +17,7 @@ MonoBehaviour:
   name: WaterC
   iconPath: PetIcon/2.Water
   Number: 2
-  petAttack: 0
-  petHP: 0
-  petExp: 0
-  petCoin: 0
+  petAttack: 100
+  petHP: 100
+  petExp: 100
+  petCoin: 100

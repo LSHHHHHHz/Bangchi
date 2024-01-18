@@ -1,3 +1,4 @@
+using Assets.HeroEditor.Common.Scripts.Common;
 using Assets.HeroEditor.InventorySystem.Scripts.Elements;
 using Assets.Making.Stage;
 using System;
@@ -5,25 +6,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using static UnityEditorInternal.VersionControl.ListControl;
 
 namespace Assets.Battle
 {
     public class BattleManager : MonoBehaviour
     {
-        public List<ItemInfo> myStages = new List<ItemInfo>();
+
+        public List<ItemInfo> MyStages = new List<ItemInfo>();
 
         public event Action<StageInfo> OnStageDone;
         public event Action OnStageRestart;
 
         public static BattleManager instance;
+
         private bool stageEndCheck = false;
+        
         public StageInfo currentStageInfo;
+        public int PageNum;
         public StageInfo LastStageInfo;
         public GameObject stageRoot;
         float stageRestartDelay = 0;
         public bool isRestartStage = false;
-
+        public bool isBossStageStart = false;
+        public bool bossStageDone = false;
+        SunBossInfo sunbossInfo;
+        public Image bossTimeBarMask;
+        public Image bossTimeBar;
 
         //GameManger가 Stage시작을 모르니 BattleManager로 옮김
         public int GetLastPlayedNormalStage() => PlayerPrefs.GetInt("LastPlayedNormalStage", defaultValue: 1);
@@ -32,6 +42,10 @@ namespace Assets.Battle
 
         private void Awake()
         {
+            if (currentStageInfo != null)
+            {
+                PageNum = currentStageInfo.pageNumber;
+            }
             if (instance == null)
             {
                 instance = this;
@@ -44,40 +58,53 @@ namespace Assets.Battle
         }
         void Update()
         {
-            // 스테이지가 끝났는지 체크
-            if (stageEndCheck && IsStageEnded())
+            if(isBossStageStart)
             {
-                FadeInOutStageProcessor.instance.RunFadeOutBoss();
+                sunbossInfo.BasicBossTime -= Time.deltaTime;
+                bossTimeBarMask.SetActive(true);
+                bossTimeBar.fillAmount = (float)(sunbossInfo.BasicBossTime / 5);
+
+                if (sunbossInfo.BasicBossTime< 0)
+                {
+                    isBossStageStart = false;
+                    bossStageDone = true;
+                    bossTimeBarMask.SetActive(false);
+                }
+
+            }
+
+            // 스테이지가 끝났는지 체크
+            if ((stageEndCheck && IsStageEnded())||bossStageDone)
+            {
+                if (sunbossInfo != null)
+                {
+                    sunbossInfo.BasicBossTime = 5;
+                }
+                bossStageDone = false;
+                FadeInOutStageProcessor.instance.RunFadeOutStage();
 
                 // 끝났다면 OnStageDone 이벤트 발생
                 OnStageDone?.Invoke(currentStageInfo);
+                //이 안에서 currentStageInfo를 라스트 스테이지로 저장시켜서 아래 currentStageInfo에 노말이 저장되게됨
+
 
                 // 더이상 스테이지가 끝났는지 체크 안하도록 stageEndCheck 변수 false로 바꿔주기
                 stageEndCheck = false;
 
                 // 스테이지 재시작에 걸리는 대기 시간을 설정해준다.
-                if (currentStageInfo.Type == StageType.Boss)
-                {
-                    stageRestartDelay = 0;
-                }
-                else
-                {
-                    stageRestartDelay = 2;
-                }
+
+                stageRestartDelay = 2;
+                
             }
 
-            // 만약 스테이지 재시작 대기 시간이 있다면
+            //스테이지가 끝나야 delay값이 있어 아래로 넘어갈 수 있음
             if (stageRestartDelay > 0)
             {
-                // 현재 시간 지난 만큼 빼준다.
                 stageRestartDelay -= Time.deltaTime;
-                // 만약 대기 시간이 0보다 작다면 대기가 끝난 것.
                 if (stageRestartDelay < 0)
                 {
-                    if (FadeInOutStageProcessor.instance.bossstageDone == false)
-                    {
-                        RestartStage();
-                    }
+                    RestartStage();
+                    
                 }
             }
             FadeInOutStageProcessor.instance.bossstageDone = false;
@@ -105,7 +132,8 @@ namespace Assets.Battle
         
         public void StartSunbossStage(SunBossInfo sunBossInfo, int level)
         {
-            
+            sunbossInfo = sunBossInfo;
+            isBossStageStart = true;
             int hp = sunBossInfo.BossHPByLevel[level];
             StartStage(sunBossInfo);
             var boss = UnitManager.instance.monsterList[0];

@@ -69,6 +69,7 @@ public class PAS2 : BaseSkill
             StopCoroutine(runningSkillCoroutine);
             runningSkillCoroutine = null;
             Player.instance.playerSpeed = originarSpeed;
+
             Player.instance.statDataSave();
 
         }

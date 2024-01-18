@@ -21,6 +21,7 @@ public class StageUI : MonoBehaviour
     public static StageUI instance;
 
     private Action<int> stageChangeDelegate;
+    private bool isfirstClick = true;
 
     private void Awake()
     {
@@ -33,20 +34,27 @@ public class StageUI : MonoBehaviour
         {
             return;
         }
-        this.currentPage = pageIndex;
-
+        if (!isfirstClick)
+        {
+            this.currentPage = pageIndex;
+            isfirstClick = true;
+        }
+        else
+        {
+            this.currentPage = BattleManager.instance.PageNum;
+        }
         var prefab = Resources.Load<GameObject>("StagePopup");
         stagePopup = Instantiate(prefab).GetComponent<StagePopup>();
 
 
-        PageInfo pageInfo = pageDB.stagePage[pageIndex];
+        PageInfo pageInfo = pageDB.stagePage[currentPage];
 
         stagePopup.Initialize(pageInfo);
-        int pageNumber = pageIndex;
+        int pageNumber = currentPage;
         if (pageNumber < pageDB.stagePage.Count)
         {
             PageInfo selectedPage = pageDB.stagePage[pageNumber];
-            StagePopup.instance.pageIcon.sprite = Resources.Load<Sprite>(selectedPage.pageIconPath);
+            StagePopup.instance.PageNumber.text= "PAGE" + selectedPage.PageNumber.ToString();
         }
     }
     public void RightStageChange()
@@ -60,7 +68,8 @@ public class StageUI : MonoBehaviour
         {
             Destroy(stagePopup.gameObject);
         }
-        // RunStage 호출하여 페이지 업데이트
+        isfirstClick = false;
+        BattleManager.instance.PageNum = currentPage;
         stageChangeDelegate.Invoke(currentPage);
     }
     public void LeftStageChange()
@@ -74,6 +83,8 @@ public class StageUI : MonoBehaviour
         {
             Destroy(stagePopup.gameObject);
         }
+        isfirstClick = false;
+        BattleManager.instance.PageNum = currentPage;
         stageChangeDelegate.Invoke(currentPage);
     }
 }

@@ -70,6 +70,7 @@ public class PAS3 : BaseSkill
             StopCoroutine(runningSkillCoroutine);
             runningSkillCoroutine = null; //
             Player.instance.Current_Attack = originarAttack; // 공격력 초기화
+
             Player.instance.statDataSave();
 
         }

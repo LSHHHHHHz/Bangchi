@@ -100,9 +100,10 @@ public class Monster : BaseUnit
     }
     private void OnTriggerEnter(Collider other)
     {
+        bool isCriticalHit = UnityEngine.Random.value < Player.instance.Current_Criticalprobability / 100;
         if (other.tag == "Melee")
         {
-            bool isCriticalHit = UnityEngine.Random.value < Player.instance.Current_Criticalprobability;
+           
             int damageAmount = isCriticalHit ? (int)Player.instance.Current_CriticalDamage + (int)Player.instance.Current_Attack
                                              : (int)Player.instance.Current_Attack;
 
@@ -118,10 +119,17 @@ public class Monster : BaseUnit
         if (other.tag == "Skill")
         {
             BaseProjectile skill = other.GetComponent<BaseProjectile>();
-            _Current_HP -= skill.damage;
+            int damageAmount = isCriticalHit ? (int)skill.damage + (int)Player.instance.Current_CriticalDamage
+                                             : (int)skill.damage;
+
+            _Current_HP -= damageAmount;
             GameObject hudText = Instantiate(hudDamageText, hudTextRoot.transform);
             hudText.transform.position = transform.position + new Vector3(0, 1, 0);
-            hudText.GetComponent<DamageText>().damage = (int)skill.damage;
+
+            DamageText tmp = hudText.GetComponent<DamageText>();
+            tmp.text.text = damageAmount.ToString();
+            tmp.text.color = isCriticalHit ? Color.red : Color.blue;
+
         }
     }
 

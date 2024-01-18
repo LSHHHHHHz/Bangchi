@@ -38,7 +38,10 @@ public class SkillUI : MonoBehaviour
 
     public Text ActiveInfoAttack;
     public Text ActiveInfoCount;
-    public Text PassiveInfoText;
+    public Text PassiveInfoAttack;
+    public Text PassiveInfoCount;
+
+
     public RectTransform equipOrEnequipPopup;
     private SkillSlot currentSlot;
 
@@ -68,7 +71,7 @@ public class SkillUI : MonoBehaviour
             var button = child.GetComponent<Button>();
             button.onClick.AddListener(() =>
             {
-                EquipOrUnequip(child);
+                EquipPopupOpen(child);
             });
             childList.Add(child);
         }
@@ -111,7 +114,8 @@ public class SkillUI : MonoBehaviour
     //-----------------------------------------------------
     public void EquipPopupOpen(SkillSlot slot)
     {
-        equipOrEnequipPopup.transform.position = new Vector3(360,640,0);
+        equipOrEnequipPopup.anchoredPosition = new Vector3(0, 0, 0);
+        //equipOrEnequipPopup.transform.position = new Vector3(0,0,0);
         isEquipText(slot);
         currentSlot = slot;
     }
@@ -125,6 +129,8 @@ public class SkillUI : MonoBehaviour
     {
         ActiveInfoAttack.SetActive(false);
         ActiveInfoCount.SetActive(false);
+        PassiveInfoAttack.SetActive(false);
+        PassiveInfoCount.SetActive(false);
         equipOrEnequipPopup.transform.position = new Vector3(-950, 0, 0);
         
     }
@@ -136,6 +142,13 @@ public class SkillUI : MonoBehaviour
             ActiveInfoCount.SetActive(true);
             ActiveInfoAttack.text = slot.skillInfo.SkillInfoAttack;
             ActiveInfoCount.text = slot.skillInfo.SkillInfoCount;
+        }
+        else
+        {
+            PassiveInfoAttack.SetActive(true);
+            PassiveInfoCount.SetActive(true);
+            PassiveInfoAttack.text = slot.skillInfo.SkillInfoAttack;
+            PassiveInfoCount.text = slot.skillInfo.SkillInfoCount;
         }
     }
     //-----------------------------------------------------

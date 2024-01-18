@@ -19,6 +19,6 @@ MonoBehaviour:
   iconPath: ItemIcon/S4
   backgroundiconPath: GradeBackGround/Blue
   Number: 16
-  Attack: 0
+  Attack: 400000
   HP: 0
   HP_recovery: 0

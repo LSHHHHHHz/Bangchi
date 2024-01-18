@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a45ecc210e903c428c812bced9ca5e7, type: 3}
   m_Name: HPBoss 1
   m_EditorClassIdentifier: 
+  pageNumber: 0
   stageName: 
   StageNumber: 0
   Type: 1
@@ -25,6 +26,7 @@ MonoBehaviour:
   - prefab: {fileID: 2507269854294887217, guid: 39a5f05a0c43f9741b8f0939ca4c9f16, type: 3}
     position: {x: 5, y: 0, z: 0}
   bossType: 1
+  stageType: 1
   SunBossLevel: 1
   RewardDamage: 0
   RewardHP: 0

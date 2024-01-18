@@ -89,6 +89,7 @@ namespace Assets.Battle
             {
                 InventoryManager.instance.AddItem(droppedItemInfo);
             }
+            Player.instance.statDataSave();
             Destroy(gameObject);
         }
     }

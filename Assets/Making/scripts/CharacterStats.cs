@@ -48,7 +48,7 @@ public class CharacterStats : MonoBehaviour
         _HP.text = player.Max_HP + "";
         _HPRecovery.text = player.RecoveryHP + "";
         _CriticalDamage.text = player.Current_CriticalDamage + "";
-        _Criticalprobability.text = player.Current_Criticalprobability + "";
+        _Criticalprobability.text = player.Current_Criticalprobability.ToString("F2") + "%";
         _MP.text = player.Max_MP + "";
         _MPRecovery.text = player.RecoveryMP + "";
         _CoinGetAmount.text = player.Coin.ToString("N0");

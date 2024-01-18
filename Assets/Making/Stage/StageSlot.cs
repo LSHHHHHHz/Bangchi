@@ -15,10 +15,18 @@ namespace Assets.Making.Stage
         public Image icon;
         public GameObject stageClickButton; //컴포넌트를 갖고오려고 씀
         private Button stageButton;
+        public Text StageNum;
+        public Text MonsterCount;
+
         private void Awake()
         {
             stageButton = stageClickButton.GetComponent<Button>();
             stageButton.onClick.AddListener(StageSelect);
+        }
+        private void Start()
+        {
+            StageNum.text = "Stage"+stageInfo.StageNumber.ToString();
+            MonsterCount.text = "몬스터 수 :"+ stageInfo.monsterSpawnInfos.Count.ToString();
         }
         public void SetData(StageInfo StageInfo)
         {

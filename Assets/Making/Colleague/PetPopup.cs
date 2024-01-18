@@ -12,7 +12,6 @@ using UnityEngine.UI;
 
 public class PetPopup : MonoBehaviour 
 {
-    public event Action OnInitialize;
     public GridLayoutGroup gird;
     public GridLayoutGroup effectgird;
     public GameObject petPrefab;

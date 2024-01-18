@@ -22,3 +22,4 @@ MonoBehaviour:
   Attack: 0
   HP: 100
   HP_recovery: 10
+  iteminfoText: "\uCCB4\uB825 + 100 \uCCB4\uB825\uD68C\uBCF5 +10"

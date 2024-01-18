@@ -11,7 +11,7 @@ public enum BossType
 public class SunBossInfo : StageInfo
 {
     public BossType bossType;
-
+    public StageType stageType;
     public int SunBossLevel;
     public int RewardDamage;
     public int RewardHP;

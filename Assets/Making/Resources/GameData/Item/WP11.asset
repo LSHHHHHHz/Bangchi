@@ -19,6 +19,6 @@ MonoBehaviour:
   iconPath: ItemIcon/A3
   backgroundiconPath: GradeBackGround/Red
   Number: 11
-  Attack: 0
+  Attack: 30000
   HP: 0
   HP_recovery: 0

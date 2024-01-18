@@ -21,3 +21,5 @@ MonoBehaviour:
   Number: 1
   CooldownSeconds: 4
   colldownCount: 4
+  SkillInfoAttack: "\uCD1D\uCCB4\uB825\uC758 10% \uC99D\uAC00"
+  SkillInfoCount: "4\uCD08\uC5D0 1\uBC88 4\uD68C"

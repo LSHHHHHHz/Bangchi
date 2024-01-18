@@ -26,9 +26,10 @@ MonoBehaviour:
   - prefab: {fileID: 6057283511534794994, guid: cbeae6a4862af0e4291d10ecd564c2bb, type: 3}
     position: {x: 5, y: 1, z: 0}
   bossType: 0
+  stageType: 1
   SunBossLevel: 1
   RewardDamage: 0
   RewardHP: 0
   RewardHPRecovery: 0
   BossHPByLevel: 0000000064000000f4010000e8030000d0070000a00f0000
-  BasicBossTime: 30
+  BasicBossTime: 5

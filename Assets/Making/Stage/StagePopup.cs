@@ -1,4 +1,4 @@
-﻿using Assets.Battle;
+using Assets.Battle;
 using Assets.Making.Stage;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ public class StagePopup : MonoBehaviour
 {
     public static StagePopup instance;
 
-    public Image pageIcon;
+    public Text PageNumber;
     public GridLayoutGroup grid;
     public GameObject stagePrefab; //StageSlot 프리펩임
     public StageUI stageUI;

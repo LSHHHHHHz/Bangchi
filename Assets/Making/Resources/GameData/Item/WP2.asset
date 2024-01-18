@@ -19,6 +19,7 @@ MonoBehaviour:
   iconPath: ItemIcon/F2
   backgroundiconPath: GradeBackGround/Gray
   Number: 2
-  Attack: 500
+  Attack: 200
   HP: 0
   HP_recovery: 0
+  iteminfoText: "\uACF5\uACA9\uB825  +200"

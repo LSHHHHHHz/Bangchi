@@ -4,6 +4,7 @@ using UnityEngine;
 using Assets.Item1;
 using System;
 using System.Linq;
+using UnityEngine.UI;
 
 [Serializable] // 클래스를 json등 데이터로 저장할 때 [Serializable]을 붙여줘야 함.
 public class InventoryData 
@@ -24,6 +25,7 @@ public class InventoryManager : MonoBehaviour
     public List<ItemInstance> colleague = new();
 
     public int originalWeaponAddDamage = 100;
+    public Text EquipIteminfo;
     public void Awake()
     {
         instance = this;
@@ -135,5 +137,17 @@ public class InventoryManager : MonoBehaviour
         equippedItems.Remove(existItem);
         OnEquippedItemChanged?.Invoke();
         Save();
+    }
+
+    public void EquipItemInfo(ItemInfo itemInfo)
+    {
+        EquipIteminfo.text = itemInfo.iteminfoText;
+    }
+    public void ClearEquipItemInfo()
+    {
+        if (EquipIteminfo != null)
+        {
+            EquipIteminfo.text = ""; 
+        }
     }
 }
