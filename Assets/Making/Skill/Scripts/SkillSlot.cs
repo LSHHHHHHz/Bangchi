@@ -96,9 +96,6 @@ public class SkillSlot : MonoBehaviour
         isMaxSkillcount = false;
         hideIcon.fillAmount = 0f; 
     }
-    //스킬 실행 했을 때 쿨다운 횟수만큼 쿨이 돌게끔 만들어놓음
-    //만약에 쿨다운 최대치가 된다면 못들어오게 해야함
-    //스테이지 변경 시 초기화 시키며 됨
     private IEnumerator CooldownCoroutine(float duration, int colldownCount)
     {
         for (int i = 0; i < colldownCount; i++)

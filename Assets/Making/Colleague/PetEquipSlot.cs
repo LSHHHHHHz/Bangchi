@@ -98,6 +98,7 @@ public class PetEquipSlot : MonoBehaviour
             PetInventoryManager.Instance.DestroyPetInfoPopup(Popup);
           
         }
+        PetInventoryManager.Instance.equipPets.Clear();
     }
 
     //펫 정보를 드랍아이템매니저에 넘김

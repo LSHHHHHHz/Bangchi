@@ -83,12 +83,6 @@ public class CoinStatAbility : MonoBehaviour
         uiGroup.anchoredPosition = new Vector3(550, -700, 0);
     }
 
-
-    private void PlayPrefabEffect(Vector3 position)
-    {
-        GameObject effectInstance = Instantiate(prefab, position, Quaternion.identity);
-    }
-
     public void OnbuttonPressDown(int index)
     {
         isButtonPress = true;
@@ -132,7 +126,7 @@ public class CoinStatAbility : MonoBehaviour
             coinAttack += coinAttackLV;
             coinAttackLV += 1;
             ablityPrice[index] += 100;
-            abilityPriceText[index].text = ablityPrice[index].ToString();// UI Text에 가격 정보 보여주기
+            abilityPriceText[index].text = ablityPrice[index].ToString();
             enterPlayer.Current_Attack += (coinAttack - originalAttack);
 
         }
@@ -143,7 +137,7 @@ public class CoinStatAbility : MonoBehaviour
             coinHP += coinHPLV;
             coinHPLV += 1;
             ablityPrice[index] += 100;
-            abilityPriceText[index].text = ablityPrice[index].ToString();// UI Text에 가격 정보 보여주기
+            abilityPriceText[index].text = ablityPrice[index].ToString();
             enterPlayer.Current_HP += (coinHP - originalHP);
         }
         else if (index == 2)
@@ -153,7 +147,7 @@ public class CoinStatAbility : MonoBehaviour
             coinRecoveryHP += coinRecoveryHPLV;
             coinRecoveryHPLV += 1;
             ablityPrice[index] += 100;
-            abilityPriceText[index].text = ablityPrice[index].ToString();// UI Text에 가격 정보 보여주기
+            abilityPriceText[index].text = ablityPrice[index].ToString();
             enterPlayer.RecoveryHP += (coinRecoveryHP -originalRecoveryHP);
         }
         else if (index == 3)
@@ -163,7 +157,7 @@ public class CoinStatAbility : MonoBehaviour
             coinCriticalDamage += coinCriticalDamageLV;
             coinCriticalDamageLV += 1;
             ablityPrice[index] += 100;
-            abilityPriceText[index].text = ablityPrice[index].ToString();// UI Text에 가격 정보 보여주기
+            abilityPriceText[index].text = ablityPrice[index].ToString();
             enterPlayer.Current_CriticalDamage += (coinCriticalDamage - originalCriticalDamage) ;
         }
         else if (index == 4)
@@ -173,7 +167,7 @@ public class CoinStatAbility : MonoBehaviour
             coinCriticalprobability += 0.1f;
             coinCriticalprobabilityLV += 1;
             ablityPrice[index] += 100;
-            abilityPriceText[index].text = ablityPrice[index].ToString();// UI Text에 가격 정보 보여주기
+            abilityPriceText[index].text = ablityPrice[index].ToString();
             enterPlayer.Current_Criticalprobability += (coinCriticalprobability - originalCriticalProbability);
         }
         statDataSave();
@@ -250,20 +244,20 @@ public class CoinStatAbility : MonoBehaviour
     }
     public void statDataLoad()
     {
-        coinAttack = PlayerPrefs.GetInt(nameof(coinAttack), 0);
-        coinAttackLV = PlayerPrefs.GetInt(nameof(coinAttackLV), 0);
+        coinAttack = PlayerPrefs.GetInt(nameof(coinAttack), 1);
+        coinAttackLV = PlayerPrefs.GetInt(nameof(coinAttackLV), 1);
 
-        coinHP = PlayerPrefs.GetInt(nameof(coinHP), 0);
-        coinHPLV = PlayerPrefs.GetInt(nameof(coinHPLV), 0);
+        coinHP = PlayerPrefs.GetInt(nameof(coinHP), 1);
+        coinHPLV = PlayerPrefs.GetInt(nameof(coinHPLV), 1);
 
-        coinRecoveryHP = PlayerPrefs.GetInt(nameof(coinRecoveryHP), 0);
-        coinRecoveryHPLV = PlayerPrefs.GetInt(nameof(coinRecoveryHPLV), 0);
+        coinRecoveryHP = PlayerPrefs.GetInt(nameof(coinRecoveryHP), 1);
+        coinRecoveryHPLV = PlayerPrefs.GetInt(nameof(coinRecoveryHPLV), 1);
 
-        coinCriticalDamage = PlayerPrefs.GetInt(nameof(coinCriticalDamage), 0);
-        coinCriticalDamageLV = PlayerPrefs.GetInt(nameof(coinCriticalDamageLV), 0);
+        coinCriticalDamage = PlayerPrefs.GetInt(nameof(coinCriticalDamage), 1);
+        coinCriticalDamageLV = PlayerPrefs.GetInt(nameof(coinCriticalDamageLV), 1);
 
-        coinCriticalprobability = PlayerPrefs.GetFloat(nameof(coinCriticalprobability), 0);
-        coinCriticalprobabilityLV = PlayerPrefs.GetInt(nameof(coinCriticalprobabilityLV), 0);
+        coinCriticalprobability = PlayerPrefs.GetFloat(nameof(coinCriticalprobability), 1);
+        coinCriticalprobabilityLV = PlayerPrefs.GetInt(nameof(coinCriticalprobabilityLV), 1);
 
         if (PlayerPrefs.HasKey("abliltyCoinLengh"))
         {

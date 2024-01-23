@@ -45,9 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
-  damage: 0
   skillCount: 0
+  skillCollSownMaxCount: 1
   passiveSpeedIncrease: 0.1
   addSpeed: 0
-  timetime: 0
   skillSlot: {fileID: 0}

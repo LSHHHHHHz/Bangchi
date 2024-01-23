@@ -54,7 +54,7 @@ public class PAS1 : BaseSkill
 
     private IEnumerator SkillCoroutine()
     {
-        while (isSkillExecuted && skillCount<4)
+        while (isSkillExecuted && skillCount< skillCollSownMaxCount)
         {
             addHP = originarHP * passiveHPIncrease;
             Player.instance.Max_HP += addHP;

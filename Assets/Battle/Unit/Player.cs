@@ -11,8 +11,10 @@ using UnityEngine.UI;
 
 public class Player : BaseUnit
 {
-
+    public int[] skillRayDistance;
+    public bool[] isSkillHit = new bool[8];
     public float playerSpeed;
+    public RaycastHit[][] skillhits;
 
     public GameObject[] weapons;
     public GameObject[] shiled;
@@ -125,6 +127,7 @@ public class Player : BaseUnit
     public static Player instance;
     void Awake()
     {
+        skillhits = new RaycastHit[skillRayDistance.Length][];
         instance = this;
         prefabs = new DropItem();
         rigid = GetComponent<Rigidbody>();
@@ -137,24 +140,26 @@ public class Player : BaseUnit
 
     private void Start()
     {
-        RefreshWeapon(); //이걸 빼면 캐릭터에 무기가 장착되어있지 않음
+        RefreshWeapon();
         InventoryManager.instance.OnEquippedItemChanged += RefreshWeapon;
-        _Attack.text = Current_Attack + " → " + (AttackLevel + Current_Attack);
-        _HP.text = Max_HP + " → " + (HPLevel + Max_HP);
-        LV_txt.text = "LV" + LV;
-        Exp_status.text = Current_Exp + "/" + Max_Exp + "(" + Current_Exp / Max_Exp + ")";  
-     
+        if (Max_Exp > 0)
+        {
+            float expPercentage = (float)Current_Exp / Max_Exp * 100;
+            Exp_status.text = Current_Exp + "/" + Max_Exp + " (" + expPercentage.ToString("F2") + "%)";
+        }
+        else
+        {
+            Exp_status.text = Current_Exp + "/" + Max_Exp + " (0%)";
+        }
         StartCoroutine(RecoveryRoutine());
     }
 
-
-    // Update is called once per frame
     void Update()
     {
+        SkillToFightRay();
         Move();
         rayCast();
         Fighting();
-        SkillCasting();
         TopStatus();
         ExpAndLevel();
         if(hits.Length> 0)
@@ -165,15 +170,6 @@ public class Player : BaseUnit
         {
             ishits = false;
         }
-    }
-    private void OnApplicationQuit()
-    {
-        statDataSave();
-    }
-    public void AddValueReset()
-    {
-        AddCoin = 0;
-        AddExp = 0;
     }
     private void TopStatus()
     {
@@ -231,18 +227,6 @@ public class Player : BaseUnit
             }
         }
     }
-                //for (int i = 0; i < shiled.Length; ++i)
-                //{
-                //    if (i == shiledIndex)
-                //    {
-                //        shiled[i].SetActive(true);
-                //    }
-                //    else
-                //    {
-                //        shiled[i].SetActive(false);
-                //    }
-                //}
-
     public void statDataSave()
     {
         Debug.Log("Saving Current_Attack: " + Current_Attack);
@@ -283,7 +267,6 @@ public class Player : BaseUnit
         PlayerPrefs.SetInt(nameof(ColleageCoinWater), ColleageCoinWater);
         PlayerPrefs.SetInt(nameof(ColleageCoinWind), ColleageCoinWind);
 
-        // PlayerPrefs에 저장된 값을 디스크에 기록
         PlayerPrefs.Save();
     }
 
@@ -291,7 +274,7 @@ public class Player : BaseUnit
     {
         Current_Attack = PlayerPrefs.GetFloat(nameof(Current_Attack), 100);
         AttackLevel = PlayerPrefs.GetInt(nameof(AttackLevel), 1);
-        Debug.Log("Loaded Current_Attack: " + Current_Attack);
+
         Max_HP = PlayerPrefs.GetFloat(nameof(Max_HP), 100);
         Current_HP = PlayerPrefs.GetFloat(nameof(Current_HP), 100);
         HPLevel = PlayerPrefs.GetInt(nameof(HPLevel), 1);
@@ -337,37 +320,14 @@ public class Player : BaseUnit
         fireDelay += Time.deltaTime;
         isFireReady = weapons1.rate < fireDelay;
     }
-
-    void ablityUpdate()
-    {
-        _Attack.text = Current_Attack + " → " + (AttackLevel + Current_Attack);
-        _AttackLevel.text = "LV" + AttackLevel;
-
-        _HP.text = Max_HP + " → " + (HPLevel + Max_HP);
-        _HPLevel.text = "LV" + HPLevel;
-
-        _Recovery.text = RecoveryHP + " → " + (RecoveryHPLevel + RecoveryHP);
-        _RecoveryLevel.text = "LV" + RecoveryHPLevel;
-
-        _CriticalDamage.text = $"{Current_CriticalDamage:F1} → {(0.1f + Current_CriticalDamage):F1}";
-        _CriticalDamageLevel.text = "LV" + CriticalDamageLevel;
-
-        _Criticalprobability.text = Current_Criticalprobability + " → " + (CriticalprobabilityLevel + Current_Criticalprobability);
-        _CriticalprobabilityLevel.text = "LV" + CriticalprobabilityLevel;
-
-
-        statDataSave();
-    }
-
-
-
     void Move()
     {
         if (isFighting || isSkillCasting)
             return;
 
         Vector2 moveVec = new Vector2(playerSpeed, 0);
-        //rigid.velocity = moveVec * playerSpeed * Time.deltaTime; // 물리적인 힘으로 움직이게끔 하는 것, 이 플레이어는 그럴 필요가 없어서 Translate로 강제로 이동시키기.
+        //rigid.velocity = moveVec * playerSpeed * Time.deltaTime;
+        // 물리적인 힘으로 움직이게끔 하는 것, 이 플레이어는 그럴 필요가 없어서 Translate로 강제로 이동시킴.
         transform.Translate(moveVec * Time.deltaTime);
     }
 
@@ -398,17 +358,6 @@ public class Player : BaseUnit
         }
     }
 
-    public void SkillCasting()
-    {
-        if (isSkillCasting == false)
-            return;
-
-        if (Time.time - skillCastTime > 0.5f)
-        {
-            isSkillCasting = false;
-        }
-    }
-
     // 내가 전투해야 하는지, 아닌지 검사하는 함수.
     private bool isSwing;
     private bool NeedToFight()
@@ -436,6 +385,7 @@ public class Player : BaseUnit
                     if (!isSwing)
                     {
                         StartSwingAnimation();
+                        StartCoroutine(playerAttack());
                     }
                     return true;
                 }
@@ -443,6 +393,36 @@ public class Player : BaseUnit
         }
         isSwing = false;
         return false;
+    }
+    private void SkillToFightRay()
+    {
+        Ray ray = new Ray();
+        ray.origin = tr.position;
+        ray.direction = tr.right;
+        for(int i = 0; i< skillRayDistance.Length; ++i)
+        {
+            if (Physics.RaycastAll(ray, skillRayDistance[i], layerMask) != null) 
+            {
+
+            skillhits[i] = Physics.RaycastAll (ray, skillRayDistance[i], layerMask);
+            }
+            if (skillhits[i].Length > 0)
+            {
+                isSkillHit[i] = true;
+            }
+            else
+            {
+                isSkillHit[i] = false;
+            }
+        }
+    }
+    private IEnumerator playerAttack()
+    {
+        while (isSwing)
+        {
+            AudioManager.instance.PlaySound("PlayerAttack");
+            yield return new WaitForSeconds(1f);
+        }
     }
     private void StartSwingAnimation()
     {
@@ -506,11 +486,5 @@ public class Player : BaseUnit
         Exp_Bar.fillAmount = (float)Current_Exp / Max_Exp;
         float percent = (float)Current_Exp / Max_Exp * 100;
         Exp_status.text = Current_Exp + "/" + Max_Exp + "(" + percent.ToString("F2") + "%)";
-    }
-    public void OnUseSkill(BaseSkill skill)
-    {
-        isSkillCasting = true;
-        skillCastTime = Time.time;
-
     }
 }

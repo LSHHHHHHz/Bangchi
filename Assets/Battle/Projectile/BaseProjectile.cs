@@ -31,7 +31,8 @@ namespace Assets.Battle.Projectile
 
         bool isSkill4CoroutineRunning = false;
         private float lastUpdateTime;
-        protected virtual void Awake()
+        bool isSkill3Activated = false;
+       void Awake()
         {
             if(Skillnumber ==1)
             {
@@ -86,8 +87,6 @@ namespace Assets.Battle.Projectile
         }
         private void OnTriggerEnter(Collider other)
         {
-            // skill3Trigger();
-
             if (owner is Player)
             {
                 // 몬스터 공격
@@ -95,18 +94,13 @@ namespace Assets.Battle.Projectile
                 if (monster != null)
                 {
                     monster._Current_HP -= damage;
-                    // 
+                  
                 }
             }
             else
             {
                 // 플레이어 공격
             }
-        }
-
-        private void OnTriggerStay(Collider other)
-        {
-
         }
 
         public void skill2Status()
@@ -122,14 +116,15 @@ namespace Assets.Battle.Projectile
 
         public void skill3Status()
         {
-            if (boxcollider != null && Skillnumber == 3)
+            if (boxcollider != null && Skillnumber == 3 && isSkill3Activated == false)
             {
                 if (elapsedTime > 2)
                 {
                     boxcollider.isTrigger = false;
                     boxcollider.size = new Vector3(3, 3, 3);
                     boxcollider.isTrigger = true;
-                    damage = 2;
+                    damage *= 2;
+                    isSkill3Activated = true;
                 }
             }
         }

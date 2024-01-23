@@ -107,7 +107,6 @@ public class IngameSkillList : MonoBehaviour
 
     private void Start()
     {
-        // 최초 1회만 이벤트에 콜백을 등록함.
         SkillInventoryManager.instance.OnEquippedSkillsChanged += OnEquippedSkillsChanged;
         Refresh();
     }
@@ -200,8 +199,12 @@ public class IngameSkillList : MonoBehaviour
     private void OnSkillButtonClicked(SkillSlot slot, int index)
     {
         if (slot.IsCooldown || slot.isMaxSkillcount)
+        {
             return;
-        if(Player.instance.ishits == false && slot.skillInfo.type == SkillType.Active)
+        }
+        //스킬
+        int skillNumber = slot.skillInfo.Number;
+        if (Player.instance.isSkillHit[skillNumber] == false && slot.skillInfo.type == SkillType.Active )
         {
             return;
         }

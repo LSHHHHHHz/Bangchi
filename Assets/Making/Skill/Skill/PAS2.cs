@@ -51,7 +51,7 @@ public class PAS2 : BaseSkill
 
     private IEnumerator SkillCoroutine()
     {
-        while (isSkillExecuted && skillCount < 2)
+        while (isSkillExecuted && skillCount < skillCollSownMaxCount)
         {
             addSpeed = passiveSpeedIncrease;
             Player.instance.playerSpeed += addSpeed;

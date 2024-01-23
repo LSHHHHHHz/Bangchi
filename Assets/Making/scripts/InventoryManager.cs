@@ -24,7 +24,6 @@ public class InventoryManager : MonoBehaviour
     public List<ItemInstance> equippedItems = new(); //장착 아이템 리스트
     public List<ItemInstance> colleague = new();
 
-    public int originalWeaponAddDamage = 100;
     public Text EquipIteminfo;
     public void Awake()
     {

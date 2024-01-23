@@ -40,7 +40,7 @@ public class SkillGachaPopup : MonoBehaviour
         children.Clear(); // 리스트 비움
         foreach (GameObject child in effectchildren)
         {
-            Destroy(child); //객체 파괴
+            Destroy(child); 
         }
         children.Clear();
         this.oneMoreTimeAction = oneMoreTime;
@@ -65,9 +65,7 @@ public class SkillGachaPopup : MonoBehaviour
                 yield return new WaitForSeconds(2f);
                 Destroy(effectwait);
             }
-            // 아이템 슬롯 생성
             SkillSlot skillslot = Instantiate(itemPrefab, grid.transform).GetComponent<SkillSlot>();
-            // 아이템 슬롯에 뽑은 아이템 데이터 적용
             skillslot.SetData(skillInfo);
 
             skillslot.transform.localScale = Vector3.one * 4f;
@@ -80,13 +78,13 @@ public class SkillGachaPopup : MonoBehaviour
                 switch (skillInfo.grade)
                 {
                     case SkillGrade.B:
-                        mainModule.startColor = Color.red; // 빨간색
+                        mainModule.startColor = Color.red; 
                         break;
                     case SkillGrade.A:
-                        mainModule.startColor = Color.blue; // 파란색
+                        mainModule.startColor = Color.blue; 
                         break;
                     case SkillGrade.S:
-                        mainModule.startColor = Color.yellow; // 금색
+                        mainModule.startColor = Color.yellow; 
                         break;
 
                 }
@@ -107,8 +105,6 @@ public class SkillGachaPopup : MonoBehaviour
             sequence.AppendCallback(() => skillslot.icon.SetActive(true));
             sequence.AppendCallback(() => skillslot.backGroundImage.SetActive(true));
             sequence.Append(skillslot.effectImage.DOFade(0, 0.3f));
-
-           // sequence.Append(skillslot.transform.DOScale(1, 0.2f));
             sequence.Play();
             
 
@@ -116,11 +112,6 @@ public class SkillGachaPopup : MonoBehaviour
             children.Add(skillslot.gameObject);
 
             yield return skillslot.transform.DOScale(Vector3.one, 0.15f).WaitForCompletion();
-
-            //sequence.WaitForCompletion을 쓰게 되면 위 WaitForSecondes가 의미없음
-            //Sequence가 더 시간이 길면 의미가 없다는 말
-            // yield return sequence.WaitForCompletion();
-
         }
 
         isCoroutineDone = true;
@@ -137,7 +128,6 @@ public class SkillGachaPopup : MonoBehaviour
         Destroy(gameObject);
     }
 
-    // 다시 뽑기 버튼 누르면 호출됨
     public void OneMoreTime1()
     {
         if (isCoroutineDone == false)

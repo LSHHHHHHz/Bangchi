@@ -12,16 +12,12 @@ public class Monster : BaseUnit
     public GameObject hudDamageText;
     GameObject hudTextRoot;
     GameObject DropItemRoot;
-    bool isMonsterDeath;
-
-    public int MonsterExp = 10;
-
     Rigidbody2D rigid;
     public Collider collider;
 
-    public GameObject expIconPrefab; //경험치 아이콘
-    public GameObject coinIconPrefab; //골드 아이콘
-    public GameObject enforceCoinPrefab; //강화석 아이콘
+    public GameObject expIconPrefab; 
+    public GameObject coinIconPrefab; 
+    public GameObject enforceCoinPrefab; 
 
     public GameObject weaponPrefab;
     public float weaponPrefabProbability;
@@ -60,6 +56,7 @@ public class Monster : BaseUnit
     {
         if (_Current_HP <= 0)
         {
+            AudioManager.instance.PlaySound("MonsterDie");
             elapsedTime += Time.deltaTime;
             if (_MonsterInfoType == MonsterInfoType.normar)
             {
@@ -131,10 +128,5 @@ public class Monster : BaseUnit
             tmp.text.color = isCriticalHit ? Color.red : Color.blue;
 
         }
-    }
-
-    IEnumerator Death()
-    {
-        yield return null;
     }
 }

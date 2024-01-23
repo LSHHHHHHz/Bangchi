@@ -1,4 +1,4 @@
-﻿using Assets.Item1;
+using Assets.Item1;
 using Assets.Making.Stage;
 using System.Collections.Generic;
 using System.Linq;
@@ -220,8 +220,7 @@ namespace Assets.Editor
             }
         }
 
-        // 스테이지 정보에 들어있는 몬스터 소환 정보를 씬에 출력한다.
-        private void RefreshStagePreview() //★이부분 잘 모르겠음//
+        private void RefreshStagePreview() 
         {
             StageInfoUtility.PrepareStage(testObjectRoot, currentStageInfo);
         }

@@ -66,18 +66,15 @@ public class PetPopup : MonoBehaviour
 
             petSlot.effecticon.transform.localScale = Vector3.one * 7;
 
-    
-
-            // 아이템 프리팹이 원래 Active:false였으니 이것도 false인 상태. true로 바꿔서 보이게 한다.
             petSlot.gameObject.SetActive(true);
             petSlot.icon.color = new Color(1, 1, 1, 0);
             var sequence = DOTween.Sequence();
 
             petSlot.effecticon.transform.DOScale(1, 0.1f);
             sequence.AppendCallback(() => petSlot.effecticon.gameObject.SetActive(true));
-            sequence.Append(petSlot.effecticon.DOFade(0.5f, 0.1f)); // 흰색 사라지기
+            sequence.Append(petSlot.effecticon.DOFade(0.5f, 0.1f)); 
             sequence.AppendCallback(() => petSlot.icon.gameObject.SetActive(true));
-            sequence.Append(petSlot.effecticon.DOFade(0f, 0.1f)); // 흰색 사라지기
+            sequence.Append(petSlot.effecticon.DOFade(0f, 0.1f)); 
 
             sequence.Join(petSlot.icon.DOFade(1, 0.1f));
            

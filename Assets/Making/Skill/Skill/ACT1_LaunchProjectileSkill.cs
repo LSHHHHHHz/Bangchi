@@ -13,16 +13,6 @@ namespace Assets.Battle.Skill
     public class ACT1_LaunchProjectileSkill : BaseSkill
     {
         public GameObject projectilePrefab;
-        private void Awake()
-        {
-        }
-        private void Start()
-        {
-        }
-        private void Update()
-        {
-
-        }
         public override void Execute()
         {
             var projectile = Instantiate(projectilePrefab).GetComponent<BaseProjectile>();

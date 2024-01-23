@@ -22,8 +22,8 @@ public class CharacterStats : MonoBehaviour
     public Text _Criticalprobability;
     public Text _MP;
     public Text _MPRecovery;
-    public Text _CoinGetAmount; //획득량은 여기서만 조절
-    public Text _ExpGetAmount;  //획득량은 여기서만 조절
+    public Text _CoinGetAmount; 
+    public Text _ExpGetAmount;  
 
     public RectTransform characterUI;
     public RectTransform characterUIClose;

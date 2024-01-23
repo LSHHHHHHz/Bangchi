@@ -53,13 +53,8 @@ public class PetUI : MonoBehaviour
     {
         petInventorySizeStatus.text = PetInventoryManager.Instance.myPets.Count + " / " + PetInventoryManager.Instance.maxaccumulatePetsCount + "";
     }
-
-    //펫이 늘어날 때마다 그리드 사이즈 크게하려고 만듬
-    //gridSizeUP 때문에 PetInventoryManager에서 Load를 awake로 바꿈 문제없는지
     public void gridSizeChange()
     {
-        //펫인벤토리의 개수가 초과했을 때 160을 증가시키고 4개 증가 때마다 160 증가
-        //기본값 800
         RectTransform rectTransform = GridUI.GetComponent<RectTransform>();
         Vector2 size = rectTransform.sizeDelta;
          int count = PetInventoryManager.Instance.myPets.Count / 4;
@@ -71,7 +66,6 @@ public class PetUI : MonoBehaviour
     }
     public void RunPet(int count)
     {
-        //☆예상 값보다 작을때만 실행하게 바꿈
         if (PetInventoryManager.Instance.myPets.Count + count<= PetInventoryManager.Instance.maxaccumulatePetsCount)
         {
             if (petPopup == null)
@@ -86,7 +80,6 @@ public class PetUI : MonoBehaviour
 
             foreach (var pet in petGachaResult.pets)
             {
-                //PetInventoryManager.Instance.AddPet(pet); <--펫 인벤토리에서는 딱히 필요없음 count가 필요 없기 때문
                 PetInventoryManager.Instance.AddPet(pet);
 
             }
@@ -111,7 +104,7 @@ public class PetUI : MonoBehaviour
     public void PetInventorySizeBuing()
     {
         if (grid.transform.childCount <= PetInventoryManager.Instance.maxaccumulatePetsCount)
-        { //5개를 샀을 때 최대치보다ㅏ 커지면 안됨
+        { 
             Debug.Log("최대치");
             return;
         }
@@ -183,8 +176,6 @@ public class PetUI : MonoBehaviour
     }
     public void petUIopen()
     {
-        //★이거 있으니 에러 발생, gridSizeUp을 instance위에 놓으면 에러 아래에 놓으면 에러X
-       // UIManager.instance.OnBottomButtonClicked();
         petUI.localPosition = new Vector3(3727, 0, 0);
         PetAndColleagueUI.SetActive(false);
     }

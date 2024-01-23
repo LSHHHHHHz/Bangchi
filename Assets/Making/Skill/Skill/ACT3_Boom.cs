@@ -23,11 +23,16 @@ public class ACT3_Boom : BaseSkill
 
     private IEnumerator SkillCoroutine()
     {
-        Vector3 playerPosition = Player.instance.transform.position;
-        Vector3 spawnPos = playerPosition + new Vector3(1, 0.1f, 0); 
-        GameObject act3Skill = Instantiate(effectPrefab, spawnPos, Quaternion.identity);
-        yield return new WaitForSeconds(3f);
-
+        if (Player.instance.skillhits[2].Length > 0) 
+        {      //Vector3 playerPosition = Player.instance.transform.position;
+            Vector3 spawnPos = Player.instance.skillhits[2][0].transform.position;
+            GameObject act3Skill = Instantiate(effectPrefab, spawnPos, Quaternion.identity);
+            yield return new WaitForSeconds(3f);
+        }
+        else
+        {
+            Debug.LogError("적 없음");
+        }
     }
 }
 

@@ -12,7 +12,6 @@ public class BossUI : MonoBehaviour
 {
     public static BossUI instance;
 
-    public EXP_Cristal exp;
     public float fadeTime = 1;
     public CanvasGroup canvasGroup;
     public RectTransform rectTransform;

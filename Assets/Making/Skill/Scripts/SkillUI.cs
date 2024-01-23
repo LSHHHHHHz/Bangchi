@@ -140,15 +140,15 @@ public class SkillUI : MonoBehaviour
         {
             ActiveInfoAttack.SetActive(true);
             ActiveInfoCount.SetActive(true);
-            ActiveInfoAttack.text = slot.skillInfo.SkillInfoAttack;
-            ActiveInfoCount.text = slot.skillInfo.SkillInfoCount;
+            ActiveInfoAttack.text = slot.skillInfo.SkillInfoAttackText;
+            ActiveInfoCount.text = slot.skillInfo.SkillInfoCountText;
         }
         else
         {
             PassiveInfoAttack.SetActive(true);
             PassiveInfoCount.SetActive(true);
-            PassiveInfoAttack.text = slot.skillInfo.SkillInfoAttack;
-            PassiveInfoCount.text = slot.skillInfo.SkillInfoCount;
+            PassiveInfoAttack.text = slot.skillInfo.SkillInfoAttackText;
+            PassiveInfoCount.text = slot.skillInfo.SkillInfoCountText;
         }
     }
     //-----------------------------------------------------

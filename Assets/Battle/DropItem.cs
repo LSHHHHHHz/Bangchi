@@ -16,7 +16,6 @@ namespace Assets.Battle
         public int exp;
         public int coin;
         public int enforceCoin;
-
         public ItemInfo droppedItemInfo;
         public ItemDB itemDB;
 
@@ -33,6 +32,8 @@ namespace Assets.Battle
         private void Awake()
         {
             createdTime = Time.time;
+            this.exp = BattleManager.instance.currentStageInfo.exp;
+            this.coin = BattleManager.instance.currentStageInfo.coin;
         }
         private void Start()
         {
@@ -80,7 +81,7 @@ namespace Assets.Battle
             var player = other.transform.GetComponent<Player>();
             if (player == null)
                 return;
-
+            AudioManager.instance.PlaySound("DropItem");
             player.Current_Exp += exp + player.AddExp;
             player.Coin += coin + player.AddCoin;
             player.enforceCoin += enforceCoin;
