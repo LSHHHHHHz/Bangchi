@@ -14630,8 +14630,8 @@ GameObject:
   - component: {fileID: 400010}
   - component: {fileID: 19800006}
   - component: {fileID: 19900006}
-  - component: {fileID: 2061159721240897130}
   - component: {fileID: -2922168146323417931}
+  - component: {fileID: 5095613561192949002}
   m_Layer: 0
   m_Name: ACT 3_Projectil
   m_TagString: Skill
@@ -19462,27 +19462,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &2061159721240897130
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 100010}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fe6b5cff6078b24b9300d3be1bcc7b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Skillnumber: 3
-  owner: {fileID: 0}
-  damage: 1
-  lifetime: 5
-  speed: 0
-  direction: {x: 0, y: 0, z: 0}
-  startPos: {x: 0, y: 0, z: 0}
-  movePos: {x: 0, y: 0, z: 0}
-  distance: 100
 --- !u!65 &-2922168146323417931
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19496,3 +19475,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5095613561192949002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cfd90f5ed505584eaef7eb84888eb57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  owner: {fileID: 0}
+  damage: 0
+  elapsedTime: 0
+  boxcollider: {fileID: -2922168146323417931}

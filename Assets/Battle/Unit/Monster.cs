@@ -115,7 +115,7 @@ public class Monster : BaseUnit
         }
         if (other.tag == "Skill")
         {
-            BaseProjectile skill = other.GetComponent<BaseProjectile>();
+            BaseSkillLaunch skill = other.GetComponent<BaseSkillLaunch>();
             int damageAmount = isCriticalHit ? (int)skill.damage + (int)Player.instance.Current_CriticalDamage
                                              : (int)skill.damage;
 

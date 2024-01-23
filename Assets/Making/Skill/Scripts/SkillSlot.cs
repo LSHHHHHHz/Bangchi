@@ -26,6 +26,7 @@ public class SkillSlot : MonoBehaviour
     private void Start()
     {
         BattleManager.instance.OnStageRestart += EndSkillCooldown;
+        
     }
     private void Update()
     {

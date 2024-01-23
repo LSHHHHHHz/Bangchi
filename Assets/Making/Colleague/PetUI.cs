@@ -62,6 +62,7 @@ public class PetUI : MonoBehaviour
         {
             size.y = 800 + 160 * (count - 4);
             rectTransform.sizeDelta = size;
+            
         }
     }
     public void RunPet(int count)

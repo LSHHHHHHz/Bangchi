@@ -9,7 +9,6 @@ using UnityEngine;
 using UnityEngine.UI;
 public class CharacterStats : MonoBehaviour
 {
-    //public Player player;
     [SerializeField]
     private Player player;
 
@@ -30,7 +29,8 @@ public class CharacterStats : MonoBehaviour
 
     public ItemSlot equipWeaponSlot; //무기 슬롯을 담을 변수
     public ItemSlot equipShieldSLot;
-
+    private ItemSlot currentWeapon;
+    private ItemSlot currentShield;
 
     void Start()
     {

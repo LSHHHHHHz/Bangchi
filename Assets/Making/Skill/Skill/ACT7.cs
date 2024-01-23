@@ -49,7 +49,7 @@ public class ACT7 : BaseSkill
         yield return new WaitForSeconds(1f);
         
         GameObject lastEffect = Instantiate(effectPrefab, spawnPosition2, Quaternion.identity);
-        BaseProjectile projectile= lastEffect.GetComponent<BaseProjectile>();
+        ACT_Skill1_Projectile projectile= lastEffect.GetComponent<ACT_Skill1_Projectile>();
         projectile.damage *= 2;
 
         lastEffect.transform.localScale = Vector3.one * 2f; // 2배 더 크게

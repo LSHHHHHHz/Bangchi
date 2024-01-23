@@ -140,7 +140,7 @@ public class IngameSkillList : MonoBehaviour
             {
                 if (equipSkill.skillInfo == null)
                 {//원래 이쪽으로 들어오면 안됨
-                    Debug.LogError("Skillinfo null" + i);
+                    //Debug.LogError("Skillinfo null" + i);
                     skillsList.Add(null);
                     continue;
                 }

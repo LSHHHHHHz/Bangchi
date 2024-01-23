@@ -87,7 +87,7 @@ public class InventoryManager : MonoBehaviour
         {
             // json이 값이 들어있다는 뜻
             var inventoryData = JsonUtility.FromJson<InventoryData>(json);
-            for (int i = 0; i < inventoryData.myItems.Count; ++i)
+            for (int i = 0; i < inventoryData.myItems.Count; i++)
             {
                 var item = inventoryData.myItems[i];
                 if (item.itemInfo == null)
@@ -96,7 +96,7 @@ public class InventoryManager : MonoBehaviour
                 myItems.Add(item);
             }
 
-            for (int i = 0; i < inventoryData.equippedItems.Count; ++i)
+            for (int i = 0; i < inventoryData.equippedItems.Count; i++)
             {
                 var item = inventoryData.equippedItems[i];
                 if (item.itemInfo == null)
@@ -106,36 +106,36 @@ public class InventoryManager : MonoBehaviour
             }
         }
     }
- 
+
 
     public void Equip(ItemInfo itemInfo)
     {
-        ItemInstance existItem = myItems.Find(item => item.itemInfo == itemInfo); 
-        if (existItem == null)
+        // 같은 종류의 아이템이 이미 장착되어 있는지 확인
+        ItemInstance existingItem = equippedItems.Find(item => item.itemInfo.type == itemInfo.type);
+        if (existingItem != null)
         {
-            // 아이템을 가지고 있지 않다는 것!
-            throw new Exception($"Item not found : {itemInfo.name}");
+            // 이미 같은 종류의 아이템이 장착되어 있으면 제거
+            equippedItems.Remove(existingItem);
         }
 
-        equippedItems.Add(existItem);
-        
-        OnEquippedItemChanged?.Invoke();
+        // 새 아이템을 장착
+        equippedItems.Add(new ItemInstance() { itemInfo = itemInfo });
 
+        OnEquippedItemChanged?.Invoke();
         Save();
     }
 
     public void UnEquip(ItemInfo itemInfo)
     {
-        ItemInstance existItem = equippedItems.Find(item => item.itemInfo == itemInfo);
-        if (existItem == null)
+        // 장착된 아이템을 찾음
+        ItemInstance itemToUnEquip = equippedItems.Find(item => item.itemInfo == itemInfo);
+        if (itemToUnEquip != null)
         {
-            // 장착을 안했다는 얘기
-            return;
+            // 장착된 아이템이 있으면 제거
+            equippedItems.Remove(itemToUnEquip);
+            OnEquippedItemChanged?.Invoke();
+            Save();
         }
-
-        equippedItems.Remove(existItem);
-        OnEquippedItemChanged?.Invoke();
-        Save();
     }
 
     public void EquipItemInfo(ItemInfo itemInfo)
