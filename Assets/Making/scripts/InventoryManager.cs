@@ -21,7 +21,7 @@ public class InventoryManager : MonoBehaviour
 
     public static InventoryManager instance;
     public List<ItemInstance> myItems = new();
-    public List<ItemInstance> equippedItems = new(); //장착 아이템 리스트
+    public List<ItemInstance> equippedItems = new();
     public List<ItemInstance> colleague = new();
 
     public Text EquipIteminfo;
@@ -106,35 +106,36 @@ public class InventoryManager : MonoBehaviour
             }
         }
     }
-
+ 
 
     public void Equip(ItemInfo itemInfo)
     {
-        // 같은 종류의 아이템이 이미 장착되어 있는지 확인
-        ItemInstance existingItem = equippedItems.Find(item => item.itemInfo.type == itemInfo.type);
-        if (existingItem != null)
+        ItemInstance existItem = myItems.Find(item => item.itemInfo == itemInfo); 
+        if (existItem == null)
         {
-            // 이미 같은 종류의 아이템이 장착되어 있으면 제거
-            equippedItems.Remove(existingItem);
+            // 아이템을 가지고 있지 않다는 것!
+            throw new Exception($"Item not found : {itemInfo.name}");
         }
-
-        // 새 아이템을 장착
-        equippedItems.Add(new ItemInstance() { itemInfo = itemInfo });
-
+        equippedItems.Add(existItem);
+        
         OnEquippedItemChanged?.Invoke();
+
         Save();
     }
 
     public void UnEquip(ItemInfo itemInfo)
     {
-        // 장착된 아이템을 찾음
-        ItemInstance itemToUnEquip = equippedItems.Find(item => item.itemInfo == itemInfo);
-        if (itemToUnEquip != null)
+        // 해당 종류의 아이템이 두 개 이상 있는지 확인
+        if (equippedItems.Count(item => item.itemInfo.type == itemInfo.type) > 1)
         {
-            // 장착된 아이템이 있으면 제거
-            equippedItems.Remove(itemToUnEquip);
-            OnEquippedItemChanged?.Invoke();
-            Save();
+            ItemInstance itemToUnEquip = equippedItems.Find(item => item.itemInfo == itemInfo);
+            if (itemToUnEquip != null)
+            {
+                // 장착된 아이템이 있으면 제거
+                equippedItems.Remove(itemToUnEquip);
+                OnEquippedItemChanged?.Invoke();
+                Save();
+            }
         }
     }
 

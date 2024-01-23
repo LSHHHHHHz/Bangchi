@@ -16,8 +16,8 @@ MonoBehaviour:
   stageName: Stage13
   StageNumber: 13
   Type: 0
-  coin: 0
-  exp: 0
+  coin: 22
+  exp: 1
   weaponProbability: 0
   shieldProbability: 0
   stageIconPath: 
@@ -47,3 +47,11 @@ MonoBehaviour:
     position: {x: 10.5, y: 0.6, z: 0}
   - prefab: {fileID: 2196524219248559357, guid: fec6b3b3dc724284f8a47db3cbf957de, type: 3}
     position: {x: 11, y: 0.6, z: 0}
+  - prefab: {fileID: 2196524219248559357, guid: fec6b3b3dc724284f8a47db3cbf957de, type: 3}
+    position: {x: 14, y: 0.6, z: 0}
+  - prefab: {fileID: 2196524219248559357, guid: fec6b3b3dc724284f8a47db3cbf957de, type: 3}
+    position: {x: 14.5, y: 0.6, z: 0}
+  - prefab: {fileID: 2196524219248559357, guid: fec6b3b3dc724284f8a47db3cbf957de, type: 3}
+    position: {x: 15, y: 0.6, z: 0}
+  - prefab: {fileID: 2196524219248559357, guid: fec6b3b3dc724284f8a47db3cbf957de, type: 3}
+    position: {x: 15.5, y: 0.6, z: 0}

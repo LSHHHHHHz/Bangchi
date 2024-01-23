@@ -39,3 +39,11 @@ MonoBehaviour:
     position: {x: 8.5, y: 0.6, z: 0}
   - prefab: {fileID: 5016283061431475226, guid: 1c38f0e3294418146b098cce65283a9b, type: 3}
     position: {x: 9, y: 0.6, z: 0}
+  - prefab: {fileID: 5016283061431475226, guid: 1c38f0e3294418146b098cce65283a9b, type: 3}
+    position: {x: 12, y: 0.6, z: 0}
+  - prefab: {fileID: 5016283061431475226, guid: 1c38f0e3294418146b098cce65283a9b, type: 3}
+    position: {x: 12.5, y: 0.6, z: 0}
+  - prefab: {fileID: 5016283061431475226, guid: 1c38f0e3294418146b098cce65283a9b, type: 3}
+    position: {x: 13, y: 0.6, z: 0}
+  - prefab: {fileID: 5016283061431475226, guid: 1c38f0e3294418146b098cce65283a9b, type: 3}
+    position: {x: 13.5, y: 0.6, z: 0}

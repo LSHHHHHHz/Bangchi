@@ -16,8 +16,8 @@ MonoBehaviour:
   stageName: Stage2
   StageNumber: 2
   Type: 0
-  coin: 0
-  exp: 0
+  coin: 1111
+  exp: 111
   weaponProbability: 0
   shieldProbability: 0
   stageIconPath: 
