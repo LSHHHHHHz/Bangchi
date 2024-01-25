@@ -47,10 +47,6 @@ public abstract class ColleaguePoly : MonoBehaviour
     public int Second_stat_LV;
     public int Third_stat;
     public int Third_stat_LV;
-    public virtual void Update()
-    {
-
-    }
     protected void UpdateText()
     {
         ColleagueStatsPriceText[0].text = ColleagueStatsPrice[0].ToString();
@@ -65,110 +61,14 @@ public abstract class ColleaguePoly : MonoBehaviour
         ColleagueStatsInfoNameText[1].text = ColleagueStatsNameText[1].text + "+" + Second_stat.ToString();
         ColleagueStatsInfoNameText[2].text = ColleagueStatsNameText[2].text + "+" + Third_stat.ToString();
     }
-    public void ColleagueStatusBuy(int index)
+     protected void PostBuyProcess(int index, int price)
     {
-        int price = ColleagueStatsPrice[index];
-        if (GetCoin() > price)
-        {
-            switch (index)
-            {
-                case 0:
-                    if(colleagueType == ColleagueType.Water)
-                    {
-                        float originstat = First_stat;
-                        First_stat_LV += 1;
-                        First_stat += First_stat_LV;
-                        Player.instance.Max_MP += (First_stat - originstat);
-                    }
-                    if (colleagueType == ColleagueType.Soil)
-                    {
-                        float originstat = First_stat;
-                        First_stat_LV += 1;
-                        First_stat += First_stat_LV;
-                        Player.instance.Current_CriticalDamage += (First_stat - originstat);
-                    }
-                    if (colleagueType == ColleagueType.Wind)
-                    {
-                        float originstat = First_stat;
-                        First_stat += 0.01f;
-                        First_stat_LV += 1;
-                        Player.instance.AttackSpeed += (First_stat - originstat);
-                    }
-                    if (colleagueType == ColleagueType.Fire)
-                    {
-                        float originstat = First_stat;
-                        First_stat_LV += 1;
-                        First_stat += First_stat_LV;
-                        Player.instance.Current_Attack += (First_stat - originstat);
-                    }
-                    break;
-                case 1:
-                    if (colleagueType == ColleagueType.Water)
-                    {
-                        float originstat = Second_stat;
-                        Second_stat_LV += 1;
-                        Second_stat += Second_stat_LV;
-                        Player.instance.RecoveryMP += (Second_stat - originstat);
-                    }
-                    if (colleagueType == ColleagueType.Soil)
-                    {
-                        float originstat = Second_stat;
-                        Second_stat_LV += 1;
-                        Second_stat += Second_stat_LV;
-                        Player.instance.Current_Attack += (Second_stat - originstat);
-                    }
-                    if (colleagueType == ColleagueType.Wind)
-                    {
-                        float originstat = Second_stat;
-                        Second_stat_LV += 1;
-                        Second_stat += 0.01f;
-                        Player.instance.playerSpeed += (Second_stat - originstat);
-                    }
-                    if (colleagueType == ColleagueType.Fire)
-                    {
-                        float originstat = Second_stat;
-                        Second_stat_LV += 1;
-                        Second_stat += Second_stat_LV;
-                        Player.instance.Current_HP += (Second_stat - originstat);
-                    }
-                    break;
-                case 2:
-                    if (colleagueType == ColleagueType.Water)
-                    {
-                        int originstat = Third_stat;
-                        Third_stat_LV += 1;
-                        Third_stat += Third_stat_LV;
-                        Player.instance.AddExp += (Third_stat - originstat);
-                    }
-                    if (colleagueType == ColleagueType.Soil)
-                    {
-                        int originstat = Third_stat;
-                        Third_stat_LV += 1;
-                        Third_stat += Third_stat_LV;
-                        Player.instance.AddCoin += (Third_stat - originstat);
-                    }
-                    if (colleagueType == ColleagueType.Wind)
-                    {
-                        int originstat = Third_stat;
-                        Third_stat_LV += 1;
-                        Third_stat += Third_stat_LV;
-                        Player.instance.PetCoin += (Third_stat - originstat);
-                    }
-                    if (colleagueType == ColleagueType.Fire)
-                    {
-                        int originstat = Third_stat;
-                        Third_stat_LV += 1;
-                        Third_stat += Third_stat_LV;
-                        Player.instance.RecoveryHP += (Third_stat - originstat);
-                    }
-                    break;
-            }
-            ColleagueStatsPrice[index] += 100 * (index + 1);
-            UpdateText();
-            SetCoin(GetCoin() - price);
-            save();
-        }
+        ColleagueStatsPrice[index] += 100 * (index + 1);
+        UpdateText();
+        SetCoin(GetCoin() - price);
+        save();
     }
+    public abstract void ColleagueStatusBuy(int index);
     public abstract int GetCoin();
     public abstract void SetCoin(int coin);
     public void save()

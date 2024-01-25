@@ -21,8 +21,9 @@ namespace Assets.Making.Stage
         private void Awake()
         {
             stageButton = stageClickButton.GetComponent<Button>();
-            stageButton.onClick.AddListener(StageSelect);
+            stageButton.onClick.AddListener(() => FadeInOutStageProcessor.instance.RunFadeOutInBoss(StageSelect, 2));
         }
+
         private void Start()
         {
             StageNum.text = "Stage"+stageInfo.StageNumber.ToString();

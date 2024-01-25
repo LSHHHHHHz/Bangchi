@@ -43,10 +43,7 @@ public class FadeInOutStageProcessor : MonoBehaviour
     public void RunBossStage(SunBossInfo sunBossInfo, int level)
     {
         lastStage = BattleManager.instance.currentStageInfo;
-        RunFadeOutInBoss(() =>
-        {
-            BattleManager.instance.StartSunbossStage(sunBossInfo, level);
-        },4f);
+        RunFadeOutInBoss(() => BattleManager.instance.StartSunbossStage(sunBossInfo, level), 4f);
     }
 
     private void OnBossStageDone()

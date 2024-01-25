@@ -64,10 +64,6 @@ namespace Assets.Battle
             // 스테이지 또는 보스스테이지가 끝났는지 체크
             if ((stageEndCheck && IsStageEnded())||bossStageDone)
             {
-                if (sunbossInfo != null)
-                {
-                    sunbossInfo.BasicBossTime = 5;
-                }
                 bossStageDone = false;
                 FadeInOutStageProcessor.instance.RunFadeOutStage();
 
