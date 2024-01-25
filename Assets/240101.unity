@@ -20019,6 +20019,7 @@ GameObject:
   - component: {fileID: 763275232}
   - component: {fileID: 763275233}
   - component: {fileID: 763275234}
+  - component: {fileID: 763275235}
   m_Layer: 0
   m_Name: Battle
   m_TagString: Untagged
@@ -20134,6 +20135,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   petInfos: []
+--- !u!114 &763275235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763275225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cd9190e0734ea54c819fe434f8f906c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &766666605
 GameObject:
   m_ObjectHideFlags: 0

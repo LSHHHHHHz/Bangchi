@@ -4837,7 +4837,7 @@ GameObject:
   - component: {fileID: 6889635655911149368}
   - component: {fileID: -2641792248856070534}
   m_Layer: 6
-  m_Name: SunBoss
+  m_Name: SunBossHP
   m_TagString: Skill
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5035,7 +5035,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
+      maxColor: {r: 0, g: 0.15819216, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -9695,7 +9695,6 @@ MonoBehaviour:
   _Max_HP: 100000
   _MonsterInfoType: 1
   hudDamageText: {fileID: 5409452494351892200, guid: ac4ab4100988f28478bf69a2f6c8b7c9, type: 3}
-  MonsterExp: 10
   collider: {fileID: -5460100367022941955, guid: 39a5f05a0c43f9741b8f0939ca4c9f16, type: 3}
   expIconPrefab: {fileID: 3904003793980084416, guid: ccda49b657be4444ebe2fb5a836c3778, type: 3}
   coinIconPrefab: {fileID: 7122588463523522965, guid: 1919c62f8fe64ab4480fe10cc0051d65, type: 3}
@@ -15006,7 +15005,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0, g: 0.66267204, b: 1, a: 1}
+      maxColor: {r: 0, g: 0.080246925, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}

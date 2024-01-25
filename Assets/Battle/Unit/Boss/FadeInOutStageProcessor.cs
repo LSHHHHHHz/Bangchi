@@ -43,10 +43,10 @@ public class FadeInOutStageProcessor : MonoBehaviour
     public void RunBossStage(SunBossInfo sunBossInfo, int level)
     {
         lastStage = BattleManager.instance.currentStageInfo;
-        RunFadeOutIn(() =>
+        RunFadeOutInBoss(() =>
         {
             BattleManager.instance.StartSunbossStage(sunBossInfo, level);
-        },2);
+        },4f);
     }
 
     private void OnBossStageDone()
@@ -96,6 +96,27 @@ public class FadeInOutStageProcessor : MonoBehaviour
         // 원래 DoTween이 timeScale의 영향을 받음. 아래처럼 Update 규칙을 true로 설정해주면 timeScale의 영향을 안받고 독립적인 Update를 수행함.
         sequence.SetUpdate(isIndependentUpdate: true);
         sequence.Play();
+    }
+    public void RunFadeOutInBoss(TweenCallback fadeOutDoneCallback, float fadeOutTime)
+    {
+        var sequence = DOTween.Sequence();
+        //이미지 활성화
+        fadeImage.enabled = true;
+        //이미지를 검은색으로 시작
+        fadeImage.color = new Color(0, 0, 0, 1f);
+        //캐릭터 및 보스 소환
+        sequence.AppendCallback(fadeOutDoneCallback);
+        //보스 배경 활성화
+        sequence.AppendCallback(onbossStage);
+        //화면 4초동안 복구
+        sequence.Append(fadeImage.DOColor(new Color(0, 0, 0, 0), fadeOutTime));
+        //완료가 되면 이미지를 비활성화시킴
+        sequence.onComplete += () =>
+        {
+            fadeImage.enabled = false;
+        };
+        sequence.Play();
+
     }
     private void onbossStage()
     {

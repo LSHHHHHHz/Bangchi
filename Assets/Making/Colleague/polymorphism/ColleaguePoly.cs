@@ -9,7 +9,7 @@ using DG.Tweening;
 using UnityEngine.UI;
 using System.IO;
 
-[System.Serializable]
+[Serializable]
 public class ColleagueData
 {
     public float First_stat;

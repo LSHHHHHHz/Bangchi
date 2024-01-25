@@ -22,6 +22,7 @@ namespace Assets.Battle
         public static BattleManager instance;
 
         private bool stageEndCheck = false;
+        public bool isrestartNomarStage = false;
         
         public StageInfo currentStageInfo;
         public int PageNum;
@@ -31,9 +32,11 @@ namespace Assets.Battle
         public bool isRestartStage = false;
         public bool isBossStageStart = false;
         public bool bossStageDone = false;
-        SunBossInfo sunbossInfo;
+        public SunBossInfo sunbossInfo;
         public Image bossTimeBarMask;
         public Image bossTimeBar;
+
+        public event Action<SunBossInfo> SunBossInfoStart;
 
         //GameManger가 Stage시작을 모르니 BattleManager로 옮김
         public int GetLastPlayedNormalStage() => PlayerPrefs.GetInt("LastPlayedNormalStage", defaultValue: 1);
@@ -58,22 +61,7 @@ namespace Assets.Battle
         }
         void Update()
         {
-            if(isBossStageStart)
-            {
-                sunbossInfo.BasicBossTime -= Time.deltaTime;
-                bossTimeBarMask.SetActive(true);
-                bossTimeBar.fillAmount = (float)(sunbossInfo.BasicBossTime / 5);
-
-                if (sunbossInfo.BasicBossTime< 0)
-                {
-                    isBossStageStart = false;
-                    bossStageDone = true;
-                    bossTimeBarMask.SetActive(false);
-                }
-
-            }
-
-            // 스테이지가 끝났는지 체크
+            // 스테이지 또는 보스스테이지가 끝났는지 체크
             if ((stageEndCheck && IsStageEnded())||bossStageDone)
             {
                 if (sunbossInfo != null)
@@ -134,17 +122,21 @@ namespace Assets.Battle
         {
             sunbossInfo = sunBossInfo;
             isBossStageStart = true;
+            isrestartNomarStage = false;
             int hp = sunBossInfo.BossHPByLevel[level];
             StartStage(sunBossInfo);
             var boss = UnitManager.instance.monsterList[0];
             boss._Max_HP = hp;
             boss._Current_HP = hp;
             stageEndCheck = true;
+            SunBossInfoStart?.Invoke(sunbossInfo);
         }
 
         public void RestartStage()
         {
             StartStage(currentStageInfo);
+            isrestartNomarStage = true;
+            isBossStageStart= false;
         }
 
         // 현재 스테이지

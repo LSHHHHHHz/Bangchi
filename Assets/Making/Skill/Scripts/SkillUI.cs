@@ -196,6 +196,7 @@ public class SkillUI : MonoBehaviour
     {
         SetEquipSlot(slot.skillInfo.type, slot.skillInfo, out bool isEquiped);
         List<SkillInfo> equippedSkills = new();
+        
         if (slot.skillInfo.type == SkillType.Active)
         {
             foreach (SkillSlot equippedSlot in equippedActiveSkillSlots)

@@ -41,17 +41,20 @@ namespace Assets.Battle
             StartCoroutine(ColliderDelay(transform.gameObject,0.2f));
             StartCoroutine(SearchPlayer());
         }
-        private void Update()
+        private void Update() //Time.time과 Time.deltaTime의 차이, Lerp, normalized
         {
-            //
             if(target != null)
             {
+                //Time.deltaTime은 이전 프레임과 현재 프레임 사이의 시간 간격을 나타내므로 Time.deltaTime 동작 구현을 위해 사용됨
+                //아이템이 생성된 후 흐른 시간을 계산할 때에는 Time.time을 사용해야함(절대적 시간 참조가 필요하고 정확한 시간을 알기 위해)
+
                 float createdElapsed = Time.time - createdTime; // 아이템이 생성된 후 흐른 시간.
                 float moveElapsed = createdElapsed - moveWaitTime; // 움직이기 시작한 시간.
 
                 float currentSpeed = Mathf.Lerp(startSpeed, maxSpeed, moveElapsed);
-               // float currentSpeed = 30;
+                //얼마나 떨어져 있는지 확인함(실제 방향은 정규화를 통해 진행)
                 Vector3 posGap = target.position - transform.position;
+                //벡터를 정규화하여 방향만을 나타내는 단위 벡터(unit vector)로 변환
                 Vector3 dir = (posGap).normalized;
                 //currentSpeed = Mathf.Lerp(0, currentSpeed, posGap.magnitude);
                 transform.Translate(dir * currentSpeed * Time.deltaTime, Space.World);
