@@ -5,6 +5,7 @@ using Assets.Item1;
 using System;
 using System.Linq;
 using UnityEngine.UI;
+using UnityEditorInternal.VersionControl;
 
 [Serializable] // 클래스를 json등 데이터로 저장할 때 [Serializable]을 붙여줘야 함.
 public class InventoryData 
@@ -116,6 +117,11 @@ public class InventoryManager : MonoBehaviour
             // 아이템을 가지고 있지 않다는 것!
             throw new Exception($"Item not found : {itemInfo.name}");
         }
+        ItemInstance itemToRemove = equippedItems.Find(item => item.itemInfo.type == itemInfo.type);
+        if (itemToRemove != null)
+        {
+            equippedItems.Remove(itemToRemove);
+        }
         equippedItems.Add(existItem);
         
         OnEquippedItemChanged?.Invoke();
@@ -125,20 +131,26 @@ public class InventoryManager : MonoBehaviour
 
     public void UnEquip(ItemInfo itemInfo)
     {
-        // 해당 종류의 아이템이 두 개 이상 있는지 확인
-        if (equippedItems.Count(item => item.itemInfo.type == itemInfo.type) > 1)
+        ItemInstance itemToUnEquip;
+
+        // 장착된 아이템을 찾음
+        if (itemInfo.type == ItemType.Sword)
         {
-            ItemInstance itemToUnEquip = equippedItems.Find(item => item.itemInfo == itemInfo);
-            if (itemToUnEquip != null)
-            {
-                // 장착된 아이템이 있으면 제거
-                equippedItems.Remove(itemToUnEquip);
-                OnEquippedItemChanged?.Invoke();
-                Save();
-            }
+             itemToUnEquip = equippedItems.Find(item => item.itemInfo == itemInfo);
+        }
+        else
+        {
+            itemToUnEquip = equippedItems.Find(item => item.itemInfo == itemInfo);
+        }
+        if (itemToUnEquip != null)
+        {
+            // 장착된 아이템이 있으면 제거
+            equippedItems.Remove(itemToUnEquip);
+            OnEquippedItemChanged?.Invoke();
+            Save();
+
         }
     }
-
     public void EquipItemInfo(ItemInfo itemInfo)
     {
         EquipIteminfo.text = itemInfo.iteminfoText;

@@ -24,7 +24,7 @@ MonoBehaviour:
   pageIconPath: 
   monsterSpawnInfos:
   - prefab: {fileID: 6057283511534794994, guid: 9c2a8f52c87d965468d413331254b7b6, type: 3}
-    position: {x: 5, y: 0, z: 0}
+    position: {x: 5, y: 1, z: 0}
   bossType: 1
   stageType: 1
   SunBossLevel: 1
@@ -32,4 +32,4 @@ MonoBehaviour:
   RewardHP: 0
   RewardHPRecovery: 0
   BossHPByLevel: 0000000064000000c800000090010000e8030000d0070000
-  BasicBossTime: 5
+  BasicBossTime: 0

@@ -21,7 +21,8 @@ namespace Assets.Making.Stage
         private void Awake()
         {
             stageButton = stageClickButton.GetComponent<Button>();
-            stageButton.onClick.AddListener(() => FadeInOutStageProcessor.instance.RunFadeOutInBoss(StageSelect, 2));
+            stageButton.onClick.AddListener(() => FadeInOutStageProcessor.instance.RunFadeOutInStage(StageSelect, 2));
+           // stageButton.onClick.AddListener(StageSelect);
         }
 
         private void Start()
@@ -42,8 +43,8 @@ namespace Assets.Making.Stage
             }
             else
             {
-                BattleManager battleManager = BattleManager.instance;
-                battleManager.StartStage(stageInfo);
+                BattleManager.instance.StartStage(stageInfo);
+                BattleManager.instance.isrestartNomarStage = true;
             }
             StagePopup.instance.Exit();
         }

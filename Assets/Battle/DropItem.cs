@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using static UnityEngine.CullingGroup;
 
 namespace Assets.Battle
 {
@@ -19,18 +20,20 @@ namespace Assets.Battle
         public ItemInfo droppedItemInfo;
         public ItemDB itemDB;
 
-
+        Vector3 playerInitialPosition;
         Rigidbody prefabRigid;
         Transform target;
         float startSpeed = 1f;
         float maxSpeed = 30f;
         public LayerMask layerMask = -1;
         float createdTime;
+        bool isAcquisition = false;
 
         private const float moveWaitTime = 0.5f;
 
         private void Awake()
         {
+            playerInitialPosition = UnitManager.instance.playerInitialPosition;
             createdTime = Time.time;
             this.exp = BattleManager.instance.currentStageInfo.exp;
             this.coin = BattleManager.instance.currentStageInfo.coin;
@@ -79,8 +82,24 @@ namespace Assets.Battle
                 iconCollider.enabled = true;
             }
         }
+        private void OnEnable()
+        {
+            BattleManager.instance.stageChangedDestoryDropITem += DestoryGameObject;
+        }
+        private void OnDisable()
+        {
+            BattleManager.instance.stageChangedDestoryDropITem -= DestoryGameObject;
+        }
+        public void DestoryGameObject()
+        {
+            Player.instance.Current_Exp += exp + Player.instance.AddExp;
+            Player.instance.Coin += coin + Player.instance.AddCoin;
+            Player.instance.enforceCoin += enforceCoin;
+            Destroy(gameObject);
+        }
         private void OnTriggerEnter(Collider other)
         {
+            isAcquisition = true;
             var player = other.transform.GetComponent<Player>();
             if (player == null)
                 return;

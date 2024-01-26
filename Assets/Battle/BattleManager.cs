@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static UnityEditorInternal.VersionControl.ListControl;
+using static UnityEngine.CullingGroup;
 
 namespace Assets.Battle
 {
@@ -31,12 +32,12 @@ namespace Assets.Battle
         float stageRestartDelay = 0;
         public bool isRestartStage = false;
         public bool isBossStageStart = false;
-        public bool bossStageDone = false;
+        public bool bossStageDoneTostartNormalStage = false;
         public SunBossInfo sunbossInfo;
-        public Image bossTimeBarMask;
-        public Image bossTimeBar;
 
         public event Action<SunBossInfo> SunBossInfoStart;
+        public event Action stageChangedDestoryDropITem;
+        public event Action stageDoneSkillDestory;
 
         //GameManger가 Stage시작을 모르니 BattleManager로 옮김
         public int GetLastPlayedNormalStage() => PlayerPrefs.GetInt("LastPlayedNormalStage", defaultValue: 1);
@@ -62,9 +63,9 @@ namespace Assets.Battle
         void Update()
         {
             // 스테이지 또는 보스스테이지가 끝났는지 체크
-            if ((stageEndCheck && IsStageEnded())||bossStageDone)
+            if ((stageEndCheck && IsStageEnded())||bossStageDoneTostartNormalStage)
             {
-                bossStageDone = false;
+                bossStageDoneTostartNormalStage = false;
                 FadeInOutStageProcessor.instance.RunFadeOutStage();
 
                 // 끝났다면 OnStageDone 이벤트 발생
@@ -88,14 +89,16 @@ namespace Assets.Battle
                 if (stageRestartDelay < 0)
                 {
                     RestartStage();
-                    
+                    stageDoneSkillDestory?.Invoke();
                 }
             }
             FadeInOutStageProcessor.instance.bossstageDone = false;
         }
 
+
         public void StartStage(StageInfo stageInfo)
         {
+            stageChangedDestoryDropITem?.Invoke();
             UnitManager.instance.player.transform.position = UnitManager.instance.playerInitialPosition;
 
             currentStageInfo = stageInfo;
@@ -105,11 +108,9 @@ namespace Assets.Battle
 
             if (stageInfo.Type == StageType.Normal)
             {
-                
                 isRestartStage = true;
                 SetLastPlayedNormalStage(stageInfo.StageNumber);
                 OnStageRestart?.Invoke();
-
             }
             isRestartStage = false;
         }
@@ -131,7 +132,6 @@ namespace Assets.Battle
         public void RestartStage()
         {
             StartStage(currentStageInfo);
-            isrestartNomarStage = true;
             isBossStageStart= false;
         }
 

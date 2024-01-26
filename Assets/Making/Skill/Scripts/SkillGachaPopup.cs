@@ -26,7 +26,6 @@ public class SkillGachaPopup : MonoBehaviour
 
     private Action<int> oneMoreTimeAction; // oneMoreTime 전달받은 값을 저장하기 위해 따로 멤버 필드로 가지고 있음.
     private bool isCoroutineDone = true;
-    private bool isCoroutineActive = false;
 
 
     public void Initialize(SkillGachaResult skillgachaResult, Action<int> oneMoreTime)
@@ -42,7 +41,7 @@ public class SkillGachaPopup : MonoBehaviour
         {
             Destroy(child); 
         }
-        children.Clear();
+        effectchildren.Clear();
         this.oneMoreTimeAction = oneMoreTime;
 
         isCoroutineDone = false;

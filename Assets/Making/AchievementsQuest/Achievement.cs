@@ -30,8 +30,6 @@ public class Achievement : MonoBehaviour
     private Color[] originalMainImageColors;
     private List<Color[]> originalChildImageColors = new List<Color[]>();
 
-    public Text NowTime;
-    public Text CheckTime;
     public string CurrentCheckTime;
     public bool isDateChange;
     public bool[] canClickButton = new bool[5]; // 조건 만족시 true
@@ -82,14 +80,12 @@ public class Achievement : MonoBehaviour
             isDateChange = true;
         }
 
-        CheckTime.text = CurrentCheckTime;
         isDateChange = false;
     }
    
 
     public void FillAmountImages()
     {
-        NowTime.text = DateTime.Now.ToString();
         DailyFillAmountImageBar[0].fillAmount = elapsedTime / 18;
         int secondsElapsed = Mathf.RoundToInt(elapsedTime);
         DailyFillAmountText[0].text = secondsElapsed.ToString() + " / 180";

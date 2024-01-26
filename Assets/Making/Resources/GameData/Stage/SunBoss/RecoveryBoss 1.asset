@@ -24,7 +24,7 @@ MonoBehaviour:
   pageIconPath: 
   monsterSpawnInfos:
   - prefab: {fileID: 6057283511534794994, guid: d71ceb16120270542bde932bd1b771cb, type: 3}
-    position: {x: 5, y: 0, z: 0}
+    position: {x: 5, y: 1, z: 0}
   bossType: 2
   stageType: 1
   SunBossLevel: 1

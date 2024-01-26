@@ -76,7 +76,7 @@ public class EquipmentUI : MonoBehaviour
     public void EquipOrUnequip(ItemSlot item)
     {
         SetEquipSlot(item.itemInfo);
-        InventoryManager.instance.UnEquip(item.itemInfo); // 장착하고 있던 칼이나 방패등 장착 해제.
+        //InventoryManager.instance.UnEquip(item.itemInfo); // 장착하고 있던 칼이나 방패등 장착 해제. 12345
         InventoryManager.instance.Equip(item.itemInfo); // 장착.
     }
     //인벤토리 UI 아이템들을 보여줌

@@ -72,10 +72,10 @@ public class EquipAndEnforcePopup : MonoBehaviour
     {
         if (originitemInfo != null)
         {
-            InventoryManager.instance.UnEquip(originitemInfo);
+            //InventoryManager.instance.UnEquip(originitemInfo); 12345
             Player.instance.Current_Attack -= originitemInfo.Attack;
         }
-        InventoryManager.instance.UnEquip(targetSlot.itemInfo);
+      //  InventoryManager.instance.UnEquip(targetSlot.itemInfo);
         InventoryManager.instance.Equip(targetSlot.itemInfo);
         Player.instance.Current_Attack += targetSlot.itemInfo.Attack;
         originitemInfo = targetSlot.itemInfo;

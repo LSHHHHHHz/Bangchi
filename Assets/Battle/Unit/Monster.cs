@@ -45,6 +45,10 @@ public class Monster : BaseUnit
     {
         //살아있는 몬스터만 UnitManager에 등록되어 있어야 하기 때문에, 죽은 몬스터는 UnregisterMonster()를 통해 UnitManager에서 등록 해제
         UnitManager.instance.UnregisterMonster(this);
+        if(this._MonsterInfoType == MonsterInfoType.boss)
+        {
+            BattleManager.instance.isrestartNomarStage = true;
+        }
     }
 
     public void PrintName(Object obj)

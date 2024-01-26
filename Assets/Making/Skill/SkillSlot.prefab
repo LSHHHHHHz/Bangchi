@@ -101,6 +101,8 @@ MonoBehaviour:
   effectImage: {fileID: 6127830285971768438}
   countText: {fileID: 8952769452713095080}
   hideIcon: {fileID: 3846104100645539352}
+  skillCollDownCount: 0
+  isMaxSkillcount: 0
 --- !u!114 &2428397232417594800
 MonoBehaviour:
   m_ObjectHideFlags: 0

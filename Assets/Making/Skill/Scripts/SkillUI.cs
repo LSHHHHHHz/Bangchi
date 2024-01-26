@@ -93,19 +93,6 @@ public class SkillUI : MonoBehaviour
         }
         equippedPassiveSkillSlots = childList.ToArray();
     }
-
-    private SkillSlot[] GetChildSlots13(RectTransform parent)
-    {
-        List<SkillSlot> childList = new();
-
-        for (int i = 0; i < parent.childCount; ++i)
-        {
-            SkillSlot child = parent.GetChild(i).GetComponent<SkillSlot>();
-            childList.Add(child);
-        }
-
-        return childList.ToArray();
-    }
     private SkillSlot[] GetChildSlots(RectTransform parent)
     {
         List<SkillSlot> childList = new();
@@ -123,7 +110,6 @@ public class SkillUI : MonoBehaviour
         SkillInventoryManager.instance.OnSkillInventoryChanged += OnSkillInventoryChangedCallback;
         SetData();
     }
-    //-----------------------------------------------------
     public void EquipPopupOpen(SkillSlot slot)
     {
         equipOrEnequipPopup.anchoredPosition = new Vector3(0, 0, 0);
@@ -168,7 +154,7 @@ public class SkillUI : MonoBehaviour
     {
         if (skillgachaPopup == null)
         {
-            var prefab = Resources.Load<GameObject>("SkillPopup"); 
+            var prefab = Resources.Load<GameObject>("SkillPopupTest"); 
             
             skillgachaPopup = Instantiate(prefab).GetComponent<SkillGachaPopup>();
 
