@@ -25,6 +25,7 @@ public class ACT_Skill3_BoomSkill : BaseSkillLaunch
     }
     void OnDestroy()
     {
+        BattleManager.instance.stageDoneSkillDestory -= skillDestory;
         FadeInOutStageProcessor.instance.stageClickForSkillDestory -= skillDestory;
     }
 
@@ -33,9 +34,9 @@ public class ACT_Skill3_BoomSkill : BaseSkillLaunch
     {
         if (elapsedTime > 2 && isSkill3Activated == false)
         {
-            boxcollider.isTrigger = false;
+            boxcollider.enabled = false;
             boxcollider.size = new Vector3(3, 3, 3);
-            boxcollider.isTrigger = true;
+            boxcollider.enabled = true;
             damage *= 2;
             isSkill3Activated = true;
         }

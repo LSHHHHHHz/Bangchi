@@ -24,6 +24,10 @@ public class PetUI : MonoBehaviour
 
     public GameObject GridUI;
 
+    public RectTransform PetSlotParent;
+    public PetSlot[] petSlots;
+    List<PetSlot> petSlotsList = new();
+
     public GameObject BuyPetSlot;
     public RectTransform petInventorySizeUpButton;
     public Text petInventorySizeStatus;
@@ -44,6 +48,13 @@ public class PetUI : MonoBehaviour
     public void Awake()
     {
         instance = this;
+        List<PetSlot> childList = new();
+        for (int i = 0; i < PetSlotParent.childCount; i++)
+        {
+            PetSlot child = PetSlotParent.GetChild(i).GetComponent<PetSlot>();
+            childList.Add(child);
+        }
+        petSlots = childList.ToArray();
     }
     public void Start()
     {
@@ -92,6 +103,55 @@ public class PetUI : MonoBehaviour
         else
         {
             return;
+        }
+    }
+
+    public void SortSlots()
+    {
+        bool isActive = Array.Exists(petSlots, x => x.petInfo != null);
+        petSlotsList.Clear();
+        foreach (PetSlot slot in petSlots)
+        {
+            if (slot.petInfo != null)
+            {
+                petSlotsList.Add(slot);
+            }
+        }
+
+        if (isActive)
+        {
+            petSlotsList.Sort((x, y) =>
+            {
+                int petNumberCompare = y.petInfo.Number.CompareTo(x.petInfo.Number);
+                if (petNumberCompare != 0) return petNumberCompare;
+
+                return x.petInfo.petType.CompareTo(y.petInfo.petType);
+            });
+
+
+            for (int i = 0; i < petSlotsList.Count; ++i)
+            {
+                PetSlot slot = petSlotsList[i];
+                slot.transform.SetSiblingIndex(i);
+            }
+        }
+    }
+
+    public void SetData()
+    {
+        int slotCount = petSlots.Length;
+
+        for (int i = 0; i < PetInventoryManager.Instance.myPets.Count; i++)
+        {
+            if (i >= slotCount)
+            {
+                Debug.LogWarning("확장필요");
+                break;
+            }
+
+            PetSlot slot = petSlots[i];
+            slot.SetData(PetInventoryManager.Instance.myPets[i]);
+            slot.SetActive(true);
         }
     }
     public void PetInventorySizeOpen()

@@ -14,7 +14,6 @@ namespace Assets.Battle
 {
     public class BattleManager : MonoBehaviour
     {
-
         public List<ItemInfo> MyStages = new List<ItemInfo>();
 
         public event Action<StageInfo> OnStageDone;
@@ -35,17 +34,44 @@ namespace Assets.Battle
         public bool bossStageDoneTostartNormalStage = false;
         public SunBossInfo sunbossInfo;
 
-        public event Action<SunBossInfo> SunBossInfoStart;
-        public event Action stageChangedDestoryDropITem;
-        public event Action stageDoneSkillDestory;
+        public  event Action<SunBossInfo> SunBossInfoStart;
+        public  event Action stageChangedDestoryDropITem;
+        public  event Action stageDoneSkillDestory;
 
+        
         //GameManger가 Stage시작을 모르니 BattleManager로 옮김
         public int GetLastPlayedNormalStage() => PlayerPrefs.GetInt("LastPlayedNormalStage", defaultValue: 1);
         public void SetLastPlayedNormalStage(int value) => PlayerPrefs.SetInt("LastPlayedNormalStage", value);
 
+        //스테이지 클리어
+        public bool[][] SunBossStageClear;
+        public int SunBossGridCount;
+        bool GetSunBossGridCountAndInitializebool = false; //초기화 한번만 되도록해야함 초기화를 계속하니 스테이지 클리어해도 윗 스테이지 넘어가질 않음
+        public void GetSunBossGridCountAndInitialize(int value)
+        {
+            if (!GetSunBossGridCountAndInitializebool)
+            {
+                SunBossGridCount = value;
 
+                if (SunBossGridCount > 0)
+                {
+                    SunBossStageClear = new bool[SunBossGridCount][];
+                    for (int i = 0; i < SunBossGridCount; i++)
+                    {
+                        SunBossStageClear[i] = new bool[3];
+
+                        for (int j = 0; j < 3; j++)
+                        {
+                            SunBossStageClear[i][j] = (i == 0);
+                        }
+                    }
+                }
+                GetSunBossGridCountAndInitializebool = true;
+            }
+        }
         private void Awake()
         {
+            Debug.Log("BattleManager Awake called");
             if (currentStageInfo != null)
             {
                 PageNum = currentStageInfo.pageNumber;
@@ -62,6 +88,7 @@ namespace Assets.Battle
         }
         void Update()
         {
+           
             // 스테이지 또는 보스스테이지가 끝났는지 체크
             if ((stageEndCheck && IsStageEnded())||bossStageDoneTostartNormalStage)
             {

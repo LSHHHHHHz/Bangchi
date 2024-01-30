@@ -1,4 +1,6 @@
+using Assets.Battle;
 using Assets.Making.Stage;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,11 +12,15 @@ public class SunBossPopup : MonoBehaviour
     public GameObject sunBossSlotPrefab;
     public SunBossPageInfo pageInfo;
     private List<GameObject> children = new List<GameObject>();
+    public static event Action<int> StartSunBossNumberInitialize;
 
     private void Awake()
     {
+        StartSunBossNumberInitialize += BattleManager.instance.GetSunBossGridCountAndInitialize;
+        StartSunBossNumberInitialize?.Invoke(grid.transform.childCount);
         instance = this;
         Initialize();
+        BattleManager.instance.SunBossGridCount = grid.transform.childCount;
     }
 
     public void destorypopup()

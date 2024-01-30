@@ -18,6 +18,16 @@ public class BossStageFunctionality : MonoBehaviour
     bool outBossStage;
     float initialBossBasicTime;
     public float elasedBossBasicTime;
+    bool rewardToPlayer;
+
+    int[] bossStageNumber = new int[3];
+    public event Action BossStageClear;
+
+    public static BossStageFunctionality Instance;
+    private void Awake()
+    {
+        Instance = this;
+    }
     private void Start()
     {
         BattleManager.instance.SunBossInfoStart += sunbossInfoSet;
@@ -27,6 +37,7 @@ public class BossStageFunctionality : MonoBehaviour
     {
         if (BattleManager.instance.isBossStageStart )
         {
+            rewardToPlayer = false;
             updateBossStageTimer();
             bossStageDone();
             BossStageHPProcessor();
@@ -81,7 +92,44 @@ public class BossStageFunctionality : MonoBehaviour
         bossHPBar.fillAmount = bossMonster._Current_HP / bossMonster._Max_HP;
         if(bossMonster._Current_HP<=0)
         {
+            BossRewardOfType();
             RunBossStage();
+        }
+    }
+    public void BossRewardOfType()
+    {
+        switch (sunbossInfo.bossType)
+        {
+            case BossType.DamageBoss:
+                Player.instance.Current_Attack += sunbossInfo.RewardDamage;
+                BattleManager.instance.SunBossStageClear[bossStageNumber[0]+1][0] = true;
+                bossStageNumber[0]++;
+                rewardToPlayer = true;
+                RewardToPlayer();
+                break;
+            case BossType.HPBoss:
+                Player.instance.Max_HP += sunbossInfo.RewardHP;
+                BattleManager.instance.SunBossStageClear[bossStageNumber[1] + 1][1] = true;
+                bossStageNumber[1]++;
+                rewardToPlayer = true;
+                RewardToPlayer();
+                break;
+            case BossType.RecoveryBoss:
+                Player.instance.RecoveryHP += sunbossInfo.RewardHPRecovery;
+                BattleManager.instance.SunBossStageClear[bossStageNumber[2] + 1][2] = true;
+                bossStageNumber[2]++;
+                rewardToPlayer = true;
+                RewardToPlayer();
+                break;
+        }
+       
+    }
+    private void RewardToPlayer()
+    {
+        if (rewardToPlayer)
+        {
+            BossStageClear?.Invoke();
+            rewardToPlayer = false;
         }
     }
 }

@@ -130,8 +130,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Current_HP: 20
   _Max_HP: 20
+  _MonsterInfoType: 0
   hudDamageText: {fileID: 5409452494351892200, guid: ac4ab4100988f28478bf69a2f6c8b7c9, type: 3}
-  MonsterExp: 10
   collider: {fileID: 7438289221025496510}
   expIconPrefab: {fileID: 3904003793980084416, guid: ccda49b657be4444ebe2fb5a836c3778, type: 3}
   coinIconPrefab: {fileID: 7122588463523522965, guid: 1919c62f8fe64ab4480fe10cc0051d65, type: 3}

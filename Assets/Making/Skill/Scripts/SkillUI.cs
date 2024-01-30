@@ -117,7 +117,7 @@ public class SkillUI : MonoBehaviour
         isEquipText(slot);
         currentSlot = slot;
     }
-    public void EquipButton(SkillSlot slot)
+    public void EquipButton()
     {
         EquipOrUnequip(currentSlot);
         EquipPopupClose();

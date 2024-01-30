@@ -110,6 +110,7 @@ public class EquipmentUI : MonoBehaviour
     {
         if (!runGacha)
         {
+        var sw = System.Diagnostics.Stopwatch.StartNew();
             runGacha = true;
             if (gachaPopup == null)
             {
@@ -118,6 +119,8 @@ public class EquipmentUI : MonoBehaviour
                 gachaPopup = Instantiate(prefab).GetComponent<GachaPopup>();
 
             }
+            Debug.LogError($"Loop 1 : {sw.Elapsed.TotalMilliseconds} ms");
+            sw.Restart(); // 초기화 및 시작
             gachaPopup.PanelFadeIn();
             GachaResult gachaResult = GachaCalculator.Calculate(itemDb, count, type);
 
@@ -129,9 +132,11 @@ public class EquipmentUI : MonoBehaviour
 
             // 인벤토리에 다 추가했으면 저장
             InventoryManager.instance.Save();
-
+            Debug.LogError($"Loop 2 : {sw.Elapsed.TotalMilliseconds} ms");
+            sw.Restart(); // 초기화 및 시작
             // 가챠팝업에서 뽑은 아이템들을 보여줘야 하므로 gachaResult를 넘김.
             gachaPopup.Initialize(gachaResult, oneMoreTime, () => runGacha = false);
+            Debug.LogError($"Loop 3 : {sw.Elapsed.TotalMilliseconds} ms");
         }
     }
     public void RunGacha_Sword(int count)

@@ -475,6 +475,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pageNum: 1
+  stageType: 0
 --- !u!1 &2137850243250356389
 GameObject:
   m_ObjectHideFlags: 0
@@ -610,6 +611,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pageNum: 1
+  stageType: 0
 --- !u!1 &2265837087302381856
 GameObject:
   m_ObjectHideFlags: 0
@@ -2173,6 +2175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pageNum: 1
+  stageType: 0
 --- !u!1 &7422224147584377088
 GameObject:
   m_ObjectHideFlags: 0
@@ -2392,6 +2395,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pageNum: 1
+  stageType: 0
 --- !u!1 &8061510329307123435
 GameObject:
   m_ObjectHideFlags: 0
@@ -2779,3 +2783,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pageNum: 1
+  stageType: 0

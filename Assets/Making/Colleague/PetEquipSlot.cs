@@ -42,49 +42,17 @@ public class PetEquipSlot : MonoBehaviour
             {
                 pets.Add(null);
             }
-
         }
-    
     }
-    private void Start()
-    {
-      
-    }
-    //펫이 장착되어 있을 경우
-    //펫이 장착되어 있지 않을 경우
-
-    //0번이면 1번 2번이랑
     public void isEquipOrUnEquip()
     {
-        if (PetInventoryManager.Instance.equipPets.Count == 0)
+        var equippedPetInfo = PetInventoryManager.Instance.equipPets.FirstOrDefault()?.petInfo;
+        if (equippedPetInfo == null || pets.Any(p => p.petinfo == equippedPetInfo))
         {
+            popupClose();
             return;
         }
-        if (Num == 0)
-        {
-            if (pets[1].petinfo == PetInventoryManager.Instance.equipPets[0].petInfo || pets[2].petinfo == PetInventoryManager.Instance.equipPets[0].petInfo)
-            {
-                popupClose();
-                return;
-            }
-        }
-        if (Num == 1)
-        {
-            if (pets[0].petinfo == PetInventoryManager.Instance.equipPets[0].petInfo || pets[2].petinfo == PetInventoryManager.Instance.equipPets[0].petInfo)
-            {
-                popupClose();
-                return;
-            }
-        }
-        if (Num == 2)
-        {
-            if (pets[1].petinfo == PetInventoryManager.Instance.equipPets[0].petInfo || pets[0].petinfo == PetInventoryManager.Instance.equipPets[0].petInfo)
-            {
-                popupClose();
-                return;
-            }
-        }
-        if ((petinfo == null && PetInventoryManager.Instance.equipPets != null)||(petinfo != null && PetInventoryManager.Instance.equipPets != null))
+        else
         {
             equipPet();
         }
@@ -100,52 +68,30 @@ public class PetEquipSlot : MonoBehaviour
         }
         PetInventoryManager.Instance.equipPets.Clear();
     }
-
-    //펫 정보를 드랍아이템매니저에 넘김
-    //몬스터가 파괴됐을 때 그 아이테 정보를 드랍아이템매니저에 넘김
-    //드랍아이템 매니저의 update에서 펫 정보와 아이템 정보를 합침
-    //이 합져진 것들을 플레이어가 먹었을 때 합처진 정보를 플레이어가 갖음
     public void equipPet()
     {
         this.petinfo = PetInventoryManager.Instance.equipPets[0].petInfo;
         SetData(petinfo);
-        PetManager.instance.AddPetInfo(petinfo);
+        PetInventoryManager.Instance.AddEquipPetInfo(petinfo);
 
-        for (int i = 0; i < PetManager.instance.petInfos.Count; i++)
+        for (int i = 0; i < PetInventoryManager.Instance.petEquipInfos.Count; i++)
         {
-            if (petinfo.petType == PetManager.instance.petInfos[i].petType && petinfo.petgrade == PetManager.instance.petInfos[i].petgrade )
+            if (petinfo.petType == PetInventoryManager.Instance.petEquipInfos[i].petType && petinfo.petgrade == PetInventoryManager.Instance.petEquipInfos[i].petgrade )
             {
-                Player.instance.Current_Attack += PetManager.instance.petInfos[i].petAttack - originAttack;
-                Player.instance.Max_HP += PetManager.instance.petInfos[i].petHP - originHp;
-                Player.instance.AddExp += PetManager.instance.petInfos[i].petExp - originplusExp;
-                Player.instance.AddCoin += PetManager.instance.petInfos[i].petCoin - originplusCoin;
+                Player.instance.Current_Attack += PetInventoryManager.Instance.petEquipInfos[i].petAttack - originAttack;
+                Player.instance.Max_HP += PetInventoryManager.Instance.petEquipInfos[i].petHP - originHp;
+                Player.instance.AddExp += PetInventoryManager.Instance.petEquipInfos[i].petExp - originplusExp;
+                Player.instance.AddCoin += PetInventoryManager.Instance.petEquipInfos[i].petCoin - originplusCoin;
 
-                originAttack = PetManager.instance.petInfos[i].petAttack;
-                originHp = PetManager.instance.petInfos[i].petHP;
-                originplusExp = PetManager.instance.petInfos[i].petExp;
-                originplusCoin = PetManager.instance.petInfos[i].petCoin;
+                originAttack = PetInventoryManager.Instance.petEquipInfos[i].petAttack;
+                originHp = PetInventoryManager.Instance.petEquipInfos[i].petHP;
+                originplusExp = PetInventoryManager.Instance.petEquipInfos[i].petExp;
+                originplusCoin = PetInventoryManager.Instance.petEquipInfos[i].petCoin;
                
             }
         }
-        //변경되면 기존 펫 정보 삭제 후 추가
-
-
-
         PetInventoryManager.Instance.equipPets.Clear();
 
-        //어짜피 순서에 상관 없으니 First 사용해서 같은 것이 있는지 확인
-        //장착했을 때 없어지면 안됨 나중에 합성할 때 참고
-       /* var petSlotReset = PetInventoryManager.Instance.petSlots.First(slot => slot.petInfo == petinfo);
-        var petInstance = PetInventoryManager.Instance.myPets.First(s => s.petInfo == petinfo);
-        if (petSlotReset != null)
-        {
-            petSlotReset.ResetData();
-            PetInventoryManager.Instance.myPets.Remove(petInstance);
-            PetInventoryManager.Instance.SortSlots();
-        }*/
-
-
-        //PetInfoPopup 파괴
         if (PetInventoryManager.Instance.petinfoPopup.Count > 0)
         {
             petinfoPopup Popup = PetInventoryManager.Instance.petinfoPopup[0];

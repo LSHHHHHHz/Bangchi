@@ -52,8 +52,17 @@ public class FadeInOutStageProcessor : MonoBehaviour
             BattleManager.instance.StartStage(lastStage);
 
     }
+
+    private bool test = false;
     public void RunFadeOutStage()
     {
+        if (test == true)
+        {
+            int wefwaef = 0;
+            return;
+        }
+
+        test = true;
         var sequence = DOTween.Sequence();
 
         fadeImage.enabled = true;
@@ -61,7 +70,7 @@ public class FadeInOutStageProcessor : MonoBehaviour
         sequence.Append(fadeImage.DOColor(new Color(0f, 0f, 0f, 1), 2f));
         sequence.AppendInterval(1);
         sequence.Append(fadeImage.DOColor(new Color(0f, 0f, 0f, 0f), 1f));
-        sequence.onComplete += () => { fadeImage.enabled = false; };
+        sequence.onComplete += () => { fadeImage.enabled = false; test = false; };
         sequence.Play();
     }
 
@@ -103,6 +112,7 @@ public class FadeInOutStageProcessor : MonoBehaviour
         fadeImage.enabled = true;
         //이미지를 검은색으로 시작
         fadeImage.color = new Color(0, 0, 0, 1f);
+        //남아있는스킬 파괴
         stageClickForSkillDestory?.Invoke();
         sequence.AppendCallback(callback);
         //화면 n초동안 복구

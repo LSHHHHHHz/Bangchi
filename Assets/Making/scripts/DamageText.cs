@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Unity.VisualScripting;
+using DG.Tweening;
 
 public class DamageText : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class DamageText : MonoBehaviour
         text = GetComponent<TextMeshPro>();
         alpha = text.color;
         Invoke("DestoryObject", destoryTime);
+        StartCoroutine(SizeUpandDown());
     }
 
     private void Awake()
@@ -31,7 +33,12 @@ public class DamageText : MonoBehaviour
         alpha.a = Mathf.Lerp(alpha.a,0, Time.deltaTime * alphaSpeed);
         text.color = alpha;
     }
-
+    IEnumerator SizeUpandDown()
+    {
+        text.transform.DOScale(1.5f, 0.1f);
+        yield return new WaitForSeconds(0.1f);
+        text.transform.DOScale(1, 0.1f);
+    }
     private void DestoryObject()
     {
         Destroy(gameObject);

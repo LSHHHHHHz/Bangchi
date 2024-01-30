@@ -32,4 +32,4 @@ MonoBehaviour:
   RewardHP: 0
   RewardHPRecovery: 0
   BossHPByLevel: 0000000064000000c800000090010000e8030000d0070000
-  BasicBossTime: 0
+  BasicBossTime: 10

@@ -61,7 +61,7 @@ public abstract class ColleaguePoly : MonoBehaviour
         ColleagueStatsInfoNameText[1].text = ColleagueStatsNameText[1].text + "+" + Second_stat.ToString();
         ColleagueStatsInfoNameText[2].text = ColleagueStatsNameText[2].text + "+" + Third_stat.ToString();
     }
-     protected void PostBuyProcess(int index, int price)
+    protected void PostBuyProcess(int index, int price)
     {
         ColleagueStatsPrice[index] += 100 * (index + 1);
         UpdateText();

@@ -29,31 +29,23 @@ public class PetInventoryManager : MonoBehaviour
     public int petCount;
 
     public event Action OnEquippedPetChanged;
-
     public event Action OnInventoryChanged;
-    public RectTransform PetSlotParent;
-    public PetSlot[] petSlots;
-    List<PetSlot> petSlotsList = new();
+  
 
-
+    //장착 펫 정보 관리
+    public List<PetInfo> petEquipInfos;
     public void Awake()
     {
         Instance = this;
-
-        List<PetSlot> childList = new();
-        for (int i = 0; i < PetSlotParent.childCount; i++)
-        {
-            PetSlot child = PetSlotParent.GetChild(i).GetComponent<PetSlot>();
-            childList.Add(child);
-        }
-        petSlots = childList.ToArray();
+        petEquipInfos = new List<PetInfo>(3);
+        
         Load();
     }
     private void Start()
     {
         OnInventoryChanged += OnInventoryChangedCallback;
-        SetData();
-        SortSlots();
+        PetUI.instance.SetData();
+        PetUI.instance.SortSlots();
     }
     public void DestroyPetInfoPopup(petinfoPopup popupInstance)
     {
@@ -63,54 +55,7 @@ public class PetInventoryManager : MonoBehaviour
             petinfoPopup.Remove(popupInstance);
         }
     }
-    public void SortSlots()
-    {
-        bool isActive = Array.Exists(petSlots, x => x.petInfo != null);
-        petSlotsList.Clear();
-        foreach (PetSlot slot in petSlots)
-        {
-            if (slot.petInfo != null)
-            {
-                petSlotsList.Add(slot);
-            }
-        }
-
-        if (isActive)
-        {
-            petSlotsList.Sort((x, y) =>
-            {
-                int petNumberCompare = y.petInfo.Number.CompareTo(x.petInfo.Number);
-                if(petNumberCompare!= 0) return petNumberCompare;
-
-                return x.petInfo.petType.CompareTo(y.petInfo.petType);
-            });
-
-
-            for (int i = 0; i < petSlotsList.Count; ++i)
-            {
-                PetSlot slot = petSlotsList[i];
-                slot.transform.SetSiblingIndex(i);
-            }
-        }
-    }
-
-    public void SetData()
-    {
-        int slotCount = petSlots.Length; 
-
-        for (int i = 0; i < myPets.Count; i++)
-        {
-            if (i >= slotCount) 
-            {
-                Debug.LogWarning("확장필요");
-                break;
-            }
-
-            PetSlot slot = petSlots[i];
-            slot.SetData(myPets[i]);
-            slot.SetActive(true);
-        }
-    }
+    
     public void AddPet(PetInfo petInfo)
     {
         myPets.Add(new PetInstance()
@@ -136,10 +81,23 @@ public class PetInventoryManager : MonoBehaviour
 
         Save();
     }
+
+    public void AddEquipPetInfo(PetInfo petInfo)
+    {
+        for (int i = 0; i < petEquipInfos.Count; i++)
+        {
+            if (petEquipInfos[i] == petInfo)
+            {
+                return;
+            }
+        }
+        petEquipInfos.Add(petInfo);
+
+    }
     private void OnInventoryChangedCallback()
     {
-        SetData();
-        SortSlots();
+        PetUI.instance.SetData();
+        PetUI.instance.SortSlots();
     }
     public void Save()
     {

@@ -14,6 +14,7 @@ public class Monster : BaseUnit
     GameObject DropItemRoot;
     Rigidbody2D rigid;
     public Collider collider;
+    SpriteRenderer spriteRenderer;
 
     public GameObject expIconPrefab; 
     public GameObject coinIconPrefab; 
@@ -27,6 +28,7 @@ public class Monster : BaseUnit
     private float elapsedTime;
     public void Awake()
     {
+        spriteRenderer= GetComponent<SpriteRenderer>();
         hudTextRoot = GameObject.Find("hudTextRoot");
         DropItemRoot = GameObject.Find("DropItemRoot");
         rigid = GetComponent<Rigidbody2D>();
@@ -107,7 +109,7 @@ public class Monster : BaseUnit
            
             int damageAmount = isCriticalHit ? (int)Player.instance.Current_CriticalDamage + (int)Player.instance.Current_Attack
                                              : (int)Player.instance.Current_Attack;
-
+            StartCoroutine(monsterDamaged());
             GameObject hudText = Instantiate(hudDamageText, hudTextRoot.transform);
             hudText.transform.position = transform.position + new Vector3(0, 1, 0);
 
@@ -122,7 +124,7 @@ public class Monster : BaseUnit
             BaseSkillLaunch skill = other.GetComponent<BaseSkillLaunch>();
             int damageAmount = isCriticalHit ? (int)skill.damage + (int)Player.instance.Current_CriticalDamage
                                              : (int)skill.damage;
-
+            StartCoroutine(monsterDamaged());
             _Current_HP -= damageAmount;
             GameObject hudText = Instantiate(hudDamageText, hudTextRoot.transform);
             hudText.transform.position = transform.position + new Vector3(0, 1, 0);
@@ -130,6 +132,26 @@ public class Monster : BaseUnit
             DamageText tmp = hudText.GetComponent<DamageText>();
             tmp.text.text = damageAmount.ToString();
             tmp.text.color = isCriticalHit ? Color.red : Color.blue;
+
+        }
+    }
+
+    IEnumerator monsterDamaged()
+    {
+        if (_MonsterInfoType == MonsterInfoType.normar)
+        {
+            spriteRenderer.color = new Color(1, 0, 0);
+            yield return new WaitForSeconds(0.05f);
+            spriteRenderer.color = new Color(1, 1, 1);
+        }
+        else
+        {
+            ParticleSystem particleSystem = GetComponent<ParticleSystem>();
+            var mainModule = particleSystem.main;
+            ParticleSystem.MinMaxGradient originalColor = mainModule.startColor;
+            ParticleSystem.MinMaxGradient newColor = new ParticleSystem.MinMaxGradient(new Color(1, 1, 1));
+            yield return new WaitForSeconds(0.05f);
+            mainModule.startColor = originalColor;
 
         }
     }

@@ -295,6 +295,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 697b4fa1a4d4abf49a97fba27f6fff6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bossLevel: 0
+  typeNum: 0
   sunBossInfo: {fileID: 0}
   sunBossButton: {fileID: 7562768922124422534}
   bossType: 1
@@ -537,6 +539,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 697b4fa1a4d4abf49a97fba27f6fff6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bossLevel: 0
+  typeNum: 0
   sunBossInfo: {fileID: 0}
   sunBossButton: {fileID: 7562768922209030006}
   bossType: 2

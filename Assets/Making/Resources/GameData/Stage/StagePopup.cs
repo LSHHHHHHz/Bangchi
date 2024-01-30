@@ -17,6 +17,7 @@ public class StagePopup : MonoBehaviour
     public Button stagePageLeftButton;
     public Button stagePageRightButton;
     private List<GameObject> children = new List<GameObject>();
+
     private void Awake()
     {    
         stageUI = GameObject.FindObjectOfType<StageUI>();
