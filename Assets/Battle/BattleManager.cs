@@ -22,53 +22,30 @@ namespace Assets.Battle
         public static BattleManager instance;
 
         private bool stageEndCheck = false;
-        public bool isrestartNomarStage = false;
         
         public StageInfo currentStageInfo;
         public int PageNum;
         public StageInfo LastStageInfo;
         public GameObject stageRoot;
         float stageRestartDelay = 0;
-        public bool isRestartStage = false;
         public bool isBossStageStart = false;
         public bool bossStageDoneTostartNormalStage = false;
         public SunBossInfo sunbossInfo;
 
-        public  event Action<SunBossInfo> SunBossInfoStart;
-        public  event Action stageChangedDestoryDropITem;
-        public  event Action stageDoneSkillDestory;
+        public event Action<SunBossInfo> SunBossInfoStart;
+        public event Action stageChangedDestoryDropITem;
+        public event Action stageDoneSkillDestory;
+        public event Action OnNormalStageRestart;
 
-        
         //GameManger가 Stage시작을 모르니 BattleManager로 옮김
         public int GetLastPlayedNormalStage() => PlayerPrefs.GetInt("LastPlayedNormalStage", defaultValue: 1);
         public void SetLastPlayedNormalStage(int value) => PlayerPrefs.SetInt("LastPlayedNormalStage", value);
 
         //스테이지 클리어
         public bool[][] SunBossStageClear;
-        public int SunBossGridCount;
+        public int SunBossGridPageCount;
         bool GetSunBossGridCountAndInitializebool = false; //초기화 한번만 되도록해야함 초기화를 계속하니 스테이지 클리어해도 윗 스테이지 넘어가질 않음
-        public void GetSunBossGridCountAndInitialize(int value)
-        {
-            if (!GetSunBossGridCountAndInitializebool)
-            {
-                SunBossGridCount = value;
-
-                if (SunBossGridCount > 0)
-                {
-                    SunBossStageClear = new bool[SunBossGridCount][];
-                    for (int i = 0; i < SunBossGridCount; i++)
-                    {
-                        SunBossStageClear[i] = new bool[3];
-
-                        for (int j = 0; j < 3; j++)
-                        {
-                            SunBossStageClear[i][j] = (i == 0);
-                        }
-                    }
-                }
-                GetSunBossGridCountAndInitializebool = true;
-            }
-        }
+     
         private void Awake()
         {
             Debug.Log("BattleManager Awake called");
@@ -119,9 +96,29 @@ namespace Assets.Battle
                     stageDoneSkillDestory?.Invoke();
                 }
             }
-            FadeInOutStageProcessor.instance.bossstageDone = false;
         }
+        public void GetSunBossGridCountAndInitialize(int value)
+        {
+            if (!GetSunBossGridCountAndInitializebool)
+            {
+                SunBossGridPageCount = value;
 
+                if (SunBossGridPageCount > 0)
+                {
+                    SunBossStageClear = new bool[SunBossGridPageCount][];
+                    for (int i = 0; i < SunBossGridPageCount; i++)
+                    {
+                        SunBossStageClear[i] = new bool[3];
+
+                        for (int j = 0; j < 3; j++)
+                        {
+                            SunBossStageClear[i][j] = (i == 0);
+                        }
+                    }
+                }
+                GetSunBossGridCountAndInitializebool = true;
+            }
+        }
 
         public void StartStage(StageInfo stageInfo)
         {
@@ -135,18 +132,15 @@ namespace Assets.Battle
 
             if (stageInfo.Type == StageType.Normal)
             {
-                isRestartStage = true;
                 SetLastPlayedNormalStage(stageInfo.StageNumber);
                 OnStageRestart?.Invoke();
             }
-            isRestartStage = false;
         }
         
         public void StartSunbossStage(SunBossInfo sunBossInfo, int level)
         {
             sunbossInfo = sunBossInfo;
             isBossStageStart = true;
-            isrestartNomarStage = false;
             int hp = sunBossInfo.BossHPByLevel[level];
             StartStage(sunBossInfo);
             var boss = UnitManager.instance.monsterList[0];
@@ -159,10 +153,9 @@ namespace Assets.Battle
         public void RestartStage()
         {
             StartStage(currentStageInfo);
-            isBossStageStart= false;
+            OnNormalStageRestart?.Invoke();
+            isBossStageStart = false;
         }
-
-        // 현재 스테이지
         private bool IsStageEnded()
         {
             return UnitManager.instance.monsterList.Count == 0;

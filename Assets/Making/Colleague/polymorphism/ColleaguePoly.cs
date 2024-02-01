@@ -33,6 +33,10 @@ public abstract class ColleaguePoly : MonoBehaviour
     {
         save();
     }
+
+    public GameObject effectPrefab;
+    public Image[] effectimagePos;
+
     public int[] ColleagueStatsPrice;
     public Text[] ColleagueStatsPriceText;
     public Text[] ColleagueStatsLVText;
@@ -66,7 +70,15 @@ public abstract class ColleaguePoly : MonoBehaviour
         ColleagueStatsPrice[index] += 100 * (index + 1);
         UpdateText();
         SetCoin(GetCoin() - price);
+        BuyEffect(index);
         save();
+    }
+    protected void BuyEffect(int index)
+    {
+        Vector3 worldPosition = ColleagueUI.instance.transform.TransformPoint(ColleagueUI.instance.effectImagepos[index]);
+        var effect = Instantiate(effectPrefab,worldPosition, Quaternion.identity,this.transform);
+        Destroy(effect, 3f);
+        // var effect = Instantiate(effectPrefab, ColleagueUI.instance.effectImagepos[index].position);
     }
     public abstract void ColleagueStatusBuy(int index);
     public abstract int GetCoin();

@@ -78,11 +78,8 @@ public class PetPopup : MonoBehaviour
 
             sequence.Join(petSlot.icon.DOFade(1, 0.1f));
            
-
             sequence.Play();
 
-          
-         
             children.Add(petSlot.gameObject);
             
             yield return sequence.WaitForCompletion();

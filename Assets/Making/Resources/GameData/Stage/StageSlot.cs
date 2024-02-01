@@ -44,7 +44,6 @@ namespace Assets.Making.Stage
             else
             {
                 BattleManager.instance.StartStage(stageInfo);
-                BattleManager.instance.isrestartNomarStage = true;
             }
             StagePopup.instance.Exit();
         }

@@ -13,7 +13,6 @@ public class Monster : BaseUnit
     GameObject hudTextRoot;
     GameObject DropItemRoot;
     Rigidbody2D rigid;
-    public Collider collider;
     SpriteRenderer spriteRenderer;
 
     public GameObject expIconPrefab; 
@@ -32,14 +31,6 @@ public class Monster : BaseUnit
         hudTextRoot = GameObject.Find("hudTextRoot");
         DropItemRoot = GameObject.Find("DropItemRoot");
         rigid = GetComponent<Rigidbody2D>();
-        collider = GetComponent<Collider>();
-
-        PrintName(rigid);
-        PrintName(collider);
-
-        Object obj = null;
-        obj = rigid; // rigid 변수의 타입 Rigidbody2D는 Object로부터 파생된 타입이기 때문에 Object 타입 변수 obj에 할당 가능
-
         UnitManager.instance.RegisterMonster(this);
     }
 
@@ -47,15 +38,6 @@ public class Monster : BaseUnit
     {
         //살아있는 몬스터만 UnitManager에 등록되어 있어야 하기 때문에, 죽은 몬스터는 UnregisterMonster()를 통해 UnitManager에서 등록 해제
         UnitManager.instance.UnregisterMonster(this);
-        if(this._MonsterInfoType == MonsterInfoType.boss)
-        {
-            BattleManager.instance.isrestartNomarStage = true;
-        }
-    }
-
-    public void PrintName(Object obj)
-    {
-        Debug.Log(obj);
     }
 
     public void Update()
@@ -106,7 +88,6 @@ public class Monster : BaseUnit
         bool isCriticalHit = UnityEngine.Random.value < Player.instance.Current_Criticalprobability / 100;
         if (other.tag == "Melee")
         {
-           
             int damageAmount = isCriticalHit ? (int)Player.instance.Current_CriticalDamage + (int)Player.instance.Current_Attack
                                              : (int)Player.instance.Current_Attack;
             StartCoroutine(monsterDamaged());
@@ -132,10 +113,8 @@ public class Monster : BaseUnit
             DamageText tmp = hudText.GetComponent<DamageText>();
             tmp.text.text = damageAmount.ToString();
             tmp.text.color = isCriticalHit ? Color.red : Color.blue;
-
         }
     }
-
     IEnumerator monsterDamaged()
     {
         if (_MonsterInfoType == MonsterInfoType.normar)

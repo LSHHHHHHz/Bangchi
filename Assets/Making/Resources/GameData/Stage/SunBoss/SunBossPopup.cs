@@ -16,11 +16,11 @@ public class SunBossPopup : MonoBehaviour
 
     private void Awake()
     {
-        StartSunBossNumberInitialize += BattleManager.instance.GetSunBossGridCountAndInitialize;
-        StartSunBossNumberInitialize?.Invoke(grid.transform.childCount);
         instance = this;
         Initialize();
-        BattleManager.instance.SunBossGridCount = grid.transform.childCount;
+        BattleManager.instance.SunBossGridPageCount = grid.transform.childCount;
+        StartSunBossNumberInitialize += BattleManager.instance.GetSunBossGridCountAndInitialize;
+        StartSunBossNumberInitialize?.Invoke(grid.transform.childCount);
     }
 
     public void destorypopup()

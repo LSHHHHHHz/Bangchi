@@ -121,7 +121,6 @@ public class Player : BaseUnit
     private bool isSkillCasting;
     private float skillCastTime;
 
-    Weapons weapons1;
     public CoinStatAbility ability;
 
     public static Player instance;
@@ -160,7 +159,7 @@ public class Player : BaseUnit
         Move();
         rayCast();
         Fighting();
-        TopStatus();
+        ResourceDisplayText();
         ExpAndLevel();
         if(hits.Length> 0)
         {
@@ -171,7 +170,7 @@ public class Player : BaseUnit
             ishits = false;
         }
     }
-    private void TopStatus()
+    private void ResourceDisplayText()
     {
         _TopGold.text = Coin.ToString("N0");
         _TopEnforceCoin.text = enforceCoin.ToString("N0");
@@ -314,11 +313,6 @@ public class Player : BaseUnit
         if (PlayerPrefs.HasKey(nameof(ColleageCoinWind)))
             ColleageCoinWind = PlayerPrefs.GetInt(nameof(ColleageCoinWind));
 
-    }
-    void Attack_weapon()
-    {
-        fireDelay += Time.deltaTime;
-        isFireReady = weapons1.rate < fireDelay;
     }
     void Move()
     {

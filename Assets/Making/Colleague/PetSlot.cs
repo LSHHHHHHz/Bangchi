@@ -62,7 +62,6 @@ public class PetSlot : MonoBehaviour
 
             PetSlot petinfopopup = instance.GetComponent<PetSlot>();
             petinfopopup.SetData(petInfo);
-
         }
         else
         {

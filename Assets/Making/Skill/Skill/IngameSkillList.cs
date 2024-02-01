@@ -32,24 +32,29 @@ public class IngameSkillList : MonoBehaviour
     {
         instance = this;
         activeSkillSlots = GetChildSlots(activeSkillSlotParent);
-        int skillIndex = 0;
-        for (int i = 0; i < activeSkillSlots.Length; ++i)
-        {
-            SkillSlot activeSkillSlot = activeSkillSlots[i];
-            var button = activeSkillSlot.GetComponent<Button>();
-            int index = skillIndex;
-            button.onClick.AddListener(() => OnSkillButtonClicked(activeSkillSlot, index));
-            ++skillIndex;
-        }
+        AddClickListenersToSkillSlots(activeSkillSlots, 0);
 
         passiveSkillSlots = GetChildSlots(passiveSkillSlotParent);
-        for (int i = 0; i < passiveSkillSlots.Length; ++i)
+        AddClickListenersToSkillSlots(passiveSkillSlots, 4);
+    }
+    private SkillSlot[] GetChildSlots(RectTransform parent)
+    {
+        List<SkillSlot> childList = new();
+        for (int i = 0; i < parent.childCount; ++i)
         {
-            SkillSlot passiveSkillSlot = passiveSkillSlots[i];
-            var button = passiveSkillSlot.GetComponent<Button>();
-            int index = skillIndex;
-            button.onClick.AddListener(() => OnSkillButtonClicked(passiveSkillSlot, index));
-            ++skillIndex;
+            SkillSlot child = parent.GetChild(i).GetComponent<SkillSlot>();
+            childList.Add(child);
+        }
+        return childList.ToArray();
+    }
+    void AddClickListenersToSkillSlots(SkillSlot[] slots, int startIndex)
+    {
+        for (int i = 0; i < slots.Length; i++)
+        {
+            SkillSlot slot = slots[i];
+            Button button = slot.GetComponent<Button>();
+            int index = i+ startIndex;
+            button.onClick.AddListener(()=>OnSkillButtonClicked(slot, index));
         }
     }
     private void Update()
@@ -74,35 +79,19 @@ public class IngameSkillList : MonoBehaviour
     }
     public void allskillAutomatic()
     {
-        for (int i = 0; i < activeSkillSlots.Length; i++)
-        {
-            SkillSlot slot = activeSkillSlots[i];
-            if (slot != null && slot.skillInfo != null)
-            {
-                OnSkillButtonClicked(slot, i);
-            }
-        }
-
-        for (int i = 0; i < passiveSkillSlots.Length; i++)
-        {
-            SkillSlot slot = passiveSkillSlots[i];
-            if (slot != null && slot.skillInfo != null)
-            {
-                OnSkillButtonClicked(slot, i + activeSkillSlots.Length);
-            }
-        }
+        SkillProcessSlot(activeSkillSlots, 0);
+        SkillProcessSlot(passiveSkillSlots, activeSkillSlots.Length);
     }
-    private SkillSlot[] GetChildSlots(RectTransform parent) 
+    void SkillProcessSlot(SkillSlot[] slots, int slotIndex)
     {
-        List<SkillSlot> childList = new();
-
-        for (int i = 0; i < parent.childCount; ++i) 
+        for (int i = 0; i < slots.Length; i++) 
         {
-            SkillSlot child = parent.GetChild(i).GetComponent<SkillSlot>();
-            childList.Add(child); 
+            SkillSlot slot = slots[i];
+            if(slot !=null && slot.skillInfo != null)
+            {
+                OnSkillButtonClicked(slot, slotIndex + i) ;
+            }
         }
-
-        return childList.ToArray();
     }
 
     private void Start()

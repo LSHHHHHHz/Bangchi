@@ -34,7 +34,7 @@ public class SunBossSlot : MonoBehaviour
     }
     public void StageClearUpdateImage() //이거 넣고 망하는중
     {
-        if (BattleManager.instance.SunBossStageClear[bossLevel - 1][typeNum - 1] == true)
+        if (image != null  && BattleManager.instance.SunBossStageClear[bossLevel - 1][typeNum - 1] == true)
         {
             image.sprite = Resources.Load<Sprite>("SunBossSlot");
         }
@@ -44,8 +44,7 @@ public class SunBossSlot : MonoBehaviour
         if (BattleManager.instance.SunBossStageClear[stageLevel-1][typeNum-1] == true)
         {
             FadeInOutStageProcessor.instance.RunBossStage(sunBossInfo, stageLevel);
-            FadeInOutStageProcessor.instance.bossstageDone = true;
-            //        BattleManager.instance.StartSunbossStage(sunBossInfo, stageLevel);
+            BossStageFunctionality.Instance.rewardToPlayer = false;
         }
         else
         {

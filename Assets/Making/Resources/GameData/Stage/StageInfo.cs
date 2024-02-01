@@ -24,7 +24,6 @@ public class StageInfo : ScriptableObject
 
     //Stage에 몬스터를 소환하기 위해 갖고있는 데이터
     public List<MonsterSpawnInfo> monsterSpawnInfos = new List<MonsterSpawnInfo>();
-    
 }
 
 [System.Serializable]

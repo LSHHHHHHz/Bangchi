@@ -12,7 +12,7 @@ public class ACT_Skill3_BoomSkill : BaseSkillLaunch
     {
         damage = Player.instance.Current_Attack * 1;
         BattleManager.instance.stageDoneSkillDestory += skillDestory;
-        FadeInOutStageProcessor.instance.stageClickForSkillDestory += skillDestory;
+        FadeInOutStageProcessor.instance.FadeOutAndResetSkillsOnStageChange += skillDestory;
     }
     private void Update()
     {
@@ -26,7 +26,7 @@ public class ACT_Skill3_BoomSkill : BaseSkillLaunch
     void OnDestroy()
     {
         BattleManager.instance.stageDoneSkillDestory -= skillDestory;
-        FadeInOutStageProcessor.instance.stageClickForSkillDestory -= skillDestory;
+        FadeInOutStageProcessor.instance.FadeOutAndResetSkillsOnStageChange -= skillDestory;
     }
 
 

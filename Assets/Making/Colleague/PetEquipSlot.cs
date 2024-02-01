@@ -105,7 +105,7 @@ public class PetEquipSlot : MonoBehaviour
         icon.sprite = Resources.Load<Sprite>(petInfo.iconPath);
         myImage.color = new Color(1, 1, 1, 1);
     }
-    public void SetEmpty(PetInfo petInfo)
+    public void SetEmpty()
     {
         this.petinfo = null;
         icon.sprite = null;

@@ -13,7 +13,6 @@ namespace Assets.Battle
 {
     public class DropItem : MonoBehaviour
     {
-        public Collider collider;
         public int exp;
         public int coin;
         public int enforceCoin;
@@ -27,7 +26,6 @@ namespace Assets.Battle
         float maxSpeed = 30f;
         public LayerMask layerMask = -1;
         float createdTime;
-        bool isAcquisition = false;
 
         private const float moveWaitTime = 0.5f;
 
@@ -99,7 +97,6 @@ namespace Assets.Battle
         }
         private void OnTriggerEnter(Collider other)
         {
-            isAcquisition = true;
             var player = other.transform.GetComponent<Player>();
             if (player == null)
                 return;

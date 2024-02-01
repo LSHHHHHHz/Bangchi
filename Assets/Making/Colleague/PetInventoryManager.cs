@@ -23,15 +23,15 @@ public class PetInventoryManager : MonoBehaviour
     public static PetInventoryManager Instance;
     public List<PetInstance> myPets = new();
     public List<PetInstance> equipPets = new();
-    public List<petinfoPopup> petinfoPopup = new(); 
 
     public int maxaccumulatePetsCount = 50;
     public int petCount;
 
     public event Action OnEquippedPetChanged;
     public event Action OnInventoryChanged;
-  
 
+    //장착 할 펫 정보
+    public List<petinfoPopup> petinfoPopup = new();
     //장착 펫 정보 관리
     public List<PetInfo> petEquipInfos;
     public void Awake()

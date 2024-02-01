@@ -15,7 +15,6 @@ public class SkillUI : MonoBehaviour
 {
     public static SkillUI instance;
     public delegate void ResetSkillDelegate(int value);
-    public event ResetSkillDelegate resetSkill;
 
     public SkillDB skillDB;
     public Sprite lockedSprite;
@@ -47,51 +46,10 @@ public class SkillUI : MonoBehaviour
     private void Awake()
     {
         instance = this;
-
-        List<SkillSlot> childList = new();
-        for (int i = 0; i < activeSkillSlotParent.childCount; ++i) 
-        {
-            SkillSlot child = activeSkillSlotParent.GetChild(i).GetComponent<SkillSlot>();
-            var button = child.GetComponent<Button>();
-            button.onClick.AddListener(() =>
-            {
-                EquipPopupOpen(child);
-            });
-            childList.Add(child);
-        }
         activeSkillSlots = GetChildSlots(activeSkillSlotParent);
-
-
-
-        childList = new();
-        for (int i = 0; i < passiveSkillSlotParent.childCount; ++i) 
-        {
-            SkillSlot child = passiveSkillSlotParent.GetChild(i).GetComponent<SkillSlot>();
-            var button = child.GetComponent<Button>();
-            button.onClick.AddListener(() =>
-            {
-                EquipPopupOpen(child);
-            });
-            childList.Add(child);
-        }
-        passiveSkillSlots = childList.ToArray(); 
-
-        childList = new();
-        for (int i = 0; i < equippedActiveSkillSlotParent.childCount; ++i) 
-        {
-            SkillSlot child = equippedActiveSkillSlotParent.GetChild(i).GetComponent<SkillSlot>();
-            childList.Add(child);
-            
-        }
-        equippedActiveSkillSlots = childList.ToArray();
-
-        childList = new();
-        for (int i = 0; i < equippedPassiveSkillSlotParent.childCount; ++i) 
-        {
-            SkillSlot child = equippedPassiveSkillSlotParent.GetChild(i).GetComponent<SkillSlot>();
-            childList.Add(child); 
-        }
-        equippedPassiveSkillSlots = childList.ToArray();
+        passiveSkillSlots = GetChildSlots(passiveSkillSlotParent);
+        equippedActiveSkillSlots = GetEquipChildSlots(equippedActiveSkillSlotParent);
+        equippedPassiveSkillSlots = GetEquipChildSlots(equippedPassiveSkillSlotParent);
     }
     private SkillSlot[] GetChildSlots(RectTransform parent)
     {
@@ -100,11 +58,29 @@ public class SkillUI : MonoBehaviour
         for (int i = 0; i < parent.childCount; ++i)
         {
             SkillSlot child = parent.GetChild(i).GetComponent<SkillSlot>();
+            var button = child.GetComponent<Button>();
+            button.onClick.AddListener(() =>
+            {
+                EquipPopupOpen(child);
+            });
             childList.Add(child); 
         }
 
         return childList.ToArray();
     }
+    private SkillSlot[] GetEquipChildSlots(RectTransform parent)
+    {
+        List<SkillSlot> childList = new();
+
+        for (int i = 0; i < parent.childCount; ++i)
+        {
+            SkillSlot child = parent.GetChild(i).GetComponent<SkillSlot>();
+            childList.Add(child);
+        }
+
+        return childList.ToArray();
+    }
+
     private void Start()
     {
         SkillInventoryManager.instance.OnSkillInventoryChanged += OnSkillInventoryChangedCallback;
@@ -149,7 +125,6 @@ public class SkillUI : MonoBehaviour
             PassiveInfoCount.text = slot.skillInfo.SkillInfoCountText;
         }
     }
-    //-----------------------------------------------------
     public void RunGacha(int count)
     {
         if (skillgachaPopup == null)

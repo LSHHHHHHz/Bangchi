@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pageNumber: 0
   stageName: 
-  StageNumber: 0
+  StageNumber: 2
   Type: 1
   coin: 0
   exp: 0
@@ -28,8 +28,8 @@ MonoBehaviour:
   bossType: 1
   stageType: 1
   SunBossLevel: 1
-  RewardDamage: 0
-  RewardHP: 0
-  RewardHPRecovery: 0
+  RewardDamage: 
+  RewardHP: 
+  RewardHPRecovery: 
   BossHPByLevel: 0000000064000000c800000090010000e8030000d0070000
   BasicBossTime: 10
