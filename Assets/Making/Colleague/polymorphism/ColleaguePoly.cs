@@ -35,7 +35,7 @@ public abstract class ColleaguePoly : MonoBehaviour
     }
 
     public GameObject effectPrefab;
-    public Image[] effectimagePos;
+    public Image[] image;
 
     public int[] ColleagueStatsPrice;
     public Text[] ColleagueStatsPriceText;
@@ -75,10 +75,10 @@ public abstract class ColleaguePoly : MonoBehaviour
     }
     protected void BuyEffect(int index)
     {
-        Vector3 worldPosition = ColleagueUI.instance.transform.TransformPoint(ColleagueUI.instance.effectImagepos[index]);
-        var effect = Instantiate(effectPrefab,worldPosition, Quaternion.identity,this.transform);
-        Destroy(effect, 3f);
-        // var effect = Instantiate(effectPrefab, ColleagueUI.instance.effectImagepos[index].position);
+        var effect = Instantiate(effectPrefab, image[index].transform);
+        RectTransform effectRectTransform = effect.GetComponent<RectTransform>();
+        effectRectTransform.anchoredPosition = Vector2.zero;
+        Destroy(effect, 1f);
     }
     public abstract void ColleagueStatusBuy(int index);
     public abstract int GetCoin();

@@ -128,11 +128,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8862b33d18f939947a81d6e9dde7c4b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Current_HP: 20
-  _Max_HP: 20
+  _Current_HP: 10000
+  _Max_HP: 10000
+  _MonsterInfoType: 0
   hudDamageText: {fileID: 5409452494351892200, guid: ac4ab4100988f28478bf69a2f6c8b7c9, type: 3}
-  MonsterExp: 10
-  collider: {fileID: 1275403977792304970}
   expIconPrefab: {fileID: 3904003793980084416, guid: ccda49b657be4444ebe2fb5a836c3778, type: 3}
   coinIconPrefab: {fileID: 7122588463523522965, guid: 1919c62f8fe64ab4480fe10cc0051d65, type: 3}
   enforceCoinPrefab: {fileID: 3904003793980084416, guid: a82b805d9973509449169a23164d4544, type: 3}

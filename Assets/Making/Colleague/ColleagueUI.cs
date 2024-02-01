@@ -28,11 +28,6 @@ public class ColleagueUI : MonoBehaviour
             if(i == index)
             {
                 uiGroup[i].localPosition = new Vector3(0, 0, 0);
-                colleaguePoly = uiGroup[i].GetComponent<ColleaguePoly>();
-                for(int j = 0; j< colleaguePoly.effectimagePos.Length; j++)
-                {
-                    effectImagepos[j] = colleaguePoly.effectimagePos[j].transform.localPosition;
-                }
             }
             else
             {

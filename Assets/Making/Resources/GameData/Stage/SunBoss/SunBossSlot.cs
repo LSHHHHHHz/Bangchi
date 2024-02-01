@@ -32,7 +32,7 @@ public class SunBossSlot : MonoBehaviour
     {
         this.sunBossInfo = subBossInfo;
     }
-    public void StageClearUpdateImage() //이거 넣고 망하는중
+    public void StageClearUpdateImage() 
     {
         if (image != null  && BattleManager.instance.SunBossStageClear[bossLevel - 1][typeNum - 1] == true)
         {
